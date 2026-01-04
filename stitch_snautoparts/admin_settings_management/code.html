@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Admin Settings</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d7ff2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922",
+                        "surface-dark": "#1c252e", // Lighter shade for cards
+                        "border-dark": "#303842",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101922; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #303842; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a5562; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111418] dark:text-white h-screen overflow-hidden flex">
+<!-- Sidebar -->
+<aside class="w-72 flex-shrink-0 border-r border-[#dce0e5] dark:border-border-dark flex flex-col justify-between bg-white dark:bg-[#101922] h-full overflow-y-auto">
+<div class="flex flex-col gap-4 p-4">
+<!-- Brand -->
+<div class="flex gap-3 items-center mb-6">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 shrink-0" data-alt="Abstract metallic texture representing auto parts brand" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCGnYKsmxN-7FQsFmlecuUM3Qbow6KOn8fnU-A8IsFDCvYoF5gRgTeMRN7X3RpjqFG1wmMGbIXIasBs8QjjB7PGg4Uoyyx9aHBgAY3eysUFe-7HejCmEYhMnUlzqwjmRCi-l9xEQpMufa5JLDZ0u1MxTxQgyKCaAZPxfQP1Q7AVP2t7rAWKB5SzEERCPuUEQaWXZcXK5eKyGmoS0hkvVyc-l37F4bjPzjfWt7p0-_EkeHX-W9peGrULj8k-PH7FrYdUO-4b1nqT1TKe");'>
+</div>
+<div class="flex flex-col">
+<h1 class="text-[#111418] dark:text-white text-base font-bold leading-normal">SN Auto Parts</h1>
+<p class="text-[#637588] dark:text-[#9cabba] text-sm font-normal leading-normal">Admin Dashboard</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3 px-3 py-2 rounded bg-primary/10 dark:bg-[#1c252e] border border-primary/20 dark:border-primary/20">
+<span class="material-symbols-outlined text-primary" style="font-size: 24px;">settings</span>
+<p class="text-[#111418] dark:text-white text-sm font-bold leading-normal">General</p>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#637588] dark:text-[#9cabba] group-hover:text-[#111418] dark:group-hover:text-white" style="font-size: 24px;">local_shipping</span>
+<p class="text-[#637588] dark:text-[#9cabba] group-hover:text-[#111418] dark:group-hover:text-white text-sm font-medium leading-normal">Tax &amp; Shipping</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#637588] dark:text-[#9cabba] group-hover:text-[#111418] dark:group-hover:text-white" style="font-size: 24px;">mail</span>
+<p class="text-[#637588] dark:text-[#9cabba] group-hover:text-[#111418] dark:group-hover:text-white text-sm font-medium leading-normal">Email Templates</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#637588] dark:text-[#9cabba] group-hover:text-[#111418] dark:group-hover:text-white" style="font-size: 24px;">group</span>
+<p class="text-[#637588] dark:text-[#9cabba] group-hover:text-[#111418] dark:group-hover:text-white text-sm font-medium leading-normal">Users</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#637588] dark:text-[#9cabba] group-hover:text-[#111418] dark:group-hover:text-white" style="font-size: 24px;">security</span>
+<p class="text-[#637588] dark:text-[#9cabba] group-hover:text-[#111418] dark:group-hover:text-white text-sm font-medium leading-normal">Security</p>
+</a>
+<div class="h-px bg-[#dce0e5] dark:bg-border-dark my-2"></div>
+<a class="flex items-center gap-3 px-3 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#637588] dark:text-[#9cabba] group-hover:text-[#111418] dark:group-hover:text-white" style="font-size: 24px;">api</span>
+<p class="text-[#637588] dark:text-[#9cabba] group-hover:text-[#111418] dark:group-hover:text-white text-sm font-medium leading-normal">API Keys</p>
+</a>
+</div>
+</div>
+<div class="p-4">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-4 bg-[#f0f2f5] dark:bg-[#283039] hover:bg-[#e4e7eb] dark:hover:bg-[#3c4753] text-[#111418] dark:text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors gap-2">
+<span class="material-symbols-outlined" style="font-size: 20px;">logout</span>
+<span class="truncate">Log Out</span>
+</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Scrollable Area -->
+<div class="flex-1 overflow-y-auto">
+<div class="max-w-[1024px] mx-auto px-6 py-8 flex flex-col gap-8 pb-32">
+<!-- Breadcrumbs & Heading -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-wrap gap-2 items-center">
+<a class="text-[#637588] dark:text-[#9cabba] text-sm font-medium leading-normal hover:underline" href="#">Dashboard</a>
+<span class="text-[#637588] dark:text-[#9cabba] text-sm font-medium leading-normal">/</span>
+<span class="text-[#111418] dark:text-white text-sm font-medium leading-normal">Settings</span>
+</div>
+<div class="flex flex-wrap justify-between items-end gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-[#111418] dark:text-white text-4xl font-bold leading-tight tracking-tight">General Settings</h1>
+<p class="text-[#637588] dark:text-[#9cabba] text-base font-normal leading-normal max-w-2xl">Manage global application preferences, store identity, and regional configuration details.</p>
+</div>
+</div>
+</div>
+<!-- Section: Store Identity -->
+<section class="flex flex-col gap-4">
+<div class="border-b border-[#dce0e5] dark:border-border-dark pb-2">
+<h2 class="text-[#111418] dark:text-white text-xl font-bold leading-tight">Store Identity</h2>
+</div>
+<!-- Store Branding Card -->
+<div class="bg-white dark:bg-surface-dark rounded-lg overflow-hidden border border-[#dce0e5] dark:border-border-dark shadow-sm">
+<div class="h-40 bg-cover bg-center relative" data-alt="Dark abstract gradient with automotive grill pattern" style='background-image: linear-gradient(180deg, rgba(16,25,34,0) 0%, rgba(16,25,34,0.8) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuC2r0UoN7HrVV0yveCSLlNEcBi8IxrUL4pwEUBMFsKaZgmyIxrI7MeXTrkeFwKJR45hB0in3MNaiDEkIiR02OwInp5hF9ZLOn9QQMxms_xuU65Gs5vBnFtbFxOmuujCAq_J8dke4cEjDCNr3JLh6ERQsbLOx3ZEe8U9EhUUv1almwUCyX9KYcqfMNegyeHmnFluP_nAgk80zUheu-UApjBJ5dR_g7rlv5OjKqiMw67WlufvgIL8dt2M_Hjes7hhJBzkfXHU7hBgXX7_");'>
+<button class="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded p-2 backdrop-blur-sm transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">edit</span>
+</button>
+</div>
+<div class="p-6 pt-0 -mt-10 relative flex justify-between items-end gap-6">
+<div class="flex gap-6 items-end">
+<div class="w-24 h-24 rounded bg-[#1c252e] border-4 border-white dark:border-surface-dark bg-cover bg-center shrink-0 shadow-lg" data-alt="Close up of a shiny metal engine part" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC3coJgNnJ6GkZ87d7QC-gkK8Z0SzcA0IuAAs8rs9PmwdU0sRmuiHBggYCFY0Ao86STkigb63FWTzmLgIqpHG7dRC5llWGyMVyLeLz0aibA9w0178Ml4ew_iQnS4TpOaRhxEJzq5PB4GNHtelSqvG5F_xcSwP_HFYlXDa-cfzOFeAsvrFe9sVe_2RWOpwKxcW1yblmZbDRxzlkjYeRwtdnb0kvaVnbG1J-k-metc35Bfam6l39HNspr51otRljQZWu7qap-SfP96mQs");'>
+</div>
+<div class="pb-2">
+<h3 class="text-[#111418] dark:text-white text-2xl font-bold">SN Auto Parts</h3>
+<p class="text-[#637588] dark:text-[#9cabba] text-sm">Public Storefront Profile</p>
+</div>
+</div>
+<div class="pb-2 hidden sm:block">
+<button class="text-primary text-sm font-bold hover:underline">View Public Store</button>
+</div>
+</div>
+<div class="p-6 border-t border-[#dce0e5] dark:border-border-dark grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#111418] dark:text-white">Store Name</label>
+<input class="w-full h-10 rounded bg-[#f0f2f5] dark:bg-[#101922] border border-[#dce0e5] dark:border-border-dark focus:border-primary focus:ring-1 focus:ring-primary px-4 text-sm text-[#111418] dark:text-white outline-none transition-all placeholder:text-[#9cabba]" type="text" value="SN Auto Parts"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#111418] dark:text-white">Support Email</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-[#9cabba]" style="font-size: 20px;">mail</span>
+<input class="w-full h-10 rounded bg-[#f0f2f5] dark:bg-[#101922] border border-[#dce0e5] dark:border-border-dark focus:border-primary focus:ring-1 focus:ring-primary pl-10 pr-4 text-sm text-[#111418] dark:text-white outline-none transition-all placeholder:text-[#9cabba]" type="email" value="support@snautoparts.com"/>
+</div>
+</div>
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="text-sm font-bold text-[#111418] dark:text-white">About Store (Meta Description)</label>
+<textarea class="w-full rounded bg-[#f0f2f5] dark:bg-[#101922] border border-[#dce0e5] dark:border-border-dark focus:border-primary focus:ring-1 focus:ring-primary p-4 text-sm text-[#111418] dark:text-white outline-none transition-all placeholder:text-[#9cabba] resize-none" rows="3">Premium auto parts supplier for performance vehicles and custom builds. Authorized dealer for major aftermarket brands.</textarea>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Regional Settings -->
+<section class="flex flex-col gap-4">
+<div class="border-b border-[#dce0e5] dark:border-border-dark pb-2 mt-4">
+<h2 class="text-[#111418] dark:text-white text-xl font-bold leading-tight">Regional Settings</h2>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-lg p-6 border border-[#dce0e5] dark:border-border-dark shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#111418] dark:text-white">Currency</label>
+<div class="relative">
+<select class="w-full h-10 rounded bg-[#f0f2f5] dark:bg-[#101922] border border-[#dce0e5] dark:border-border-dark focus:border-primary focus:ring-1 focus:ring-primary px-4 text-sm text-[#111418] dark:text-white outline-none appearance-none cursor-pointer">
+<option selected="" value="USD">USD - US Dollar</option>
+<option value="EUR">EUR - Euro</option>
+<option value="CAD">CAD - Canadian Dollar</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-[#9cabba] pointer-events-none" style="font-size: 20px;">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#111418] dark:text-white">Timezone</label>
+<div class="relative">
+<select class="w-full h-10 rounded bg-[#f0f2f5] dark:bg-[#101922] border border-[#dce0e5] dark:border-border-dark focus:border-primary focus:ring-1 focus:ring-primary px-4 text-sm text-[#111418] dark:text-white outline-none appearance-none cursor-pointer">
+<option value="PST">Pacific Time (US &amp; Canada)</option>
+<option selected="" value="EST">Eastern Time (US &amp; Canada)</option>
+<option value="UTC">UTC</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-[#9cabba] pointer-events-none" style="font-size: 20px;">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#111418] dark:text-white">Weight Unit</label>
+<div class="relative">
+<select class="w-full h-10 rounded bg-[#f0f2f5] dark:bg-[#101922] border border-[#dce0e5] dark:border-border-dark focus:border-primary focus:ring-1 focus:ring-primary px-4 text-sm text-[#111418] dark:text-white outline-none appearance-none cursor-pointer">
+<option selected="" value="lb">Pounds (lb)</option>
+<option value="kg">Kilograms (kg)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-[#9cabba] pointer-events-none" style="font-size: 20px;">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Integrations & System -->
+<section class="flex flex-col gap-4">
+<div class="border-b border-[#dce0e5] dark:border-border-dark pb-2 mt-4 flex justify-between items-end">
+<h2 class="text-[#111418] dark:text-white text-xl font-bold leading-tight">System Status &amp; Integrations</h2>
+<span class="text-xs font-mono text-[#637588] dark:text-[#9cabba]">v2.4.0-stable</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<!-- Card: Integrations -->
+<div class="bg-white dark:bg-surface-dark rounded-lg border border-[#dce0e5] dark:border-border-dark shadow-sm flex flex-col">
+<div class="p-4 border-b border-[#dce0e5] dark:border-border-dark bg-[#f0f2f5] dark:bg-[#202a34]">
+<h3 class="text-[#111418] dark:text-white font-bold text-base">Payment &amp; Shipping</h3>
+</div>
+<div class="p-2 flex flex-col">
+<!-- Item -->
+<div class="flex items-center justify-between p-3 rounded hover:bg-[#f0f2f5] dark:hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-white flex items-center justify-center border border-[#dce0e5]">
+<img alt="Stripe Logo" class="w-6 h-6 object-contain" data-alt="Stripe logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZk4f965HvbdV6LOv0brnYB7JxzrH6ZwmXbfQVZTDPwpon98fUdGhGvq35gduL6bqbLucGODC8KvElhQLFSkKpzPSQVDYRkq6jdslCIOgcvtcvLj-MjEU80zIRIsS7HzWeZj9yXBbjt4iaE_KHr-_5IgDZHgX2Gf9mGwOqKSkIZSmF5fzHszT8n2ZgFDBddmmoIDuZ1ET3teQacN3yfRA4m1DFMHzSADlXFDA2-JYrF_9xoeykqshHn4iUvr2wUVCI332YEwsUkKgi"/>
+</div>
+<div>
+<p class="text-sm font-bold text-[#111418] dark:text-white">Stripe</p>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-green-500"></div>
+<span class="text-xs text-[#637588] dark:text-[#9cabba]">Connected</span>
+</div>
+</div>
+</div>
+<button class="text-[#637588] dark:text-[#9cabba] hover:text-[#111418] dark:hover:text-white">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<!-- Item -->
+<div class="flex items-center justify-between p-3 rounded hover:bg-[#f0f2f5] dark:hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-white flex items-center justify-center border border-[#dce0e5]">
+<span class="material-symbols-outlined text-gray-800">local_shipping</span>
+</div>
+<div>
+<p class="text-sm font-bold text-[#111418] dark:text-white">ShipStation</p>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-red-500"></div>
+<span class="text-xs text-[#637588] dark:text-[#9cabba]">Connection Error</span>
+</div>
+</div>
+</div>
+<button class="text-primary text-sm font-bold">Reconnect</button>
+</div>
+<!-- Item -->
+<div class="flex items-center justify-between p-3 rounded hover:bg-[#f0f2f5] dark:hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-white flex items-center justify-center border border-[#dce0e5]">
+<span class="material-symbols-outlined text-gray-800">calculate</span>
+</div>
+<div>
+<p class="text-sm font-bold text-[#111418] dark:text-white">TaxJar</p>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-gray-500"></div>
+<span class="text-xs text-[#637588] dark:text-[#9cabba]">Not Configured</span>
+</div>
+</div>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-gray-300 appearance-none cursor-pointer" id="toggle-tax" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer" for="toggle-tax"></label>
+</div>
+<style>
+                                        .toggle-checkbox:checked {
+                                            right: 0;
+                                            border-color: #0d7ff2;
+                                        }
+                                        .toggle-checkbox:checked + .toggle-label {
+                                            background-color: #0d7ff2;
+                                        }
+                                    </style>
+</div>
+</div>
+</div>
+<!-- Card: Maintenance -->
+<div class="bg-white dark:bg-surface-dark rounded-lg border border-[#dce0e5] dark:border-border-dark shadow-sm flex flex-col">
+<div class="p-4 border-b border-[#dce0e5] dark:border-border-dark bg-[#f0f2f5] dark:bg-[#202a34]">
+<h3 class="text-[#111418] dark:text-white font-bold text-base">System Maintenance</h3>
+</div>
+<div class="p-6 flex flex-col gap-6 justify-center flex-1">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-[#111418] dark:text-white">Maintenance Mode</span>
+<span class="text-xs text-[#637588] dark:text-[#9cabba]">Disable storefront for visitors</span>
+</div>
+<!-- Toggle -->
+<div class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</div>
+</div>
+<div class="h-px bg-[#dce0e5] dark:bg-border-dark"></div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-[#111418] dark:text-white">Application Cache</span>
+<span class="text-xs text-[#637588] dark:text-[#9cabba]">Last cleared: 2h ago</span>
+</div>
+<button class="px-3 py-1.5 rounded border border-[#dce0e5] dark:border-border-dark text-xs font-bold text-[#111418] dark:text-white hover:bg-[#f0f2f5] dark:hover:bg-white/5">
+                                        Clear Cache
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Danger Zone -->
+<div class="rounded-lg border border-red-200 dark:border-red-900/30 bg-red-50 dark:bg-red-900/10 p-6 flex flex-col sm:flex-row items-center justify-between gap-4 mt-8">
+<div class="flex items-center gap-4">
+<div class="p-2 bg-red-100 dark:bg-red-900/40 rounded-full text-red-600 dark:text-red-400">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<div>
+<h4 class="text-red-900 dark:text-red-200 font-bold text-sm">Reset Configuration</h4>
+<p class="text-red-700 dark:text-red-400 text-xs mt-1">This will revert all general settings to their default factory state.</p>
+</div>
+</div>
+<button class="whitespace-nowrap px-4 py-2 bg-white dark:bg-transparent border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm font-bold rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                        Reset to Defaults
+                     </button>
+</div>
+</div>
+</div>
+<!-- Sticky Footer Action Bar -->
+<div class="sticky bottom-0 left-0 right-0 bg-white/80 dark:bg-[#101922]/90 backdrop-blur-md border-t border-[#dce0e5] dark:border-border-dark p-4 z-10">
+<div class="max-w-[1024px] mx-auto flex items-center justify-between">
+<p class="text-sm text-[#637588] dark:text-[#9cabba] hidden sm:block">
+<span class="material-symbols-outlined align-middle mr-1" style="font-size: 16px;">info</span>
+                    Unsaved changes will be lost if you leave.
+                </p>
+<div class="flex gap-3 ml-auto">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-6 bg-transparent hover:bg-black/5 dark:hover:bg-white/5 text-[#111418] dark:text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors">
+                        Discard
+                    </button>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-6 bg-primary hover:bg-blue-600 text-white text-sm font-bold leading-normal tracking-[0.015em] shadow-lg shadow-blue-500/20 transition-colors">
+                        Save Changes
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

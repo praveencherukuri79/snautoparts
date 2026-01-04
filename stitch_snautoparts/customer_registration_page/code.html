@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Registration - SN Auto Parts</title>
+<!-- Fonts and Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;family=Noto+Sans:wght@300..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d7ff2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetic in dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111418;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #283039;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b4754;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display text-white overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#283039] bg-[#111418]/90 backdrop-blur-md px-10 py-4 fixed w-full z-50">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined !text-2xl">directions_car</span>
+</div>
+<h2 class="text-white text-xl font-bold leading-tight tracking-[-0.015em] uppercase">SN Auto Parts</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8">
+<div class="flex items-center gap-9">
+<a class="text-gray-300 hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Shop</a>
+<a class="text-gray-300 hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Deals</a>
+<a class="text-gray-300 hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Support</a>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded h-9 px-4 border border-[#3b4754] bg-transparent hover:bg-[#283039] text-white text-sm font-bold leading-normal transition-colors">
+<span class="truncate">Log In</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow pt-[72px] flex items-center justify-center relative">
+<!-- Background decorative elements -->
+<div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+<div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#0d7ff2]/10 to-transparent"></div>
+<div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#111418] to-transparent"></div>
+</div>
+<div class="layout-container w-full max-w-[1280px] mx-auto px-4 py-8 md:py-12 flex flex-col md:flex-row gap-8 lg:gap-16 items-center z-10">
+<!-- Left Side: Visual / Brand Messaging -->
+<div class="hidden md:flex flex-col flex-1 gap-6 text-left">
+<div class="rounded-xl overflow-hidden relative aspect-[4/3] shadow-2xl border border-[#283039]">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
+<div class="w-full h-full bg-center bg-cover" data-alt="Close up of a modern car engine with blue lighting accents" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAMxSkhrds6Q5LwbDJK3Ia5mwalnn2cwc0CUFVnOvQmjbemufaUqiswm307aSNpoh4gqELeqvLsGc_jhDBKU9-wHV7sJOfkZDfXcazB6ti4cqRSVFFnjyhRWUsEVA2o8vCkdYqW1Ht2ovi_qXlCSzHE-W6DuSeZHjrwgdTbjafC4mfY6_REj3pSuq5ws_fA3-Yb-wyNjz6X7iPw0cdfD-55sRsRhNm-J0W8tWawIk4VDOQOurtDxC4Gc_fUvMY76g_juCCY4ufy5DUz");'>
+</div>
+<div class="absolute bottom-0 left-0 p-8 z-20">
+<div class="flex items-center gap-2 text-primary mb-2">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+<span class="text-xs font-bold uppercase tracking-wider">Trusted by 50k+ Mechanics</span>
+</div>
+<h3 class="text-3xl font-bold text-white mb-2">Build Your Dream Machine</h3>
+<p class="text-gray-300 text-sm max-w-md">Access premium parts, track your orders in real-time, and get exclusive pro-member deals when you join.</p>
+</div>
+</div>
+</div>
+<!-- Right Side: Registration Form -->
+<div class="w-full md:max-w-[480px] flex-1">
+<div class="bg-[#1b2127] border border-[#283039] rounded-xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+<!-- Top accent line -->
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+<div class="flex flex-col gap-2 mb-8 text-center md:text-left">
+<h1 class="text-3xl md:text-4xl font-black text-white tracking-tight uppercase">Start Your Engine</h1>
+<p class="text-[#9cabba] text-sm md:text-base">Create your account to get started.</p>
+</div>
+<form class="flex flex-col gap-5">
+<!-- Full Name -->
+<div class="flex flex-col gap-1.5">
+<label class="text-white text-sm font-bold tracking-wide uppercase" for="fullname">Full Name</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[#9cabba] group-focus-within:text-primary transition-colors text-[20px]">person</span>
+</div>
+<input class="form-input w-full rounded bg-[#111418] border border-[#3b4754] focus:border-primary focus:ring-1 focus:ring-primary text-white placeholder-[#546273] pl-10 pr-4 py-3 text-base transition-all" id="fullname" placeholder="John Doe" type="text"/>
+</div>
+</div>
+<!-- Email -->
+<div class="flex flex-col gap-1.5">
+<label class="text-white text-sm font-bold tracking-wide uppercase" for="email">Email Address</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[#9cabba] group-focus-within:text-primary transition-colors text-[20px]">mail</span>
+</div>
+<input class="form-input w-full rounded bg-[#111418] border border-[#3b4754] focus:border-primary focus:ring-1 focus:ring-primary text-white placeholder-[#546273] pl-10 pr-4 py-3 text-base transition-all" id="email" placeholder="john@example.com" type="email"/>
+</div>
+</div>
+<!-- Password Group -->
+<div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+<div class="flex flex-col gap-1.5">
+<label class="text-white text-sm font-bold tracking-wide uppercase" for="password">Password</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[#9cabba] group-focus-within:text-primary transition-colors text-[20px]">lock</span>
+</div>
+<input class="form-input w-full rounded bg-[#111418] border border-[#3b4754] focus:border-primary focus:ring-1 focus:ring-primary text-white placeholder-[#546273] pl-10 pr-4 py-3 text-base transition-all" id="password" placeholder="********" type="password"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-white text-sm font-bold tracking-wide uppercase" for="confirm-password">Confirm</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[#9cabba] group-focus-within:text-primary transition-colors text-[20px]">lock_reset</span>
+</div>
+<input class="form-input w-full rounded bg-[#111418] border border-[#3b4754] focus:border-primary focus:ring-1 focus:ring-primary text-white placeholder-[#546273] pl-10 pr-4 py-3 text-base transition-all" id="confirm-password" placeholder="********" type="password"/>
+</div>
+</div>
+</div>
+<!-- Checkbox -->
+<div class="flex items-start gap-3 mt-1">
+<div class="flex h-6 items-center">
+<input class="h-5 w-5 rounded border-[#3b4754] bg-[#111418] text-primary focus:ring-primary focus:ring-offset-[#1b2127]" id="newsletter" name="newsletter" type="checkbox"/>
+</div>
+<div class="text-sm leading-6">
+<label class="font-medium text-[#9cabba]" for="newsletter">Subscribe to SN Auto Parts newsletter for exclusive deals and mechanic tips.</label>
+</div>
+</div>
+<!-- Action Button -->
+<button class="mt-2 w-full flex cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-primary hover:bg-blue-600 active:bg-blue-700 text-white text-base font-bold uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(13,127,242,0.3)] hover:shadow-[0_0_30px_rgba(13,127,242,0.5)]" type="button">
+                            Create Account
+                        </button>
+</form>
+<!-- Footer / Utility -->
+<div class="mt-8 pt-6 border-t border-[#283039] text-center">
+<p class="text-[#9cabba] text-sm">
+                            Already have an account? 
+                            <a class="text-primary hover:text-white font-bold transition-colors ml-1" href="#">Log In</a>
+</p>
+<p class="text-[#546273] text-xs mt-4">
+                            By creating an account, you agree to our <a class="underline hover:text-white" href="#">Terms of Service</a> and <a class="underline hover:text-white" href="#">Privacy Policy</a>.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

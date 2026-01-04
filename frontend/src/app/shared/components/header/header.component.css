@@ -1,0 +1,5 @@
+/* Header dropdown animation */
+.group:hover .group-hover\:opacity-100 {
+  transition-delay: 100ms;
+}
+

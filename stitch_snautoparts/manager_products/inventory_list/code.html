@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Manager Inventory</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d7ff2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922",
+                        "surface-dark": "#1a222b",
+                        "border-dark": "#3b4754",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem", "sm": "4px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for dark technical vibe */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101922; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b4754; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #505f70; 
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-x-hidden antialiased">
+<div class="relative flex h-screen w-full overflow-hidden">
+<!-- SideNavBar -->
+<div class="hidden md:flex w-[260px] flex-col border-r border-border-dark bg-[#111418] shrink-0 z-20">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-6">
+<div class="flex flex-col px-2">
+<h1 class="text-white text-xl font-bold tracking-tight">SN Auto Parts</h1>
+<p class="text-[#9cabba] text-xs font-normal uppercase tracking-wider mt-1">Manager Portal</p>
+</div>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded hover:bg-[#283039] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#9cabba] group-hover:text-white">dashboard</span>
+<p class="text-[#9cabba] group-hover:text-white text-sm font-medium">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded bg-primary/20 border-l-2 border-primary" href="#">
+<span class="material-symbols-outlined text-white filled-icon">inventory_2</span>
+<p class="text-white text-sm font-medium">Inventory</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded hover:bg-[#283039] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#9cabba] group-hover:text-white">shopping_cart</span>
+<p class="text-[#9cabba] group-hover:text-white text-sm font-medium">Orders</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded hover:bg-[#283039] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#9cabba] group-hover:text-white">group</span>
+<p class="text-[#9cabba] group-hover:text-white text-sm font-medium">Customers</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded hover:bg-[#283039] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#9cabba] group-hover:text-white">analytics</span>
+<p class="text-[#9cabba] group-hover:text-white text-sm font-medium">Analytics</p>
+</a>
+</div>
+</div>
+<div class="flex flex-col gap-2 border-t border-border-dark pt-4">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded hover:bg-[#283039] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#9cabba] group-hover:text-white">settings</span>
+<p class="text-[#9cabba] group-hover:text-white text-sm font-medium">Settings</p>
+</a>
+<div class="flex items-center gap-3 px-3 py-3 mt-2 rounded bg-[#1a2027] border border-border-dark">
+<div class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-blue-800 flex items-center justify-center text-xs font-bold text-white">
+                        JD
+                    </div>
+<div class="flex flex-col">
+<p class="text-white text-xs font-bold">John Doe</p>
+<p class="text-[#9cabba] text-[10px]">Manager</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col h-full relative overflow-y-auto">
+<!-- Header Section -->
+<header class="sticky top-0 z-10 bg-[#111418]/90 backdrop-blur-md border-b border-border-dark px-6 py-4">
+<div class="flex flex-wrap justify-between items-end gap-4">
+<div class="flex flex-col gap-1">
+<h2 class="text-white text-3xl font-bold tracking-tight">Inventory Management</h2>
+<p class="text-[#9cabba] text-sm">Track stock levels, pricing, and product details across all warehouses.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded bg-[#283039] hover:bg-[#323c47] text-white text-sm font-medium transition-colors border border-border-dark">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Export CSV
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded bg-primary hover:bg-blue-600 text-white text-sm font-bold shadow-lg shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-sm">add</span>
+                        Add Product
+                    </button>
+</div>
+</div>
+</header>
+<div class="p-6 flex flex-col gap-6 max-w-[1600px] w-full mx-auto pb-20">
+<!-- Stats Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="flex flex-col gap-1 rounded p-5 bg-[#1a222b] border border-border-dark relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-white">inventory_2</span>
+</div>
+<p class="text-[#9cabba] text-xs font-semibold uppercase tracking-wider">Total SKUs</p>
+<div class="flex items-baseline gap-2 mt-1">
+<p class="text-white text-3xl font-bold">1,240</p>
+<span class="text-[#0bda5b] text-xs font-medium flex items-center bg-[#0bda5b]/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[10px] mr-0.5">trending_up</span>+5%
+                        </span>
+</div>
+</div>
+<div class="flex flex-col gap-1 rounded p-5 bg-[#1a222b] border border-border-dark relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-[#fa6238]">warning</span>
+</div>
+<p class="text-[#9cabba] text-xs font-semibold uppercase tracking-wider">Low Stock Alerts</p>
+<div class="flex items-baseline gap-2 mt-1">
+<p class="text-white text-3xl font-bold">12</p>
+<span class="text-[#fa6238] text-xs font-medium flex items-center bg-[#fa6238]/10 px-1.5 py-0.5 rounded">
+                           Needs Attention
+                        </span>
+</div>
+</div>
+<div class="flex flex-col gap-1 rounded p-5 bg-[#1a222b] border border-border-dark relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-white">block</span>
+</div>
+<p class="text-[#9cabba] text-xs font-semibold uppercase tracking-wider">Out of Stock</p>
+<div class="flex items-baseline gap-2 mt-1">
+<p class="text-white text-3xl font-bold">3</p>
+<span class="text-[#9cabba] text-xs font-medium flex items-center bg-[#283039] px-1.5 py-0.5 rounded">
+                           Stable
+                        </span>
+</div>
+</div>
+<div class="flex flex-col gap-1 rounded p-5 bg-[#1a222b] border border-border-dark relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">payments</span>
+</div>
+<p class="text-[#9cabba] text-xs font-semibold uppercase tracking-wider">Inventory Value</p>
+<div class="flex items-baseline gap-2 mt-1">
+<p class="text-white text-3xl font-bold">$450,200</p>
+<span class="text-[#0bda5b] text-xs font-medium flex items-center bg-[#0bda5b]/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[10px] mr-0.5">trending_up</span>+1.2%
+                        </span>
+</div>
+</div>
+</div>
+<!-- Toolbar & Filters -->
+<div class="flex flex-col lg:flex-row justify-between gap-4 items-center bg-[#1a222b] p-2 rounded border border-border-dark">
+<!-- Search -->
+<div class="w-full lg:w-auto lg:flex-1 max-w-xl">
+<label class="relative flex items-center w-full">
+<span class="material-symbols-outlined absolute left-3 text-[#9cabba]">search</span>
+<input class="w-full h-10 bg-[#111418] border border-border-dark rounded pl-10 pr-4 text-white text-sm placeholder-[#556372] focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all" placeholder="Search by Part Name, Brand, or SKU..." type="text"/>
+</label>
+</div>
+<!-- Filters -->
+<div class="flex items-center gap-2 w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0 no-scrollbar">
+<button class="flex items-center gap-2 h-10 px-3 rounded border border-border-dark bg-[#111418] text-[#9cabba] hover:text-white hover:border-white/20 transition-colors whitespace-nowrap text-sm font-medium">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                        Filter
+                    </button>
+<div class="h-6 w-px bg-border-dark mx-1"></div>
+<button class="flex items-center gap-1 h-10 px-3 rounded bg-[#111418] text-white border border-border-dark hover:bg-[#283039] transition-colors whitespace-nowrap text-sm font-medium">
+                        Brand
+                        <span class="material-symbols-outlined text-lg">arrow_drop_down</span>
+</button>
+<button class="flex items-center gap-1 h-10 px-3 rounded bg-[#111418] text-white border border-border-dark hover:bg-[#283039] transition-colors whitespace-nowrap text-sm font-medium">
+                        Category
+                        <span class="material-symbols-outlined text-lg">arrow_drop_down</span>
+</button>
+<button class="flex items-center gap-1 h-10 px-3 rounded bg-[#111418] text-white border border-border-dark hover:bg-[#283039] transition-colors whitespace-nowrap text-sm font-medium">
+                        Status
+                        <span class="material-symbols-outlined text-lg">arrow_drop_down</span>
+</button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-[#1a222b] rounded border border-border-dark overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#283039] border-b border-border-dark">
+<th class="py-3 px-4 w-12 text-center">
+<input class="rounded border-border-dark bg-[#111418] text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 cursor-pointer" type="checkbox"/>
+</th>
+<th class="py-3 px-4 text-[#9cabba] text-xs font-bold uppercase tracking-wider">Product Info</th>
+<th class="py-3 px-4 text-[#9cabba] text-xs font-bold uppercase tracking-wider">SKU / Part #</th>
+<th class="py-3 px-4 text-[#9cabba] text-xs font-bold uppercase tracking-wider">Brand</th>
+<th class="py-3 px-4 text-[#9cabba] text-xs font-bold uppercase tracking-wider">Category</th>
+<th class="py-3 px-4 text-[#9cabba] text-xs font-bold uppercase tracking-wider">Stock Level</th>
+<th class="py-3 px-4 text-[#9cabba] text-xs font-bold uppercase tracking-wider text-right">Price</th>
+<th class="py-3 px-4 w-16"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark">
+<!-- Row 1 -->
+<tr class="hover:bg-[#222b36] transition-colors group">
+<td class="py-4 px-4 text-center">
+<input class="rounded border-border-dark bg-[#111418] text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded bg-[#111418] border border-border-dark flex items-center justify-center overflow-hidden shrink-0">
+<img alt="Brake Pad" class="w-full h-full object-cover opacity-80" data-alt="Modern car brake disc with caliper detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfO7tIAFZreN1PEJePkx7TX-Y6Qluy3W1Bnn7uTUHTDSveUYtl6YxRT_3guekLr-siO3i9hJPV7zYbtTLKB8PmGmggjnLpMKD9gr3CM2HP689aF1dVzMwsR0F89UlqnyzXiY-k_76K266vsH8f_jOAk_u8J3BSr5ifT380n91fWxTfxZbi6wg4S2BbgJwiDkc9Yn6IIElRqDsXVtmHCgAFADzQo0rYYX2vrg5HyJZBrCDSI5AxsbJbwWXPIRpDasAymwPJ6lhZCaQi"/>
+</div>
+<div>
+<p class="text-white text-sm font-bold">Ceramic Brake Pad Set</p>
+<p class="text-[#9cabba] text-xs">Front Axle</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<code class="text-[#dbe1e8] bg-[#111418] px-1.5 py-0.5 rounded border border-border-dark text-xs font-mono">P85020</code>
+</td>
+<td class="py-4 px-4 text-sm text-white">Brembo</td>
+<td class="py-4 px-4 text-sm text-[#9cabba]">Braking System</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-[#0bda5b] shadow-[0_0_8px_rgba(11,218,91,0.5)]"></div>
+<span class="text-[#0bda5b] text-xs font-medium">45 In Stock</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right text-sm font-bold text-white">$55.00</td>
+<td class="py-4 px-4 text-right">
+<button class="text-[#9cabba] hover:text-white p-1 rounded hover:bg-[#283039] transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-[#222b36] transition-colors group">
+<td class="py-4 px-4 text-center">
+<input class="rounded border-border-dark bg-[#111418] text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded bg-[#111418] border border-border-dark flex items-center justify-center overflow-hidden shrink-0">
+<img alt="Oil Filter" class="w-full h-full object-cover opacity-80" data-alt="Automotive oil filter on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwj9UZGpDGfWGWcouW4YGktW_a6aQzAnB9s4xVRYKcCQATpdVXUEvarIJzimNZuNBg484Mj_1lohc5zMN0vuBZIvcNyTOZ7nXFXkyE0fpZocxQW2K3OsQIORuMcXsdRry5HDkkOAV6CoIWTKXCxpUrLY53JybbP-tBsv_b9WI0KPhLBPRcgZh6uIzudpFwf-pRxGYK08retyL2g4IbbcZdMxLzuyXmV1IbFjC80uuDAbEJRXsUblpm5l8bfJSnfi8oVq30poKUdkNj"/>
+</div>
+<div>
+<p class="text-white text-sm font-bold">Premium Oil Filter</p>
+<p class="text-[#9cabba] text-xs">High Efficiency</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<code class="text-[#dbe1e8] bg-[#111418] px-1.5 py-0.5 rounded border border-border-dark text-xs font-mono">OF-3323</code>
+</td>
+<td class="py-4 px-4 text-sm text-white">Bosch</td>
+<td class="py-4 px-4 text-sm text-[#9cabba]">Filters</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-[#fa6238] shadow-[0_0_8px_rgba(250,98,56,0.5)]"></div>
+<span class="text-[#fa6238] text-xs font-medium">4 Low Stock</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right text-sm font-bold text-white">$12.50</td>
+<td class="py-4 px-4 text-right">
+<button class="text-[#9cabba] hover:text-white p-1 rounded hover:bg-[#283039] transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-[#222b36] transition-colors group">
+<td class="py-4 px-4 text-center">
+<input class="rounded border-border-dark bg-[#111418] text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded bg-[#111418] border border-border-dark flex items-center justify-center overflow-hidden shrink-0">
+<img alt="Alternator" class="w-full h-full object-cover opacity-80" data-alt="Car engine alternator part close up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACBPB9DruleDWJ4BdcDxdOUquX7_SPdBOY8wHi-NABaYuSMhSDt4LG0UDO9sh6XKf8rHmSbUFRhJKLoP4DDMos2CJNyK0x-xiEZfAaIUgXx2fRsFBK4mT7AyEQWuFdVDtjQPcEIx0AZZwDGS-t5CLhJ3AhOcNUKC19UeXASm8pPjjHarsV9PGeyA5uJDKUd_cb4iSupNp_DkzNnztbiM1qrWhimFOjIwPGnD7wZhb1Bf6SpXyPVIgxOCYfqQCmsluUhWqEUtRB3SvS"/>
+</div>
+<div>
+<p class="text-white text-sm font-bold">Alternator 12V 150A</p>
+<p class="text-[#9cabba] text-xs">Heavy Duty</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<code class="text-[#dbe1e8] bg-[#111418] px-1.5 py-0.5 rounded border border-border-dark text-xs font-mono">210-0193</code>
+</td>
+<td class="py-4 px-4 text-sm text-white">Denso</td>
+<td class="py-4 px-4 text-sm text-[#9cabba]">Electrical</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.5)]"></div>
+<span class="text-yellow-500 text-xs font-medium">12 Warning</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right text-sm font-bold text-white">$185.99</td>
+<td class="py-4 px-4 text-right">
+<button class="text-[#9cabba] hover:text-white p-1 rounded hover:bg-[#283039] transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-[#222b36] transition-colors group">
+<td class="py-4 px-4 text-center">
+<input class="rounded border-border-dark bg-[#111418] text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded bg-[#111418] border border-border-dark flex items-center justify-center overflow-hidden shrink-0">
+<img alt="Spark Plug" class="w-full h-full object-cover opacity-80" data-alt="Spark plug close up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWMfduRptNVnxxXtq16-86pP6ywLIRyg0K1k4vmw9AQQKt83eT_zWTHxs5I5GnwfA1KGWOL8GsrreRbz7XD7WUEwd8NFSQ6qQRp_l8KMeu9EEL7T684ph-w0avXb10GhCms6rV9BcR-VYtmfBwVeGwUS3j5JUVaF0yPSUJImm_sGAk8etGpxRsCVs0IIuN4vJgmyYaUv01dg3T43G17lyM8p811fwjExCWDOLPCXziLsSV7cayf_M_g1cjjs11yUm6B_Z7T1PvHMYD"/>
+</div>
+<div>
+<p class="text-white text-sm font-bold">Iridium Spark Plug</p>
+<p class="text-[#9cabba] text-xs">Laser Platinum</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<code class="text-[#dbe1e8] bg-[#111418] px-1.5 py-0.5 rounded border border-border-dark text-xs font-mono">ILZKR7B</code>
+</td>
+<td class="py-4 px-4 text-sm text-white">NGK</td>
+<td class="py-4 px-4 text-sm text-[#9cabba]">Ignition</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-[#0bda5b] shadow-[0_0_8px_rgba(11,218,91,0.5)]"></div>
+<span class="text-[#0bda5b] text-xs font-medium">150 In Stock</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right text-sm font-bold text-white">$14.25</td>
+<td class="py-4 px-4 text-right">
+<button class="text-[#9cabba] hover:text-white p-1 rounded hover:bg-[#283039] transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-[#222b36] transition-colors group">
+<td class="py-4 px-4 text-center">
+<input class="rounded border-border-dark bg-[#111418] text-primary focus:ring-0 focus:ring-offset-0 h-4 w-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded bg-[#111418] border border-border-dark flex items-center justify-center overflow-hidden shrink-0">
+<div class="flex items-center justify-center h-full w-full bg-[#283039]">
+<span class="material-symbols-outlined text-[#556372]">no_photography</span>
+</div>
+</div>
+<div>
+<p class="text-white text-sm font-bold">Air Filter Replacement</p>
+<p class="text-[#9cabba] text-xs">High Flow</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<code class="text-[#dbe1e8] bg-[#111418] px-1.5 py-0.5 rounded border border-border-dark text-xs font-mono">33-2129</code>
+</td>
+<td class="py-4 px-4 text-sm text-white">K&amp;N</td>
+<td class="py-4 px-4 text-sm text-[#9cabba]">Filters</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-[#9cabba]"></div>
+<span class="text-[#9cabba] text-xs font-medium">0 Out of Stock</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right text-sm font-bold text-white">$52.99</td>
+<td class="py-4 px-4 text-right">
+<button class="text-[#9cabba] hover:text-white p-1 rounded hover:bg-[#283039] transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex flex-col sm:flex-row items-center justify-between p-4 border-t border-border-dark bg-[#1a222b] gap-4">
+<p class="text-sm text-[#9cabba]">
+                        Showing <span class="font-bold text-white">1</span> to <span class="font-bold text-white">5</span> of <span class="font-bold text-white">1,240</span> results
+                    </p>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded border border-border-dark bg-[#111418] text-[#9cabba] hover:text-white hover:bg-[#283039] disabled:opacity-50 text-sm font-medium transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">chevron_left</span> Previous
+                        </button>
+<button class="px-3 py-1.5 rounded border border-primary bg-primary text-white text-sm font-medium transition-colors">1</button>
+<button class="px-3 py-1.5 rounded border border-border-dark bg-[#111418] text-[#9cabba] hover:text-white hover:bg-[#283039] text-sm font-medium transition-colors">2</button>
+<button class="px-3 py-1.5 rounded border border-border-dark bg-[#111418] text-[#9cabba] hover:text-white hover:bg-[#283039] text-sm font-medium transition-colors">3</button>
+<span class="text-[#9cabba] flex items-end px-1">...</span>
+<button class="px-3 py-1.5 rounded border border-border-dark bg-[#111418] text-[#9cabba] hover:text-white hover:bg-[#283039] text-sm font-medium transition-colors flex items-center gap-1">
+                            Next <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

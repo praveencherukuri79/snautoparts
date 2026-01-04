@@ -1,0 +1,5 @@
+/* Product card styles */
+:host {
+  display: block;
+}
+

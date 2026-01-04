@@ -1,0 +1,189 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+        {{ content.admin.users.title }}
+      </h1>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        Manage access and permissions for SN Auto Parts staff
+      </p>
+    </div>
+    <div class="flex gap-3">
+      <a routerLink="/admin/audit" class="btn btn-secondary btn-md">
+        <app-icon name="history" [size]="18"></app-icon>
+        View Audit Log
+      </a>
+      <button (click)="openAddUserModal()" type="button" class="btn btn-primary btn-md">
+        <app-icon name="person_add" [size]="18"></app-icon>
+        {{ content.admin.users.addUser }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+    <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+      <!-- Search -->
+      <div class="relative w-full md:w-96">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <app-icon name="search" [size]="20" class="text-gray-400"></app-icon>
+        </div>
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          (input)="onSearchChange()"
+          placeholder="Search by name, email..."
+          class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
+        >
+      </div>
+      <!-- Filter Dropdowns -->
+      <div class="flex items-center gap-3 w-full md:w-auto">
+        <select
+          [(ngModel)]="roleFilter"
+          (change)="applyFilters()"
+          class="w-full md:w-auto px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-primary focus:border-primary">
+          <option value="">All Roles</option>
+          @for (role of roleOptions; track role) {
+            <option [value]="role">{{ role }}</option>
+          }
+        </select>
+        <select
+          [(ngModel)]="statusFilter"
+          (change)="applyFilters()"
+          class="w-full md:w-auto px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-primary focus:border-primary">
+          <option value="">Any Status</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Table -->
+  <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
+    @if (loading()) {
+      <app-loading-spinner [height]="300"></app-loading-spinner>
+    } @else {
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead class="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
+            <tr>
+              <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                User
+              </th>
+              <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                {{ content.admin.users.role }}
+              </th>
+              <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                Status
+              </th>
+              <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                Joined
+              </th>
+              <th class="px-6 py-4 text-right text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                {{ content.admin.users.actions }}
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+            @for (user of filteredUsers(); track user.id) {
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm"
+                         [class]="getAvatarClass(user)">
+                      {{ getInitials(user) }}
+                    </div>
+                    <div>
+                      <p class="font-medium text-gray-900 dark:text-white">
+                        {{ user.firstName }} {{ user.lastName }}
+                      </p>
+                      <p class="text-sm text-gray-500 dark:text-gray-400">{{ user.email }}</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <span [class]="getRoleBadgeClass(user.role)" 
+                        class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-semibold">
+                    <app-icon [name]="getRoleIcon(user.role)" [size]="14"></app-icon>
+                    {{ user.role }}
+                  </span>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-2">
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Active</span>
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+                  {{ user.createdAt | date:'MMM d, y' }}
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <div class="relative inline-block" #menuContainer>
+                    <button 
+                      (click)="toggleActionMenu(user.id)"
+                      type="button" 
+                      class="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white transition-colors">
+                      <app-icon name="more_vert" [size]="20"></app-icon>
+                    </button>
+                    @if (activeMenuUserId === user.id) {
+                      <div class="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20 py-1">
+                        <button 
+                          (click)="editUser(user)"
+                          type="button"
+                          class="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+                          <app-icon name="edit" [size]="16"></app-icon>
+                          Edit User
+                        </button>
+                        <button 
+                          (click)="changeRole(user)"
+                          type="button"
+                          class="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+                          <app-icon name="swap_horiz" [size]="16"></app-icon>
+                          Change Role
+                        </button>
+                        <hr class="my-1 border-gray-200 dark:border-gray-700">
+                        <button 
+                          (click)="disableUser(user)"
+                          type="button"
+                          class="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">
+                          <app-icon name="block" [size]="16"></app-icon>
+                          Disable Account
+                        </button>
+                      </div>
+                    }
+                  </div>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5" class="px-6 py-12 text-center">
+                  <app-icon name="person_search" [size]="48" class="text-gray-300 dark:text-gray-600 mb-3"></app-icon>
+                  <p class="text-gray-500 dark:text-gray-400">No users found matching your criteria</p>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <!-- Pagination -->
+      @if (filteredUsers().length > 0) {
+        <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            Showing <span class="font-medium text-gray-900 dark:text-white">{{ filteredUsers().length }}</span> of 
+            <span class="font-medium text-gray-900 dark:text-white">{{ users().length }}</span> users
+          </p>
+          <div class="flex gap-2">
+            <button class="px-3 py-1.5 rounded border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50" disabled>
+              Previous
+            </button>
+            <button class="px-3 py-1.5 rounded border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
+              Next
+            </button>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>

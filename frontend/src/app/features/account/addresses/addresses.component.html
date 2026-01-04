@@ -1,0 +1,256 @@
+<app-header></app-header>
+
+<main class="flex-1 bg-background-light dark:bg-background-dark">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-8">
+      {{ content.account.title }}
+    </h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <!-- Sidebar -->
+      <aside class="lg:col-span-1">
+        <nav class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <a routerLink="/account" 
+             class="flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
+            <app-icon name="person" [size]="20"></app-icon>
+            {{ content.account.profile.title }}
+          </a>
+          <a routerLink="/account/addresses" routerLinkActive="bg-blue-50 dark:bg-blue-900/20 text-primary border-l-4 border-primary"
+             class="flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
+            <app-icon name="location_on" [size]="20"></app-icon>
+            {{ content.account.addresses.title }}
+          </a>
+          <a routerLink="/orders" 
+             class="flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
+            <app-icon name="receipt_long" [size]="20"></app-icon>
+            {{ content.account.orders.title }}
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="lg:col-span-3">
+        <div class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+              {{ content.account.addresses.title }}
+            </h2>
+            <button (click)="openAddModal()" type="button" class="btn btn-primary btn-sm">
+              <app-icon name="add" [size]="18"></app-icon>
+              {{ content.account.addresses.add }}
+            </button>
+          </div>
+
+          @if (loading()) {
+            <app-loading-spinner [height]="200"></app-loading-spinner>
+          } @else if (addresses().length === 0) {
+            <div class="text-center py-12">
+              <app-icon name="location_off" [size]="48" class="text-gray-300 mb-4"></app-icon>
+              <p class="text-gray-500 mb-4">No saved addresses yet.</p>
+              <button (click)="openAddModal()" type="button" class="btn btn-primary btn-md">
+                <app-icon name="add_location" [size]="18"></app-icon>
+                Add New Address
+              </button>
+            </div>
+          } @else {
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              @for (address of addresses(); track address.id) {
+                <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-xl hover:border-primary/50 transition-colors">
+                  <div class="flex items-start justify-between">
+                    <div class="flex items-start gap-4">
+                      <div class="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-500">
+                        <app-icon name="home" [size]="20"></app-icon>
+                      </div>
+                      <div>
+                        <p class="font-medium text-gray-900 dark:text-white">
+                          {{ address.firstName }} {{ address.lastName }}
+                        </p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          {{ address.street }}
+                          @if (address.apartment) {
+                            , {{ address.apartment }}
+                          }
+                        </p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                          {{ address.city }}, {{ address.state }} {{ address.zipCode }}
+                        </p>
+                        @if (address.phone) {
+                          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ address.phone }}</p>
+                        }
+                      </div>
+                    </div>
+                    @if (address.isDefault) {
+                      <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">
+                        <app-icon name="check_circle" [size]="12"></app-icon>
+                        Default
+                      </span>
+                    }
+                  </div>
+                  <div class="flex items-center gap-4 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <button (click)="openEditModal(address)" type="button" class="text-sm font-medium text-primary hover:underline">
+                      {{ content.account.addresses.edit }}
+                    </button>
+                    @if (!address.isDefault) {
+                      <button (click)="setAsDefault(address)" type="button" class="text-sm font-medium text-gray-500 hover:text-primary">
+                        {{ content.account.addresses.setDefault }}
+                      </button>
+                    }
+                    <button (click)="deleteAddress(address.id)" type="button" class="text-sm font-medium text-red-500 hover:underline">
+                      {{ content.account.addresses.delete }}
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<app-footer></app-footer>
+
+<!-- Address Modal -->
+@if (modalOpen()) {
+  <div class="fixed inset-0 z-50 overflow-y-auto">
+    <div class="flex min-h-full items-center justify-center p-4">
+      <!-- Backdrop -->
+      <div (click)="closeModal()" class="fixed inset-0 bg-black/50 backdrop-blur-sm"></div>
+      
+      <!-- Modal -->
+      <div class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-lg">
+        <!-- Header -->
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          <h2 class="text-lg font-bold text-gray-900 dark:text-white">
+            {{ editingAddress() ? 'Edit Address' : 'Add New Address' }}
+          </h2>
+          <button (click)="closeModal()" type="button" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+            <app-icon name="close" [size]="24"></app-icon>
+          </button>
+        </div>
+        
+        <!-- Form -->
+        <form [formGroup]="addressForm" (ngSubmit)="saveAddress()" class="p-6 space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">First Name</label>
+              <input 
+                type="text"
+                formControlName="firstName"
+                class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Last Name</label>
+              <input 
+                type="text"
+                formControlName="lastName"
+                class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+              >
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Street Address</label>
+            <input 
+              type="text"
+              formControlName="street"
+              placeholder="123 Main Street"
+              class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+            >
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Apartment, Suite, etc. (Optional)</label>
+            <input 
+              type="text"
+              formControlName="apartment"
+              placeholder="Apt 4B"
+              class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+            >
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">City</label>
+              <input 
+                type="text"
+                formControlName="city"
+                class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">State</label>
+              <input 
+                type="text"
+                formControlName="state"
+                class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+              >
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">ZIP Code</label>
+              <input 
+                type="text"
+                formControlName="zipCode"
+                class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Country</label>
+              <input 
+                type="text"
+                formControlName="country"
+                class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+              >
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone (Optional)</label>
+            <input 
+              type="tel"
+              formControlName="phone"
+              placeholder="+1 (555) 123-4567"
+              class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+            >
+          </div>
+          
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input 
+              type="checkbox"
+              formControlName="isDefault"
+              class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+            >
+            <span class="text-sm text-gray-700 dark:text-gray-300">Set as default shipping address</span>
+          </label>
+        </form>
+        
+        <!-- Actions -->
+        <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex gap-3">
+          <button 
+            (click)="closeModal()"
+            type="button"
+            class="flex-1 h-11 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            Cancel
+          </button>
+          <button 
+            (click)="saveAddress()"
+            type="button"
+            [disabled]="!addressForm.valid || saving()"
+            class="flex-1 h-11 rounded-lg bg-primary hover:bg-blue-600 text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+            @if (saving()) {
+              <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            } @else {
+              <app-icon name="save" [size]="18"></app-icon>
+            }
+            {{ editingAddress() ? 'Update Address' : 'Save Address' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Product Listing</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetics in sidebar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111418] antialiased min-h-screen flex flex-col">
+<!-- Header -->
+<header class="bg-white border-b border-[#f0f2f4] sticky top-0 z-50">
+<div class="max-w-[1440px] mx-auto px-4 lg:px-8">
+<div class="flex items-center justify-between h-[72px] gap-4">
+<!-- Logo -->
+<a class="flex items-center gap-3 text-[#111418] shrink-0" href="#">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-[32px]">local_car_wash</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">SN Auto Parts</h2>
+</a>
+<!-- Search Bar (Hidden on mobile, visible on desktop) -->
+<div class="hidden md:flex flex-1 max-w-xl mx-8">
+<label class="relative flex w-full items-stretch h-10">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[#617589]">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="block w-full rounded-l-lg border-0 bg-[#f0f2f4] py-1.5 pl-10 pr-3 text-[#111418] ring-0 placeholder:text-[#617589] focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" placeholder="Search by part name, number, or vehicle" type="text"/>
+<button class="bg-primary hover:bg-primary/90 text-white font-bold px-6 rounded-r-lg text-sm transition-colors">
+                            Search
+                        </button>
+</label>
+</div>
+<!-- Navigation Actions -->
+<div class="flex items-center gap-2 sm:gap-4 shrink-0">
+<button class="hidden sm:flex items-center justify-center h-10 px-4 bg-[#f0f2f4] hover:bg-[#e2e4e7] rounded-lg text-[#111418] text-sm font-bold transition-colors">
+                        Sign In
+                    </button>
+<button class="flex items-center justify-center size-10 rounded-lg hover:bg-[#f0f2f4] text-[#111418] transition-colors relative">
+<span class="material-symbols-outlined">person</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-lg hover:bg-[#f0f2f4] text-[#111418] transition-colors relative">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500 ring-2 ring-white"></span>
+</button>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden flex items-center justify-center size-10 rounded-lg hover:bg-[#f0f2f4] text-[#111418]">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+<!-- Secondary Nav -->
+<nav class="hidden md:flex items-center gap-8 py-3 overflow-x-auto text-sm font-medium text-[#111418]">
+<a class="hover:text-primary whitespace-nowrap" href="#">Brakes</a>
+<a class="hover:text-primary whitespace-nowrap" href="#">Engine</a>
+<a class="hover:text-primary whitespace-nowrap" href="#">Suspension</a>
+<a class="hover:text-primary whitespace-nowrap" href="#">Exhaust</a>
+<a class="hover:text-primary whitespace-nowrap" href="#">Accessories</a>
+<a class="hover:text-primary whitespace-nowrap" href="#">Tools &amp; Equipment</a>
+<a class="hover:text-primary whitespace-nowrap text-red-600" href="#">Deals</a>
+</nav>
+</div>
+</header>
+<!-- Main Content Wrapper -->
+<main class="flex-1 max-w-[1440px] w-full mx-auto px-4 lg:px-8 py-6">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 mb-6 text-sm">
+<a class="text-[#617589] hover:text-primary font-medium" href="#">Home</a>
+<span class="text-[#617589]">/</span>
+<a class="text-[#617589] hover:text-primary font-medium" href="#">Brakes</a>
+<span class="text-[#617589]">/</span>
+<span class="text-[#111418] font-semibold">Rotors</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Sidebar (Filters) -->
+<aside class="hidden lg:flex lg:col-span-3 flex-col gap-6 sticky top-28">
+<!-- Garage Widget -->
+<div class="bg-white border border-primary/20 rounded-xl overflow-hidden shadow-sm">
+<div class="bg-primary/5 p-4 border-b border-primary/10">
+<div class="flex items-center gap-3 mb-2">
+<div class="size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">directions_car</span>
+</div>
+<h3 class="font-bold text-lg text-[#111418]">My Garage</h3>
+</div>
+<p class="text-sm text-[#111418] font-medium">2018 Ford F-150</p>
+<p class="text-xs text-[#617589] mt-0.5">XLT 3.5L V6 EcoBoost 4WD</p>
+</div>
+<div class="p-3 bg-white">
+<div class="flex items-center gap-2 text-green-700 text-xs font-bold bg-green-50 p-2 rounded border border-green-100 mb-3">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>Fitting parts shown</span>
+</div>
+<button class="w-full h-9 flex items-center justify-center rounded-lg border border-[#dbe0e6] bg-white hover:bg-gray-50 text-[#111418] text-sm font-bold transition-colors">
+                            Change Vehicle
+                        </button>
+</div>
+</div>
+<!-- Filters -->
+<div class="flex flex-col gap-6">
+<!-- Category Filter -->
+<div class="flex flex-col gap-3">
+<h4 class="font-bold text-[#111418]">Category</h4>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-[#111418] group-hover:text-primary">Brake Rotors (142)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-[#111418] group-hover:text-primary">Brake Pads (89)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-[#111418] group-hover:text-primary">Calipers (45)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-[#111418] group-hover:text-primary">Hardware Kits (22)</span>
+</label>
+</div>
+</div>
+<div class="h-px bg-[#f0f2f4]"></div>
+<!-- Price Filter -->
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<h4 class="font-bold text-[#111418]">Price Range</h4>
+</div>
+<div class="flex h-[38px] w-full pt-1.5 px-2">
+<div class="relative flex h-1 w-full rounded-sm bg-[#dbe0e6] mt-4">
+<div class="absolute left-[10%] right-[30%] h-1 rounded-sm bg-[#111418]"></div>
+<!-- Left Thumb -->
+<div class="absolute left-[10%] -top-1.5 -ml-1.5 cursor-pointer">
+<div class="size-4 rounded-full bg-white border-2 border-[#111418] shadow-sm hover:scale-110 transition-transform"></div>
+<span class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-[#111418]">$45</span>
+</div>
+<!-- Right Thumb -->
+<div class="absolute right-[30%] -top-1.5 -mr-1.5 cursor-pointer">
+<div class="size-4 rounded-full bg-white border-2 border-[#111418] shadow-sm hover:scale-110 transition-transform"></div>
+<span class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-[#111418]">$120</span>
+</div>
+</div>
+</div>
+<div class="flex gap-2 mt-2">
+<div class="relative w-full">
+<span class="absolute left-2 top-2 text-xs text-gray-500">$</span>
+<input class="w-full pl-5 pr-2 py-1.5 text-sm border border-gray-300 rounded focus:ring-primary focus:border-primary" type="number" value="45"/>
+</div>
+<span class="self-center text-gray-400">-</span>
+<div class="relative w-full">
+<span class="absolute left-2 top-2 text-xs text-gray-500">$</span>
+<input class="w-full pl-5 pr-2 py-1.5 text-sm border border-gray-300 rounded focus:ring-primary focus:border-primary" type="number" value="120"/>
+</div>
+</div>
+</div>
+<div class="h-px bg-[#f0f2f4]"></div>
+<!-- Brand Filter -->
+<div class="flex flex-col gap-3">
+<h4 class="font-bold text-[#111418]">Brand</h4>
+<div class="flex flex-col gap-2 max-h-48 overflow-y-auto pr-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-[#111418] group-hover:text-primary">Brembo (12)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-[#111418] group-hover:text-primary">Bosch (8)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-[#111418] group-hover:text-primary">Wagner (15)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-[#111418] group-hover:text-primary">ACDelco (20)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-[#111418] group-hover:text-primary">Power Stop (5)</span>
+</label>
+</div>
+</div>
+<div class="h-px bg-[#f0f2f4]"></div>
+<!-- Availability Filter -->
+<div class="flex flex-col gap-3">
+<h4 class="font-bold text-[#111418]">Availability</h4>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-[#111418] group-hover:text-primary">In Stock (120)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-[#111418] group-hover:text-primary">Ship to Home (142)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-[#111418] group-hover:text-primary">Pick up in Store (84)</span>
+</label>
+</div>
+</div>
+</div>
+</aside>
+<!-- Product Grid Area -->
+<div class="col-span-1 lg:col-span-9 flex flex-col gap-6">
+<!-- Results Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#f0f2f4]">
+<div>
+<h1 class="text-2xl font-bold tracking-tight text-[#111418]">Brake Rotors</h1>
+<p class="text-sm text-[#617589]">Showing 142 results for 2018 Ford F-150</p>
+</div>
+<div class="flex items-center gap-3 self-end sm:self-auto">
+<span class="text-sm font-medium text-[#617589]">Sort by:</span>
+<div class="relative">
+<select class="block w-full rounded-lg border-gray-200 bg-white py-2 pl-3 pr-10 text-sm font-medium text-[#111418] focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm">
+<option>Best Selling</option>
+<option>Price: Low to High</option>
+<option>Price: High to Low</option>
+<option>Highest Rated</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Active Filters (Chips) -->
+<div class="flex flex-wrap gap-2">
+<button class="inline-flex items-center gap-1.5 rounded-full bg-white border border-[#dbe0e6] px-3 py-1 text-xs font-bold text-[#111418] hover:bg-gray-50">
+                        Price: $45 - $120
+                        <span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+<button class="inline-flex items-center gap-1.5 rounded-full bg-white border border-[#dbe0e6] px-3 py-1 text-xs font-bold text-[#111418] hover:bg-gray-50">
+                        Brand: Brembo
+                        <span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+<button class="text-xs font-medium text-primary hover:underline ml-2">Clear All</button>
+</div>
+<!-- The Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Product Card 1 -->
+<div class="group relative flex flex-col bg-white rounded-xl border border-[#e5e7eb] hover:border-[#b0b3b8] hover:shadow-lg transition-all duration-200 overflow-hidden">
+<!-- Image Container -->
+<div class="relative aspect-square w-full bg-[#f8f9fa] p-6 flex items-center justify-center">
+<div class="absolute top-3 left-3 z-10">
+<span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-bold text-green-700 ring-1 ring-inset ring-green-600/20">In Stock</span>
+</div>
+<img alt="Brake Rotor" class="object-contain w-full h-full mix-blend-multiply group-hover:scale-105 transition-transform duration-300" data-alt="Silver metal brake rotor car part" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFGOr8CHqrP-GZG7d3jVxde5ngdSQmzMqReXw3PWlnb4VdpXyEiRhzHhf5QXZ7yIIn5eTVASzIvS9YlkiQwbLYZ4kFUxPBKZX1zFQHxhPSJNEGa3IEFt-MQn8AJHqKiuRhWYz-OCaxxzCl4xUIeGIvnlZqZEOtv_RUQk94QPV-DQdFIp2PNLhUNGd_pWztzdQJWUSVCwu1EeJo6KxTBjofuucJqFBRXgT9-2qEynU3v0gRmWeqVEnW9BGHz5KNPr2DXM-LOh5hzAnK"/>
+</div>
+<!-- Content -->
+<div class="flex flex-col flex-1 p-4">
+<div class="flex items-start justify-between gap-2 mb-1">
+<p class="text-xs font-medium text-[#617589]">Brembo</p>
+<div class="flex items-center text-green-700 text-[10px] font-bold gap-0.5">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>FITS</span>
+</div>
+</div>
+<h3 class="text-base font-bold text-[#111418] leading-tight mb-1 group-hover:text-primary transition-colors line-clamp-2">
+                                Premium UV Coated Front Disc Brake Rotor
+                            </h3>
+<p class="text-xs text-[#617589] mb-4">Part #: 09.A448.11</p>
+<div class="mt-auto flex items-end justify-between gap-2">
+<div class="flex flex-col">
+<span class="text-xl font-bold text-[#111418]">$89.99</span>
+<span class="text-[10px] text-[#617589] line-through">$110.00</span>
+</div>
+<button class="rounded-lg bg-primary hover:bg-blue-600 text-white px-4 py-2 text-sm font-bold shadow-sm transition-colors flex items-center gap-2">
+                                    Add <span class="hidden sm:inline">to Cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group relative flex flex-col bg-white rounded-xl border border-[#e5e7eb] hover:border-[#b0b3b8] hover:shadow-lg transition-all duration-200 overflow-hidden">
+<div class="relative aspect-square w-full bg-[#f8f9fa] p-6 flex items-center justify-center">
+<div class="absolute top-3 left-3 z-10">
+<span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-bold text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Low Stock</span>
+</div>
+<!-- Using a placeholder gradient pattern for automotive part feel -->
+<div class="w-full h-full bg-gradient-to-tr from-gray-200 to-gray-100 rounded-full shadow-inner flex items-center justify-center" data-alt="Abstract metallic circular car part">
+<span class="material-symbols-outlined text-gray-400 text-6xl">settings</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 p-4">
+<div class="flex items-start justify-between gap-2 mb-1">
+<p class="text-xs font-medium text-[#617589]">Bosch</p>
+<div class="flex items-center text-green-700 text-[10px] font-bold gap-0.5">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>FITS</span>
+</div>
+</div>
+<h3 class="text-base font-bold text-[#111418] leading-tight mb-1 group-hover:text-primary transition-colors line-clamp-2">
+                                QuietCast Premium Disc Brake Rotor
+                            </h3>
+<p class="text-xs text-[#617589] mb-4">Part #: 20010378</p>
+<div class="mt-auto flex items-end justify-between gap-2">
+<div class="flex flex-col">
+<span class="text-xl font-bold text-[#111418]">$72.50</span>
+</div>
+<button class="rounded-lg bg-primary hover:bg-blue-600 text-white px-4 py-2 text-sm font-bold shadow-sm transition-colors flex items-center gap-2">
+                                    Add <span class="hidden sm:inline">to Cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group relative flex flex-col bg-white rounded-xl border border-[#e5e7eb] hover:border-[#b0b3b8] hover:shadow-lg transition-all duration-200 overflow-hidden">
+<div class="relative aspect-square w-full bg-[#f8f9fa] p-6 flex items-center justify-center">
+<div class="absolute top-3 left-3 z-10">
+<span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-bold text-green-700 ring-1 ring-inset ring-green-600/20">In Stock</span>
+</div>
+<img alt="Brake Kit" class="object-contain w-full h-full mix-blend-multiply group-hover:scale-105 transition-transform duration-300" data-alt="Close up of mechanical car parts gears" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIWdXBpB3U4wKLV4n9TcbPnHYzMx_fZ_VLq1PLQ5gHjEq44CBJ1u6aBqo77RoEPsgS5Vzx89c0AsJvWpDeagl0Vt8jzwAQA0LcQWkC_KFKMFXtFEX_Mkg64c_MeBn61LadehlgrmWsytiO0k06E-gFOsmJmW4cTXHPHXzSPs--DJTVOKDX5FG3j4ZQDqKqpvN9kZbwSvQ0nly3HIb7PFs33jWxmg5JHjaGhQK5XVB4gJufuRzS894VHSk5jCO0RajUnF_YxtxKIpSn"/>
+</div>
+<div class="flex flex-col flex-1 p-4">
+<div class="flex items-start justify-between gap-2 mb-1">
+<p class="text-xs font-medium text-[#617589]">Power Stop</p>
+<div class="flex items-center text-green-700 text-[10px] font-bold gap-0.5">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>FITS</span>
+</div>
+</div>
+<h3 class="text-base font-bold text-[#111418] leading-tight mb-1 group-hover:text-primary transition-colors line-clamp-2">
+                                Z36 Truck &amp; Tow Performance Brake Kit
+                            </h3>
+<p class="text-xs text-[#617589] mb-4">Part #: K6268-36</p>
+<div class="mt-auto flex items-end justify-between gap-2">
+<div class="flex flex-col">
+<span class="text-xl font-bold text-[#111418]">$349.99</span>
+</div>
+<button class="rounded-lg bg-primary hover:bg-blue-600 text-white px-4 py-2 text-sm font-bold shadow-sm transition-colors flex items-center gap-2">
+                                    Add <span class="hidden sm:inline">to Cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group relative flex flex-col bg-white rounded-xl border border-[#e5e7eb] hover:border-[#b0b3b8] hover:shadow-lg transition-all duration-200 overflow-hidden">
+<div class="relative aspect-square w-full bg-[#f8f9fa] p-6 flex items-center justify-center">
+<div class="w-full h-full bg-gradient-to-br from-gray-100 to-slate-200 rounded-lg flex items-center justify-center" data-alt="Generic brake rotor illustration">
+<span class="material-symbols-outlined text-slate-300 text-6xl">tire_repair</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 p-4">
+<div class="flex items-start justify-between gap-2 mb-1">
+<p class="text-xs font-medium text-[#617589]">Duralast</p>
+<div class="flex items-center text-gray-400 text-[10px] font-bold gap-0.5" title="Universal Fit">
+<span class="material-symbols-outlined text-[14px]">info</span>
+<span>UNIVERSAL</span>
+</div>
+</div>
+<h3 class="text-base font-bold text-[#111418] leading-tight mb-1 group-hover:text-primary transition-colors line-clamp-2">
+                                Gold C-Max Brake Pads - Ceramic
+                            </h3>
+<p class="text-xs text-[#617589] mb-4">Part #: DGC1083</p>
+<div class="mt-auto flex items-end justify-between gap-2">
+<div class="flex flex-col">
+<span class="text-xl font-bold text-[#111418]">$54.99</span>
+</div>
+<button class="rounded-lg bg-primary hover:bg-blue-600 text-white px-4 py-2 text-sm font-bold shadow-sm transition-colors flex items-center gap-2">
+                                    Add <span class="hidden sm:inline">to Cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="group relative flex flex-col bg-white rounded-xl border border-[#e5e7eb] hover:border-[#b0b3b8] hover:shadow-lg transition-all duration-200 overflow-hidden">
+<div class="relative aspect-square w-full bg-[#f8f9fa] p-6 flex items-center justify-center">
+<div class="absolute top-3 left-3 z-10">
+<span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-bold text-green-700 ring-1 ring-inset ring-green-600/20">In Stock</span>
+</div>
+<img alt="Brake Disc" class="object-contain w-full h-full mix-blend-multiply group-hover:scale-105 transition-transform duration-300" data-alt="Metallic brake disc isolated" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYYNtmYyWjgsq_C9XO9okLWZaVCAjrHs06UKQmZSNSgXE1Hpe8TmZPBpdwe-FapGq6DYXgFfbPvzG3mzKFO89rAzvUJtRYgQVOOpTKtOPyrXzmlMgzQLd2ANj3w1lbN8SmVFc-uxXumAtjpLPuX84bzaJmAk7KkTcg9nQAWQwrnf8iU1HpiFuyRj7xyMs70-dSbBWGgvoDucGWD5vabqr5mi6b6GSn0UtnvMy_3cX_XzSTQLFlFyy9tKJAo0vInaM2EQqat3e9McqG"/>
+</div>
+<div class="flex flex-col flex-1 p-4">
+<div class="flex items-start justify-between gap-2 mb-1">
+<p class="text-xs font-medium text-[#617589]">ACDelco</p>
+<div class="flex items-center text-green-700 text-[10px] font-bold gap-0.5">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>FITS</span>
+</div>
+</div>
+<h3 class="text-base font-bold text-[#111418] leading-tight mb-1 group-hover:text-primary transition-colors line-clamp-2">
+                                GM Original Equipment Front Brake Rotor
+                            </h3>
+<p class="text-xs text-[#617589] mb-4">Part #: 177-1051</p>
+<div class="mt-auto flex items-end justify-between gap-2">
+<div class="flex flex-col">
+<span class="text-xl font-bold text-[#111418]">$94.50</span>
+</div>
+<button class="rounded-lg bg-primary hover:bg-blue-600 text-white px-4 py-2 text-sm font-bold shadow-sm transition-colors flex items-center gap-2">
+                                    Add <span class="hidden sm:inline">to Cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="group relative flex flex-col bg-white rounded-xl border border-[#e5e7eb] hover:border-[#b0b3b8] hover:shadow-lg transition-all duration-200 overflow-hidden">
+<div class="relative aspect-square w-full bg-[#f8f9fa] p-6 flex items-center justify-center">
+<div class="w-full h-full bg-gradient-to-tr from-gray-300 to-gray-200 rounded-full flex items-center justify-center" data-alt="Abstract metallic texture for car part">
+<span class="material-symbols-outlined text-gray-500 text-6xl">build</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 p-4">
+<div class="flex items-start justify-between gap-2 mb-1">
+<p class="text-xs font-medium text-[#617589]">Wagner</p>
+<div class="flex items-center text-green-700 text-[10px] font-bold gap-0.5">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>FITS</span>
+</div>
+</div>
+<h3 class="text-base font-bold text-[#111418] leading-tight mb-1 group-hover:text-primary transition-colors line-clamp-2">
+                                E-Coated Brake Rotor
+                            </h3>
+<p class="text-xs text-[#617589] mb-4">Part #: BD126090E</p>
+<div class="mt-auto flex items-end justify-between gap-2">
+<div class="flex flex-col">
+<span class="text-xl font-bold text-[#111418]">$58.99</span>
+</div>
+<button class="rounded-lg bg-primary hover:bg-blue-600 text-white px-4 py-2 text-sm font-bold shadow-sm transition-colors flex items-center gap-2">
+                                    Add <span class="hidden sm:inline">to Cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-center gap-2 mt-8 py-4">
+<button class="size-10 flex items-center justify-center rounded-lg border border-[#dbe0e6] bg-white text-[#111418] hover:bg-gray-50 disabled:opacity-50">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="size-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">1</button>
+<button class="size-10 flex items-center justify-center rounded-lg border border-[#dbe0e6] bg-white text-[#111418] hover:bg-gray-50 font-medium">2</button>
+<button class="size-10 flex items-center justify-center rounded-lg border border-[#dbe0e6] bg-white text-[#111418] hover:bg-gray-50 font-medium">3</button>
+<span class="text-[#617589]">...</span>
+<button class="size-10 flex items-center justify-center rounded-lg border border-[#dbe0e6] bg-white text-[#111418] hover:bg-gray-50 font-medium">12</button>
+<button class="size-10 flex items-center justify-center rounded-lg border border-[#dbe0e6] bg-white text-[#111418] hover:bg-gray-50">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

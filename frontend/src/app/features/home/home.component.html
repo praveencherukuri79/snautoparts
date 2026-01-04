@@ -1,0 +1,154 @@
+<app-header></app-header>
+
+<main class="flex-1">
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900/40 text-white overflow-hidden">
+    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920')] bg-cover bg-center opacity-20"></div>
+    <div class="relative container mx-auto px-4 py-20 md:py-32">
+      <div class="max-w-2xl">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+          {{ content.home.hero.title }}
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
+          {{ content.home.hero.subtitle }}
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a routerLink="/products" class="btn btn-primary btn-lg shadow-lg hover:shadow-blue-500/40 transition-shadow">
+            {{ content.home.hero.ctaPrimary }}
+            <app-icon name="arrow_forward" [size]="20"></app-icon>
+          </a>
+          <a routerLink="/products" [queryParams]="{ onSale: true }" class="btn btn-lg border-2 border-white/30 bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm">
+            {{ content.home.hero.ctaSecondary }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- Decorative elements -->
+    <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background-light dark:from-background-dark to-transparent"></div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-12 bg-white dark:bg-surface-dark border-b border-gray-100 dark:border-gray-800">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        @for (feature of content.home.features; track feature.title) {
+          <div class="flex items-start gap-4 p-4">
+            <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-primary flex items-center justify-center">
+              <app-icon [name]="feature.icon" [size]="24"></app-icon>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-1">{{ feature.title }}</h3>
+              <p class="text-sm text-gray-500">{{ feature.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="py-16 bg-background-light dark:bg-background-dark">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+          {{ content.home.sections.topCategories }}
+        </h2>
+        <a routerLink="/products" class="text-primary hover:underline font-medium flex items-center gap-1">
+          {{ content.common.viewAll }}
+          <app-icon name="chevron_right" [size]="18"></app-icon>
+        </a>
+      </div>
+      @if (loading()) {
+        <app-loading-spinner [height]="200"></app-loading-spinner>
+      } @else {
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          @for (category of categories(); track category.id) {
+            <a [routerLink]="['/category', category.slug]" 
+               class="group relative aspect-square overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-800">
+              <img 
+                [src]="getCategoryImage(category.imageUrl)" 
+                [alt]="category.name"
+                appImageFallback="category"
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                loading="lazy"
+              >
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+              <div class="absolute inset-0 flex flex-col items-center justify-end p-4 text-center">
+                <h3 class="font-semibold text-white text-sm md:text-base">{{ category.name }}</h3>
+                @if (category._count?.products) {
+                  <p class="text-xs text-gray-300 mt-1">{{ category._count!.products }} products</p>
+                }
+              </div>
+            </a>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="py-16 bg-white dark:bg-surface-dark">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+          {{ content.home.sections.featuredProducts }}
+        </h2>
+        <a routerLink="/products" class="text-primary hover:underline font-medium flex items-center gap-1">
+          {{ content.common.viewAll }}
+          <app-icon name="chevron_right" [size]="18"></app-icon>
+        </a>
+      </div>
+      @if (loading()) {
+        <app-loading-spinner [height]="300"></app-loading-spinner>
+      } @else {
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          @for (product of featuredProducts(); track product.id) {
+            <app-product-card [product]="product"></app-product-card>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Brands Section -->
+  <section class="py-16 bg-gray-50 dark:bg-gray-900/50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+        {{ content.home.sections.topBrands }}
+      </h2>
+      <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+        @for (brand of brands(); track brand.id) {
+          <a [routerLink]="['/products']" [queryParams]="{ brand: brand.slug }"
+             class="text-xl md:text-2xl font-bold text-gray-400 hover:text-primary transition-colors">
+            {{ brand.name }}
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-primary">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">
+        Need Help Finding the Right Part?
+      </h2>
+      <p class="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
+        Our ASE-certified experts are ready to help you find the perfect parts for your vehicle. Call us or chat online!
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="tel:{{ content.brand.phone }}" class="btn btn-lg bg-white text-primary hover:bg-gray-100">
+          <app-icon name="phone" [size]="20"></app-icon>
+          {{ content.brand.phone }}
+        </a>
+        <button type="button" class="btn btn-lg border-2 border-white/30 text-white hover:bg-white/10">
+          <app-icon name="chat" [size]="20"></app-icon>
+          Live Chat
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>
+

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Manager Orders Dashboard - SN Auto Parts</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d7ff2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922",
+                        "surface-dark": "#1b2733",
+                        "surface-dark-highlight": "#283442",
+                        "border-dark": "#2d3b4a",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Space Grotesk", "Noto Sans", sans-serif;
+        }
+        /* Custom scrollbar for dark mode technical feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101922; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3b4a; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0d7ff2; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white h-screen overflow-hidden flex selection:bg-primary selection:text-white">
+<!-- Left Navigation Sidebar -->
+<aside class="w-64 flex-none bg-surface-dark border-r border-border-dark flex flex-col h-full z-20">
+<div class="p-5 flex items-center gap-3 border-b border-border-dark/50">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary" data-alt="Abstract geometric logo in blue and metallic tones" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBuAZbxbsxcllL0OJZxv7T0MyQUEUQ64kdsiFkLWMiWh_qgu8kvWKbRgjnjuFMCLg7vYa3AL9e3oqSWdRzrtnYiGuLK4D6VaNEHHEjxQzd5cz_JVvTbmcaJM16MvPd1iVpgeD42Yu71rt78ro9bFaTwf_bdVdNmO0dd1hJ6kbbNjMc9r7z73_bOaTXyrw4tbIctKlfOCxSZZIRAxwbJGwtmuvLPmLEdaKVvFt6EnbuUOPjSQnaSyVwdi9R04arz9ul28rRcuFXyUAnv");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-bold leading-none tracking-tight">SN Auto Parts</h1>
+<p class="text-slate-400 text-xs font-normal mt-1">Manager Console</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-3 rounded bg-primary/20 border border-primary/20 text-white group" href="#">
+<span class="material-symbols-outlined text-primary group-hover:text-white transition-colors">assignment</span>
+<p class="text-sm font-bold tracking-wide">Orders</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded hover:bg-surface-dark-highlight text-slate-400 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<p class="text-sm font-medium tracking-wide">Inventory</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded hover:bg-surface-dark-highlight text-slate-400 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<p class="text-sm font-medium tracking-wide">Customers</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded hover:bg-surface-dark-highlight text-slate-400 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<p class="text-sm font-medium tracking-wide">Reports</p>
+</a>
+<div class="my-2 border-t border-border-dark/50"></div>
+<a class="flex items-center gap-3 px-3 py-3 rounded hover:bg-surface-dark-highlight text-slate-400 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium tracking-wide">Settings</p>
+</a>
+</nav>
+<div class="p-4 border-t border-border-dark/50">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white">JD</div>
+<div class="overflow-hidden">
+<p class="text-white text-sm font-medium truncate">Jane Doe</p>
+<p class="text-slate-500 text-xs truncate">Logistics Mgr.</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 h-full relative">
+<!-- Header & Stats -->
+<div class="flex-none p-6 pb-2">
+<div class="flex flex-col xl:flex-row xl:items-end justify-between gap-4 mb-6">
+<div>
+<h1 class="text-white text-3xl font-bold tracking-tight mb-1">Orders Dashboard</h1>
+<p class="text-slate-400 text-sm">Overview of daily performance and fulfillment status.</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded h-10 bg-surface-dark-highlight hover:bg-border-dark text-white px-4 border border-border-dark transition-colors">
+<span class="material-symbols-outlined mr-2 text-[20px]">refresh</span>
+<span class="text-sm font-medium">Refresh</span>
+</button>
+<button class="flex items-center justify-center rounded h-10 bg-primary hover:bg-primary/90 text-white px-4 shadow-lg shadow-primary/20 transition-colors">
+<span class="material-symbols-outlined mr-2 text-[20px] fill-1">download</span>
+<span class="text-sm font-bold">Export Data</span>
+</button>
+</div>
+</div>
+<!-- Stats Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
+<div class="bg-surface-dark border border-border-dark rounded-lg p-5 flex flex-col justify-between hover:border-primary/50 transition-colors cursor-default group">
+<div class="flex justify-between items-start">
+<p class="text-slate-400 text-sm font-medium uppercase tracking-wider">New Orders</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-full">shopping_cart</span>
+</div>
+<div class="mt-4">
+<p class="text-white text-3xl font-bold group-hover:text-primary transition-colors">56</p>
+<p class="text-emerald-500 text-xs font-medium mt-1 flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-0.5">trending_up</span> +12% vs yesterday
+                        </p>
+</div>
+</div>
+<div class="bg-surface-dark border border-border-dark rounded-lg p-5 flex flex-col justify-between hover:border-orange-500/50 transition-colors cursor-default group">
+<div class="flex justify-between items-start">
+<p class="text-slate-400 text-sm font-medium uppercase tracking-wider">Pending Shipment</p>
+<span class="material-symbols-outlined text-orange-500 bg-orange-500/10 p-1.5 rounded-full">local_shipping</span>
+</div>
+<div class="mt-4">
+<p class="text-white text-3xl font-bold group-hover:text-orange-500 transition-colors">12</p>
+<p class="text-slate-500 text-xs font-medium mt-1">Requires immediate action</p>
+</div>
+</div>
+<div class="bg-surface-dark border border-border-dark rounded-lg p-5 flex flex-col justify-between hover:border-emerald-500/50 transition-colors cursor-default group">
+<div class="flex justify-between items-start">
+<p class="text-slate-400 text-sm font-medium uppercase tracking-wider">Today's Volume</p>
+<span class="material-symbols-outlined text-emerald-500 bg-emerald-500/10 p-1.5 rounded-full">payments</span>
+</div>
+<div class="mt-4">
+<p class="text-white text-3xl font-bold group-hover:text-emerald-500 transition-colors">$4,250</p>
+<p class="text-emerald-500 text-xs font-medium mt-1 flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-0.5">trending_up</span> On track
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Toolbar & Filters -->
+<div class="px-6 py-3 flex flex-wrap items-center justify-between gap-4 border-b border-border-dark/50 bg-background-dark sticky top-0 z-10">
+<div class="flex flex-1 items-center gap-3 min-w-[300px]">
+<div class="relative flex-1 max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">search</span>
+<input class="w-full h-10 pl-10 pr-4 bg-surface-dark border border-border-dark rounded text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-sm" placeholder="Search Order ID, Customer, or SKU..." type="text"/>
+</div>
+<div class="h-6 w-px bg-border-dark mx-1"></div>
+<button class="flex items-center gap-2 px-3 h-10 rounded border border-border-dark bg-surface-dark text-slate-300 hover:text-white hover:border-slate-500 transition-colors text-sm">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+<span>Filter</span>
+</button>
+<button class="flex items-center gap-2 px-3 h-10 rounded border border-border-dark bg-surface-dark text-slate-300 hover:text-white hover:border-slate-500 transition-colors text-sm">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span>Today</span>
+</button>
+</div>
+<div class="text-xs text-slate-500 font-medium font-mono uppercase tracking-wide">
+                Showing 1-10 of 56
+            </div>
+</div>
+<!-- Data Table -->
+<div class="flex-1 overflow-y-auto px-6 pb-6">
+<div class="min-w-full inline-block align-middle">
+<div class="border rounded-lg overflow-hidden border-border-dark">
+<table class="min-w-full divide-y divide-border-dark">
+<thead class="bg-surface-dark">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-wider w-32" scope="col">Order ID</th>
+<th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-wider" scope="col">Customer</th>
+<th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-wider" scope="col">Date</th>
+<th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-wider" scope="col">Status</th>
+<th class="px-6 py-3 text-right text-xs font-bold text-slate-400 uppercase tracking-wider" scope="col">Total</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark bg-[#141c25]">
+<!-- Row 1: Active -->
+<tr class="hover:bg-surface-dark-highlight cursor-pointer group transition-colors bg-primary/5 border-l-4 border-l-primary">
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="text-primary font-bold font-mono text-sm group-hover:underline">#ORD-3922</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-slate-700 flex-shrink-0 flex items-center justify-center text-xs text-white font-bold mr-3">
+                                            MR
+                                        </div>
+<div class="text-sm font-medium text-white">Michael Ross</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400 font-mono">
+                                    Oct 24, 10:42 AM
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-orange-400 mr-1.5 animate-pulse"></span>
+                                        Pending
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white font-bold text-right font-mono">
+                                    $342.50
+                                </td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-dark-highlight cursor-pointer transition-colors border-l-4 border-l-transparent">
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="text-white font-bold font-mono text-sm hover:text-primary">#ORD-3921</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-indigo-900 flex-shrink-0 flex items-center justify-center text-xs text-indigo-200 font-bold mr-3">
+                                            SJ
+                                        </div>
+<div class="text-sm font-medium text-white">Sarah Jenkins</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400 font-mono">
+                                    Oct 24, 09:15 AM
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                        Shipped
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white font-bold text-right font-mono">
+                                    $1,205.00
+                                </td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-dark-highlight cursor-pointer transition-colors border-l-4 border-l-transparent">
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="text-white font-bold font-mono text-sm hover:text-primary">#ORD-3920</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-purple-900 flex-shrink-0 flex items-center justify-center text-xs text-purple-200 font-bold mr-3">
+                                            DK
+                                        </div>
+<div class="text-sm font-medium text-white">David Kim</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400 font-mono">
+                                    Oct 23, 04:50 PM
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                        Shipped
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white font-bold text-right font-mono">
+                                    $89.99
+                                </td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-dark-highlight cursor-pointer transition-colors border-l-4 border-l-transparent">
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="text-white font-bold font-mono text-sm hover:text-primary">#ORD-3919</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-slate-700 flex-shrink-0 flex items-center justify-center text-xs text-white font-bold mr-3">
+                                            TS
+                                        </div>
+<div class="text-sm font-medium text-white">Tony Stark</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400 font-mono">
+                                    Oct 23, 02:30 PM
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-500/10 text-red-400 border border-red-500/20">
+                                        Cancelled
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white font-bold text-right font-mono">
+                                    $4,500.00
+                                </td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-dark-highlight cursor-pointer transition-colors border-l-4 border-l-transparent">
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="text-white font-bold font-mono text-sm hover:text-primary">#ORD-3918</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-blue-900 flex-shrink-0 flex items-center justify-center text-xs text-blue-200 font-bold mr-3">
+                                            EL
+                                        </div>
+<div class="text-sm font-medium text-white">Elena Lopez</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400 font-mono">
+                                    Oct 23, 11:15 AM
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                        Delivered
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-white font-bold text-right font-mono">
+                                    $215.50
+                                </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Detail Drawer (Persistent Split View for Manager) -->
+<aside class="w-[400px] flex-none bg-surface-dark border-l border-border-dark flex flex-col h-full z-20 shadow-2xl overflow-hidden relative">
+<!-- Close button for mobile contexts, though this is desktop split view -->
+<div class="absolute top-4 right-4 z-10 lg:hidden">
+<button class="text-slate-400 hover:text-white"><span class="material-symbols-outlined">close</span></button>
+</div>
+<!-- Drawer Header -->
+<div class="flex-none p-6 border-b border-border-dark bg-[#141c25]">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs font-bold uppercase rounded border border-orange-500/20 tracking-wider">Pending</span>
+<span class="text-slate-500 text-xs font-mono">Oct 24, 10:42 AM</span>
+</div>
+</div>
+<h2 class="text-2xl font-bold text-white mb-1">Order #ORD-3922</h2>
+<div class="flex items-center gap-2 text-sm text-slate-400 mb-4">
+<span class="material-symbols-outlined text-sm">person</span>
+<span>Michael Ross</span>
+<span class="mx-1">•</span>
+<span>2 Items</span>
+</div>
+<!-- Primary Actions -->
+<div class="grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white py-2 px-4 rounded font-bold text-sm transition-colors shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[18px]">local_shipping</span>
+                    Ship Order
+                </button>
+<button class="flex items-center justify-center gap-2 bg-surface-dark-highlight hover:bg-border-dark text-white border border-border-dark py-2 px-4 rounded font-medium text-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]">print</span>
+                    Print Label
+                </button>
+</div>
+</div>
+<!-- Drawer Content -->
+<div class="flex-1 overflow-y-auto p-6 space-y-8">
+<!-- Items Section -->
+<section>
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center">
+<span class="material-symbols-outlined text-sm mr-2">inventory_2</span> Order Items
+                </h3>
+<div class="space-y-4">
+<!-- Item 1 -->
+<div class="flex gap-4">
+<div class="size-16 rounded bg-background-dark border border-border-dark flex-none bg-center bg-cover" data-alt="Brake rotor detail shot" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCKcqK00Lqp3g96oIOD7uAc-oIL67hEuNJYgNeSzX_r7oqYxasRTO8lvrx3_UUoyG7E3Ew-VVWiBZmNfsJc0GUmVSvtCoNyB4q5Eua8TtFR1git9sQdS-A-WDD_AnWPPv3-iHp5Obzj7Hni-seIcs4nVf1l9Vho1t9t8yNZ0htbc-fHRvH0tVFZaPnaPdyjCTQ-ibd_WIQ-ER7h519kYZn0zkSpGkZ1anURKRPUkFuj5a_5KxRtvBi7ioIKnIf2wfshtfbNGUedKqNM");'></div>
+<div class="flex-1">
+<p class="text-white text-sm font-bold leading-tight mb-1">Brembo Ceramic Brake Pads - Front Pair</p>
+<p class="text-slate-500 text-xs font-mono mb-2">SKU: BR-992-X</p>
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-400">Qty: 1</span>
+<span class="text-white font-bold">$142.50</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex gap-4">
+<div class="size-16 rounded bg-background-dark border border-border-dark flex-none bg-center bg-cover" data-alt="Synthetic motor oil bottle" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCR_TBthahSiapbVG0FA5BvIZW84ode-RPagHwCR5FTK4r6it_CGe4ByY7CYnLWUbIBHnuYCjmKXYG5z0Z8jPOCij3EAwYwOVmywi-jAW7NWek7UYRl62iSiB25d318t_JcanFElOQaWeLWVhn4fDPbbCBe4Zs5HhXidbhNwov4P4KGfYkoOJj3hrt_51H_rscQ_TwEXVOgs0hDH7LX27hIDK-IeaWVcpytqBVS7DDylglyAia1Jb1_5C6awa0IMbVEF9JZzkxe7mXs");'></div>
+<div class="flex-1">
+<p class="text-white text-sm font-bold leading-tight mb-1">Mobil 1 Advanced Full Synthetic Motor Oil 5W-30</p>
+<p class="text-slate-500 text-xs font-mono mb-2">SKU: OIL-5W30-5QT</p>
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-400">Qty: 4</span>
+<span class="text-white font-bold">$200.00</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-border-dark flex justify-between items-center">
+<span class="text-slate-400 text-sm">Subtotal</span>
+<span class="text-white font-bold text-sm">$342.50</span>
+</div>
+<div class="flex justify-between items-center mt-2">
+<span class="text-slate-400 text-sm">Shipping</span>
+<span class="text-white font-bold text-sm">Free</span>
+</div>
+<div class="flex justify-between items-center mt-2 pt-2 border-t border-border-dark/50">
+<span class="text-white font-bold">Total</span>
+<span class="text-primary font-bold text-lg">$342.50</span>
+</div>
+</section>
+<!-- Customer & Shipping Section -->
+<section>
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center">
+<span class="material-symbols-outlined text-sm mr-2">local_shipping</span> Shipping Details
+                </h3>
+<div class="bg-background-dark rounded p-4 border border-border-dark">
+<p class="text-white font-bold text-sm mb-1">Michael Ross</p>
+<p class="text-slate-400 text-sm leading-relaxed">
+                        1245 Garage Avenue, Suite 400<br/>
+                        Detroit, MI 48201<br/>
+                        United States
+                    </p>
+<div class="mt-3 pt-3 border-t border-border-dark/50 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500 text-sm">email</span>
+<a class="text-primary text-sm hover:underline" href="#">mike.ross@example.com</a>
+</div>
+<div class="mt-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500 text-sm">phone</span>
+<span class="text-slate-400 text-sm">+1 (313) 555-0199</span>
+</div>
+</div>
+</section>
+<!-- Payment Status -->
+<section>
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center">
+<span class="material-symbols-outlined text-sm mr-2">credit_card</span> Payment
+                </h3>
+<div class="flex items-center justify-between bg-emerald-500/5 border border-emerald-500/20 rounded p-3">
+<div class="flex items-center gap-3">
+<div class="bg-white rounded p-1 h-8 w-12 flex items-center justify-center">
+<img alt="Mastercard" class="h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxxQfpOce_oYWwiWUSk3npcv9TEaY6Qc26_5jssMVSm0svlpqrvjkLMbv7N9zrz6COiC8ncnyRib2h9GDei3BhElDcSyb63lWn4wIGrGb4i18plhbrgdW4jbQI7YUGnftls5lAA0Pc-DlYrNRNqSWzDypRt5YFmwugOFhvPMg9Mzv1mFLhasl9NGGeNhQgdoaz68ak7QL4l2SuV3VNK47tOknI4548MN9jHAlkZhVARZ-0dH_iGYTzUJ4tB-RHOwVHqAMp0SwDZQAS"/>
+</div>
+<div>
+<p class="text-white text-sm font-bold">•••• 4242</p>
+<p class="text-emerald-500 text-xs">Paid on Oct 24</p>
+</div>
+</div>
+<span class="text-emerald-400 text-xs font-bold uppercase tracking-wider">Authorized</span>
+</div>
+</section>
+<!-- Timeline (Simplified) -->
+<section>
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center">
+<span class="material-symbols-outlined text-sm mr-2">history</span> Timeline
+                </h3>
+<div class="relative pl-4 border-l-2 border-border-dark space-y-6">
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-3 w-3 rounded-full bg-slate-600 border-2 border-surface-dark"></div>
+<p class="text-slate-400 text-sm">Order Placed</p>
+<p class="text-slate-600 text-xs">Oct 24, 10:42 AM</p>
+</div>
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-3 w-3 rounded-full bg-slate-600 border-2 border-surface-dark"></div>
+<p class="text-slate-400 text-sm">Payment Authorized</p>
+<p class="text-slate-600 text-xs">Oct 24, 10:43 AM</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Drawer Footer -->
+<div class="p-4 border-t border-border-dark bg-[#141c25]">
+<button class="w-full flex items-center justify-center gap-2 bg-transparent hover:bg-red-500/10 text-red-400 border border-red-500/20 hover:border-red-500 py-3 px-4 rounded font-bold text-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]">block</span>
+                Cancel Order &amp; Refund
+            </button>
+</div>
+</aside>
+</body></html>

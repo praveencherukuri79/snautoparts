@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Order History</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec1313",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#181111", /* Adjusted slightly to match the vibe */
+                        "surface-dark": "#251818",
+                        "surface-highlight": "#392828",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem", 
+                        "lg": "0.25rem", 
+                        "xl": "0.5rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        /* Custom scrollbar for table container if needed */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #251818; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #392828; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ec1313; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col font-display selection:bg-primary selection:text-white">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-[#392828] bg-background-dark/95 backdrop-blur-sm">
+<div class="px-6 lg:px-12 flex h-20 items-center justify-between gap-8">
+<!-- Logo Section -->
+<div class="flex items-center gap-4">
+<a class="flex items-center gap-2 group" href="#">
+<div class="flex items-center justify-center size-10 rounded bg-primary text-white transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-2xl">directions_car</span>
+</div>
+<h2 class="text-white text-xl font-bold tracking-tight uppercase hidden md:block">SN Auto Parts</h2>
+</a>
+</div>
+<!-- Search Bar -->
+<div class="hidden md:flex flex-1 max-w-xl">
+<label class="relative w-full group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#b99d9d] group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="block w-full rounded-lg border-none bg-[#251818] py-2.5 pl-10 pr-3 text-white placeholder:text-[#b99d9d] focus:ring-2 focus:ring-primary focus:bg-[#2f1f1f] transition-all sm:text-sm sm:leading-6" placeholder="Search parts by keyword, VIN, or part number..." type="text"/>
+</label>
+</div>
+<!-- Navigation Links & Actions -->
+<div class="flex items-center gap-6">
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Shop Parts</a>
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Garage</a>
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Deals</a>
+</nav>
+<div class="h-6 w-px bg-[#392828] hidden lg:block"></div>
+<div class="flex items-center gap-3">
+<button class="relative flex size-10 items-center justify-center rounded-lg bg-[#251818] text-white hover:bg-primary hover:text-white transition-colors group">
+<span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+<span class="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold group-hover:bg-white group-hover:text-primary">2</span>
+</button>
+<button class="flex size-10 items-center justify-center rounded-lg bg-[#251818] text-white hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+</button>
+<!-- Mobile Menu Toggle -->
+<button class="flex lg:hidden size-10 items-center justify-center rounded-lg bg-[#251818] text-white hover:bg-primary transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 py-8">
+<!-- Breadcrumbs -->
+<nav class="flex items-center text-sm font-medium mb-8 text-[#b99d9d]">
+<a class="hover:text-white transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-base mx-2 text-[#543b3b]">chevron_right</span>
+<a class="hover:text-white transition-colors" href="#">Account</a>
+<span class="material-symbols-outlined text-base mx-2 text-[#543b3b]">chevron_right</span>
+<span class="text-primary font-semibold">Order History</span>
+</nav>
+<!-- Page Heading -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 border-b border-[#392828] pb-6">
+<div class="space-y-2">
+<h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight">Order History</h1>
+<p class="text-[#b99d9d] text-lg max-w-2xl">Track status, view invoices, and manage returns for your recent builds.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#251818] text-white text-sm font-medium hover:bg-[#392828] transition-colors border border-[#392828]">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                    Last 30 Days
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#251818] text-white text-sm font-medium hover:bg-[#392828] transition-colors border border-[#392828]">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                    Export CSV
+                </button>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex flex-wrap items-center gap-3 mb-8">
+<button class="px-5 py-2 rounded-full bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 transition-transform hover:scale-105">
+                All Orders
+            </button>
+<button class="px-5 py-2 rounded-full bg-[#251818] text-[#b99d9d] border border-[#392828] text-sm font-medium hover:text-white hover:border-white/20 transition-all hover:bg-[#2f1f1f]">
+                Open Orders <span class="ml-1 text-xs bg-[#392828] px-1.5 py-0.5 rounded text-white">2</span>
+</button>
+<button class="px-5 py-2 rounded-full bg-[#251818] text-[#b99d9d] border border-[#392828] text-sm font-medium hover:text-white hover:border-white/20 transition-all hover:bg-[#2f1f1f]">
+                Cancelled
+            </button>
+<button class="px-5 py-2 rounded-full bg-[#251818] text-[#b99d9d] border border-[#392828] text-sm font-medium hover:text-white hover:border-white/20 transition-all hover:bg-[#2f1f1f]">
+                Returns
+            </button>
+</div>
+<!-- Orders Table Container -->
+<div class="w-full bg-[#1c1212] rounded-xl border border-[#392828] overflow-hidden shadow-2xl">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#251818] border-b border-[#392828]">
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-[#b99d9d]">Order ID</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-[#b99d9d]">Date Ordered</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-[#b99d9d]">Items</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-[#b99d9d]">Ship To</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-[#b99d9d]">Total</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-[#b99d9d]">Status</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-[#b99d9d] text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#2f1f1f]">
+<!-- Row 1 -->
+<tr class="group hover:bg-[#251818] transition-colors cursor-pointer">
+<td class="py-5 px-6">
+<span class="text-white font-bold group-hover:text-primary transition-colors">#SN-88219</span>
+</td>
+<td class="py-5 px-6 text-sm text-[#d4c5c5]">
+                                Oct 24, 2023
+                            </td>
+<td class="py-5 px-6 text-sm text-[#d4c5c5]">
+<div class="flex flex-col">
+<span class="text-white font-medium">Brembo Ceramic Brake Pads</span>
+<span class="text-xs text-[#b99d9d]">+ 2 other items</span>
+</div>
+</td>
+<td class="py-5 px-6 text-sm text-[#d4c5c5]">
+                                Alex Driver
+                            </td>
+<td class="py-5 px-6 font-mono font-medium text-white">
+                                $342.50
+                            </td>
+<td class="py-5 px-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+<span class="size-1.5 rounded-full bg-blue-400"></span>
+                                    Shipped
+                                </span>
+</td>
+<td class="py-5 px-6 text-right">
+<button class="text-[#b99d9d] group-hover:text-white transition-colors p-2 hover:bg-[#392828] rounded-full">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-[#251818] transition-colors cursor-pointer">
+<td class="py-5 px-6">
+<span class="text-white font-bold group-hover:text-primary transition-colors">#SN-88004</span>
+</td>
+<td class="py-5 px-6 text-sm text-[#d4c5c5]">
+                                Sep 12, 2023
+                            </td>
+<td class="py-5 px-6 text-sm text-[#d4c5c5]">
+<div class="flex flex-col">
+<span class="text-white font-medium">Castrol EDGE 5W-30 (5QT)</span>
+</div>
+</td>
+<td class="py-5 px-6 text-sm text-[#d4c5c5]">
+                                Alex Driver
+                            </td>
+<td class="py-5 px-6 font-mono font-medium text-white">
+                                $89.99
+                            </td>
+<td class="py-5 px-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-green-500/10 text-green-400 border border-green-500/20">
+<span class="material-symbols-outlined text-[14px]">check</span>
+                                    Delivered
+                                </span>
+</td>
+<td class="py-5 px-6 text-right">
+<button class="text-[#b99d9d] group-hover:text-white transition-colors p-2 hover:bg-[#392828] rounded-full">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-[#251818] transition-colors cursor-pointer">
+<td class="py-5 px-6">
+<span class="text-white font-bold group-hover:text-primary transition-colors">#SN-87552</span>
+</td>
+<td class="py-5 px-6 text-sm text-[#d4c5c5]">
+                                Aug 05, 2023
+                            </td>
+<td class="py-5 px-6 text-sm text-[#d4c5c5]">
+<div class="flex flex-col">
+<span class="text-white font-medium">Garrett G25-660 Turbo</span>
+<span class="text-xs text-[#b99d9d]">+ Installation Kit</span>
+</div>
+</td>
+<td class="py-5 px-6 text-sm text-[#d4c5c5]">
+                                Alex Driver
+                            </td>
+<td class="py-5 px-6 font-mono font-medium text-white">
+                                $1,240.00
+                            </td>
+<td class="py-5 px-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">
+<span class="size-1.5 rounded-full bg-yellow-400 animate-pulse"></span>
+                                    Processing
+                                </span>
+</td>
+<td class="py-5 px-6 text-right">
+<button class="text-[#b99d9d] group-hover:text-white transition-colors p-2 hover:bg-[#392828] rounded-full">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-[#251818] transition-colors cursor-pointer">
+<td class="py-5 px-6">
+<span class="text-white font-bold group-hover:text-primary transition-colors">#SN-85002</span>
+</td>
+<td class="py-5 px-6 text-sm text-[#d4c5c5]">
+                                Jun 01, 2023
+                            </td>
+<td class="py-5 px-6 text-sm text-[#d4c5c5]">
+<div class="flex flex-col">
+<span class="text-white font-medium">K&amp;N Air Filter</span>
+</div>
+</td>
+<td class="py-5 px-6 text-sm text-[#d4c5c5]">
+                                Alex Driver
+                            </td>
+<td class="py-5 px-6 font-mono font-medium text-white">
+                                $56.75
+                            </td>
+<td class="py-5 px-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-500/10 text-red-400 border border-red-500/20">
+<span class="material-symbols-outlined text-[14px]">block</span>
+                                    Cancelled
+                                </span>
+</td>
+<td class="py-5 px-6 text-right">
+<button class="text-[#b99d9d] group-hover:text-white transition-colors p-2 hover:bg-[#392828] rounded-full">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-[#392828] flex items-center justify-between bg-[#251818]">
+<p class="text-sm text-[#b99d9d]">Showing <span class="text-white font-bold">1-4</span> of <span class="text-white font-bold">12</span> orders</p>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded bg-[#392828] text-white disabled:opacity-50 hover:bg-[#4a3535] transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="px-3 py-1.5 rounded bg-[#392828] text-white hover:bg-[#4a3535] transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Help Section -->
+<div class="mt-8 flex justify-end">
+<a class="inline-flex items-center gap-2 text-sm text-[#b99d9d] hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+                Returns &amp; Warranty Policy
+            </a>
+</div>
+</main>
+<!-- Footer -->
+<footer class="border-t border-[#392828] bg-[#140e0e] py-12 mt-auto">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between gap-8">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-2">
+<div class="flex items-center justify-center size-8 rounded bg-primary text-white">
+<span class="material-symbols-outlined text-lg">directions_car</span>
+</div>
+<span class="text-white text-lg font-bold uppercase">SN Auto Parts</span>
+</div>
+<p class="text-[#b99d9d] text-sm max-w-xs">Premium parts for the serious enthusiast. Built for speed, reliability, and performance.</p>
+</div>
+<div class="flex flex-wrap gap-8 md:gap-16">
+<div class="flex flex-col gap-3">
+<h3 class="text-white font-bold text-sm uppercase tracking-wider">Support</h3>
+<a class="text-[#b99d9d] text-sm hover:text-white" href="#">Help Center</a>
+<a class="text-[#b99d9d] text-sm hover:text-white" href="#">Track Order</a>
+<a class="text-[#b99d9d] text-sm hover:text-white" href="#">Returns</a>
+</div>
+<div class="flex flex-col gap-3">
+<h3 class="text-white font-bold text-sm uppercase tracking-wider">Company</h3>
+<a class="text-[#b99d9d] text-sm hover:text-white" href="#">About Us</a>
+<a class="text-[#b99d9d] text-sm hover:text-white" href="#">Careers</a>
+<a class="text-[#b99d9d] text-sm hover:text-white" href="#">Blog</a>
+</div>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 mt-12 pt-8 border-t border-[#251818] flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-[#543b3b] text-sm">© 2023 SN Auto Parts. All rights reserved.</p>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-[#543b3b] hover:text-white cursor-pointer">public</span>
+<span class="material-symbols-outlined text-[#543b3b] hover:text-white cursor-pointer">alternate_email</span>
+</div>
+</div>
+</footer>
+</body></html>

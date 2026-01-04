@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout - Shipping Method</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2430",
+                        "text-main-light": "#111418",
+                        "text-main-dark": "#e2e8f0",
+                        "text-sub-light": "#617589",
+                        "text-sub-dark": "#94a3b8",
+                        "border-light": "#dbe0e6",
+                        "border-dark": "#2d3748",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen font-display flex flex-col transition-colors duration-200">
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark px-4 py-3 sm:px-10">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">local_car_wash</span>
+</div>
+<h1 class="text-text-main-light dark:text-text-main-dark text-xl font-bold tracking-tight">SN Auto Parts</h1>
+</div>
+<div class="hidden sm:flex items-center gap-2 bg-background-light dark:bg-background-dark px-3 py-1.5 rounded-lg border border-border-light dark:border-border-dark">
+<span class="material-symbols-outlined text-green-600 text-[20px]">lock</span>
+<span class="text-text-main-light dark:text-text-main-dark text-sm font-semibold">Secure Checkout</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<div class="flex-1 w-full max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+<div class="lg:grid lg:grid-cols-12 lg:gap-12 items-start">
+<!-- Left Column: Shipping Flow -->
+<main class="lg:col-span-8 flex flex-col gap-8">
+<!-- Stepper / Breadcrumbs -->
+<nav aria-label="Progress">
+<ol class="flex items-center space-x-4" role="list">
+<li class="flex items-center">
+<a class="group flex items-center gap-2" href="#">
+<span class="flex items-center justify-center w-6 h-6 rounded-full bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+<span class="text-sm font-medium text-text-sub-light dark:text-text-sub-dark group-hover:text-text-main-light dark:group-hover:text-text-main-dark">Information</span>
+</a>
+</li>
+<li class="text-text-sub-light dark:text-text-sub-dark">
+<span class="material-symbols-outlined text-[16px] mt-1">chevron_right</span>
+</li>
+<li class="flex items-center">
+<div aria-current="step" class="flex items-center gap-2">
+<span class="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-xs font-bold ring-4 ring-primary/20">2</span>
+<span class="text-sm font-bold text-primary">Shipping</span>
+</div>
+</li>
+<li class="text-text-sub-light dark:text-text-sub-dark">
+<span class="material-symbols-outlined text-[16px] mt-1">chevron_right</span>
+</li>
+<li class="flex items-center">
+<div class="flex items-center gap-2">
+<span class="flex items-center justify-center w-6 h-6 rounded-full border border-border-light dark:border-border-dark text-text-sub-light dark:text-text-sub-dark text-xs font-medium">3</span>
+<span class="text-sm font-medium text-text-sub-light dark:text-text-sub-dark">Payment</span>
+</div>
+</li>
+</ol>
+</nav>
+<!-- Page Heading -->
+<div class="flex flex-col gap-1">
+<h2 class="text-3xl font-extrabold text-text-main-light dark:text-text-main-dark tracking-tight">Shipping Method</h2>
+<p class="text-text-sub-light dark:text-text-sub-dark text-sm">Calculated based on shipping to <span class="font-semibold text-text-main-light dark:text-text-main-dark">90210</span></p>
+</div>
+<!-- Shipping Options (Radio List) -->
+<form class="flex flex-col gap-4">
+<!-- Option 1: Standard -->
+<label class="group relative flex cursor-pointer rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-4 shadow-sm focus:outline-none transition-all hover:border-primary/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10 has-[:checked]:ring-1 has-[:checked]:ring-primary">
+<input aria-describedby="shipping-method-0-description-0 shipping-method-0-description-1" aria-labelledby="shipping-method-0-label" checked="" class="sr-only" name="shipping-method" type="radio" value="standard"/>
+<div class="flex w-full items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-2xl">local_shipping</span>
+</div>
+<div class="flex flex-col">
+<span class="block text-sm font-bold text-text-main-light dark:text-text-main-dark" id="shipping-method-0-label">Standard Ground</span>
+<span class="mt-1 flex items-center text-sm text-text-sub-light dark:text-text-sub-dark" id="shipping-method-0-description-0">
+<span class="material-symbols-outlined text-[16px] mr-1">calendar_today</span>
+                                        5-7 business days
+                                    </span>
+</div>
+</div>
+<div class="text-right">
+<span class="block text-base font-bold text-text-main-light dark:text-text-main-dark" id="shipping-method-0-description-1">Free</span>
+</div>
+</div>
+<!-- Checkmark Indicator -->
+<div class="absolute -right-px -top-px hidden size-6 rounded-bl-lg rounded-tr-xl bg-primary text-white group-has-[:checked]:flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+</label>
+<!-- Option 2: Priority -->
+<label class="group relative flex cursor-pointer rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-4 shadow-sm focus:outline-none transition-all hover:border-primary/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10 has-[:checked]:ring-1 has-[:checked]:ring-primary">
+<input aria-describedby="shipping-method-1-description-0 shipping-method-1-description-1" aria-labelledby="shipping-method-1-label" class="sr-only" name="shipping-method" type="radio" value="priority"/>
+<div class="flex w-full items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-2xl">flight</span>
+</div>
+<div class="flex flex-col">
+<span class="block text-sm font-bold text-text-main-light dark:text-text-main-dark" id="shipping-method-1-label">Priority Express</span>
+<span class="mt-1 flex items-center text-sm text-text-sub-light dark:text-text-sub-dark" id="shipping-method-1-description-0">
+<span class="material-symbols-outlined text-[16px] mr-1">calendar_today</span>
+                                        2-3 business days
+                                    </span>
+</div>
+</div>
+<div class="text-right">
+<span class="block text-base font-bold text-text-main-light dark:text-text-main-dark" id="shipping-method-1-description-1">$12.99</span>
+<span class="text-xs text-text-sub-light dark:text-text-sub-dark">FedEx</span>
+</div>
+</div>
+<!-- Checkmark Indicator -->
+<div class="absolute -right-px -top-px hidden size-6 rounded-bl-lg rounded-tr-xl bg-primary text-white group-has-[:checked]:flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+</label>
+<!-- Option 3: Overnight -->
+<label class="group relative flex cursor-pointer rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-4 shadow-sm focus:outline-none transition-all hover:border-primary/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10 has-[:checked]:ring-1 has-[:checked]:ring-primary">
+<input aria-describedby="shipping-method-2-description-0 shipping-method-2-description-1" aria-labelledby="shipping-method-2-label" class="sr-only" name="shipping-method" type="radio" value="overnight"/>
+<div class="flex w-full items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-2xl">rocket_launch</span>
+</div>
+<div class="flex flex-col">
+<span class="block text-sm font-bold text-text-main-light dark:text-text-main-dark" id="shipping-method-2-label">Overnight</span>
+<span class="mt-1 flex items-center text-sm text-text-sub-light dark:text-text-sub-dark" id="shipping-method-2-description-0">
+<span class="material-symbols-outlined text-[16px] mr-1">calendar_today</span>
+                                        Next day delivery
+                                    </span>
+</div>
+</div>
+<div class="text-right">
+<span class="block text-base font-bold text-text-main-light dark:text-text-main-dark" id="shipping-method-2-description-1">$35.00</span>
+<span class="text-xs text-text-sub-light dark:text-text-sub-dark">UPS</span>
+</div>
+</div>
+<!-- Checkmark Indicator -->
+<div class="absolute -right-px -top-px hidden size-6 rounded-bl-lg rounded-tr-xl bg-primary text-white group-has-[:checked]:flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+</label>
+</form>
+<!-- Action Button -->
+<div class="mt-4 flex flex-col sm:flex-row items-center gap-4">
+<button class="w-full sm:w-auto flex-1 max-w-sm flex items-center justify-center rounded-lg bg-primary h-12 px-8 text-white text-base font-bold shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-colors">
+                        Continue to Payment
+                    </button>
+<a class="text-sm font-medium text-text-sub-light dark:text-text-sub-dark hover:text-primary dark:hover:text-primary transition-colors" href="#">
+                        Return to Information
+                    </a>
+</div>
+<!-- Trust Signals -->
+<div class="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4 pt-8 border-t border-border-light dark:border-border-dark">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-text-sub-light dark:text-text-sub-dark">verified_user</span>
+<span class="text-xs font-medium text-text-sub-light dark:text-text-sub-dark">Secure SSL Encryption</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-text-sub-light dark:text-text-sub-dark">assignment_return</span>
+<span class="text-xs font-medium text-text-sub-light dark:text-text-sub-dark">30-Day Returns</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-text-sub-light dark:text-text-sub-dark">support_agent</span>
+<span class="text-xs font-medium text-text-sub-light dark:text-text-sub-dark">Expert Support</span>
+</div>
+</div>
+</main>
+<!-- Right Column: Order Summary (Sticky) -->
+<aside class="hidden lg:block lg:col-span-4 mt-8 lg:mt-0">
+<div class="sticky top-24 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm overflow-hidden">
+<div class="p-6">
+<h3 class="text-lg font-bold text-text-main-light dark:text-text-main-dark mb-4">Order Summary</h3>
+<!-- Product List -->
+<ul class="flex flex-col gap-4 mb-6 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+<li class="flex gap-4">
+<div class="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark">
+<img class="h-full w-full object-cover object-center" data-alt="Close up of a car engine bay, focus on mechanical parts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXKNLGBcoLtH6RKUYuIVp96kFlPrlEsPx5ApzkTY73VEBBZTbI-NZLxy2472UuInsgUou5cE_QLqIcK0nDCcMNhgrO6vejxQN0NmJMUdivxJX0HYEehU9kAvAoZ4M1osdyoOovFpKEghF0YnXwvkCj9f0ivvStHNi66DJpAU7d83_rEmI3z5DN-xrFOkClC8IupRWtvqyGSO7MkHZdo8hCCX8nJbnHVRgwJAKZriGW6s6hFLNugEBlitnmnR9M9cBocKTFqwroirom"/>
+</div>
+<div class="flex flex-1 flex-col">
+<div class="flex justify-between text-base font-medium text-text-main-light dark:text-text-main-dark">
+<h4 class="line-clamp-2 text-sm leading-tight">High Performance Brake Pads - Front Set</h4>
+<p class="ml-4 text-sm">$89.99</p>
+</div>
+<p class="mt-1 text-xs text-text-sub-light dark:text-text-sub-dark">Part #BP-2024-X</p>
+<p class="text-xs text-text-sub-light dark:text-text-sub-dark">Qty 1</p>
+</div>
+</li>
+<li class="flex gap-4">
+<div class="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark">
+<img class="h-full w-full object-cover object-center" data-alt="New oil filter cartridge for automotive use" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPXf2qWQvkMxWOO-tq8NMytglVvErmxY82kBriK-4tmEUwM6dV82XWLFKYBiMgGDJBC1nfAIVZ3tOD_6dGfT0AY4fD4BCBGaskov7fATGgWl2qxOoBCIgXA8d-h6KwOygKJU_5By-gly_2ArVPinwTIqDIM2tnPn7_bcg1Cy8kDM9w-t0funmEwFRJEabjQP3QkbN0uKNFzlOLasmN0Zz28nzRNHXFdqjvB4eEwpY4FWkKOjbfInbEwqbJKfh3gd9CTq5EAYbgIaSZ"/>
+</div>
+<div class="flex flex-1 flex-col">
+<div class="flex justify-between text-base font-medium text-text-main-light dark:text-text-main-dark">
+<h4 class="line-clamp-2 text-sm leading-tight">Premium Oil Filter</h4>
+<p class="ml-4 text-sm">$14.50</p>
+</div>
+<p class="mt-1 text-xs text-text-sub-light dark:text-text-sub-dark">Part #OF-9921</p>
+<p class="text-xs text-text-sub-light dark:text-text-sub-dark">Qty 2</p>
+</div>
+</li>
+</ul>
+<!-- Pricing Breakdown -->
+<div class="flex flex-col gap-3 border-t border-border-light dark:border-border-dark pt-4">
+<div class="flex justify-between text-sm text-text-sub-light dark:text-text-sub-dark">
+<p>Subtotal</p>
+<p class="font-medium text-text-main-light dark:text-text-main-dark">$118.99</p>
+</div>
+<div class="flex justify-between text-sm text-text-sub-light dark:text-text-sub-dark">
+<p class="flex items-center gap-1">Shipping <span class="material-symbols-outlined text-[14px]" title="Calculated at next step">help</span></p>
+<p class="font-medium text-green-600 dark:text-green-400">Free</p>
+</div>
+<div class="flex justify-between text-sm text-text-sub-light dark:text-text-sub-dark">
+<p>Estimated Tax</p>
+<p class="font-medium text-text-main-light dark:text-text-main-dark">$9.52</p>
+</div>
+</div>
+<!-- Total -->
+<div class="mt-6 flex items-center justify-between border-t border-border-light dark:border-border-dark pt-4">
+<div class="flex flex-col">
+<p class="text-base font-bold text-text-main-light dark:text-text-main-dark">Total</p>
+<p class="text-xs text-text-sub-light dark:text-text-sub-dark">USD</p>
+</div>
+<p class="text-xl font-extrabold text-primary">$128.51</p>
+</div>
+</div>
+<!-- Promo Code Area -->
+<div class="bg-background-light dark:bg-background-dark p-4 border-t border-border-light dark:border-border-dark">
+<div class="relative flex items-center">
+<input class="w-full rounded-md border-0 py-2 pl-3 pr-20 text-text-main-light dark:text-text-main-dark ring-1 ring-inset ring-border-light dark:ring-border-dark placeholder:text-text-sub-light dark:placeholder:text-text-sub-dark focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-surface-light dark:bg-surface-dark" placeholder="Gift card or discount code" type="text"/>
+<button class="absolute right-1 top-1 rounded bg-white dark:bg-surface-dark px-2.5 py-1 text-xs font-semibold text-text-sub-light shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50" type="button">Apply</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- Mobile Order Summary Toggle (Only visible on small screens) -->
+<div class="lg:hidden mt-8 border-t border-border-light dark:border-border-dark pt-6">
+<details class="group">
+<summary class="flex cursor-pointer items-center justify-between list-none text-text-main-light dark:text-text-main-dark font-bold">
+<span>Show Order Summary</span>
+<span class="flex items-center gap-2">
+<span class="text-primary">$128.51</span>
+<span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
+</span>
+</summary>
+<div class="mt-4 text-sm text-text-sub-light dark:text-text-sub-dark">
+<p class="mb-2">Items: 3</p>
+<p class="mb-2">Subtotal: $118.99</p>
+<p class="mb-2">Shipping: Free</p>
+<p>Tax: $9.52</p>
+</div>
+</details>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,199 @@
+<div class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+  <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+    {{ content.checkout.address.title }}
+  </h2>
+
+  @if (loading()) {
+    <app-loading-spinner [height]="200"></app-loading-spinner>
+  } @else {
+    <!-- Saved Addresses -->
+    @if (savedAddresses().length > 0 && !showNewAddressForm()) {
+      <div class="space-y-4 mb-6">
+        @for (address of savedAddresses(); track address.id) {
+          <button
+            (click)="selectAddress(address.id)"
+            type="button"
+            class="w-full text-left p-4 rounded-xl border-2 transition-colors"
+            [ngClass]="{
+              'border-primary bg-blue-50 dark:bg-blue-900/20': selectedAddressId() === address.id,
+              'border-gray-200 dark:border-gray-700': selectedAddressId() !== address.id
+            }">
+            <div class="flex items-start justify-between">
+              <div>
+                <p class="font-medium text-gray-900 dark:text-white">
+                  {{ address.firstName }} {{ address.lastName }}
+                </p>
+                @if (address.label) {
+                  <p class="text-sm text-gray-500">{{ address.label }}</p>
+                }
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  {{ address.street }}
+                  @if (address.apartment) {
+                    , {{ address.apartment }}
+                  }
+                </p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  {{ address.city }}, {{ address.state }} {{ address.zipCode }}
+                </p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">{{ address.phone }}</p>
+              </div>
+              @if (address.isDefault) {
+                <span class="badge badge-info">Default</span>
+              }
+            </div>
+          </button>
+        }
+      </div>
+
+      <button
+        (click)="toggleNewAddressForm()"
+        type="button"
+        class="w-full flex items-center justify-center gap-2 p-4 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-primary hover:text-primary transition-colors mb-6">
+        <app-icon name="add" [size]="20"></app-icon>
+        {{ content.account.addresses.add }}
+      </button>
+    }
+
+    <!-- New Address Form -->
+    @if (showNewAddressForm()) {
+      <form [formGroup]="addressForm" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              {{ content.checkout.address.firstName }} *
+            </label>
+            <input
+              type="text"
+              formControlName="firstName"
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              {{ content.checkout.address.lastName }} *
+            </label>
+            <input
+              type="text"
+              formControlName="lastName"
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+            >
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            {{ content.checkout.address.company }}
+          </label>
+          <input
+            type="text"
+            formControlName="company"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+          >
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            {{ content.checkout.address.address1 }} *
+          </label>
+          <input
+            type="text"
+            formControlName="address1"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+          >
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            {{ content.checkout.address.address2 }}
+          </label>
+          <input
+            type="text"
+            formControlName="address2"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+          >
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="col-span-2 sm:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              {{ content.checkout.address.city }} *
+            </label>
+            <input
+              type="text"
+              formControlName="city"
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              {{ content.checkout.address.state }} *
+            </label>
+            <input
+              type="text"
+              formControlName="state"
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              {{ content.checkout.address.postalCode }} *
+            </label>
+            <input
+              type="text"
+              formControlName="postalCode"
+              placeholder="12345"
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              {{ content.checkout.address.country }} *
+            </label>
+            <select
+              formControlName="country"
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+              <option value="USA">United States</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            {{ content.checkout.address.phone }} *
+          </label>
+          <input
+            type="tel"
+            formControlName="phone"
+            placeholder="(555) 123-4567"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+          >
+        </div>
+      </form>
+
+      @if (savedAddresses().length > 0) {
+        <button
+          (click)="toggleNewAddressForm()"
+          type="button"
+          class="mt-4 text-sm text-primary hover:underline">
+          Use saved address instead
+        </button>
+      }
+    }
+
+    <!-- Continue Button -->
+    <div class="mt-8">
+      <button
+        (click)="continue()"
+        type="button"
+        class="w-full btn btn-primary btn-lg"
+        [disabled]="!canContinue || saving()">
+        @if (saving()) {
+          <div class="spinner w-5 h-5"></div>
+        }
+        {{ content.checkout.address.continue }}
+        <app-icon name="arrow_forward" [size]="18"></app-icon>
+      </button>
+    </div>
+  }
+</div>
+

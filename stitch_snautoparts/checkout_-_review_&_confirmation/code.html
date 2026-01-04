@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout - Review &amp; Confirmation - SN Auto Parts</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "primary-dark": "#0b5ec2",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+              "surface-light": "#ffffff",
+              "surface-dark": "#1a2632",
+              "border-light": "#e5e7eb",
+              "border-dark": "#2d3b4a",
+              "text-main": "#111418",
+              "text-secondary": "#617589",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"],
+              "mono": ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
+            },
+            borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom scrollbar for cleaner look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Step Progress Line */
+        .step-connector::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 100%;
+            height: 2px;
+            background-color: #e5e7eb;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+        .step-connector.active::after {
+            background-color: #137fec;
+        }
+        .step-connector:last-child::after {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col text-text-main dark:text-white transition-colors duration-200">
+<!-- Header / Top Navigation -->
+<header class="flex items-center justify-center border-b border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark sticky top-0 z-30 px-4 sm:px-10 py-4 shadow-sm">
+<div class="flex items-center justify-between w-full max-w-[1200px]">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">local_shipping</span>
+</div>
+<h1 class="text-text-main dark:text-white text-xl font-black tracking-tighter">SN Auto Parts</h1>
+</div>
+<div class="flex items-center gap-2 text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-3 py-1.5 rounded-full border border-green-100 dark:border-green-900/30">
+<span class="material-symbols-outlined text-sm font-bold">lock</span>
+<span class="text-xs font-bold uppercase tracking-wide">Secure Checkout</span>
+</div>
+</div>
+</header>
+<!-- Main Content Layout -->
+<main class="flex-grow w-full flex justify-center py-8 px-4 sm:px-6">
+<div class="w-full max-w-[1200px] flex flex-col gap-8">
+<!-- Breadcrumbs / Progress Steps -->
+<nav class="w-full mb-4">
+<ol class="flex flex-wrap items-center gap-2 sm:gap-4 text-sm font-medium">
+<li class="flex items-center gap-2 text-primary">
+<span class="flex items-center justify-center size-6 rounded-full bg-primary text-white text-xs">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+<span class="hidden sm:inline">Cart</span>
+</li>
+<li class="w-8 h-[2px] bg-primary rounded"></li>
+<li class="flex items-center gap-2 text-primary">
+<span class="flex items-center justify-center size-6 rounded-full bg-primary text-white text-xs">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+<span class="hidden sm:inline">Shipping</span>
+</li>
+<li class="w-8 h-[2px] bg-primary rounded"></li>
+<li class="flex items-center gap-2 text-primary">
+<span class="flex items-center justify-center size-6 rounded-full bg-primary text-white text-xs">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+<span class="hidden sm:inline">Payment</span>
+</li>
+<li class="w-8 h-[2px] bg-primary rounded"></li>
+<li class="flex items-center gap-2 text-text-main dark:text-white">
+<span class="flex items-center justify-center size-6 rounded-full bg-text-main dark:bg-white text-white dark:text-black text-xs font-bold">4</span>
+<span class="font-bold underline decoration-2 underline-offset-4 decoration-primary">Review</span>
+</li>
+</ol>
+</nav>
+<div class="flex flex-col lg:flex-row gap-8 items-start">
+<!-- Left Column: Order Details -->
+<div class="flex-1 w-full flex flex-col gap-6">
+<!-- Page Heading -->
+<div class="flex flex-col gap-2">
+<h2 class="text-3xl sm:text-4xl font-black tracking-tight text-text-main dark:text-white">Review Order</h2>
+<p class="text-text-secondary dark:text-gray-400">Please verify your shipping and payment details before placing the order.</p>
+</div>
+<!-- Shipping Info Card -->
+<section class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden">
+<div class="flex items-center justify-between px-6 py-4 border-b border-border-light dark:border-border-dark bg-gray-50/50 dark:bg-white/5">
+<h3 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+                                Shipping Information
+                            </h3>
+<button class="text-sm font-bold text-primary hover:text-primary-dark hover:underline">Edit</button>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<p class="text-xs font-bold text-text-secondary uppercase tracking-wider mb-1">Ship To</p>
+<p class="font-medium">John Doe</p>
+<p class="text-text-secondary">123 Garage Lane</p>
+<p class="text-text-secondary">Detroit, MI 48201</p>
+</div>
+<div>
+<p class="text-xs font-bold text-text-secondary uppercase tracking-wider mb-1">Method</p>
+<p class="font-medium">Ground Shipping (3-5 Days)</p>
+<p class="text-green-600 dark:text-green-400 text-sm mt-1 font-medium">Estimated Delivery: Oct 24</p>
+</div>
+</div>
+</section>
+<!-- Payment Info Card -->
+<section class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden">
+<div class="flex items-center justify-between px-6 py-4 border-b border-border-light dark:border-border-dark bg-gray-50/50 dark:bg-white/5">
+<h3 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">credit_card</span>
+                                Payment Method
+                            </h3>
+<button class="text-sm font-bold text-primary hover:text-primary-dark hover:underline">Edit</button>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<p class="text-xs font-bold text-text-secondary uppercase tracking-wider mb-1">Card Details</p>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-blue-800 text-2xl">payments</span> <!-- Visa icon placeholder -->
+<p class="font-medium">Visa ending in 4242</p>
+</div>
+<p class="text-text-secondary text-sm">Exp: 12/28</p>
+</div>
+<div>
+<p class="text-xs font-bold text-text-secondary uppercase tracking-wider mb-1">Billing Address</p>
+<p class="font-medium">Same as shipping address</p>
+</div>
+</div>
+</section>
+<!-- Items Card -->
+<section class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden">
+<div class="flex items-center justify-between px-6 py-4 border-b border-border-light dark:border-border-dark bg-gray-50/50 dark:bg-white/5">
+<h3 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">inventory_2</span>
+                                Items in Your Order (2)
+                            </h3>
+<button class="text-sm font-bold text-primary hover:text-primary-dark hover:underline">Edit Cart</button>
+</div>
+<div class="divide-y divide-border-light dark:divide-border-dark">
+<!-- Item 1 -->
+<div class="p-6 flex flex-col sm:flex-row gap-4 sm:items-center">
+<div class="size-20 bg-white rounded-lg border border-border-light p-1 shrink-0 flex items-center justify-center">
+<img alt="Car brake rotor close up with metallic texture" class="w-full h-full object-contain rounded-md mix-blend-multiply dark:mix-blend-normal" data-alt="Close up of a metallic car brake rotor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBovaXvSVM5vVK2n_LIHFyHTJwKIyOefZh4Yu0h9w67By5qO5IrEpaLTIHb2QIqxhaLogcbJ7_HRFLwacgsQ16l2R3GsMK_vz6fIvjPkK8tLU_ESVUmxlLMs-ZizLzYtf0I1IiOgNUtGf5eKlH6vLOzCC1X9mTWqLSzrqusyef1Ar8U0RxZN93S0DKMNixhIKL58TjVTI9iTUHdly1HpMcAZkm6xIi_R8f8dZ03qg1cqdIRkWT9QPauV3s20VeF_XS-FA2ObLd7NFLs"/>
+</div>
+<div class="flex-grow">
+<div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+<div>
+<h4 class="font-bold text-text-main dark:text-white text-lg">Brembo Brake Pads - Front Set</h4>
+<p class="text-sm font-mono text-text-secondary mt-1">SKU: BRM-8829-F</p>
+<div class="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold border border-green-200 dark:border-green-800">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                                Fitment Verified: 2018 Ford F-150
+                                            </div>
+</div>
+<div class="text-right flex flex-row sm:flex-col justify-between items-center sm:items-end w-full sm:w-auto mt-2 sm:mt-0">
+<p class="font-bold text-lg">$85.00</p>
+<p class="text-sm text-text-secondary">Qty: 1</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-6 flex flex-col sm:flex-row gap-4 sm:items-center">
+<div class="size-20 bg-white rounded-lg border border-border-light p-1 shrink-0 flex items-center justify-center">
+<img alt="Plastic bottle of motor oil" class="w-full h-full object-contain rounded-md mix-blend-multiply dark:mix-blend-normal" data-alt="Golden motor oil bottle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnZ5fq7pHbp5QQbU6Hh5DH1y8y0cL0fbUn00HOUU7EabpdUNYMVMnjmtQz54w3aqxBHDVlUc58IrDlfeC8LXlT-__tIY6Ost6du-EWtjQ2auERCsC888O09CgkFhzLDPZoJbh0oaLx5r-8bSCO4dIZYQKQoQhZYkoSjkCj-vKAZQlIDXSyN9GGHDPIAPl8DKxo75KcGGuArPjrP9BB4olnnsCWowBUkDcW_0Ahb5bbG_yHqAByy-csm57pKcV3s2EUPT8zCO_riksj"/>
+</div>
+<div class="flex-grow">
+<div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+<div>
+<h4 class="font-bold text-text-main dark:text-white text-lg">Castrol Edge 5W-30 Motor Oil - 5qt</h4>
+<p class="text-sm font-mono text-text-secondary mt-1">SKU: CST-5W30-5Q</p>
+<p class="text-sm text-text-secondary mt-1">Type: Full Synthetic</p>
+</div>
+<div class="text-right flex flex-row sm:flex-col justify-between items-center sm:items-end w-full sm:w-auto mt-2 sm:mt-0">
+<p class="font-bold text-lg">$60.00</p>
+<p class="text-sm text-text-secondary">Qty: 1</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Sticky Summary -->
+<div class="w-full lg:w-[380px] shrink-0 lg:sticky lg:top-24 flex flex-col gap-4">
+<!-- Summary Card -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-lg p-6 flex flex-col gap-4">
+<h3 class="text-xl font-black text-text-main dark:text-white border-b border-border-light dark:border-border-dark pb-4">Order Summary</h3>
+<div class="space-y-3">
+<div class="flex justify-between text-text-secondary dark:text-gray-400">
+<span>Subtotal</span>
+<span class="text-text-main dark:text-white font-medium">$145.00</span>
+</div>
+<div class="flex justify-between text-text-secondary dark:text-gray-400">
+<span>Shipping</span>
+<span class="text-text-main dark:text-white font-medium">$12.00</span>
+</div>
+<div class="flex justify-between text-text-secondary dark:text-gray-400">
+<span>Estimated Tax</span>
+<span class="text-text-main dark:text-white font-medium">$10.50</span>
+</div>
+</div>
+<div class="border-t border-dashed border-border-light dark:border-border-dark my-2"></div>
+<div class="flex justify-between items-end">
+<span class="text-lg font-bold text-text-main dark:text-white">Total</span>
+<div class="text-right">
+<span class="text-xs text-text-secondary block font-normal mb-1">USD</span>
+<span class="text-3xl font-black text-primary tracking-tight">$167.50</span>
+</div>
+</div>
+<button class="mt-4 w-full bg-primary hover:bg-primary-dark text-white h-14 rounded-lg font-bold text-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 group" onclick="document.getElementById('success-modal').classList.remove('hidden'); window.scrollTo(0,0);">
+<span>Place Order</span>
+<span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+</button>
+<div class="flex items-center justify-center gap-4 mt-2 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+<span class="material-symbols-outlined text-3xl" title="Visa">credit_card</span>
+<span class="material-symbols-outlined text-3xl" title="Mastercard">add_card</span>
+<span class="material-symbols-outlined text-3xl" title="Paypal">account_balance_wallet</span>
+</div>
+<p class="text-xs text-center text-text-secondary mt-2">
+                            By placing your order, you agree to our <a class="underline hover:text-primary" href="#">Terms of Service</a> and <a class="underline hover:text-primary" href="#">Privacy Policy</a>.
+                        </p>
+</div>
+<!-- Trust Box -->
+<div class="bg-blue-50 dark:bg-blue-900/10 rounded-lg p-4 border border-blue-100 dark:border-blue-900/30 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">verified_user</span>
+<div>
+<h4 class="text-sm font-bold text-text-main dark:text-white">Shop with Confidence</h4>
+<p class="text-xs text-text-secondary mt-1">Every purchase is backed by our fitment guarantee and easy 30-day returns.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Simple -->
+<footer class="mt-auto py-8 border-t border-border-light dark:border-border-dark bg-white dark:bg-surface-dark">
+<div class="max-w-[1200px] mx-auto px-6 text-center text-text-secondary text-sm">
+<p>© 2023 SN Auto Parts. All rights reserved.</p>
+</div>
+</footer>
+<!-- Success Confirmation Modal (Hidden by default, triggered by "Place Order") -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in" id="success-modal">
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-2xl max-w-md w-full overflow-hidden flex flex-col transform transition-all animate-scale-in border border-border-light dark:border-border-dark">
+<!-- Modal Header Pattern -->
+<div class="h-32 bg-primary flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+<div class="size-20 rounded-full bg-white flex items-center justify-center shadow-lg relative z-10">
+<span class="material-symbols-outlined text-5xl text-primary font-bold">check</span>
+</div>
+</div>
+<div class="p-8 text-center flex flex-col gap-4">
+<div>
+<h2 class="text-2xl font-black text-text-main dark:text-white mb-2">Order Confirmed!</h2>
+<p class="text-text-secondary">Thank you, John! Your order has been placed successfully.</p>
+</div>
+<div class="bg-background-light dark:bg-background-dark p-4 rounded-lg border border-border-light dark:border-border-dark">
+<p class="text-sm text-text-secondary mb-1 uppercase tracking-wide font-bold">Order ID</p>
+<p class="text-xl font-mono font-bold text-text-main dark:text-white">#SN-8821</p>
+</div>
+<p class="text-sm text-text-secondary">We've sent a confirmation email to <span class="font-bold text-text-main dark:text-white">john.doe@example.com</span> with your tracking details.</p>
+<div class="flex flex-col gap-3 mt-4">
+<button class="w-full bg-primary hover:bg-primary-dark text-white h-12 rounded-lg font-bold shadow transition-colors">Track Order</button>
+<button class="w-full bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-text-main dark:text-white h-12 rounded-lg font-bold border border-border-light dark:border-border-dark transition-colors" onclick="document.getElementById('success-modal').classList.add('hidden')">Continue Shopping</button>
+</div>
+</div>
+</div>
+</div>
+<style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        .animate-scale-in {
+            animation: scaleIn 0.3s ease-out forwards;
+        }
+    </style>
+</body></html>

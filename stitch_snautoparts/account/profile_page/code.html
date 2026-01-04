@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Profile</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec1313",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#181111", /* Matched to component example */
+                        "surface-dark": "#271c1c",
+                        "border-dark": "#392828",
+                        "text-muted": "#b99d9d",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Space Grotesk", "Noto Sans", sans-serif;
+        }
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #181111;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #392828;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ec1313;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-black dark:text-white overflow-x-hidden min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="border-b border-solid border-border-dark bg-background-dark/95 backdrop-blur-sm sticky top-0 z-50">
+<div class="px-5 md:px-10 py-3 max-w-[1440px] mx-auto w-full">
+<div class="flex items-center justify-between gap-4">
+<!-- Logo & Search -->
+<div class="flex items-center gap-4 md:gap-8 flex-1">
+<a class="flex items-center gap-3 text-white hover:opacity-80 transition-opacity" href="#">
+<div class="size-8 text-primary">
+<svg fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2L2 19H22L12 2ZM12 5.8L18.5 17H5.5L12 5.8Z"></path>
+<path d="M7 19H17V21H7V19Z" opacity="0.5"></path>
+</svg>
+</div>
+<h2 class="text-white text-xl font-bold leading-tight tracking-tight uppercase">SN Auto Parts</h2>
+</a>
+<div class="hidden md:flex flex-1 max-w-md">
+<label class="flex w-full items-stretch rounded h-10 overflow-hidden group focus-within:ring-1 focus-within:ring-primary">
+<div class="text-text-muted bg-border-dark flex items-center justify-center pl-3 pr-2">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full bg-border-dark text-white placeholder:text-text-muted border-none focus:ring-0 px-2 text-sm" placeholder="Search for parts by Year, Make, Model..."/>
+</label>
+</div>
+</div>
+<!-- Nav Links & Actions -->
+<div class="flex items-center gap-4 md:gap-8">
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Shop</a>
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Deals</a>
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Brands</a>
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Support</a>
+</nav>
+<div class="flex gap-3">
+<button class="flex items-center justify-center size-10 rounded bg-border-dark text-white hover:bg-primary transition-colors relative">
+<span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+<span class="absolute -top-1 -right-1 size-4 bg-primary text-white text-[10px] font-bold flex items-center justify-center rounded-full border border-background-dark">2</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded bg-border-dark text-white hover:bg-primary transition-colors" title="My Garage">
+<span class="material-symbols-outlined text-[20px]">garage</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded bg-border-dark text-white hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Layout Container -->
+<div class="flex-1 flex justify-center py-8 px-4 md:px-10 lg:px-20">
+<div class="flex flex-col lg:flex-row gap-8 max-w-[1280px] w-full">
+<!-- Sidebar Navigation -->
+<aside class="w-full lg:w-72 flex-shrink-0">
+<div class="bg-surface-dark/50 border border-border-dark rounded-xl p-5 sticky top-24">
+<!-- User Profile Summary -->
+<div class="flex items-center gap-4 mb-6 pb-6 border-b border-border-dark">
+<div class="size-12 rounded-full bg-cover bg-center border-2 border-primary" data-alt="Portrait of a user named John Doe" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBdiMht0zD-BY9XTRJIn2bnvpEcjoOXZ-d-wpSJ7MtstwiRkSx_45biQyVH2Bfglgj7bkst52kXpevUwxQzbbpMXoHQ-l5ALZVovTmt1jkCTF1lZsNZ54mA1WGf6wsbE-WTc7EX-oOV6TFV7VQL5npAZOIxJz0hXQ0bL2GNVhBYy7YUR2Ceog1EsSlWvrHxoUlZ_GEk6TuMtSNinym3lQZVs8RJVoIwjPm1O5JKOv2tlMSn2rN07-_YjJY6B4wiS_TOLLY2ndl_2aMc");'></div>
+<div>
+<h3 class="text-white font-bold leading-tight">John Doe</h3>
+<p class="text-text-muted text-xs">Member since 2023</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-text-muted hover:bg-border-dark hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-sm font-medium">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded bg-primary text-white shadow-lg shadow-primary/20" href="#">
+<span class="material-symbols-outlined text-[20px] fill-1">person</span>
+<span class="text-sm font-bold">Personal Info</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-text-muted hover:bg-border-dark hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+<span class="text-sm font-medium">Addresses</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-text-muted hover:bg-border-dark hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+<span class="text-sm font-medium">Order History</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-text-muted hover:bg-border-dark hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">directions_car</span>
+<span class="text-sm font-medium">My Garage</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-text-muted hover:bg-border-dark hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">shield</span>
+<span class="text-sm font-medium">Security</span>
+</a>
+</nav>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 min-w-0">
+<!-- Page Heading -->
+<div class="mb-8">
+<h1 class="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">Personal Information</h1>
+<p class="text-text-muted">Manage your personal details and contact preferences for a smoother checkout.</p>
+</div>
+<!-- Form Section -->
+<div class="bg-surface-dark border border-border-dark rounded-xl p-6 md:p-8 space-y-8">
+<!-- Identity Fields -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col gap-2">
+<span class="text-white text-sm font-medium">First Name</span>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted material-symbols-outlined text-[20px]">badge</span>
+<input class="w-full bg-background-dark border border-border-dark rounded h-12 pl-10 pr-4 text-white focus:border-primary focus:ring-1 focus:ring-primary placeholder:text-text-muted/50 transition-colors" type="text" value="John"/>
+</div>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-white text-sm font-medium">Last Name</span>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted material-symbols-outlined text-[20px]">badge</span>
+<input class="w-full bg-background-dark border border-border-dark rounded h-12 pl-10 pr-4 text-white focus:border-primary focus:ring-1 focus:ring-primary placeholder:text-text-muted/50 transition-colors" type="text" value="Doe"/>
+</div>
+</label>
+</div>
+<!-- Contact Fields -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col gap-2">
+<span class="text-white text-sm font-medium">Email Address</span>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted material-symbols-outlined text-[20px]">mail</span>
+<input class="w-full bg-background-dark border border-border-dark rounded h-12 pl-10 pr-4 text-white focus:border-primary focus:ring-1 focus:ring-primary placeholder:text-text-muted/50 transition-colors" type="email" value="john.doe@example.com"/>
+</div>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-white text-sm font-medium">Phone Number</span>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted material-symbols-outlined text-[20px]">call</span>
+<input class="w-full bg-background-dark border border-border-dark rounded h-12 pl-10 pr-4 text-white focus:border-primary focus:ring-1 focus:ring-primary placeholder:text-text-muted/50 transition-colors" type="tel" value="+1 (555) 012-3456"/>
+</div>
+</label>
+</div>
+<!-- Additional Info / Preferences (Styled as Cards) -->
+<div class="pt-4 border-t border-border-dark">
+<h3 class="text-lg font-bold text-white mb-4">Default Shipping Address</h3>
+<div class="flex flex-col md:flex-row gap-4">
+<div class="flex-1 bg-background-dark border border-border-dark rounded-lg p-4 flex items-start gap-4 hover:border-text-muted transition-colors cursor-pointer group">
+<div class="bg-border-dark p-2 rounded text-text-muted group-hover:text-white">
+<span class="material-symbols-outlined">home</span>
+</div>
+<div class="flex-1">
+<p class="text-white font-bold text-sm">Home</p>
+<p class="text-text-muted text-sm mt-1">1234 Gearbox Avenue, Suite 100<br/>Detroit, MI 48201</p>
+</div>
+<button class="text-primary text-sm font-bold hover:underline">Edit</button>
+</div>
+<button class="flex-1 border border-dashed border-border-dark rounded-lg p-4 flex flex-col items-center justify-center gap-2 text-text-muted hover:text-white hover:border-primary hover:bg-primary/5 transition-all min-h-[100px]">
+<span class="material-symbols-outlined">add_location_alt</span>
+<span class="text-sm font-medium">Add New Address</span>
+</button>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-4 border-t border-border-dark">
+<button class="px-6 py-3 rounded text-sm font-bold text-text-muted hover:text-white transition-colors">Discard Changes</button>
+<button class="px-6 py-3 rounded bg-primary hover:bg-red-600 text-white text-sm font-bold tracking-wide shadow-lg shadow-primary/25 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                            Save Changes
+                         </button>
+</div>
+</div>
+<!-- Security Quick Link Teaser -->
+<div class="mt-8 bg-background-dark border border-border-dark rounded-xl p-6 flex flex-wrap md:flex-nowrap items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-surface-dark rounded-full text-primary">
+<span class="material-symbols-outlined">lock_reset</span>
+</div>
+<div>
+<h3 class="text-white font-bold">Password &amp; Security</h3>
+<p class="text-text-muted text-sm">Last updated 3 months ago</p>
+</div>
+</div>
+<button class="px-4 py-2 bg-surface-dark border border-border-dark text-white text-sm font-bold rounded hover:bg-border-dark transition-colors whitespace-nowrap">
+                        Update Password
+                    </button>
+</div>
+</main>
+</div>
+</div>
+</body></html>

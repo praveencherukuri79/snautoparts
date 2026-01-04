@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Admin Audit Logs</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d7ff2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922",
+                        "surface-dark": "#1b2127",
+                        "border-dark": "#283039",
+                        "text-secondary": "#9cabba"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for the table container */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1b2127;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3b4754;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #4b5966;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display min-h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="w-full border-b border-gray-200 dark:border-border-dark bg-white dark:bg-surface-dark sticky top-0 z-50">
+<div class="px-6 lg:px-10 py-3 flex items-center justify-between">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tight">SN Auto Parts <span class="text-text-secondary text-sm font-medium ml-2 uppercase tracking-widest">Admin</span></h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center gap-2">
+<button class="flex size-9 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-text-secondary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex size-9 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-text-secondary transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="h-6 w-px bg-gray-200 dark:bg-border-dark"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold leading-none">Alex R.</p>
+<p class="text-xs text-text-secondary mt-1">Super Admin</p>
+</div>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-primary/20" data-alt="User profile picture of an administrator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAwe0dZjIxIhq8RmcgwNpoRHqMCOZuH_IOVSzJqsARLJEbFkwp4meaj14TZLeMB1vTWarw35gr5LayDeB32AVya10sx0A0kYXv4jInUvJKt2lhUubOw7_Onapg64sn9tYlvSjbQrU3s-NC78P3TjsRwQ1yVZIM0tiSCSSk6z-xj-iO-_Ru_fL6Hwe0T4reaStQoCLmz7BwCywklLeIxCLmVUoJbL__AscnXtW5sdijTq-kAnwFebHaOVGO7b5Z5B-yvHHk0ZQRtN-RW");'></div>
+</div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 overflow-y-auto custom-scrollbar">
+<div class="container mx-auto max-w-7xl px-6 py-8">
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="flex mb-6">
+<ol class="inline-flex items-center space-x-1 md:space-x-3">
+<li class="inline-flex items-center">
+<a class="inline-flex items-center text-sm font-medium text-text-secondary hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] mr-2">dashboard</span>
+                                Dashboard
+                            </a>
+</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-text-secondary text-[20px]">chevron_right</span>
+<a class="ml-1 text-sm font-medium text-text-secondary hover:text-primary transition-colors md:ml-2" href="#">Security</a>
+</div>
+</li>
+<li aria-current="page">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-text-secondary text-[20px]">chevron_right</span>
+<span class="ml-1 text-sm font-medium text-slate-900 dark:text-white md:ml-2">Audit Logs</span>
+</div>
+</li>
+</ol>
+</nav>
+<!-- Page Header & Stats -->
+<div class="grid lg:grid-cols-3 gap-6 mb-8">
+<div class="lg:col-span-2">
+<div class="flex flex-col gap-2">
+<h1 class="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">System Audit Logs</h1>
+<p class="text-text-secondary text-lg max-w-2xl">Review system events, user actions, and security alerts to maintain integrity and compliance across the SN Auto Parts platform.</p>
+</div>
+</div>
+<!-- Quick Stats -->
+<div class="grid grid-cols-3 gap-4 lg:col-span-1">
+<div class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-border-dark rounded-lg p-4 flex flex-col justify-between hover:border-primary/50 transition-colors group">
+<div class="flex items-start justify-between">
+<span class="text-xs font-medium text-text-secondary uppercase tracking-wider">Events 24h</span>
+<span class="material-symbols-outlined text-primary text-[20px] opacity-70 group-hover:opacity-100">list_alt</span>
+</div>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-2">1,240</p>
+</div>
+<div class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-border-dark rounded-lg p-4 flex flex-col justify-between hover:border-red-500/50 transition-colors group">
+<div class="flex items-start justify-between">
+<span class="text-xs font-medium text-text-secondary uppercase tracking-wider">Critical</span>
+<span class="material-symbols-outlined text-red-500 text-[20px] opacity-70 group-hover:opacity-100">warning</span>
+</div>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-2">3</p>
+</div>
+<div class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-border-dark rounded-lg p-4 flex flex-col justify-between hover:border-green-500/50 transition-colors group">
+<div class="flex items-start justify-between">
+<span class="text-xs font-medium text-text-secondary uppercase tracking-wider">Admins</span>
+<span class="material-symbols-outlined text-green-500 text-[20px] opacity-70 group-hover:opacity-100">security</span>
+</div>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-2">5</p>
+</div>
+</div>
+</div>
+<!-- Filters & Toolbar -->
+<div class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-border-dark rounded-t-lg p-4 flex flex-col lg:flex-row gap-4 items-start lg:items-end justify-between">
+<!-- Search & Dates -->
+<div class="flex flex-col md:flex-row gap-4 w-full lg:w-auto flex-1">
+<div class="relative w-full md:w-80">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<span class="material-symbols-outlined text-text-secondary">search</span>
+</div>
+<input class="block w-full p-2.5 pl-10 text-sm text-slate-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary focus:border-primary dark:bg-[#111418] dark:border-border-dark dark:placeholder-text-secondary dark:text-white dark:focus:ring-primary dark:focus:border-primary transition-all" placeholder="Search Log ID, User, or Action..." type="text"/>
+</div>
+<div class="relative w-full md:w-64">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<span class="material-symbols-outlined text-text-secondary">calendar_today</span>
+</div>
+<input class="block w-full p-2.5 pl-10 text-sm text-slate-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary focus:border-primary dark:bg-[#111418] dark:border-border-dark dark:placeholder-text-secondary dark:text-white dark:focus:ring-primary dark:focus:border-primary transition-all" placeholder="Select Date Range" type="text"/>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-wrap items-center gap-3 w-full lg:w-auto justify-end">
+<div class="flex items-center gap-2">
+<select class="bg-gray-50 border border-gray-300 text-slate-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-auto p-2.5 dark:bg-[#111418] dark:border-border-dark dark:placeholder-text-secondary dark:text-white dark:focus:ring-primary dark:focus:border-primary">
+<option selected="">Severity: All</option>
+<option value="info">Info</option>
+<option value="warning">Warning</option>
+<option value="critical">Critical</option>
+</select>
+<select class="bg-gray-50 border border-gray-300 text-slate-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-auto p-2.5 dark:bg-[#111418] dark:border-border-dark dark:placeholder-text-secondary dark:text-white dark:focus:ring-primary dark:focus:border-primary">
+<option selected="">Module: All</option>
+<option value="inventory">Inventory</option>
+<option value="users">Users</option>
+<option value="orders">Orders</option>
+</select>
+</div>
+<button class="text-slate-900 dark:text-white bg-white dark:bg-transparent border border-gray-300 dark:border-border-dark hover:bg-gray-100 dark:hover:bg-white/5 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center transition-colors">
+<span class="material-symbols-outlined text-[18px] mr-2">download</span>
+                            Export
+                        </button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="relative overflow-x-auto border-x border-b border-gray-200 dark:border-border-dark rounded-b-lg bg-white dark:bg-surface-dark">
+<table class="w-full text-sm text-left text-text-secondary">
+<thead class="text-xs text-text-secondary uppercase bg-gray-50 dark:bg-[#151a20] border-b border-gray-200 dark:border-border-dark">
+<tr>
+<th class="px-6 py-4 font-semibold tracking-wider" scope="col">
+<div class="flex items-center cursor-pointer hover:text-primary transition-colors">
+                                        Timestamp
+                                        <span class="material-symbols-outlined text-[16px] ml-1">arrow_downward</span>
+</div>
+</th>
+<th class="px-6 py-4 font-semibold tracking-wider" scope="col">Severity</th>
+<th class="px-6 py-4 font-semibold tracking-wider" scope="col">Actor</th>
+<th class="px-6 py-4 font-semibold tracking-wider w-1/3" scope="col">Action</th>
+<th class="px-6 py-4 font-semibold tracking-wider" scope="col">IP Address</th>
+<th class="px-6 py-4 font-semibold tracking-wider" scope="col">Resource ID</th>
+<th class="px-6 py-4 text-right" scope="col">
+<span class="sr-only">Actions</span>
+</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-border-dark">
+<!-- Row 1: Critical -->
+<tr class="bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4 font-mono text-slate-900 dark:text-white whitespace-nowrap">
+                                    2023-10-24 14:32:05
+                                </td>
+<td class="px-6 py-4">
+<span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded border border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-900/50 inline-flex items-center">
+<span class="w-1.5 h-1.5 bg-red-500 rounded-full mr-1.5"></span>
+                                        Critical
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover bg-center" data-alt="Avatar of user Sarah J." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOM29TLi4eyMMnIk2C_vhUU0s1AzhFX9gail2djd41KwRLvr1YSvida7LvGMo9Ozbp6_Sx136sfaCGmnkI4w2FZK8RHOD7hr2YspfqPqfhCoe-nPrUHtDYggLrzv9UUk5ERpHu6JypQyhpgKxEi9V-mAFjEfiHhJx8PV5AX_qgC-48VG4fwoWEUfjde5uD8QfpaUVaq3O9I-yYQ5nWcsPSHJQ2JiCHYyAgkRpSb1tOYxLH6Z2eIwY70BYE6ENNBC6vb4jybcZ1UKVS");'></div>
+<span class="font-medium text-slate-900 dark:text-white">Sarah J.</span>
+</div>
+</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">
+                                    Failed Login Attempt (3x)
+                                </td>
+<td class="px-6 py-4 font-mono">192.168.1.42</td>
+<td class="px-6 py-4 font-mono text-primary hover:underline cursor-pointer">USER-8821</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-secondary hover:text-slate-900 dark:hover:text-white">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Info -->
+<tr class="bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4 font-mono text-slate-900 dark:text-white whitespace-nowrap">
+                                    2023-10-24 14:28:12
+                                </td>
+<td class="px-6 py-4">
+<span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded border border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-900/50 inline-flex items-center">
+<span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-1.5"></span>
+                                        Info
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover bg-center" data-alt="Avatar of user Alex R." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCtzQCkAhi8vOLum4Ma11WfMuo3IEUci1R5HFCvq5XvDhmvA7o9G9WRy4Ux1svl2a5Up5h8GXCcWByRGIqO4TLqkNEInSgf49lrdVouTYSM5MYBRzwGsJ7BoJIrKQMwZcK5Fdo6DeYYEnH_m1fpXk9DJ2Rj2TNI-FzTLR9gNXKetrxwT4mXNoBENO85_hBiMmgtWr2ck6BXTCwzcQWbxot8YJd2I3JTP6TexNSgiALLvs3jiin-zCpRiTdm6vGuDGpsRtzF0TUjMhCL");'></div>
+<span class="font-medium text-slate-900 dark:text-white">Alex R.</span>
+</div>
+</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">
+                                    Updated Inventory Quantity
+                                </td>
+<td class="px-6 py-4 font-mono">10.0.0.51</td>
+<td class="px-6 py-4 font-mono text-primary hover:underline cursor-pointer">SKU-9920</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-secondary hover:text-slate-900 dark:hover:text-white">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Warning -->
+<tr class="bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group border-l-2 border-l-transparent hover:border-l-primary">
+<td class="px-6 py-4 font-mono text-slate-900 dark:text-white whitespace-nowrap">
+                                    2023-10-24 13:45:00
+                                </td>
+<td class="px-6 py-4">
+<span class="bg-orange-100 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded border border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-900/50 inline-flex items-center">
+<span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-1.5"></span>
+                                        Warning
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-primary/20 flex items-center justify-center text-[10px] font-bold text-primary">SYS</div>
+<span class="font-medium text-slate-900 dark:text-white">System</span>
+</div>
+</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">
+                                    API Rate Limit Exceeded
+                                </td>
+<td class="px-6 py-4 font-mono">127.0.0.1</td>
+<td class="px-6 py-4 font-mono text-primary hover:underline cursor-pointer">API-GW</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-secondary hover:text-slate-900 dark:hover:text-white">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Info -->
+<tr class="bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4 font-mono text-slate-900 dark:text-white whitespace-nowrap">
+                                    2023-10-24 12:10:33
+                                </td>
+<td class="px-6 py-4">
+<span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded border border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-900/50 inline-flex items-center">
+<span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-1.5"></span>
+                                        Info
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover bg-center" data-alt="Avatar of user Mike T." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBkDELDNhKX37IFBok_3nMy6C6r6zCSOkKk0miWMLYbK_Vzm2JOUv1bMnvpT1U5ak9royYwUne_bNLIYNe8bIZmtPSxgXvjbVhdOkJuRBWCvjl6kF17dztVcP8SCJdXtSBzrOopGh8EeKpWyNv0ruff9918ZqGidV-QVGK85feOsNhp-43R8PYsEYAiHAzi0amKYVSIDjYnJG7x2ro8zKEyDvKDG77M4cVVYfrmPpWUe9J6AhJ_q4rsZKamxATF_XxYdJ0mKajlEufn");'></div>
+<span class="font-medium text-slate-900 dark:text-white">Mike T.</span>
+</div>
+</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">
+                                    Exported User Report
+                                </td>
+<td class="px-6 py-4 font-mono">192.168.1.10</td>
+<td class="px-6 py-4 font-mono text-primary hover:underline cursor-pointer">REP-2023-X</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-secondary hover:text-slate-900 dark:hover:text-white">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Info -->
+<tr class="bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4 font-mono text-slate-900 dark:text-white whitespace-nowrap">
+                                    2023-10-24 11:05:12
+                                </td>
+<td class="px-6 py-4">
+<span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded border border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-900/50 inline-flex items-center">
+<span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-1.5"></span>
+                                        Info
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover bg-center" data-alt="Avatar of user Alex R." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBNMEhBZ-lYxUUk1gKtpESR7W66nDMVCG0--8dScYWgOKJAf7onBbGD1ep74-2_h3XNJ_QHh4YlMFWVv7oJaX8p-4xF1jzbsEkvPrGTzL_cgG4Im_oWEYl8Ccz6mVUpXo5bgmw1yPcuztHNOf0pAORh7ByxabSwvthKQWgJLWd63t17jOzWdIt_wqduc_EtiHxIWyI9tNj25De3zcZdYk4MFxKSyvU-Hs5qHbms1nl4XmIEoj9uKUR4ZrmY-0p1i33AjjUkUixt3GrH");'></div>
+<span class="font-medium text-slate-900 dark:text-white">Alex R.</span>
+</div>
+</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">
+                                    Created New Category "EV Parts"
+                                </td>
+<td class="px-6 py-4 font-mono">10.0.0.51</td>
+<td class="px-6 py-4 font-mono text-primary hover:underline cursor-pointer">CAT-105</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-secondary hover:text-slate-900 dark:hover:text-white">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</td>
+</tr>
+<!-- Row 6: Info - Expanded State Sim (just visually distinct) -->
+<tr class="bg-gray-50 dark:bg-[#151a20] border-l-2 border-l-primary transition-colors group">
+<td class="px-6 py-4 font-mono text-slate-900 dark:text-white whitespace-nowrap">
+                                    2023-10-24 09:15:44
+                                </td>
+<td class="px-6 py-4">
+<span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded border border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-900/50 inline-flex items-center">
+<span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-1.5"></span>
+                                        Info
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover bg-center" data-alt="Avatar of user Sarah J." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBySm_2WBxgp1syUkzHAcc7P8HSlIzrCRJGS6PubjU2gJMDfVNNCQQcVpdT31nLk2ANVDmwwO04S-5vmgCN2NJWGbkntM3Gj1NOhJlXH9qme-nGXN7qAKxKRVEVESemr0gO-IqH8iLr22f3Y8o41FsjCCEmyKoiP6mh3tvF_YqPO1lYBQNm0w4bg18kZa-GW2N7y8ZRNRZtdGHr9SPFp3PNqhyojE-dW2vV5QO1dB5ycyJX8PkFbp27QpiGQBEDHEYKSGOXpVR8P9-3");'></div>
+<span class="font-medium text-slate-900 dark:text-white">Sarah J.</span>
+</div>
+</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">
+                                    Updated Price on Headlight Assembly
+                                </td>
+<td class="px-6 py-4 font-mono">192.168.1.42</td>
+<td class="px-6 py-4 font-mono text-primary hover:underline cursor-pointer">SKU-4402</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-primary/80">
+<span class="material-symbols-outlined">expand_less</span>
+</button>
+</td>
+</tr>
+<!-- Expanded Detail View -->
+<tr class="bg-gray-50 dark:bg-[#151a20]">
+<td class="px-6 pb-6 pt-0" colspan="7">
+<div class="p-4 rounded border border-gray-200 dark:border-border-dark bg-white dark:bg-black/20">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-xs font-medium text-text-secondary uppercase mb-2">Previous Value</p>
+<div class="font-mono text-xs bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 p-2 rounded">
+                                                    "price": 149.99
+                                                </div>
+</div>
+<div>
+<p class="text-xs font-medium text-text-secondary uppercase mb-2">New Value</p>
+<div class="font-mono text-xs bg-green-50 dark:bg-green-900/10 text-green-600 dark:text-green-400 p-2 rounded">
+                                                    "price": 159.99
+                                                </div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between p-4 bg-white dark:bg-surface-dark border-x border-b border-gray-200 dark:border-border-dark rounded-b-lg">
+<div class="flex items-center gap-2">
+<span class="text-sm text-text-secondary">Showing</span>
+<span class="font-semibold text-slate-900 dark:text-white">1-50</span>
+<span class="text-sm text-text-secondary">of</span>
+<span class="font-semibold text-slate-900 dark:text-white">12,400</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center h-8 w-8 rounded hover:bg-gray-100 dark:hover:bg-white/10 text-text-secondary disabled:opacity-50">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="flex items-center justify-center h-8 w-8 rounded bg-primary text-white text-sm font-medium">1</button>
+<button class="flex items-center justify-center h-8 w-8 rounded hover:bg-gray-100 dark:hover:bg-white/10 text-slate-900 dark:text-white text-sm font-medium">2</button>
+<button class="flex items-center justify-center h-8 w-8 rounded hover:bg-gray-100 dark:hover:bg-white/10 text-slate-900 dark:text-white text-sm font-medium">3</button>
+<span class="text-text-secondary">...</span>
+<button class="flex items-center justify-center h-8 w-8 rounded hover:bg-gray-100 dark:hover:bg-white/10 text-slate-900 dark:text-white text-sm font-medium">248</button>
+<button class="flex items-center justify-center h-8 w-8 rounded hover:bg-gray-100 dark:hover:bg-white/10 text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

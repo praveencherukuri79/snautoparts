@@ -1,0 +1,6 @@
+/* App root styles */
+:host {
+  display: block;
+  min-height: 100vh;
+}
+

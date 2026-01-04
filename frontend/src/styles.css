@@ -3,33 +3,37 @@
 @tailwind utilities;
 
 /* ============================================
-   CSS CUSTOM PROPERTIES (Theme Variables)
+   DESIGN TOKENS (Theme Variables)
    ============================================ */
 
 :root {
-  /* Primary Colors */
+  /* --------------------------------------------
+     Primitive palette (do not use directly in components)
+     -------------------------------------------- */
+
+  /* Primary */
   --color-primary: #137fec;
   --color-primary-hover: #0f6bd0;
   --color-primary-light: rgba(19, 127, 236, 0.1);
 
-  /* Background Colors */
+  /* Background (legacy names; semantic tokens below) */
   --color-bg-light: #f6f7f8;
   --color-bg-dark: #101922;
 
-  /* Surface Colors */
+  /* Surface (legacy names; semantic tokens below) */
   --color-surface-light: #ffffff;
   --color-surface-dark: #1b2631;
 
-  /* Border Colors */
+  /* Border (legacy names; semantic tokens below) */
   --color-border-light: #e5e7eb;
   --color-border-dark: #2a3b4d;
 
-  /* Text Colors */
+  /* Text */
   --color-text-primary: #111418;
   --color-text-secondary: #374151;
   --color-text-muted: #617589;
 
-  /* Status Colors */
+  /* Status */
   --color-success: #16a34a;
   --color-warning: #f59e0b;
   --color-error: #dc2626;
@@ -52,13 +56,77 @@
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
   --radius-full: 9999px;
+
+  /* --------------------------------------------
+     Semantic tokens (USE THESE everywhere)
+     -------------------------------------------- */
+
+  /* Core surfaces */
+  --color-bg: var(--color-bg-light);
+  --color-surface: var(--color-surface-light);
+  --color-border: var(--color-border-light);
+
+  /* Text */
+  --color-text: var(--color-text-primary);
+
+  /* Interactive */
+  --color-focus: var(--color-primary);
+
+  /* Subtle surfaces (used by secondary/outline buttons, etc.) */
+  --color-surface-subtle: #f3f4f6; /* Tailwind gray-100 */
+  --color-surface-subtle-hover: #e5e7eb; /* Tailwind gray-200 */
+  --color-surface-hover: #f9fafb; /* Tailwind gray-50 */
+  --color-border-strong: #d1d5db; /* Tailwind gray-300 */
+
+  /* Cards */
+  --color-card-border-hover: #60a5fa; /* Tailwind blue-400 (matches previous .card-hover) */
+
+  /* Status badges */
+  --color-success-bg: #dcfce7; /* Tailwind green-100 */
+  --color-success-text: #15803d; /* Tailwind green-700 */
+  --color-warning-bg: #fef9c3; /* Tailwind yellow-100 */
+  --color-warning-text: #a16207; /* Tailwind yellow-700 */
+  --color-error-bg: #fee2e2; /* Tailwind red-100 */
+  --color-error-text: #b91c1c; /* Tailwind red-700 */
+  --color-info-bg: #dbeafe; /* Tailwind blue-100 */
+  --color-info-text: #1d4ed8; /* Tailwind blue-700 */
 }
 
-/* Dark Mode Variables */
+/* --------------------------------------------
+   Multi-theme support (preferred: html[data-theme="..."])
+   Keep `.dark` for backwards compatibility with Tailwind darkMode: 'class'.
+   -------------------------------------------- */
+
+html[data-theme="light"] {
+  /* Explicitly opt into the default theme (matches :root). */
+}
+
+html[data-theme="dark"],
 .dark {
+  --color-bg: var(--color-bg-dark);
+  --color-surface: var(--color-surface-dark);
+  --color-border: var(--color-border-dark);
+
   --color-text-primary: #ffffff;
   --color-text-secondary: #d1d5db;
   --color-text-muted: #9cabba;
+  --color-text: var(--color-text-primary);
+
+  /* Subtle surfaces (dark equivalents of the previous Tailwind palette usage) */
+  --color-surface-subtle: #1f2937; /* Tailwind gray-800 */
+  --color-surface-subtle-hover: #374151; /* Tailwind gray-700 */
+  --color-surface-hover: #1f2937; /* Tailwind gray-800 */
+  --color-border-strong: #4b5563; /* Tailwind gray-600 */
+
+  /* Status badges (dark equivalents of previous Tailwind usage) */
+  --color-success-bg: rgba(20, 83, 45, 0.3); /* Tailwind green-900 / 30% */
+  --color-success-text: #4ade80; /* Tailwind green-400 */
+  --color-warning-bg: rgba(113, 63, 18, 0.3); /* Tailwind yellow-900 / 30% */
+  --color-warning-text: #facc15; /* Tailwind yellow-400 */
+  --color-error-bg: rgba(127, 29, 29, 0.3); /* Tailwind red-900 / 30% */
+  --color-error-text: #f87171; /* Tailwind red-400 */
+  --color-info-bg: rgba(30, 58, 138, 0.3); /* Tailwind blue-900 / 30% */
+  --color-info-text: #60a5fa; /* Tailwind blue-400 */
 }
 
 /* ============================================
@@ -79,6 +147,12 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessible focus ring (minimal + theme-safe; doesn't affect mouse focus) */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 /* ============================================
@@ -104,20 +178,12 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-light);
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: var(--color-bg-dark);
+  background: var(--color-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border-light);
+  background: var(--color-border);
   border-radius: 4px;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: var(--color-border-dark);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -151,23 +217,42 @@ select {
    ============================================ */
 
 .btn {
-  @apply inline-flex items-center justify-center gap-2 font-bold rounded-lg transition-all duration-200;
+  @apply inline-flex items-center justify-center gap-2 font-bold rounded-lg;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .btn-primary {
-  @apply bg-primary text-white hover:bg-primary-hover shadow-md;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
 }
 
 .btn-primary:hover {
+  background-color: var(--color-primary-hover);
   box-shadow: var(--shadow-primary);
 }
 
 .btn-secondary {
-  @apply bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700;
+  background-color: var(--color-surface-subtle);
+  color: var(--color-text-primary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-surface-subtle-hover);
 }
 
 .btn-outline {
-  @apply border border-gray-300 bg-transparent hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800;
+  background-color: transparent;
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-surface-hover);
 }
 
 .btn-sm {
@@ -187,11 +272,21 @@ select {
    ============================================ */
 
 .card {
-  @apply bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
 }
 
 .card-hover {
-  @apply transition-all duration-200 hover:shadow-md hover:border-blue-400;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.card-hover:hover {
+  border-color: var(--color-card-border-hover);
+  box-shadow: var(--shadow-md);
 }
 
 /* ============================================
@@ -199,7 +294,9 @@ select {
    ============================================ */
 
 .spinner {
-  @apply animate-spin rounded-full border-2 border-gray-300 border-t-primary;
+  @apply animate-spin rounded-full border-2;
+  border-color: var(--color-border-strong);
+  border-top-color: var(--color-primary);
 }
 
 /* ============================================
@@ -211,19 +308,23 @@ select {
 }
 
 .badge-success {
-  @apply bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400;
+  background-color: var(--color-success-bg);
+  color: var(--color-success-text);
 }
 
 .badge-warning {
-  @apply bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400;
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning-text);
 }
 
 .badge-error {
-  @apply bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400;
+  background-color: var(--color-error-bg);
+  color: var(--color-error-text);
 }
 
 .badge-info {
-  @apply bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400;
+  background-color: var(--color-info-bg);
+  color: var(--color-info-text);
 }
 
 /* ============================================

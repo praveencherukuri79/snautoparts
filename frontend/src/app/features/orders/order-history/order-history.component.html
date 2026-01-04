@@ -1,20 +1,20 @@
 <app-header></app-header>
 
-<main class="flex-1 bg-background-light dark:bg-background-dark">
+<main class="flex-1 bg-background">
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-text mb-8">
       {{ content.orders.title }}
     </h1>
 
     @if (loading()) {
       <app-loading-spinner [height]="300"></app-loading-spinner>
     } @else if (orders().length === 0) {
-      <div class="text-center py-16 bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-700">
-        <app-icon name="receipt_long" [size]="64" class="text-gray-300 mb-4"></app-icon>
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+      <div class="text-center py-16 bg-surface rounded-2xl border border-border">
+        <app-icon name="receipt_long" [size]="64" class="text-text-muted opacity-50 mb-4"></app-icon>
+        <h2 class="text-xl font-semibold text-text mb-2">
           {{ content.account.orders.noOrders }}
         </h2>
-        <p class="text-gray-500 mb-6">Start shopping to see your orders here!</p>
+        <p class="text-text-muted mb-6">Start shopping to see your orders here!</p>
         <a routerLink="/products" class="btn btn-primary btn-lg">
           {{ content.navigation.shop }}
         </a>
@@ -22,21 +22,21 @@
     } @else {
       <div class="space-y-4">
         @for (order of orders(); track order.id) {
-          <div class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div class="bg-surface rounded-2xl border border-border overflow-hidden">
             <!-- Order Header -->
-            <div class="p-4 bg-gray-50 dark:bg-gray-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="p-4 bg-surface-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div class="flex flex-wrap items-center gap-4 sm:gap-8">
                 <div>
-                  <p class="text-xs text-gray-500 uppercase">{{ content.orders.orderNumber }}</p>
+                  <p class="text-xs text-text-muted uppercase">{{ content.orders.orderNumber }}</p>
                   <p class="font-semibold text-primary">{{ order.orderNumber }}</p>
                 </div>
                 <div>
-                  <p class="text-xs text-gray-500 uppercase">{{ content.orders.date }}</p>
-                  <p class="font-medium text-gray-900 dark:text-white">{{ order.createdAt | date:'MMM d, y' }}</p>
+                  <p class="text-xs text-text-muted uppercase">{{ content.orders.date }}</p>
+                  <p class="font-medium text-text">{{ order.createdAt | date:'MMM d, y' }}</p>
                 </div>
                 <div>
-                  <p class="text-xs text-gray-500 uppercase">{{ content.orders.total }}</p>
-                  <p class="font-medium text-gray-900 dark:text-white">{{ order.totalAmount | currency }}</p>
+                  <p class="text-xs text-text-muted uppercase">{{ content.orders.total }}</p>
+                  <p class="font-medium text-text">{{ order.totalAmount | currency }}</p>
                 </div>
               </div>
               <div class="flex items-center gap-4">
@@ -54,19 +54,19 @@
               <div class="flex flex-wrap gap-4">
                 @for (item of order.items.slice(0, 4); track item.id) {
                   <div class="flex items-center gap-3">
-                    <div class="w-16 h-16 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                      <app-icon name="inventory_2" [size]="24" class="text-gray-400"></app-icon>
+                    <div class="w-16 h-16 rounded-lg bg-surface-subtle flex items-center justify-center">
+                      <app-icon name="inventory_2" [size]="24" class="text-text-muted"></app-icon>
                     </div>
                     <div>
-                      <p class="text-sm font-medium text-gray-900 dark:text-white line-clamp-1 max-w-[150px]">
+                      <p class="text-sm font-medium text-text line-clamp-1 max-w-[150px]">
                         {{ item.name }}
                       </p>
-                      <p class="text-xs text-gray-500">Qty: {{ item.quantity }}</p>
+                      <p class="text-xs text-text-muted">Qty: {{ item.quantity }}</p>
                     </div>
                   </div>
                 }
                 @if (order.items.length > 4) {
-                  <div class="flex items-center text-sm text-gray-500">
+                  <div class="flex items-center text-sm text-text-muted">
                     +{{ order.items.length - 4 }} more items
                   </div>
                 }

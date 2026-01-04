@@ -1,0 +1,156 @@
+/* ============================================
+   DESIGN TOKENS (Semantic + Theme Values)
+   Default theme values live in :root.
+   Theme overrides live in theme.*.css files.
+   ============================================ */
+
+:root {
+  /* --------------------------------------------
+     Primitive palette (theme values)
+     -------------------------------------------- */
+
+  /* Primary */
+  --color-primary: #137fec;
+  --color-primary-hover: #0f6bd0;
+  --color-primary-light: rgba(19, 127, 236, 0.1);
+  --color-primary-contrast: #ffffff;
+
+  /* Background */
+  --color-bg-light: #f6f7f8;
+  --color-bg-dark: #101922;
+
+  /* Surface */
+  --color-surface-light: #ffffff;
+  --color-surface-dark: #1b2631;
+
+  /* Border */
+  --color-border-light: #e5e7eb;
+  --color-border-dark: #2a3b4d;
+
+  /* Text */
+  --color-text-primary: #111418;
+  --color-text-secondary: #374151;
+  --color-text-muted: #617589;
+
+  /* Status */
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-error: #dc2626;
+  --color-info: #0ea5e9;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-primary: 0 4px 14px 0 rgba(19, 127, 236, 0.3);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* --------------------------------------------
+     Semantic tokens (USE THESE everywhere)
+     -------------------------------------------- */
+
+  /* Core surfaces */
+  --color-bg: var(--color-bg-light);
+  --color-surface: var(--color-surface-light);
+  --color-border: var(--color-border-light);
+  --color-surface-raised: #ffffff; /* matches current light surfaces */
+
+  /* Text */
+  --color-text: var(--color-text-primary);
+
+  /* Interactive */
+  --color-focus: var(--color-primary);
+
+  /* Subtle surfaces (used by secondary/outline buttons, etc.) */
+  --color-surface-subtle: #f3f4f6; /* Tailwind gray-100 */
+  --color-surface-subtle-hover: #e5e7eb; /* Tailwind gray-200 */
+  --color-surface-hover: #f9fafb; /* Tailwind gray-50 */
+  --color-border-strong: #d1d5db; /* Tailwind gray-300 */
+
+  /* Cards */
+  --color-card-border-hover: #60a5fa; /* Tailwind blue-400 */
+
+  /* Status surfaces/text (light theme) */
+  --color-success-bg: #dcfce7; /* Tailwind green-100 */
+  --color-success-text: #15803d; /* Tailwind green-700 */
+  --color-warning-bg: #fef9c3; /* Tailwind yellow-100 */
+  --color-warning-text: #a16207; /* Tailwind yellow-700 */
+  --color-error-bg: #fee2e2; /* Tailwind red-100 */
+  --color-error-text: #b91c1c; /* Tailwind red-700 */
+  --color-info-bg: #dbeafe; /* Tailwind blue-100 */
+  --color-info-text: #1d4ed8; /* Tailwind blue-700 */
+
+  /* Inputs */
+  --color-input-bg: var(--color-surface-light);
+  --color-input-border: var(--color-border-strong);
+
+  /* Alerts (match existing UI) */
+  --color-alert-error-bg: #fef2f2; /* Tailwind red-50 */
+  --color-alert-error-border: #fecaca; /* Tailwind red-200 */
+  --color-alert-error-text: var(--color-error);
+
+  --color-alert-success-bg: #f0fdf4; /* Tailwind green-50 */
+  --color-alert-success-border: #bbf7d0; /* Tailwind green-200 */
+  --color-alert-success-text: var(--color-success);
+
+  --color-alert-warning-bg: #fffbeb; /* Tailwind amber-50 */
+  --color-alert-warning-border: #fde68a; /* Tailwind amber-200 */
+  --color-alert-warning-text: #92400e; /* Tailwind amber-800 */
+  --color-alert-warning-border-subtle: #fef3c7; /* Tailwind amber-100 */
+
+  /* Role badges (match existing dev panel colors) */
+  --color-role-admin-bg: #f3e8ff; /* Tailwind purple-100 */
+  --color-role-admin-text: #7e22ce; /* Tailwind purple-700 */
+  --color-role-manager-bg: #dbeafe; /* Tailwind blue-100 */
+  --color-role-manager-text: #1d4ed8; /* Tailwind blue-700 */
+  --color-role-customer-bg: #dcfce7; /* Tailwind green-100 */
+  --color-role-customer-text: #15803d; /* Tailwind green-700 */
+
+  /* Role avatar solids (token-driven replacements for bg-*-500) */
+  --color-role-admin-solid: #a855f7; /* Tailwind purple-500 */
+  --color-role-manager-solid: #3b82f6; /* Tailwind blue-500 */
+  --color-role-customer-solid: #6b7280; /* Tailwind gray-500 */
+
+  /* Code chip */
+  --color-code-bg: #f3f4f6; /* Tailwind gray-100 */
+  --color-code-text: #1f2937; /* Tailwind gray-800 */
+
+  /* Overlay */
+  --color-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Footer (dark section, token-driven) */
+  --color-footer-bg: #111827; /* Tailwind gray-900 */
+  --color-footer-text: #d1d5db; /* Tailwind gray-300 */
+  --color-footer-muted: #9ca3af; /* Tailwind gray-400 */
+  --color-footer-border: #1f2937; /* Tailwind gray-800 */
+  --color-footer-input-bg: #1f2937; /* Tailwind gray-800 */
+  --color-footer-input-border: #374151; /* Tailwind gray-700 */
+  --color-footer-input-placeholder: #6b7280; /* Tailwind gray-500 */
+
+  /* Home hero (token-driven) */
+  --color-hero-from: #111827; /* Tailwind gray-900 */
+  --color-hero-via: #1f2937; /* Tailwind gray-800 */
+  --color-hero-to: rgba(30, 58, 138, 0.4); /* Tailwind blue-900 / 40% */
+  --color-hero-text: #ffffff;
+  --color-hero-muted: #d1d5db; /* Tailwind gray-300 */
+  --color-hero-cta-secondary-bg: rgba(255, 255, 255, 0.1);
+  --color-hero-cta-secondary-bg-hover: rgba(255, 255, 255, 0.2);
+  --color-hero-cta-secondary-border: rgba(255, 255, 255, 0.3);
+
+  /* Overlay strengths (for gradients) */
+  --color-overlay-strong: rgba(0, 0, 0, 0.7);
+  --color-overlay-soft: rgba(0, 0, 0, 0.2);
+}
+
+

@@ -1,4 +1,4 @@
-<header class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-gray-200 dark:border-gray-700">
+<header class="sticky top-0 z-50 bg-surface border-b border-border">
   <div class="container mx-auto px-4">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
@@ -9,22 +9,22 @@
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center gap-6">
         <a routerLink="/" routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
-           class="text-sm font-medium text-gray-700 hover:text-primary transition-colors">
+           class="text-sm font-medium text-text-secondary hover:text-primary transition-colors">
           {{ content.navigation.home }}
         </a>
         <a routerLink="/products" routerLinkActive="text-primary"
-           class="text-sm font-medium text-gray-700 hover:text-primary transition-colors">
+           class="text-sm font-medium text-text-secondary hover:text-primary transition-colors">
           {{ content.navigation.shop }}
         </a>
         @if (showManagerLink) {
           <a routerLink="/manager" routerLinkActive="text-primary"
-             class="text-sm font-medium text-gray-700 hover:text-primary transition-colors">
+             class="text-sm font-medium text-text-secondary hover:text-primary transition-colors">
             {{ content.navigation.manager }}
           </a>
         }
         @if (showAdminLink) {
           <a routerLink="/admin" routerLinkActive="text-primary"
-             class="text-sm font-medium text-gray-700 hover:text-primary transition-colors">
+             class="text-sm font-medium text-text-secondary hover:text-primary transition-colors">
             {{ content.navigation.admin }}
           </a>
         }
@@ -36,10 +36,10 @@
         <app-search-dropdown></app-search-dropdown>
 
         <!-- Cart -->
-        <a routerLink="/cart" class="relative p-2 text-gray-600 hover:text-primary transition-colors rounded-lg hover:bg-gray-100">
+        <a routerLink="/cart" class="relative p-2 text-text-muted hover:text-primary transition-colors rounded-lg hover:bg-surface-subtle">
           <app-icon name="shopping_cart" [size]="22"></app-icon>
           @if (cartItemCount() > 0) {
-            <span class="absolute -top-1 -right-1 min-w-[20px] h-5 flex items-center justify-center bg-primary text-white text-xs font-bold rounded-full px-1">
+            <span class="absolute -top-1 -right-1 min-w-[20px] h-5 flex items-center justify-center bg-primary text-primary-contrast text-xs font-bold rounded-full px-1">
               {{ cartItemCount() }}
             </span>
           }
@@ -49,29 +49,29 @@
         <div class="hidden md:flex items-center gap-2">
           @if (isLoggedIn()) {
             <div class="relative group">
-              <button type="button" class="flex items-center gap-2 p-2 text-gray-600 hover:text-primary transition-colors rounded-lg hover:bg-gray-100">
+              <button type="button" class="flex items-center gap-2 p-2 text-text-muted hover:text-primary transition-colors rounded-lg hover:bg-surface-subtle">
                 <app-icon name="account_circle" [size]="22"></app-icon>
                 <span class="text-sm font-medium">{{ displayName }}</span>
                 <app-icon name="expand_more" [size]="18"></app-icon>
               </button>
-              <div class="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-surface-dark rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                <a routerLink="/account" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">
+              <div class="absolute right-0 top-full mt-1 w-48 bg-surface rounded-lg shadow-lg border border-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <a routerLink="/account" class="flex items-center gap-2 px-4 py-2 text-sm text-text-secondary hover:bg-surface-hover hover:text-primary">
                   <app-icon name="person" [size]="18"></app-icon>
                   {{ content.navigation.account }}
                 </a>
-                <a routerLink="/orders" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary">
+                <a routerLink="/orders" class="flex items-center gap-2 px-4 py-2 text-sm text-text-secondary hover:bg-surface-hover hover:text-primary">
                   <app-icon name="receipt_long" [size]="18"></app-icon>
                   {{ content.navigation.orders }}
                 </a>
-                <hr class="my-1 border-gray-200">
-                <button (click)="logout()" type="button" class="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-red-600">
+                <hr class="my-1 border-border">
+                <button (click)="logout()" type="button" class="w-full flex items-center gap-2 px-4 py-2 text-sm text-text-secondary hover:bg-surface-hover hover:text-error">
                   <app-icon name="logout" [size]="18"></app-icon>
                   {{ content.navigation.logout }}
                 </button>
               </div>
             </div>
           } @else {
-            <a routerLink="/login" class="text-sm font-medium text-gray-700 hover:text-primary transition-colors">
+            <a routerLink="/login" class="text-sm font-medium text-text-secondary hover:text-primary transition-colors">
               {{ content.navigation.login }}
             </a>
             <a routerLink="/register" class="btn btn-primary btn-sm">
@@ -84,7 +84,7 @@
         <button 
           (click)="toggleMobileMenu()" 
           type="button" 
-          class="md:hidden p-2 text-gray-600 hover:text-primary transition-colors rounded-lg hover:bg-gray-100">
+          class="md:hidden p-2 text-text-muted hover:text-primary transition-colors rounded-lg hover:bg-surface-subtle">
           <app-icon [name]="mobileMenuOpen() ? 'close' : 'menu'" [size]="24"></app-icon>
         </button>
       </div>
@@ -93,48 +93,48 @@
 
   <!-- Mobile Menu -->
   @if (mobileMenuOpen()) {
-    <div class="md:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-surface-dark">
+    <div class="md:hidden border-t border-border bg-surface">
       <nav class="container mx-auto px-4 py-4 flex flex-col gap-2">
-        <a (click)="closeMobileMenu()" routerLink="/" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+        <a (click)="closeMobileMenu()" routerLink="/" class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:bg-surface-hover rounded-lg">
           <app-icon name="home" [size]="20"></app-icon>
           {{ content.navigation.home }}
         </a>
-        <a (click)="closeMobileMenu()" routerLink="/products" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+        <a (click)="closeMobileMenu()" routerLink="/products" class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:bg-surface-hover rounded-lg">
           <app-icon name="storefront" [size]="20"></app-icon>
           {{ content.navigation.shop }}
         </a>
         @if (showManagerLink) {
-          <a (click)="closeMobileMenu()" routerLink="/manager" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+          <a (click)="closeMobileMenu()" routerLink="/manager" class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:bg-surface-hover rounded-lg">
             <app-icon name="inventory_2" [size]="20"></app-icon>
             {{ content.navigation.manager }}
           </a>
         }
         @if (showAdminLink) {
-          <a (click)="closeMobileMenu()" routerLink="/admin" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+          <a (click)="closeMobileMenu()" routerLink="/admin" class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:bg-surface-hover rounded-lg">
             <app-icon name="admin_panel_settings" [size]="20"></app-icon>
             {{ content.navigation.admin }}
           </a>
         }
-        <hr class="my-2 border-gray-200">
+        <hr class="my-2 border-border">
         @if (isLoggedIn()) {
-          <a (click)="closeMobileMenu()" routerLink="/account" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+          <a (click)="closeMobileMenu()" routerLink="/account" class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:bg-surface-hover rounded-lg">
             <app-icon name="person" [size]="20"></app-icon>
             {{ content.navigation.account }}
           </a>
-          <a (click)="closeMobileMenu()" routerLink="/orders" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+          <a (click)="closeMobileMenu()" routerLink="/orders" class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:bg-surface-hover rounded-lg">
             <app-icon name="receipt_long" [size]="20"></app-icon>
             {{ content.navigation.orders }}
           </a>
-          <button (click)="logout()" type="button" class="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg">
+          <button (click)="logout()" type="button" class="flex items-center gap-3 px-4 py-3 text-error hover:bg-error-bg rounded-lg">
             <app-icon name="logout" [size]="20"></app-icon>
             {{ content.navigation.logout }}
           </button>
         } @else {
-          <a (click)="closeMobileMenu()" routerLink="/login" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+          <a (click)="closeMobileMenu()" routerLink="/login" class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:bg-surface-hover rounded-lg">
             <app-icon name="login" [size]="20"></app-icon>
             {{ content.navigation.login }}
           </a>
-          <a (click)="closeMobileMenu()" routerLink="/register" class="flex items-center gap-3 px-4 py-3 text-primary font-medium hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg">
+          <a (click)="closeMobileMenu()" routerLink="/register" class="flex items-center gap-3 px-4 py-3 text-primary font-medium hover:bg-primary-light rounded-lg">
             <app-icon name="person_add" [size]="20"></app-icon>
             {{ content.navigation.register }}
           </a>

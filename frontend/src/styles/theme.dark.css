@@ -1,0 +1,75 @@
+/* ============================================
+   Theme: Dark
+   Preferred switch: html[data-theme="dark"]
+   Compatibility: .dark (Tailwind darkMode: 'class')
+   ============================================ */
+
+html[data-theme="dark"],
+.dark {
+  --color-bg: var(--color-bg-dark);
+  --color-surface: var(--color-surface-dark);
+  --color-border: var(--color-border-dark);
+  --color-surface-raised: #1f2937; /* Tailwind gray-800 (matches previous raised surfaces) */
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #d1d5db;
+  --color-text-muted: #9cabba;
+  --color-text: var(--color-text-primary);
+
+  /* Subtle surfaces (dark equivalents) */
+  --color-surface-subtle: #1f2937; /* Tailwind gray-800 */
+  --color-surface-subtle-hover: #374151; /* Tailwind gray-700 */
+  --color-surface-hover: #1f2937; /* Tailwind gray-800 */
+  --color-border-strong: #4b5563; /* Tailwind gray-600 */
+
+  /* Status surfaces/text (dark equivalents) */
+  --color-success-bg: rgba(20, 83, 45, 0.3); /* Tailwind green-900 / 30% */
+  --color-success-text: #4ade80; /* Tailwind green-400 */
+  --color-warning-bg: rgba(113, 63, 18, 0.3); /* Tailwind yellow-900 / 30% */
+  --color-warning-text: #facc15; /* Tailwind yellow-400 */
+  --color-error-bg: rgba(127, 29, 29, 0.3); /* Tailwind red-900 / 30% */
+  --color-error-text: #f87171; /* Tailwind red-400 */
+  --color-info-bg: rgba(30, 58, 138, 0.3); /* Tailwind blue-900 / 30% */
+  --color-info-text: #60a5fa; /* Tailwind blue-400 */
+
+  /* Inputs */
+  --color-input-bg: #1f2937; /* Tailwind gray-800 (matches previous dark inputs) */
+
+  /* Alerts (match existing UI) */
+  --color-alert-error-bg: rgba(127, 29, 29, 0.2); /* Tailwind red-900 / 20% */
+  --color-alert-error-border: #991b1b; /* Tailwind red-800 */
+  --color-alert-error-text: #f87171; /* Tailwind red-400 */
+
+  --color-alert-success-bg: rgba(20, 83, 45, 0.2); /* Tailwind green-900 / 20% */
+  --color-alert-success-border: #166534; /* Tailwind green-800 */
+  --color-alert-success-text: #4ade80; /* Tailwind green-400 */
+
+  --color-alert-warning-bg: rgba(120, 53, 15, 0.2); /* Tailwind amber-900 / 20% */
+  --color-alert-warning-border: #b45309; /* Tailwind amber-700 */
+  --color-alert-warning-text: #fcd34d; /* Tailwind amber-300 */
+  --color-alert-warning-border-subtle: #92400e; /* Tailwind amber-800 */
+
+  /* Role badges (match existing dev panel colors) */
+  --color-role-admin-bg: #581c87; /* Tailwind purple-900 */
+  --color-role-admin-text: #d8b4fe; /* Tailwind purple-300 */
+  --color-role-manager-bg: #1e3a8a; /* Tailwind blue-900 */
+  --color-role-manager-text: #93c5fd; /* Tailwind blue-300 */
+  --color-role-customer-bg: #14532d; /* Tailwind green-900 */
+  --color-role-customer-text: #86efac; /* Tailwind green-300 */
+
+  /* Code chip */
+  --color-code-bg: #374151; /* Tailwind gray-700 */
+  --color-code-text: #e5e7eb; /* Tailwind gray-200 */
+
+  /* Overlay */
+  --color-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Overlay strengths */
+  --color-overlay-strong: rgba(0, 0, 0, 0.7);
+  --color-overlay-soft: rgba(0, 0, 0, 0.2);
+
+  /* Footer keeps its own dark palette in both themes by default.
+     If we later want a "light footer" variant, we can override these. */
+}
+
+

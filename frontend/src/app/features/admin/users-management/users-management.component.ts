@@ -134,22 +134,22 @@ export class UsersManagementComponent implements OnInit {
   getAvatarClass(user: User): string {
     switch (user.role) {
       case 'ADMIN':
-        return 'bg-purple-500';
+        return 'bg-role-admin';
       case 'MANAGER':
-        return 'bg-blue-500';
+        return 'bg-role-manager';
       default:
-        return 'bg-gray-500';
+        return 'bg-role-customer';
     }
   }
 
   getRoleBadgeClass(role: UserRole): string {
     switch (role) {
       case 'ADMIN':
-        return 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400 border border-purple-200 dark:border-purple-800';
+        return 'badge badge-role-admin';
       case 'MANAGER':
-        return 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border border-blue-200 dark:border-blue-800';
+        return 'badge badge-role-manager';
       default:
-        return 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300 border border-gray-200 dark:border-gray-700';
+        return 'badge badge-role-customer';
     }
   }
 

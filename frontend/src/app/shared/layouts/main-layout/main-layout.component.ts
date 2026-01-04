@@ -9,7 +9,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
   standalone: true,
   imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent],
   template: `
-    <div class="min-h-screen flex flex-col bg-background-light dark:bg-background-dark">
+    <div class="min-h-screen flex flex-col bg-background">
       <app-header></app-header>
       <main class="flex-1">
         <router-outlet></router-outlet>

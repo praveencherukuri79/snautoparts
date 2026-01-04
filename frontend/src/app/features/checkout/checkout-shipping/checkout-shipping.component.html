@@ -1,5 +1,5 @@
-<div class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
-  <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+<div class="bg-surface rounded-2xl border border-border p-6">
+  <h2 class="text-xl font-semibold text-text mb-6">
     {{ content.checkout.shipping.title }}
   </h2>
 
@@ -13,8 +13,8 @@
           type="button"
           class="w-full text-left p-4 rounded-xl border-2 transition-colors"
           [ngClass]="{
-            'border-primary bg-blue-50 dark:bg-blue-900/20': selectedMethodId() === method.id,
-            'border-gray-200 dark:border-gray-700': selectedMethodId() !== method.id
+            'border-primary bg-primary-light': selectedMethodId() === method.id,
+            'border-border': selectedMethodId() !== method.id
           }">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-4">
@@ -22,7 +22,7 @@
                 class="w-5 h-5 rounded-full border-2 flex items-center justify-center"
                 [ngClass]="{
                   'border-primary': selectedMethodId() === method.id,
-                  'border-gray-300': selectedMethodId() !== method.id
+                  'border-border-strong': selectedMethodId() !== method.id
                 }">
                 @if (selectedMethodId() === method.id) {
                   <div class="w-3 h-3 rounded-full bg-primary"></div>
@@ -30,20 +30,20 @@
               </div>
               <div>
                 <div class="flex items-center gap-2">
-                  <p class="font-medium text-gray-900 dark:text-white">{{ method.name }}</p>
+                  <p class="font-medium text-text">{{ method.name }}</p>
                   @if (isFreeShipping(method)) {
                     <span class="badge badge-success">Free!</span>
                   }
                 </div>
-                <p class="text-sm text-gray-500">{{ method.description }}</p>
+                <p class="text-sm text-text-muted">{{ method.description }}</p>
               </div>
             </div>
             <div class="text-right">
               @if (isFreeShipping(method)) {
-                <p class="font-semibold text-green-600">FREE</p>
-                <p class="text-sm text-gray-400 line-through">{{ method.price | currency }}</p>
+                <p class="font-semibold text-success">FREE</p>
+                <p class="text-sm text-text-muted opacity-70 line-through">{{ method.price | currency }}</p>
               } @else {
-                <p class="font-semibold text-gray-900 dark:text-white">{{ method.price | currency }}</p>
+                <p class="font-semibold text-text">{{ method.price | currency }}</p>
               }
             </div>
           </div>
@@ -53,8 +53,8 @@
 
     <!-- Free Shipping Banner -->
     @if (subtotal() < 75) {
-      <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-        <div class="flex items-center gap-2 text-blue-700 dark:text-blue-400">
+      <div class="mt-6 p-4 bg-primary-light rounded-lg">
+        <div class="flex items-center gap-2 text-primary">
           <app-icon name="local_shipping" [size]="20"></app-icon>
           <span class="text-sm font-medium">
             Add {{ (75 - subtotal()) | currency }} more to qualify for free standard shipping!

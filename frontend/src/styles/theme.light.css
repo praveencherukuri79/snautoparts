@@ -1,0 +1,10 @@
+/* ============================================
+   Theme: Light
+   ============================================ */
+
+html[data-theme="light"] {
+  /* Default values already live in :root (tokens.css). This exists so we can
+     force light theme explicitly without changing any component CSS. */
+}
+
+

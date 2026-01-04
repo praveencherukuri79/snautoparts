@@ -2,10 +2,10 @@
   <!-- Header -->
   <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
     <div>
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+      <h1 class="text-2xl font-bold text-text">
         {{ content.manager.inventory.title }}
       </h1>
-      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+      <p class="text-sm text-text-muted mt-1">
         Manage stock levels and record inventory adjustments
       </p>
     </div>
@@ -17,43 +17,43 @@
 
   <!-- Stats Cards -->
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 p-4">
-      <p class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Products</p>
-      <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ products().length }}</p>
+    <div class="bg-surface rounded-xl border border-border p-4">
+      <p class="text-xs font-bold text-text-muted uppercase tracking-wider">Total Products</p>
+      <p class="text-2xl font-bold text-text mt-1">{{ products().length }}</p>
     </div>
-    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 p-4">
-      <p class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Low Stock</p>
-      <p class="text-2xl font-bold text-orange-500 mt-1">{{ getLowStockCount() }}</p>
+    <div class="bg-surface rounded-xl border border-border p-4">
+      <p class="text-xs font-bold text-text-muted uppercase tracking-wider">Low Stock</p>
+      <p class="text-2xl font-bold text-warning mt-1">{{ getLowStockCount() }}</p>
     </div>
-    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 p-4">
-      <p class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Out of Stock</p>
-      <p class="text-2xl font-bold text-red-500 mt-1">{{ getOutOfStockCount() }}</p>
+    <div class="bg-surface rounded-xl border border-border p-4">
+      <p class="text-xs font-bold text-text-muted uppercase tracking-wider">Out of Stock</p>
+      <p class="text-2xl font-bold text-error mt-1">{{ getOutOfStockCount() }}</p>
     </div>
   </div>
 
   <!-- Filters -->
-  <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+  <div class="bg-surface rounded-xl border border-border p-4">
     <div class="flex flex-col sm:flex-row gap-4">
       <div class="flex-1 relative">
         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <app-icon name="search" [size]="20" class="text-gray-400"></app-icon>
+          <app-icon name="search" [size]="20" class="text-text-muted"></app-icon>
         </div>
         <input
           type="text"
           [(ngModel)]="searchQuery"
           (keyup.enter)="applyFilters()"
           placeholder="{{ content.manager.inventory.search }}"
-          class="w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary"
+          class="w-full pl-10 pr-4 py-2.5 rounded-lg ui-input"
         >
       </div>
-      <label class="flex items-center gap-2 cursor-pointer px-4 py-2 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600">
+      <label class="flex items-center gap-2 cursor-pointer px-4 py-2 bg-surface-subtle rounded-lg border border-border-strong">
         <input
           type="checkbox"
           [(ngModel)]="showLowStockOnly"
           (change)="applyFilters()"
-          class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+          class="w-4 h-4 text-primary border-border-strong rounded focus:ring-primary"
         >
-        <span class="text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">
+        <span class="text-sm text-text-secondary whitespace-nowrap">
           {{ content.manager.inventory.lowStock }} Only
         </span>
       </label>
@@ -65,56 +65,56 @@
   </div>
 
   <!-- Products Table -->
-  <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
+  <div class="bg-surface rounded-xl border border-border overflow-hidden shadow-sm">
     @if (loading()) {
       <app-loading-spinner [height]="300"></app-loading-spinner>
     } @else {
       <div class="overflow-x-auto">
         <table class="w-full text-left">
-          <thead class="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
+          <thead class="bg-surface-subtle border-b border-border">
             <tr>
-              <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th class="px-6 py-4 text-xs font-bold text-text-muted uppercase tracking-wider">
                 Product
               </th>
-              <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th class="px-6 py-4 text-xs font-bold text-text-muted uppercase tracking-wider">
                 SKU
               </th>
-              <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th class="px-6 py-4 text-xs font-bold text-text-muted uppercase tracking-wider">
                 Price
               </th>
-              <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th class="px-6 py-4 text-xs font-bold text-text-muted uppercase tracking-wider">
                 Stock
               </th>
-              <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th class="px-6 py-4 text-xs font-bold text-text-muted uppercase tracking-wider">
                 Status
               </th>
-              <th class="px-6 py-4 text-right text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th class="px-6 py-4 text-right text-xs font-bold text-text-muted uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+          <tbody class="divide-y divide-border">
             @for (product of products(); track product.id) {
-              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+              <tr class="hover:bg-surface-hover transition-colors">
                 <td class="px-6 py-4">
                   <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-800 overflow-hidden border border-gray-200 dark:border-gray-700">
+                    <div class="w-12 h-12 rounded-lg bg-surface-subtle overflow-hidden border border-border">
                       <img [src]="getProductImage(product)" [alt]="product.name" class="w-full h-full object-cover">
                     </div>
                     <div>
-                      <p class="font-medium text-gray-900 dark:text-white line-clamp-1">{{ product.name }}</p>
+                      <p class="font-medium text-text line-clamp-1">{{ product.name }}</p>
                       @if (product.brand) {
-                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ product.brand.name }}</p>
+                        <p class="text-xs text-text-muted">{{ product.brand.name }}</p>
                       }
                     </div>
                   </div>
                 </td>
                 <td class="px-6 py-4">
-                  <code class="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
+                  <code class="text-xs font-mono text-text-muted bg-surface-subtle px-2 py-1 rounded">
                     {{ product.sku }}
                   </code>
                 </td>
-                <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
+                <td class="px-6 py-4 text-sm font-medium text-text">
                   {{ product.price | currency }}
                 </td>
                 <td class="px-6 py-4">
@@ -124,17 +124,17 @@
                 </td>
                 <td class="px-6 py-4">
                   @if (getStockStatus(product) === 'out') {
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-medium">
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-error-bg text-error-text text-xs font-medium">
                       <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
                       Out of Stock
                     </span>
                   } @else if (getStockStatus(product) === 'low') {
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-medium">
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-warning-bg text-warning-text text-xs font-medium">
                       <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
                       Low Stock
                     </span>
                   } @else {
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium">
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-success-bg text-success-text text-xs font-medium">
                       <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
                       In Stock
                     </span>
@@ -144,7 +144,7 @@
                   <button 
                     (click)="openAdjustModal(product)"
                     type="button" 
-                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 hover:bg-primary text-primary hover:text-white text-sm font-medium rounded-lg transition-colors">
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 hover:bg-primary text-primary hover:text-primary-contrast text-sm font-medium rounded-lg transition-colors">
                     <app-icon name="edit" [size]="16"></app-icon>
                     {{ content.manager.inventory.adjust }}
                   </button>
@@ -153,8 +153,8 @@
             } @empty {
               <tr>
                 <td colspan="6" class="px-6 py-12 text-center">
-                  <app-icon name="inventory_2" [size]="48" class="text-gray-300 dark:text-gray-600 mb-3"></app-icon>
-                  <p class="text-gray-500 dark:text-gray-400">No products found</p>
+                  <app-icon name="inventory_2" [size]="48" class="text-text-muted opacity-50 mb-3"></app-icon>
+                  <p class="text-text-muted">No products found</p>
                 </td>
               </tr>
             }
@@ -170,35 +170,35 @@
   <div class="fixed inset-0 z-50 overflow-y-auto">
     <div class="flex min-h-full items-center justify-center p-4">
       <!-- Backdrop -->
-      <div (click)="closeAdjustModal()" class="fixed inset-0 bg-black/50 backdrop-blur-sm"></div>
+      <div (click)="closeAdjustModal()" class="fixed inset-0 bg-overlay backdrop-blur-sm"></div>
       
       <!-- Modal -->
-      <div class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-lg">
+      <div class="relative bg-surface rounded-2xl shadow-2xl w-full max-w-lg">
         <!-- Header -->
-        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-          <h2 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+        <div class="px-6 py-4 border-b border-border flex items-center justify-between">
+          <h2 class="text-lg font-bold text-text flex items-center gap-2">
             <app-icon name="edit_square" [size]="20" class="text-primary"></app-icon>
             Adjust Stock
           </h2>
-          <button (click)="closeAdjustModal()" type="button" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+          <button (click)="closeAdjustModal()" type="button" class="text-text-muted hover:text-text-secondary">
             <app-icon name="close" [size]="24"></app-icon>
           </button>
         </div>
         
         <!-- Product Info -->
         @if (selectedProduct()) {
-          <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+          <div class="px-6 py-4 border-b border-border bg-surface-subtle">
             <div class="flex items-center gap-4">
-              <div class="w-16 h-16 rounded-lg bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 overflow-hidden">
+              <div class="w-16 h-16 rounded-lg bg-surface-raised border border-border overflow-hidden">
                 <img [src]="getProductImage(selectedProduct()!)" [alt]="selectedProduct()!.name" class="w-full h-full object-cover">
               </div>
               <div class="flex-1">
-                <h3 class="font-bold text-gray-900 dark:text-white">{{ selectedProduct()!.name }}</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 font-mono">{{ selectedProduct()!.sku }}</p>
+                <h3 class="font-bold text-text">{{ selectedProduct()!.name }}</h3>
+                <p class="text-sm text-text-muted font-mono">{{ selectedProduct()!.sku }}</p>
               </div>
               <div class="text-right">
-                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase font-bold">Current Stock</p>
-                <p class="text-3xl font-black text-gray-900 dark:text-white tabular-nums">{{ selectedProduct()!.stockQuantity }}</p>
+                <p class="text-xs text-text-muted uppercase font-bold">Current Stock</p>
+                <p class="text-3xl font-black text-text tabular-nums">{{ selectedProduct()!.stockQuantity }}</p>
               </div>
             </div>
           </div>
@@ -207,31 +207,31 @@
           <div class="px-6 py-6 space-y-5">
             <!-- New Quantity -->
             <div>
-              <label class="block text-sm font-medium text-gray-900 dark:text-white mb-2">New Quantity</label>
+              <label class="block text-sm font-medium text-text mb-2">New Quantity</label>
               <div class="flex items-center">
                 <button 
                   (click)="decrementQuantity()"
                   type="button"
-                  class="w-12 h-12 rounded-l-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center text-gray-700 dark:text-gray-300 border border-r-0 border-gray-300 dark:border-gray-600 transition-colors">
+                  class="w-12 h-12 rounded-l-lg bg-surface-subtle hover:bg-surface-hover flex items-center justify-center text-text-secondary border border-r-0 border-border-strong transition-colors">
                   <app-icon name="remove" [size]="24"></app-icon>
                 </button>
                 <input 
                   type="number" 
                   [(ngModel)]="newQuantity"
                   min="0"
-                  class="h-12 w-full text-center bg-white dark:bg-gray-900 border-y border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-xl font-bold focus:ring-primary focus:border-primary"
+                  class="h-12 w-full text-center bg-surface border-y border-border-strong text-text text-xl font-bold focus:ring-primary focus:border-primary"
                 >
                 <button 
                   (click)="incrementQuantity()"
                   type="button"
-                  class="w-12 h-12 rounded-r-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center text-gray-700 dark:text-gray-300 border border-l-0 border-gray-300 dark:border-gray-600 transition-colors">
+                  class="w-12 h-12 rounded-r-lg bg-surface-subtle hover:bg-surface-hover flex items-center justify-center text-text-secondary border border-l-0 border-border-strong transition-colors">
                   <app-icon name="add" [size]="24"></app-icon>
                 </button>
               </div>
               @if (getQuantityChange() !== 0) {
                 <p class="mt-2 text-center text-sm font-medium" 
-                   [class.text-green-600]="getQuantityChange() > 0"
-                   [class.text-red-600]="getQuantityChange() < 0">
+                   [class.text-success]="getQuantityChange() > 0"
+                   [class.text-error]="getQuantityChange() < 0">
                   @if (getQuantityChange() > 0) {
                     +{{ getQuantityChange() }} units
                   } @else {
@@ -239,16 +239,16 @@
                   }
                 </p>
               } @else {
-                <p class="mt-2 text-center text-sm text-gray-500">No change</p>
+                <p class="mt-2 text-center text-sm text-text-muted">No change</p>
               }
             </div>
             
             <!-- Reason -->
             <div>
-              <label class="block text-sm font-medium text-gray-900 dark:text-white mb-2">Reason Code</label>
+              <label class="block text-sm font-medium text-text mb-2">Reason Code</label>
               <select 
                 [(ngModel)]="adjustmentReason"
-                class="w-full h-12 rounded-lg bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white px-4 focus:ring-primary focus:border-primary">
+                class="w-full h-12 rounded-lg ui-input px-4 focus:ring-primary focus:border-primary">
                 <option value="">Select a reason...</option>
                 <option value="RECEIVED">New Shipment / Restock</option>
                 <option value="DAMAGED">Damaged / Defective</option>
@@ -261,31 +261,31 @@
             
             <!-- Note -->
             <div>
-              <label class="block text-sm font-medium text-gray-900 dark:text-white mb-2">Internal Note (Optional)</label>
+              <label class="block text-sm font-medium text-text mb-2">Internal Note (Optional)</label>
               <textarea 
                 [(ngModel)]="adjustmentNote"
                 rows="2"
                 placeholder="Add details about this adjustment..."
-                class="w-full rounded-lg bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white p-3 focus:ring-primary focus:border-primary resize-none"
+                class="w-full rounded-lg ui-input p-3 focus:ring-primary focus:border-primary resize-none"
               ></textarea>
             </div>
           </div>
           
           <!-- Actions -->
-          <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex gap-3">
+          <div class="px-6 py-4 border-t border-border flex gap-3">
             <button 
               (click)="closeAdjustModal()"
               type="button"
-              class="flex-1 h-12 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-bold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              class="flex-1 h-12 rounded-lg border border-border-strong text-text-secondary font-bold hover:bg-surface-hover transition-colors">
               Cancel
             </button>
             <button 
               (click)="submitAdjustment()"
               type="button"
               [disabled]="!canSubmitAdjustment() || submitting()"
-              class="flex-1 h-12 rounded-lg bg-primary hover:bg-blue-600 text-white font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+              class="flex-1 h-12 rounded-lg bg-primary hover:bg-primary-hover text-primary-contrast font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
               @if (submitting()) {
-                <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <div class="w-5 h-5 border-2 border-primary-contrast border-t-transparent rounded-full animate-spin"></div>
               } @else {
                 <app-icon name="save" [size]="20"></app-icon>
               }

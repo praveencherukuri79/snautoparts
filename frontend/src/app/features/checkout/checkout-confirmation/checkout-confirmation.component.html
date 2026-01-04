@@ -1,65 +1,65 @@
 <app-header></app-header>
 
-<main class="flex-1 bg-background-light dark:bg-background-dark">
+<main class="flex-1 bg-background">
   <div class="container mx-auto px-4 py-12">
     @if (loading()) {
       <app-loading-spinner [height]="300"></app-loading-spinner>
     } @else if (order()) {
       <div class="max-w-2xl mx-auto text-center">
         <!-- Success Icon -->
-        <div class="w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-6">
-          <app-icon name="check_circle" [size]="48" class="text-green-600 dark:text-green-400"></app-icon>
+        <div class="w-20 h-20 rounded-full bg-success-bg flex items-center justify-center mx-auto mb-6">
+          <app-icon name="check_circle" [size]="48" class="text-success-text"></app-icon>
         </div>
 
         <!-- Title -->
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 class="text-3xl font-bold text-text mb-2">
           {{ content.checkout.confirmation.title }}
         </h1>
-        <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+        <p class="text-lg text-text-muted mb-8">
           {{ content.checkout.confirmation.thankYou }}
         </p>
 
         <!-- Order Number -->
-        <div class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
-          <p class="text-sm text-gray-500 mb-1">{{ content.checkout.confirmation.orderNumber }}</p>
+        <div class="bg-surface rounded-2xl border border-border p-6 mb-6">
+          <p class="text-sm text-text-muted mb-1">{{ content.checkout.confirmation.orderNumber }}</p>
           <p class="text-2xl font-bold text-primary">{{ order()!.orderNumber }}</p>
         </div>
 
         <!-- Order Details -->
-        <div class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-700 p-6 text-left">
+        <div class="bg-surface rounded-2xl border border-border p-6 text-left">
           <div class="grid grid-cols-2 gap-6">
             <div>
-              <p class="text-sm text-gray-500 mb-1">Order Date</p>
-              <p class="font-medium text-gray-900 dark:text-white">
+              <p class="text-sm text-text-muted mb-1">Order Date</p>
+              <p class="font-medium text-text">
                 {{ order()!.createdAt | date:'MMMM d, y' }}
               </p>
             </div>
             <div>
-              <p class="text-sm text-gray-500 mb-1">Order Total</p>
-              <p class="font-medium text-gray-900 dark:text-white">
+              <p class="text-sm text-text-muted mb-1">Order Total</p>
+              <p class="font-medium text-text">
                 {{ order()!.totalAmount | currency }}
               </p>
             </div>
             <div>
-              <p class="text-sm text-gray-500 mb-1">Shipping Method</p>
-              <p class="font-medium text-gray-900 dark:text-white">
+              <p class="text-sm text-text-muted mb-1">Shipping Method</p>
+              <p class="font-medium text-text">
                 {{ order()!.shippingMethod }}
               </p>
             </div>
             <div>
-              <p class="text-sm text-gray-500 mb-1">{{ content.checkout.confirmation.estimatedDelivery }}</p>
-              <p class="font-medium text-gray-900 dark:text-white">
+              <p class="text-sm text-text-muted mb-1">{{ content.checkout.confirmation.estimatedDelivery }}</p>
+              <p class="font-medium text-text">
                 3-7 Business Days
               </p>
             </div>
           </div>
 
-          <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-            <p class="text-sm text-gray-500 mb-1">Shipping To</p>
-            <p class="font-medium text-gray-900 dark:text-white">
+          <div class="mt-6 pt-6 border-t border-border">
+            <p class="text-sm text-text-muted mb-1">Shipping To</p>
+            <p class="font-medium text-text">
               {{ order()!.shippingFirstName }} {{ order()!.shippingLastName }}
             </p>
-            <p class="text-gray-600 dark:text-gray-400">
+            <p class="text-text-muted">
               {{ order()!.shippingStreet }},
               {{ order()!.shippingCity }}, {{ order()!.shippingState }} {{ order()!.shippingZipCode }}
             </p>
@@ -79,8 +79,8 @@
       </div>
     } @else {
       <div class="text-center py-16">
-        <app-icon name="error" [size]="64" class="text-gray-300 mb-4"></app-icon>
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Order not found</h2>
+        <app-icon name="error" [size]="64" class="text-text-muted opacity-50 mb-4"></app-icon>
+        <h2 class="text-xl font-semibold text-text mb-2">Order not found</h2>
         <a routerLink="/" class="btn btn-primary btn-md mt-4">
           Go Home
         </a>

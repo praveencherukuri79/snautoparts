@@ -1,20 +1,20 @@
 <app-header></app-header>
 
-<main class="flex-1 bg-background-light dark:bg-background-dark">
+<main class="flex-1 bg-background">
   <!-- Breadcrumb -->
-  <div class="bg-white dark:bg-surface-dark border-b border-gray-200 dark:border-gray-700">
+  <div class="bg-surface border-b border-border">
     <div class="container mx-auto px-4 py-3">
       <nav class="flex items-center gap-2 text-sm">
-        <a routerLink="/" class="text-gray-500 hover:text-primary transition-colors">
+        <a routerLink="/" class="text-text-muted hover:text-primary transition-colors">
           {{ content.navigation.home }}
         </a>
-        <app-icon name="chevron_right" [size]="16" class="text-gray-400"></app-icon>
-        <a routerLink="/products" class="text-gray-500 hover:text-primary transition-colors">
+        <app-icon name="chevron_right" [size]="16" class="text-text-muted opacity-70"></app-icon>
+        <a routerLink="/products" class="text-text-muted hover:text-primary transition-colors">
           {{ content.navigation.shop }}
         </a>
         @if (category()) {
-          <app-icon name="chevron_right" [size]="16" class="text-gray-400"></app-icon>
-          <span class="text-gray-900 dark:text-white font-medium">{{ category()!.name }}</span>
+          <app-icon name="chevron_right" [size]="16" class="text-text-muted opacity-70"></app-icon>
+          <span class="text-text font-medium">{{ category()!.name }}</span>
         }
       </nav>
     </div>
@@ -22,14 +22,14 @@
 
   <!-- Category Header -->
   @if (category()) {
-    <div class="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-12">
+    <div class="bg-gradient-to-br from-hero-from to-hero-via text-hero-text py-12">
       <div class="container mx-auto px-4">
         <h1 class="text-3xl md:text-4xl font-bold mb-3">{{ category()!.name }}</h1>
         @if (category()!.description) {
-          <p class="text-gray-300 max-w-2xl">{{ category()!.description }}</p>
+          <p class="text-hero-muted max-w-2xl">{{ category()!.description }}</p>
         }
         @if (category()!._count?.products) {
-          <p class="text-gray-400 mt-4">{{ category()!._count!.products }} products</p>
+          <p class="text-hero-muted opacity-70 mt-4">{{ category()!._count!.products }} products</p>
         }
       </div>
     </div>
@@ -41,11 +41,11 @@
       <app-loading-spinner [height]="400"></app-loading-spinner>
     } @else if (products().length === 0) {
       <div class="text-center py-16">
-        <app-icon name="search_off" [size]="64" class="text-gray-300 mb-4"></app-icon>
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+        <app-icon name="search_off" [size]="64" class="text-text-muted opacity-50 mb-4"></app-icon>
+        <h3 class="text-xl font-semibold text-text mb-2">
           {{ content.catalog.results.noResults }}
         </h3>
-        <p class="text-gray-500 mb-6">{{ content.catalog.results.adjustFilters }}</p>
+        <p class="text-text-muted mb-6">{{ content.catalog.results.adjustFilters }}</p>
         <a routerLink="/products" class="btn btn-primary btn-md">
           {{ content.navigation.shop }}
         </a>

@@ -68,9 +68,9 @@ export class InventoryListComponent implements OnInit {
 
   getStockClass(product: Product): string {
     const status = this.getStockStatus(product);
-    if (status === 'out') return 'text-red-600';
-    if (status === 'low') return 'text-amber-600';
-    return 'text-green-600';
+    if (status === 'out') return 'text-error';
+    if (status === 'low') return 'text-warning';
+    return 'text-success';
   }
 
   getProductImage(product: Product | null): string {

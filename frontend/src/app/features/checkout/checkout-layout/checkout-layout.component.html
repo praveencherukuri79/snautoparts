@@ -1,8 +1,8 @@
 <app-header></app-header>
 
-<main class="flex-1 bg-background-light dark:bg-background-dark">
+<main class="flex-1 bg-background">
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-text mb-8">
       {{ content.checkout.title }}
     </h1>
 
@@ -15,9 +15,9 @@
               <div 
                 class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-colors"
                 [class.bg-primary]="isStepComplete(step.key) || isStepCurrent(step.key)"
-                [class.text-white]="isStepComplete(step.key) || isStepCurrent(step.key)"
-                [class.bg-gray-200]="!isStepComplete(step.key) && !isStepCurrent(step.key)"
-                [class.text-gray-500]="!isStepComplete(step.key) && !isStepCurrent(step.key)">
+                [class.text-primary-contrast]="isStepComplete(step.key) || isStepCurrent(step.key)"
+                [class.bg-surface-subtle]="!isStepComplete(step.key) && !isStepCurrent(step.key)"
+                [class.text-text-muted]="!isStepComplete(step.key) && !isStepCurrent(step.key)">
                 @if (isStepComplete(step.key)) {
                   <app-icon name="check" [size]="20"></app-icon>
                 } @else {
@@ -27,8 +27,8 @@
               <span 
                 class="mt-2 text-xs font-medium hidden sm:block"
                 [class.text-primary]="isStepCurrent(step.key)"
-                [class.text-gray-900]="isStepComplete(step.key)"
-                [class.text-gray-500]="!isStepComplete(step.key) && !isStepCurrent(step.key)">
+                [class.text-text]="isStepComplete(step.key)"
+                [class.text-text-muted]="!isStepComplete(step.key) && !isStepCurrent(step.key)">
                 {{ step.label }}
               </span>
             </div>
@@ -36,7 +36,7 @@
               <div 
                 class="w-12 sm:w-24 h-1 mx-2 rounded"
                 [class.bg-primary]="isStepComplete(step.key)"
-                [class.bg-gray-200]="!isStepComplete(step.key)">
+                [class.bg-surface-subtle]="!isStepComplete(step.key)">
               </div>
             }
           </div>
@@ -52,8 +52,8 @@
 
       <!-- Order Summary -->
       <div class="lg:col-span-1">
-        <div class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-700 p-6 sticky top-24">
-          <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+        <div class="bg-surface rounded-2xl border border-border p-6 sticky top-24">
+          <h2 class="text-lg font-semibold text-text mb-6">
             {{ content.checkout.review.orderSummary }}
           </h2>
 
@@ -61,16 +61,16 @@
           <div class="space-y-4 mb-6 max-h-64 overflow-y-auto">
             @for (item of items(); track item.id) {
               <div class="flex gap-3">
-                <div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 flex-shrink-0">
+                <div class="w-16 h-16 rounded-lg overflow-hidden bg-surface-subtle flex-shrink-0">
                   <img [src]="getItemImage(item.product.imageUrl)" [alt]="item.product.name" class="w-full h-full object-cover">
                 </div>
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm font-medium text-gray-900 dark:text-white line-clamp-2">
+                  <p class="text-sm font-medium text-text line-clamp-2">
                     {{ item.product.name }}
                   </p>
-                  <p class="text-sm text-gray-500 mt-1">Qty: {{ item.quantity }}</p>
+                  <p class="text-sm text-text-muted mt-1">Qty: {{ item.quantity }}</p>
                 </div>
-                <div class="text-sm font-medium text-gray-900 dark:text-white">
+                <div class="text-sm font-medium text-text">
                   {{ item.total | currency }}
                 </div>
               </div>
@@ -78,12 +78,12 @@
           </div>
 
           <!-- Totals -->
-          <div class="space-y-3 border-t border-gray-200 dark:border-gray-700 pt-4">
-            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+          <div class="space-y-3 border-t border-border pt-4">
+            <div class="flex justify-between text-sm text-text-muted">
               <span>{{ content.cart.subtotal }}</span>
               <span>{{ subtotal() | currency }}</span>
             </div>
-            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+            <div class="flex justify-between text-sm text-text-muted">
               <span>{{ content.cart.shipping }}</span>
               @if (shippingMethod()) {
                 <span>{{ shippingCost | currency }}</span>
@@ -91,7 +91,7 @@
                 <span>--</span>
               }
             </div>
-            <div class="flex justify-between text-lg font-semibold text-gray-900 dark:text-white pt-2 border-t border-gray-200 dark:border-gray-700">
+            <div class="flex justify-between text-lg font-semibold text-text pt-2 border-t border-border">
               <span>{{ content.cart.total }}</span>
               <span>{{ total | currency }}</span>
             </div>

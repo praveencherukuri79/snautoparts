@@ -1,20 +1,20 @@
 <app-header></app-header>
 
-<main class="flex-1 bg-background-light dark:bg-background-dark">
+<main class="flex-1 bg-background">
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-text mb-8">
       {{ content.cart.title }}
     </h1>
 
     @if (isLoading()) {
       <app-loading-spinner [height]="300"></app-loading-spinner>
     } @else if (isEmpty()) {
-      <div class="text-center py-16 bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-700">
-        <app-icon name="shopping_cart" [size]="80" class="text-gray-300 mb-4"></app-icon>
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+      <div class="text-center py-16 bg-surface rounded-2xl border border-border">
+        <app-icon name="shopping_cart" [size]="80" class="text-text-muted opacity-50 mb-4"></app-icon>
+        <h2 class="text-xl font-semibold text-text mb-2">
           {{ content.cart.empty }}
         </h2>
-        <p class="text-gray-500 mb-6">{{ content.cart.emptyMessage }}</p>
+        <p class="text-text-muted mb-6">{{ content.cart.emptyMessage }}</p>
         <a routerLink="/products" class="btn btn-primary btn-lg">
           {{ content.cart.continueShopping }}
         </a>
@@ -23,9 +23,9 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Cart Items -->
         <div class="lg:col-span-2">
-          <div class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div class="bg-surface rounded-2xl border border-border overflow-hidden">
             <!-- Header -->
-            <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50 dark:bg-gray-800/50 text-sm font-medium text-gray-500 uppercase tracking-wide">
+            <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-4 bg-surface-subtle text-sm font-medium text-text-muted uppercase tracking-wide">
               <div class="col-span-6">{{ content.cart.item }}</div>
               <div class="col-span-2 text-center">{{ content.cart.price }}</div>
               <div class="col-span-2 text-center">{{ content.cart.quantity }}</div>
@@ -34,46 +34,46 @@
 
             <!-- Items -->
             @for (item of items(); track item.id) {
-              <div class="grid grid-cols-1 md:grid-cols-12 gap-4 p-6 border-b border-gray-200 dark:border-gray-700 last:border-0">
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-4 p-6 border-b border-border last:border-0">
                 <!-- Product Info -->
                 <div class="col-span-6 flex gap-4">
-                  <a [routerLink]="['/products', item.product.slug]" class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
+                  <a [routerLink]="['/products', item.product.slug]" class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-surface-subtle">
                     <img [src]="getPrimaryImage(item)" [alt]="item.product.name" class="w-full h-full object-cover">
                   </a>
                   <div class="flex-1 min-w-0">
-                    <a [routerLink]="['/products', item.product.slug]" class="font-medium text-gray-900 dark:text-white hover:text-primary transition-colors line-clamp-2">
+                    <a [routerLink]="['/products', item.product.slug]" class="font-medium text-text hover:text-primary transition-colors line-clamp-2">
                       {{ item.product.name }}
                     </a>
-                    <p class="text-xs text-gray-400 mt-1">SKU: {{ item.product.sku }}</p>
+                    <p class="text-xs text-text-muted opacity-70 mt-1">SKU: {{ item.product.sku }}</p>
                     <!-- Mobile Price -->
-                    <p class="md:hidden text-sm font-medium text-gray-900 dark:text-white mt-2">
+                    <p class="md:hidden text-sm font-medium text-text mt-2">
                       {{ item.price | currency }}
                     </p>
                   </div>
                 </div>
 
                 <!-- Desktop Price -->
-                <div class="hidden md:flex col-span-2 items-center justify-center text-gray-900 dark:text-white">
+                <div class="hidden md:flex col-span-2 items-center justify-center text-text">
                   {{ item.price | currency }}
                 </div>
 
                 <!-- Quantity -->
                 <div class="col-span-2 flex items-center justify-center">
-                  <div class="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg">
+                  <div class="flex items-center border border-border-strong rounded-lg">
                     <button
                       (click)="updateQuantity(item, -1)"
                       type="button"
-                      class="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      class="w-8 h-8 flex items-center justify-center text-text-muted hover:bg-surface-subtle transition-colors"
                       [disabled]="item.quantity <= 1">
                       <app-icon name="remove" [size]="16"></app-icon>
                     </button>
-                    <span class="w-10 text-center text-sm font-medium text-gray-900 dark:text-white">
+                    <span class="w-10 text-center text-sm font-medium text-text">
                       {{ item.quantity }}
                     </span>
                     <button
                       (click)="updateQuantity(item, 1)"
                       type="button"
-                      class="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      class="w-8 h-8 flex items-center justify-center text-text-muted hover:bg-surface-subtle transition-colors"
                       [disabled]="item.quantity >= item.product.stockQuantity">
                       <app-icon name="add" [size]="16"></app-icon>
                     </button>
@@ -82,13 +82,13 @@
 
                 <!-- Total & Remove -->
                 <div class="col-span-2 flex items-center justify-between md:justify-end gap-4">
-                  <span class="font-semibold text-gray-900 dark:text-white">
+                  <span class="font-semibold text-text">
                     {{ item.total | currency }}
                   </span>
                   <button
                     (click)="removeItem(item)"
                     type="button"
-                    class="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                    class="p-2 text-text-muted hover:text-error transition-colors"
                     title="{{ content.cart.remove }}">
                     <app-icon name="delete" [size]="20"></app-icon>
                   </button>
@@ -108,30 +108,30 @@
 
         <!-- Order Summary -->
         <div class="lg:col-span-1">
-          <div class="bg-white dark:bg-surface-dark rounded-2xl border border-gray-200 dark:border-gray-700 p-6 sticky top-24">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+          <div class="bg-surface rounded-2xl border border-border p-6 sticky top-24">
+            <h2 class="text-lg font-semibold text-text mb-6">
               Order Summary
             </h2>
 
             <div class="space-y-4 mb-6">
-              <div class="flex justify-between text-gray-600 dark:text-gray-400">
+              <div class="flex justify-between text-text-muted">
                 <span>{{ content.cart.subtotal }} ({{ itemCount() }} items)</span>
-                <span class="text-gray-900 dark:text-white font-medium">{{ subtotal() | currency }}</span>
+                <span class="text-text font-medium">{{ subtotal() | currency }}</span>
               </div>
-              <div class="flex justify-between text-gray-600 dark:text-gray-400">
+              <div class="flex justify-between text-text-muted">
                 <span>{{ content.cart.shipping }}</span>
-                <span class="text-gray-900 dark:text-white font-medium">{{ content.cart.calculatedAtCheckout }}</span>
+                <span class="text-text font-medium">{{ content.cart.calculatedAtCheckout }}</span>
               </div>
-              <div class="flex justify-between text-gray-600 dark:text-gray-400">
+              <div class="flex justify-between text-text-muted">
                 <span>{{ content.cart.tax }}</span>
-                <span class="text-gray-900 dark:text-white font-medium">{{ content.cart.calculatedAtCheckout }}</span>
+                <span class="text-text font-medium">{{ content.cart.calculatedAtCheckout }}</span>
               </div>
             </div>
 
-            <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mb-6">
+            <div class="border-t border-border pt-4 mb-6">
               <div class="flex justify-between text-lg">
-                <span class="font-semibold text-gray-900 dark:text-white">{{ content.cart.subtotal }}</span>
-                <span class="font-bold text-gray-900 dark:text-white">{{ subtotal() | currency }}</span>
+                <span class="font-semibold text-text">{{ content.cart.subtotal }}</span>
+                <span class="font-bold text-text">{{ subtotal() | currency }}</span>
               </div>
             </div>
 
@@ -148,16 +148,16 @@
             }
 
             <!-- Trust badges -->
-            <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-              <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+            <div class="mt-6 pt-6 border-t border-border">
+              <div class="flex items-center gap-2 text-sm text-text-muted mb-3">
                 <app-icon name="lock" [size]="16"></app-icon>
                 Secure Checkout
               </div>
-              <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+              <div class="flex items-center gap-2 text-sm text-text-muted mb-3">
                 <app-icon name="verified" [size]="16"></app-icon>
                 Guaranteed Fitment
               </div>
-              <div class="flex items-center gap-2 text-sm text-gray-500">
+              <div class="flex items-center gap-2 text-sm text-text-muted">
                 <app-icon name="autorenew" [size]="16"></app-icon>
                 30-Day Returns
               </div>

@@ -135,18 +135,18 @@ export class OrderDetailComponent implements OnInit {
   getStatusBadgeClass(status: OrderStatus): string {
     switch (status) {
       case 'DELIVERED':
-        return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400';
+        return 'badge-success';
       case 'SHIPPED':
-        return 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400';
+        return 'badge-info';
       case 'PROCESSING':
-        return 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400';
+        return 'badge-warning';
       case 'PENDING':
       case 'CONFIRMED':
-        return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400';
+        return 'badge-warning';
       case 'CANCELLED':
-        return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400';
+        return 'badge-error';
       default:
-        return 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300';
+        return '';
     }
   }
 }

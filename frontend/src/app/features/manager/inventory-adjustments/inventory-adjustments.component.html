@@ -2,80 +2,80 @@
   <!-- Header -->
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-4">
-      <a routerLink="/manager/inventory" class="p-2 text-gray-600 dark:text-gray-400 hover:text-primary">
+      <a routerLink="/manager/inventory" class="p-2 text-text-muted hover:text-primary">
         <app-icon name="arrow_back" [size]="20"></app-icon>
       </a>
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+      <h1 class="text-2xl font-bold text-text">
         Inventory Adjustments
       </h1>
     </div>
   </div>
 
   <!-- Adjustments Table -->
-  <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+  <div class="bg-surface rounded-xl border border-border overflow-hidden">
     @if (loading()) {
       <app-loading-spinner [height]="300"></app-loading-spinner>
     } @else if (adjustments().length === 0) {
       <div class="text-center py-16">
-        <app-icon name="tune" [size]="48" class="text-gray-300 mb-4"></app-icon>
-        <p class="text-gray-500">No inventory adjustments yet.</p>
+        <app-icon name="tune" [size]="48" class="text-text-muted opacity-50 mb-4"></app-icon>
+        <p class="text-text-muted">No inventory adjustments yet.</p>
       </div>
     } @else {
       <div class="overflow-x-auto">
         <table class="w-full">
-          <thead class="bg-gray-50 dark:bg-gray-800/50">
+          <thead class="bg-surface-subtle">
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">
                 Product
               </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">
                 Previous
               </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">
                 Adjustment
               </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">
                 New
               </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">
                 {{ content.manager.inventory.reason }}
               </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">
                 By
               </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">
                 Date
               </th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+          <tbody class="divide-y divide-border">
             @for (adj of adjustments(); track adj.id) {
               <tr>
                 <td class="px-6 py-4">
-                  <p class="font-medium text-gray-900 dark:text-white">{{ adj.product?.name || 'Unknown Product' }}</p>
-                  <p class="text-xs text-gray-500">{{ adj.product?.sku || adj.productId }}</p>
+                  <p class="font-medium text-text">{{ adj.product?.name || 'Unknown Product' }}</p>
+                  <p class="text-xs text-text-muted">{{ adj.product?.sku || adj.productId }}</p>
                 </td>
-                <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+                <td class="px-6 py-4 text-sm text-text-muted">
                   {{ adj.previousQty }}
                 </td>
                 <td class="px-6 py-4">
                   <span 
                     class="font-medium"
-                    [class.text-green-600]="adj.quantity > 0"
-                    [class.text-red-600]="adj.quantity < 0">
+                    [class.text-success]="adj.quantity > 0"
+                    [class.text-error]="adj.quantity < 0">
                     {{ adj.quantity > 0 ? '+' : '' }}{{ adj.quantity }}
                   </span>
                 </td>
-                <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
+                <td class="px-6 py-4 text-sm font-medium text-text">
                   {{ adj.newQty }}
                 </td>
-                <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+                <td class="px-6 py-4 text-sm text-text-muted">
                   {{ adj.reason || '-' }}
                 </td>
-                <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+                <td class="px-6 py-4 text-sm text-text-muted">
                   {{ adj.adjustmentType }}
                 </td>
-                <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+                <td class="px-6 py-4 text-sm text-text-muted">
                   {{ adj.createdAt | date:'MMM d, y h:mm a' }}
                 </td>
               </tr>

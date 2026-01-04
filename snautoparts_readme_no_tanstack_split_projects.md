@@ -410,3 +410,4 @@ Store Stitch artifacts under:
 
 ## Notes
 - This README is the root spec. Each project folder (`frontend/`, `backend/`) should also have its own `README.md` containing the exact run/build commands and environment variables for that project.
+- Dont Create unnecessary readme files.

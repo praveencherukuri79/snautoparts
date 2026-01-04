@@ -1,0 +1,615 @@
+// ============================================
+// SN Auto Parts - Main Styles
+// ============================================
+// This is the main stylesheet that imports all partials
+// All styles are globally available and components should
+// use these classes instead of component-level styles
+
+// ============================================
+// CORE CONFIGURATION
+// ============================================
+@use './styles/variables' as *;
+@use './styles/mixins' as *;
+
+// ============================================
+// THEMES
+// ============================================
+@use './styles/theme-light';
+@use './styles/theme-dark';
+@use './styles/theme-high-contrast';
+@use './styles/theme';  // Angular Material theme
+
+// ============================================
+// BASE STYLES
+// ============================================
+@use './styles/typography';
+@use './styles/animations';
+
+// ============================================
+// COMPONENTS
+// ============================================
+@use './styles/buttons';
+@use './styles/forms';
+@use './styles/cards';
+@use './styles/tables';
+@use './styles/navigation';
+
+// ============================================
+// LAYOUT & UTILITIES
+// ============================================
+@use './styles/layout';
+@use './styles/utilities';
+@use './styles/spacing-utilities';
+
+// ===========================================
+// Reset & Base Styles
+// ===========================================
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+// ===========================================
+// Custom Scrollbar (Global)
+// ===========================================
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: $radius-full;
+  
+  &:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
+}
+
+// Firefox
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+// ===========================================
+// Angular Material Icon Font
+// ===========================================
+
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined' !important;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+// ===========================================
+// Angular Material Overrides
+// ===========================================
+
+// Mat Form Field - COMPREHENSIVE FIXES
+.mat-mdc-form-field {
+  width: 100%;
+  
+  .mat-mdc-text-field-wrapper {
+    background-color: var(--input-background) !important;
+  }
+  
+  &.mat-form-field-appearance-outline {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--input-border) !important;
+    }
+    
+    &:hover:not(.mat-focused):not(.mat-form-field-invalid) {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--input-border-hover) !important;
+      }
+    }
+    
+    &.mat-focused {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--primary-color) !important;
+        border-width: 2px !important;
+      }
+    }
+  }
+  
+  .mat-mdc-input-element {
+    color: var(--input-text) !important;
+    font-size: 16px !important;
+    padding: 12px 16px !important;
+  }
+  
+  .mat-mdc-floating-label {
+    color: var(--text-secondary) !important;
+  }
+  
+  &.mat-focused .mat-mdc-floating-label {
+    color: var(--primary-color) !important;
+  }
+  
+  // Fix icon prefix/suffix
+  .mat-mdc-form-field-icon-prefix,
+  .mat-mdc-form-field-icon-suffix {
+    padding: 0 8px !important;
+    
+    mat-icon {
+      font-size: 20px !important;
+      width: 20px !important;
+      height: 20px !important;
+      color: var(--text-secondary) !important;
+    }
+  }
+  
+  // Error state
+  &.mat-form-field-invalid {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--error-color) !important;
+    }
+    
+    .mat-mdc-floating-label {
+      color: var(--error-color) !important;
+    }
+  }
+  
+  // Fix hint and error text
+  .mat-mdc-form-field-hint-wrapper,
+  .mat-mdc-form-field-error-wrapper {
+    padding: 4px 16px 0 !important;
+  }
+  
+  mat-hint,
+  mat-error {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+  }
+}
+
+// Mat Button
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-stroked-button,
+.mat-mdc-flat-button,
+.mat-mdc-unelevated-button {
+  border-radius: $radius-lg !important;
+  font-weight: $font-weight-medium;
+  letter-spacing: 0.02em;
+  transition: all $transition-fast !important;
+  
+  &.mat-mdc-button-base {
+    min-height: 40px;
+    height: auto;
+    padding: $spacing-2 $spacing-5;
+  }
+}
+
+.mat-mdc-icon-button {
+  &.mat-mdc-button-base {
+    width: 40px;
+    height: 40px;
+    padding: $spacing-2;
+    border-radius: $radius-md !important;
+  }
+}
+
+// Mat Card
+.mat-mdc-card {
+  border-radius: $radius-xl !important;
+  box-shadow: var(--shadow-md) !important;
+  background-color: var(--surface-color);
+  border: 1px solid var(--divider-color);
+  
+  .mat-mdc-card-header {
+    padding: $spacing-5 $spacing-6 0;
+  }
+  
+  .mat-mdc-card-content {
+    padding: $spacing-5 $spacing-6;
+  }
+  
+  .mat-mdc-card-actions {
+    padding: 0 $spacing-6 $spacing-5;
+  }
+}
+
+// Mat Toolbar
+.mat-toolbar {
+  background-color: var(--header-background);
+  color: var(--header-text);
+  
+  &.mat-primary {
+    background-color: var(--primary-color);
+    color: white;
+  }
+}
+
+// Mat Dialog
+.mat-mdc-dialog-container {
+  border-radius: $radius-xl !important;
+  
+  .mat-mdc-dialog-surface {
+    border-radius: $radius-xl !important;
+    background-color: var(--surface-color);
+  }
+}
+
+// Mat Snackbar
+.mat-mdc-snack-bar-container {
+  margin-top: 80px !important;
+  
+  &.mat-mdc-snack-bar-container {
+    --mdc-snackbar-container-color: var(--surface-elevated);
+    --mdc-snackbar-supporting-text-color: var(--text-primary);
+    border-radius: $radius-lg;
+    box-shadow: var(--shadow-xl);
+  }
+}
+
+// Mat Menu
+.mat-mdc-menu-panel {
+  border-radius: $radius-lg !important;
+  box-shadow: var(--shadow-lg) !important;
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  
+  .mat-mdc-menu-content {
+    padding: $spacing-2;
+  }
+  
+  .mat-mdc-menu-item {
+    border-radius: $radius-md;
+    margin-bottom: $spacing-1;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Mat Select
+.mat-mdc-select {
+  color: var(--text-primary);
+}
+
+.mat-mdc-select-panel {
+  border-radius: $radius-lg !important;
+  background-color: var(--surface-color);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+}
+
+// Mat Checkbox & Radio
+.mat-mdc-checkbox,
+.mat-mdc-radio-button {
+  .mdc-form-field > label {
+    color: var(--text-primary);
+  }
+}
+
+// Mat Slide Toggle
+.mat-mdc-slide-toggle {
+  .mdc-switch:enabled .mdc-switch__track::after {
+    background: var(--border-color);
+  }
+  
+  &.mat-mdc-slide-toggle-checked {
+    .mdc-switch:enabled .mdc-switch__track::after {
+      background: var(--primary-color);
+    }
+  }
+}
+
+// Mat Tabs
+.mat-mdc-tab-group {
+  .mat-mdc-tab {
+    font-weight: $font-weight-medium;
+  }
+  
+  .mat-mdc-tab-body-content {
+    padding: $spacing-4 0;
+  }
+}
+
+// Mat Table
+.mat-mdc-table {
+  background-color: var(--surface-color);
+  
+  .mat-mdc-header-row {
+    background-color: var(--table-header-bg);
+  }
+  
+  .mat-mdc-row {
+    &:hover {
+      background-color: var(--table-row-hover);
+    }
+  }
+  
+  .mat-mdc-header-cell,
+  .mat-mdc-cell {
+    color: var(--text-primary);
+    border-bottom-color: var(--table-border);
+  }
+  
+  .mat-mdc-header-cell {
+    font-weight: $font-weight-semibold;
+    color: var(--text-secondary);
+  }
+}
+
+// Mat Paginator
+.mat-mdc-paginator {
+  background-color: var(--surface-color);
+  border-top: 1px solid var(--table-border);
+  
+  .mat-mdc-paginator-container {
+    color: var(--text-primary);
+  }
+}
+
+// Mat Progress Spinner
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: var(--primary-color);
+}
+
+// Mat Chips
+.mat-mdc-chip {
+  border-radius: $radius-full !important;
+  font-weight: $font-weight-medium;
+}
+
+// Mat Stepper
+.mat-stepper-horizontal {
+  background-color: transparent;
+  
+  .mat-step-header {
+    padding: $spacing-4;
+    
+    .mat-step-icon {
+      width: 36px;
+      height: 36px;
+    }
+  }
+}
+
+// Mat Tooltip
+.mat-mdc-tooltip {
+  --mdc-plain-tooltip-container-color: rgba(0, 0, 0, 0.9);
+  --mdc-plain-tooltip-supporting-text-color: #ffffff;
+  font-size: $font-size-xs !important;
+  border-radius: $radius-md;
+}
+
+// ===========================================
+// FOOTER STYLES
+// ===========================================
+
+footer {
+  background-color: var(--footer-background) !important;
+  color: var(--footer-text) !important;
+  
+  h4 {
+    color: var(--text-inverse) !important;
+  }
+  
+  a {
+    color: var(--footer-text);
+    transition: color $transition-fast;
+    
+    &:hover {
+      color: var(--text-inverse);
+    }
+  }
+  
+  .newsletter-input {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-color: var(--border-color);
+    color: var(--text-inverse);
+    
+    &::placeholder {
+      color: var(--text-disabled);
+    }
+    
+    &:focus {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+  }
+}
+
+// ===========================================
+// AUTH PAGE SPECIFIC STYLES
+// ===========================================
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-6;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 500px !important;
+  padding: $spacing-10 $spacing-8 !important;
+  
+  .mat-mdc-card-content {
+    padding: 0 !important;
+  }
+}
+
+.auth-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: $spacing-6;
+  
+  img {
+    height: 64px;
+    width: auto;
+  }
+}
+
+.auth-title {
+  font-size: $font-size-3xl !important;
+  font-weight: $font-weight-bold !important;
+  color: var(--text-primary) !important;
+  margin: 0 0 $spacing-2 0 !important;
+  text-align: center;
+}
+
+.auth-subtitle {
+  font-size: $font-size-base !important;
+  color: var(--text-secondary) !important;
+  margin: 0 0 $spacing-6 0 !important;
+  text-align: center;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-5;
+  
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-4;
+  
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.submit-button {
+  width: 100%;
+  height: 52px !important;
+  font-size: $font-size-base !important;
+  font-weight: $font-weight-semibold !important;
+  margin-top: $spacing-2 !important;
+}
+
+.divider {
+  margin: $spacing-8 0 !important;
+}
+
+.register-text {
+  text-align: center;
+  font-size: $font-size-sm;
+  color: var(--text-secondary);
+  margin: $spacing-6 0 0 0;
+}
+
+.register-link {
+  color: var(--primary-color);
+  font-weight: $font-weight-semibold;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.forgot-link {
+  font-size: $font-size-sm;
+  color: var(--primary-color);
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.form-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: $spacing-2 0;
+}
+
+// ===========================================
+// Print Styles
+// ===========================================
+
+@media print {
+  .no-print,
+  .print-hidden {
+    display: none !important;
+  }
+  
+  .mat-toolbar,
+  header,
+  footer,
+  .breadcrumb,
+  button:not(.print-visible) {
+    display: none !important;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+  
+  * {
+    box-shadow: none !important;
+  }
+  
+  .page-content {
+    padding: 0;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+}

@@ -1,4 +1,5 @@
-@use 'tokens' as *;
+// Dashboard Layout - Minimal SCSS
+// Uses Angular Material for sidenav, only custom tokens here
 
 .dashboard-layout {
   display: flex;
@@ -10,8 +11,8 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: var(--z-fixed);
-    background-color: var(--color-header-bg);
+    z-index: var(--z-sticky);
+    background-color: var(--color-header-bg) !important;
   }
 
   &__brand {
@@ -33,7 +34,7 @@
 
   &__container {
     flex: 1;
-    margin-top: 64px; // Toolbar height
+    margin-top: 64px; // Material toolbar height
   }
 
   &__sidenav {
@@ -44,8 +45,8 @@
 
   &__nav-item {
     &.active {
-      background-color: var(--color-primary-light);
-      color: var(--color-primary);
+      background-color: var(--color-primary-light) !important;
+      color: var(--color-primary) !important;
 
       mat-icon {
         color: var(--color-primary);
@@ -86,12 +87,9 @@
   }
 }
 
-// Responsive
+// Mobile responsive
 @media (max-width: 768px) {
-  .dashboard-layout {
-    &__sidenav {
-      width: 100%;
-    }
+  .dashboard-layout__sidenav {
+    width: 100%;
   }
 }
-

@@ -1,4 +1,4 @@
-@use 'tokens' as *;
+// Home Component - Minimal SCSS
 
 // Hero Section
 .hero {
@@ -18,145 +18,9 @@
     opacity: 0.4;
     mix-blend-mode: overlay;
   }
-
-  &__content {
-    position: relative;
-    z-index: 1;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: var(--spacing-20) var(--spacing-6);
-    width: 100%;
-  }
-
-  &__text {
-    max-width: 640px;
-  }
-
-  &__title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: var(--font-weight-black);
-    line-height: 1.1;
-    margin-bottom: var(--spacing-4);
-  }
-
-  &__title-accent {
-    color: var(--color-primary);
-  }
-
-  &__subtitle {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-muted);
-    margin-bottom: var(--spacing-8);
-    max-width: 500px;
-  }
-
-  &__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-4);
-  }
 }
 
-// Fitment Selector
-.fitment-selector {
-  position: relative;
-  margin-top: -40px;
-  z-index: 10;
-  padding: 0 var(--spacing-6);
-
-  &__container {
-    max-width: 1280px;
-    margin: 0 auto;
-    background-color: var(--color-surface);
-    border-radius: var(--radius-xl);
-    padding: var(--spacing-6);
-    box-shadow: var(--shadow-xl);
-  }
-
-  &__title {
-    text-align: center;
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-bold);
-    margin-bottom: var(--spacing-4);
-  }
-
-  &__form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-4);
-
-    @media (min-width: 1024px) {
-      flex-direction: row;
-      align-items: flex-end;
-    }
-  }
-
-  &__fields {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-4);
-    flex: 1;
-
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-}
-
-// Categories
-.categories {
-  padding: var(--spacing-16) var(--spacing-6);
-
-  &__container {
-    max-width: 1280px;
-    margin: 0 auto;
-  }
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-8);
-  }
-
-  &__title {
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
-  }
-
-  &__link {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-1);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-primary);
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-
-    .material-symbols-outlined {
-      font-size: 18px;
-    }
-  }
-
-  &__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-4);
-
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    @media (min-width: 1024px) {
-      grid-template-columns: repeat(6, 1fr);
-    }
-  }
-}
-
+// Category Card
 .category-card {
   display: flex;
   flex-direction: column;
@@ -187,95 +51,26 @@
     width: 56px;
     height: 56px;
     border-radius: var(--radius-full);
-    background-color: var(--color-surface-secondary);
+    background-color: var(--color-gray-100);
     margin-bottom: var(--spacing-3);
     transition: all var(--transition-fast);
-
-    .material-symbols-outlined {
-      font-size: 28px;
-    }
-  }
-
-  &__name {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-bold);
-    text-align: center;
-  }
-}
-
-// Featured Products
-.featured-products {
-  padding: var(--spacing-16) var(--spacing-6);
-  background-color: var(--color-surface);
-
-  &__container {
-    max-width: 1280px;
-    margin: 0 auto;
-  }
-
-  &__title {
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
-    margin-bottom: var(--spacing-8);
-  }
-
-  &__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-8);
-
-    @media (min-width: 640px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (min-width: 1024px) {
-      grid-template-columns: repeat(4, 1fr);
-    }
   }
 }
 
 // Newsletter
 .newsletter {
-  padding: var(--spacing-16) var(--spacing-6);
+  background-color: var(--color-primary);
+  background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-10) var(--spacing-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
 
-  &__container {
-    max-width: 1280px;
-    margin: 0 auto;
-    background-color: var(--color-primary);
-    background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-    border-radius: var(--radius-2xl);
-    padding: var(--spacing-10) var(--spacing-12);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-8);
-
-    @media (min-width: 768px) {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-  }
-
-  &__content {
-    color: var(--color-white);
-  }
-
-  &__title {
-    font-size: var(--font-size-3xl);
-    font-weight: var(--font-weight-bold);
-    margin-bottom: var(--spacing-2);
-  }
-
-  &__subtitle {
-    font-size: var(--font-size-lg);
-    opacity: 0.9;
-    max-width: 500px;
-  }
-
-  &__form {
-    display: flex;
-    gap: var(--spacing-2);
-    flex-shrink: 0;
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 
   &__input {
@@ -287,14 +82,10 @@
     color: var(--color-white);
     font-size: var(--font-size-sm);
 
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
-
+    &::placeholder { color: rgba(255, 255, 255, 0.6); }
     &:focus {
       outline: none;
       box-shadow: 0 0 0 2px var(--color-white);
     }
   }
 }
-

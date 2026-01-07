@@ -1,10 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 export type CheckboxColor = 'primary' | 'accent' | 'warn';
 
+/**
+ * Checkbox Primitive
+ * Uses Angular Material checkbox directly.
+ */
 @Component({
   selector: 'app-checkbox',
   standalone: true,
@@ -13,9 +17,8 @@ export type CheckboxColor = 'primary' | 'accent' | 'warn';
   styleUrl: './checkbox.component.scss',
 })
 export class CheckboxComponent {
-  @Input({ required: true }) control!: FormControl<boolean>;
-  @Input() color: CheckboxColor = 'primary';
-  @Input() disabled = false;
-  @Input() labelPosition: 'before' | 'after' = 'after';
+  readonly control = input.required<FormControl<boolean>>();
+  readonly color = input<CheckboxColor>('primary');
+  readonly disabled = input(false);
+  readonly labelPosition = input<'before' | 'after'>('after');
 }
-

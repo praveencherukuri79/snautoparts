@@ -1,21 +1,8 @@
-.audit-page {
-  padding: var(--space-6);
-}
-
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-6);
-  flex-wrap: wrap;
-  gap: var(--space-4);
-
-  h1 {
-    margin: 0;
-  }
-}
+// .admin-page from _admin.scss provides base styling
+// Only component-specific styles here
 
 .filters {
   min-width: 200px;
 }
+
 

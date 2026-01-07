@@ -1,9 +1,8 @@
-import { Component, Input, forwardRef, signal, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, input, output, forwardRef, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { MatIconModule } from '@angular/material/icon';
 
 export interface SelectOption<T = string> {
   value: T;
@@ -11,10 +10,14 @@ export interface SelectOption<T = string> {
   disabled?: boolean;
 }
 
+/**
+ * Select Primitive
+ * Uses Angular Material select with outline appearance.
+ */
 @Component({
   selector: 'app-select',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatIconModule],
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatSelectModule],
   templateUrl: './select.component.html',
   styleUrl: './select.component.scss',
   providers: [
@@ -26,45 +29,34 @@ export interface SelectOption<T = string> {
   ],
 })
 export class SelectComponent<T = string> implements ControlValueAccessor, OnInit {
-  @Input() label = '';
-  @Input() placeholder = 'Select an option';
-  @Input() options: SelectOption<T>[] = [];
-  @Input() hint = '';
-  @Input() error = '';
-  @Input() required = false;
-  @Input() multiple = false;
-  @Input() set disabled(value: boolean) {
-    this.isDisabled.set(value);
-  }
-  
-  // Optional FormControl for direct binding
-  @Input() control?: FormControl<T | null>;
+  readonly label = input('');
+  readonly placeholder = input('Select an option');
+  readonly options = input<SelectOption<T>[]>([]);
+  readonly hint = input('');
+  readonly error = input('');
+  readonly required = input(false);
+  readonly multiple = input(false);
+  readonly control = input<FormControl<T | null>>();
 
-  @Output() selectionChange = new EventEmitter<T>();
+  readonly selectionChange = output<T>();
 
-  // Internal state
   value = signal<T | T[] | null>(null);
   isDisabled = signal(false);
-  
-  // Use provided control or create internal one
-  get activeControl(): FormControl<T | null> {
-    return this.control ?? new FormControl<T | null>(null);
-  }
-  
-  ngOnInit(): void {
-    // Sync initial value from control if provided
-    if (this.control) {
-      this.value.set(this.control.value);
-    }
-  }
 
   private onChange: (value: T | T[] | null) => void = () => {};
   private onTouched: () => void = () => {};
 
+  ngOnInit(): void {
+    const ctrl = this.control();
+    if (ctrl) {
+      this.value.set(ctrl.value);
+    }
+  }
+
   onSelectionChange(value: T | T[]): void {
     this.value.set(value);
     this.onChange(value);
-    if (!this.multiple) {
+    if (!this.multiple()) {
       this.selectionChange.emit(value as T);
     }
   }
@@ -73,7 +65,6 @@ export class SelectComponent<T = string> implements ControlValueAccessor, OnInit
     this.onTouched();
   }
 
-  // ControlValueAccessor implementation
   writeValue(value: T | T[] | null): void {
     this.value.set(value);
   }
@@ -90,4 +81,3 @@ export class SelectComponent<T = string> implements ControlValueAccessor, OnInit
     this.isDisabled.set(isDisabled);
   }
 }
-

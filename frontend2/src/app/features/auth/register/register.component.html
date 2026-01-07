@@ -1,11 +1,11 @@
-<div class="register">
-  <div class="register__header">
-    <h1 class="register__title">Create an Account</h1>
-    <p class="register__subtitle">Join the SN Auto Parts family today.</p>
+<div class="w-full max-w-[480px]">
+  <div class="mb-8">
+    <h1 class="text-3xl md:text-4xl font-black mb-2">Create an Account</h1>
+    <p class="text-[var(--color-text-muted)]">Join the SN Auto Parts family today.</p>
   </div>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="register__form">
-    <div class="register__row">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+    <div class="grid grid-cols-2 gap-4">
       <app-input
         label="First Name"
         placeholder="John"
@@ -60,9 +60,10 @@
     </app-button>
   </form>
 
-  <p class="register__login">
+  <p class="mt-8 text-center text-sm text-[var(--color-text-muted)]">
     Already have an account?
-    <a routerLink="/login" class="register__login-link">Sign in</a>
+    <a routerLink="/login" class="text-[var(--color-primary)] font-semibold ml-1 hover:text-[var(--color-text)]">
+      Sign in
+    </a>
   </p>
 </div>
-

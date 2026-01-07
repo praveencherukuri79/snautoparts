@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
+import { Component, input, output, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,51 +7,48 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
+/**
+ * Button Primitive
+ * Uses Angular Material button as base with custom theming.
+ */
 @Component({
   selector: 'app-button',
   standalone: true,
   imports: [CommonModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule],
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',
+  host: {
+    '[class.full-width]': 'fullWidth()',
+  }
 })
 export class ButtonComponent {
-  @Input() variant: ButtonVariant = 'primary';
-  @Input() size: ButtonSize = 'md';
-  @Input() type: 'button' | 'submit' | 'reset' = 'button';
-  @Input() disabled = false;
-  @Input() loading = false;
-  @Input() icon?: string;
-  @Input() iconPosition: 'left' | 'right' = 'left';
-  @Input() fullWidth = false;
+  readonly variant = input<ButtonVariant>('primary');
+  readonly size = input<ButtonSize>('md');
+  readonly type = input<'button' | 'submit' | 'reset'>('button');
+  readonly disabled = input(false);
+  readonly loading = input(false);
+  readonly icon = input<string | undefined>(undefined);
+  readonly iconPosition = input<'left' | 'right'>('left');
+  readonly fullWidth = input(false);
 
-  @Output() clicked = new EventEmitter<MouseEvent>();
+  readonly clicked = output<MouseEvent>();
 
-  @HostBinding('class.full-width')
-  get isFullWidth(): boolean {
-    return this.fullWidth;
-  }
+  readonly isDisabled = computed(() => this.disabled() || this.loading());
 
-  get isDisabled(): boolean {
-    return this.disabled || this.loading;
-  }
-
-  get buttonClasses(): string[] {
+  readonly buttonClasses = computed(() => {
     const classes = [
-      'app-button',
-      `app-button--${this.variant}`,
-      `app-button--${this.size}`,
+      'btn',
+      `btn--${this.variant()}`,
+      `btn--${this.size()}`,
     ];
-
-    if (this.loading) classes.push('app-button--loading');
-    if (this.fullWidth) classes.push('app-button--full-width');
-
-    return classes;
-  }
+    if (this.loading()) classes.push('btn--loading');
+    if (this.fullWidth()) classes.push('btn--full');
+    return classes.join(' ');
+  });
 
   onClick(event: MouseEvent): void {
-    if (!this.isDisabled) {
+    if (!this.isDisabled()) {
       this.clicked.emit(event);
     }
   }
 }
-

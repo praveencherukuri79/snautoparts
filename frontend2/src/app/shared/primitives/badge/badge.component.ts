@@ -1,34 +1,37 @@
-import { Component, Input, HostBinding } from '@angular/core';
+import { Component, input, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export type BadgeVariant = 'default' | 'primary' | 'success' | 'warning' | 'error' | 'info' | 'neutral';
 export type BadgeSize = 'sm' | 'md' | 'lg';
 
+/**
+ * Badge Primitive
+ * Status indicators and labels.
+ */
 @Component({
   selector: 'app-badge',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './badge.component.html',
   styleUrl: './badge.component.scss',
+  host: {
+    '[class]': 'hostClasses()',
+  }
 })
 export class BadgeComponent {
-  @Input() variant: BadgeVariant = 'default';
-  @Input() size: BadgeSize = 'md';
-  @Input() dot = false;
-  @Input() rounded = false;
+  readonly variant = input<BadgeVariant>('default');
+  readonly size = input<BadgeSize>('md');
+  readonly dot = input(false);
+  readonly rounded = input(false);
 
-  @HostBinding('class')
-  get hostClasses(): string {
+  readonly hostClasses = computed(() => {
     const classes = [
-      'app-badge',
-      `app-badge--${this.variant}`,
-      `app-badge--${this.size}`,
+      'badge',
+      `badge--${this.variant()}`,
+      `badge--${this.size()}`,
     ];
-
-    if (this.dot) classes.push('app-badge--dot');
-    if (this.rounded) classes.push('app-badge--rounded');
-
+    if (this.dot()) classes.push('badge--dot');
+    if (this.rounded()) classes.push('badge--rounded');
     return classes.join(' ');
-  }
+  });
 }
-

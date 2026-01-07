@@ -7,32 +7,30 @@
       placeholder="Select Year"
       (selectionChange)="onYearChange($event)"
     />
-    
+
     <app-select
       label="Make"
       [options]="makes()"
       [control]="makeControl"
       placeholder="Select Make"
-      [disabled]="!yearControl.value || loadingMakes()"
       (selectionChange)="onMakeChange($event)"
     />
-    
+
     <app-select
       label="Model"
       [options]="models()"
       [control]="modelControl"
       placeholder="Select Model"
-      [disabled]="!makeControl.value || loadingModels()"
     />
   </div>
-  
+
   <app-button
     icon="search"
-    [disabled]="!isComplete"
+    [disabled]="!isComplete()"
     (clicked)="search()"
-    class="fitment-selector__button"
+    [fullWidth]="true"
+    class="md:w-auto"
   >
     Find Parts
   </app-button>
 </div>
-

@@ -1,19 +1,19 @@
-@use 'tokens' as *;
+// Spinner Primitive - Minimal SCSS
 
 :host {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  &.app-spinner--overlay {
+  &.spinner--overlay {
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: var(--z-overlay);
+    z-index: var(--z-modal);
   }
 }
 
-.app-spinner {
+.spinner {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,9 +24,8 @@
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
 
-    :host.app-spinner--overlay & {
+    :host.spinner--overlay & {
       color: var(--color-white);
     }
   }
 }
-

@@ -2,11 +2,7 @@
   text-align: center;
 }
 
-.loading-container {
-  display: flex;
-  justify-content: center;
-  padding: var(--space-12);
-}
+// .loading-container is defined globally in _components.scss
 
 .confirmation-content {
   display: flex;
@@ -15,7 +11,7 @@
 }
 
 .success-icon {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--spacing-6);
 
   .material-symbols-outlined {
     font-size: 80px;
@@ -24,13 +20,13 @@
 }
 
 h1 {
-  margin: 0 0 var(--space-2);
+  margin: 0 0 var(--spacing-2);
   font-size: var(--font-size-3xl);
 }
 
 .subtitle {
   color: var(--color-text-secondary);
-  margin: 0 0 var(--space-8);
+  margin: 0 0 var(--spacing-8);
 }
 
 .order-details {
@@ -42,7 +38,7 @@ h1 {
 .detail-row {
   display: flex;
   justify-content: space-between;
-  padding: var(--space-3) 0;
+  padding: var(--spacing-3) 0;
   border-bottom: 1px solid var(--color-border);
 
   &:last-child {
@@ -71,18 +67,19 @@ h1 {
 }
 
 .email-notice {
-  margin: var(--space-6) 0;
+  margin: var(--spacing-6) 0;
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
 }
 
 .actions {
   display: flex;
-  gap: var(--space-4);
+  gap: var(--spacing-4);
 
   @media (max-width: 640px) {
     flex-direction: column;
     width: 100%;
   }
 }
+
 

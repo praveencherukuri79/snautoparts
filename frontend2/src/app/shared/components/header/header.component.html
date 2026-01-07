@@ -1,14 +1,14 @@
 <header class="header">
-  <div class="header__container">
+  <div class="flex items-center justify-between gap-6 max-w-[1280px] mx-auto px-6 h-20">
     <!-- Logo -->
-    <a routerLink="/" class="header__brand">
+    <a routerLink="/" class="flex items-center gap-2 no-underline text-white flex-shrink-0">
       <span class="header__brand-icon material-symbols-outlined">directions_car</span>
-      <span class="header__brand-name">SN Auto Parts</span>
+      <span class="text-xl font-bold tracking-tight">SN Auto Parts</span>
     </a>
 
     <!-- Search Bar -->
     <div class="header__search">
-      <span class="header__search-icon material-symbols-outlined">search</span>
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none">search</span>
       <input
         type="text"
         class="header__search-input"
@@ -17,20 +17,23 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="header__nav">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="header__nav-link">
+    <nav class="hidden lg:flex items-center gap-6">
+      <a routerLink="/" routerLinkActive="text-white" [routerLinkActiveOptions]="{exact: true}"
+         class="text-sm font-medium text-[var(--color-text-muted)] hover:text-white transition-colors">
         Home
       </a>
-      <a routerLink="/products" routerLinkActive="active" class="header__nav-link">
+      <a routerLink="/products" routerLinkActive="text-white"
+         class="text-sm font-medium text-[var(--color-text-muted)] hover:text-white transition-colors">
         Products
       </a>
-      <a routerLink="/categories" routerLinkActive="active" class="header__nav-link">
+      <a routerLink="/categories" routerLinkActive="text-white"
+         class="text-sm font-medium text-[var(--color-text-muted)] hover:text-white transition-colors">
         Categories
       </a>
     </nav>
 
     <!-- Actions -->
-    <div class="header__actions">
+    <div class="flex items-center gap-2 pl-4 border-l border-white/10">
       <!-- Cart -->
       <a routerLink="/cart" class="header__action-btn" [matBadge]="cartItemCount()" [matBadgeHidden]="!cartItemCount()">
         <span class="material-symbols-outlined">shopping_cart</span>
@@ -42,9 +45,9 @@
           <span class="material-symbols-outlined">account_circle</span>
         </button>
         <mat-menu #userMenu="matMenu">
-          <div class="header__user-info">
-            <span class="header__user-name">{{ user()?.firstName }} {{ user()?.lastName }}</span>
-            <span class="header__user-email">{{ user()?.email }}</span>
+          <div class="px-4 py-3">
+            <span class="block font-semibold">{{ user()?.firstName }} {{ user()?.lastName }}</span>
+            <span class="block text-sm text-[var(--color-text-muted)]">{{ user()?.email }}</span>
           </div>
           <mat-divider></mat-divider>
           @for (item of accountNavItems(); track item.id) {
@@ -67,4 +70,3 @@
     </div>
   </div>
 </header>
-

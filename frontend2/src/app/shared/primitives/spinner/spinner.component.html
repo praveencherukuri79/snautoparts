@@ -1,7 +1,6 @@
-<div class="app-spinner">
-  <mat-spinner [diameter]="diameter" [color]="color"></mat-spinner>
-  @if (text) {
-    <span class="app-spinner__text">{{ text }}</span>
+<div class="spinner">
+  <mat-spinner [diameter]="diameter()" [color]="color()"></mat-spinner>
+  @if (text()) {
+    <span class="spinner__text">{{ text() }}</span>
   }
 </div>
-

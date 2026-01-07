@@ -1,23 +1,32 @@
+// Product Listing - Minimal SCSS
+
 .product-listing {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
-  padding: var(--space-6);
+  gap: var(--spacing-6);
+  padding: var(--spacing-6);
   max-width: 1280px;
   margin: 0 auto;
+
+  &__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+  }
+
+  &__content {
+    min-height: 400px;
+  }
 }
 
-.product-listing__fitment {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
+// Fitment Badge
 .fitment-badge {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-4);
   background: var(--color-primary-light);
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);
@@ -29,21 +38,11 @@
   color: var(--color-primary);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
-  padding: var(--space-1) var(--space-2);
+  padding: var(--spacing-1) var(--spacing-2);
   border-radius: var(--radius-sm);
   transition: background-color var(--transition-fast);
 
-  &:hover {
-    background: rgba(0, 0, 0, 0.05);
-  }
-}
-
-.product-listing__toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--space-4);
+  &:hover { background: rgba(0, 0, 0, 0.05); }
 }
 
 .toolbar__results {
@@ -55,33 +54,13 @@
   min-width: 180px;
 }
 
-.product-listing__content {
-  min-height: 400px;
-}
-
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
-}
-
+// Products Grid
 .products-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-4);
+  gap: var(--spacing-4);
 
-  @media (min-width: 640px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (min-width: 1280px) {
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-6);
-  }
+  @media (min-width: 640px) { grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 1024px) { grid-template-columns: repeat(3, 1fr); }
+  @media (min-width: 1280px) { grid-template-columns: repeat(4, 1fr); gap: var(--spacing-6); }
 }
-

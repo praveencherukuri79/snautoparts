@@ -1,34 +1,30 @@
 <!-- Hero Section -->
 <section class="hero">
   <div class="hero__overlay"></div>
-  <div class="hero__content">
-    <div class="hero__text">
-      <h1 class="hero__title">
+  <div class="container relative z-10 py-20">
+    <div class="max-w-xl">
+      <h1 class="text-4xl md:text-6xl font-black leading-tight mb-4">
         Quality Auto Parts<br />
-        <span class="hero__title-accent">You Can Trust</span>
+        <span class="text-[var(--color-primary)]">You Can Trust</span>
       </h1>
-      <p class="hero__subtitle">
-        Find the perfect parts for your vehicle with our extensive catalog. 
+      <p class="text-lg text-[var(--color-text-muted)] mb-8 max-w-lg">
+        Find the perfect parts for your vehicle with our extensive catalog.
         Guaranteed fitment, fast shipping, and expert support.
       </p>
-      <div class="hero__actions">
-        <app-button variant="primary" size="lg" routerLink="/products">
-          Shop Now
-        </app-button>
-        <app-button variant="outline" size="lg" routerLink="/deals">
-          View Deals
-        </app-button>
+      <div class="flex flex-wrap gap-4">
+        <app-button variant="primary" size="lg" routerLink="/products">Shop Now</app-button>
+        <app-button variant="outline" size="lg" routerLink="/deals">View Deals</app-button>
       </div>
     </div>
   </div>
 </section>
 
 <!-- Vehicle Fitment Selector -->
-<section class="fitment-selector">
-  <div class="fitment-selector__container">
-    <h2 class="fitment-selector__title">Select your vehicle for guaranteed fitment</h2>
-    <div class="fitment-selector__form">
-      <div class="fitment-selector__fields">
+<section class="relative -mt-10 z-10 px-6">
+  <div class="container card card--elevated p-6">
+    <h2 class="text-lg font-bold text-center mb-4">Select your vehicle for guaranteed fitment</h2>
+    <div class="flex flex-col lg:flex-row gap-4 lg:items-end">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1">
         <app-select
           label="Year"
           placeholder="Select Year"
@@ -39,14 +35,12 @@
           label="Make"
           placeholder="Select Make"
           [options]="makes()"
-          [disabled]="!selectedYear()"
           (selectionChange)="onMakeChange($event)"
         ></app-select>
         <app-select
           label="Model"
           placeholder="Select Model"
           [options]="models()"
-          [disabled]="!selectedMake()"
           (selectionChange)="onModelChange($event)"
         ></app-select>
       </div>
@@ -64,22 +58,22 @@
 </section>
 
 <!-- Categories Grid -->
-<section class="categories">
-  <div class="categories__container">
-    <div class="categories__header">
-      <h2 class="categories__title">Shop by Category</h2>
-      <a routerLink="/categories" class="categories__link">
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title text-2xl">Shop by Category</h2>
+      <a routerLink="/categories" class="section-link">
         View all categories
-        <span class="material-symbols-outlined">arrow_forward</span>
+        <span class="material-symbols-outlined text-lg">arrow_forward</span>
       </a>
     </div>
-    <div class="categories__grid">
+    <div class="grid-6">
       @for (category of categories().slice(0, 6); track trackByCategory($index, category)) {
         <a [routerLink]="['/categories', category.slug]" class="category-card">
           <div class="category-card__icon">
-            <span class="material-symbols-outlined">{{ getCategoryIcon(category.name) }}</span>
+            <span class="material-symbols-outlined text-3xl">{{ getCategoryIcon(category.name) }}</span>
           </div>
-          <h3 class="category-card__name">{{ category.name }}</h3>
+          <h3 class="text-sm font-bold text-center">{{ category.name }}</h3>
         </a>
       }
     </div>
@@ -87,10 +81,10 @@
 </section>
 
 <!-- Featured Products -->
-<section class="featured-products">
-  <div class="featured-products__container">
-    <h2 class="featured-products__title">Featured Products</h2>
-    <div class="featured-products__grid">
+<section class="section bg-[var(--color-surface)]">
+  <div class="container">
+    <h2 class="section-title text-2xl mb-8">Featured Products</h2>
+    <div class="grid-4 gap-8">
       @for (product of featuredProducts(); track trackByProduct($index, product)) {
         <app-product-card
           [product]="product"
@@ -102,23 +96,24 @@
 </section>
 
 <!-- Newsletter Section -->
-<section class="newsletter">
-  <div class="newsletter__container">
-    <div class="newsletter__content">
-      <h2 class="newsletter__title">Join the SN Auto Club</h2>
-      <p class="newsletter__subtitle">
-        Sign up for our newsletter to receive exclusive deals, maintenance tips, and 15% off your first order.
-      </p>
+<section class="section">
+  <div class="container">
+    <div class="newsletter">
+      <div class="text-white">
+        <h2 class="text-3xl font-bold mb-2">Join the SN Auto Club</h2>
+        <p class="text-lg opacity-90 max-w-lg">
+          Sign up for our newsletter to receive exclusive deals, maintenance tips, and 15% off your first order.
+        </p>
+      </div>
+      <form class="flex gap-2 flex-shrink-0">
+        <input
+          type="email"
+          class="newsletter__input"
+          placeholder="Enter your email"
+          required
+        />
+        <app-button variant="secondary" type="submit">Subscribe</app-button>
+      </form>
     </div>
-    <form class="newsletter__form">
-      <input
-        type="email"
-        class="newsletter__input"
-        placeholder="Enter your email"
-        required
-      />
-      <app-button variant="secondary" type="submit">Subscribe</app-button>
-    </form>
   </div>
 </section>
-

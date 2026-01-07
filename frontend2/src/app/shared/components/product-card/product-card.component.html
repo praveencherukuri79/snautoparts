@@ -1,75 +1,73 @@
-<a [routerLink]="['/products', product.slug]" class="product-card">
+<a [routerLink]="['/products', product().slug]" class="product-card card card--outlined card--hoverable">
   <!-- Image -->
   <div class="product-card__image-wrapper">
-    @if (isOnSale) {
-      <span class="product-card__badge product-card__badge--sale">
-        -{{ discountPercentage }}%
+    @if (isOnSale()) {
+      <span class="product-card__badge badge badge--error badge--sm">
+        -{{ discountPercentage() }}%
       </span>
     }
-    @if (product.isFeatured) {
-      <span class="product-card__badge product-card__badge--featured">
+    @if (product().isFeatured) {
+      <span class="product-card__badge product-card__badge--featured badge badge--primary badge--sm">
         HOT
       </span>
     }
-    <div 
+    <div
       class="product-card__image"
-      [style.backgroundImage]="product.imageUrl ? 'url(' + product.imageUrl + ')' : 'none'"
+      [style.backgroundImage]="product().imageUrl ? 'url(' + product().imageUrl + ')' : 'none'"
     >
-      @if (!product.imageUrl) {
-        <span class="material-symbols-outlined product-card__placeholder-icon">image</span>
+      @if (!product().imageUrl) {
+        <span class="material-symbols-outlined text-5xl text-[var(--color-text-muted)]">image</span>
       }
     </div>
   </div>
 
   <!-- Content -->
-  <div class="product-card__content">
+  <div class="flex flex-col flex-1 p-4">
     <!-- Rating -->
-    @if (showRating && product.rating) {
-      <div class="product-card__rating">
+    @if (showRating() && product().rating) {
+      <div class="flex items-center gap-1 mb-2">
         @for (star of starArray; track star) {
-          <span 
-            class="material-symbols-outlined product-card__star"
-            [class.product-card__star--filled]="star <= (product.rating || 0)"
+          <span
+            class="material-symbols-outlined text-base"
+            [class.text-[var(--color-warning)]]="star <= (product().rating || 0)"
+            [class.text-[var(--color-border)]]="star > (product().rating || 0)"
           >
             star
           </span>
         }
-        @if (product.reviewCount) {
-          <span class="product-card__review-count">({{ product.reviewCount }})</span>
+        @if (product().reviewCount) {
+          <span class="text-xs text-[var(--color-text-muted)] ml-1">({{ product().reviewCount }})</span>
         }
       </div>
     }
 
     <!-- Name -->
-    <h3 class="product-card__name">{{ product.name }}</h3>
+    <h3 class="font-bold text-base mb-3 line-clamp-2">{{ product().name }}</h3>
 
-    <!-- Price -->
-    <div class="product-card__price-row">
-      <div class="product-card__prices">
-        <span class="product-card__price">${{ product.price | number:'1.2-2' }}</span>
-        @if (isOnSale && product.compareAtPrice) {
-          <span class="product-card__compare-price">${{ product.compareAtPrice | number:'1.2-2' }}</span>
+    <!-- Price Row -->
+    <div class="flex items-center justify-between mt-auto mb-2">
+      <div class="flex items-baseline gap-2">
+        <span class="price price--lg">${{ product().price | number:'1.2-2' }}</span>
+        @if (isOnSale() && product().compareAtPrice) {
+          <span class="price-original">${{ product().compareAtPrice | number:'1.2-2' }}</span>
         }
       </div>
 
-      <!-- Add to Cart Button -->
-      @if (showAddToCart) {
+      @if (showAddToCart()) {
         <button
           class="product-card__add-btn"
-          [class.product-card__add-btn--disabled]="product.stockStatus === 'out_of_stock'"
-          [disabled]="product.stockStatus === 'out_of_stock'"
+          [class.opacity-50]="product().stockStatus === 'out_of_stock'"
+          [disabled]="product().stockStatus === 'out_of_stock'"
           (click)="onAddToCart($event)"
-          [attr.aria-label]="'Add ' + product.name + ' to cart'"
         >
-          <span class="material-symbols-outlined">add_shopping_cart</span>
+          <span class="material-symbols-outlined text-xl">add_shopping_cart</span>
         </button>
       }
     </div>
 
     <!-- Stock Status -->
-    <span class="product-card__stock {{ stockStatusClass }}">
-      {{ stockStatusLabel }}
+    <span class="text-xs font-medium {{ stockStatusClass() }}">
+      {{ stockStatusLabel() }}
     </span>
   </div>
 </a>
-

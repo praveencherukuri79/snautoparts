@@ -1,4 +1,14 @@
+// Checkbox Primitive - Minimal SCSS
+// Angular Material handles styling
+
 :host {
   display: inline-block;
 }
 
+// Theme customization
+mat-checkbox {
+  --mdc-checkbox-selected-checkmark-color: var(--color-white);
+  --mdc-checkbox-selected-icon-color: var(--color-primary);
+  --mdc-checkbox-selected-hover-icon-color: var(--color-primary-dark);
+  --mdc-checkbox-selected-focus-icon-color: var(--color-primary);
+}

@@ -1,41 +1,41 @@
-@if (useContentProjection) {
+@if (useContentProjection()) {
   <!-- Content Projection Mode -->
-  <div class="form-field-wrapper">
-    <label class="form-field-label">
-      {{ label }}
-      @if (required) {
-        <span class="required-indicator">*</span>
+  <div class="field-wrapper">
+    <label class="field-label">
+      {{ label() }}
+      @if (required()) {
+        <span class="text-[var(--color-error)]">*</span>
       }
     </label>
-    <div class="form-field-content">
+    <div class="field-content">
       <ng-content></ng-content>
     </div>
-    @if (hint && !hasError) {
-      <span class="form-field-hint">{{ hint }}</span>
+    @if (hint() && !hasError()) {
+      <span class="field-hint">{{ hint() }}</span>
     }
-    @if (hasError) {
-      <span class="form-field-error">{{ errorMessage }}</span>
+    @if (hasError()) {
+      <span class="field-error">{{ errorMessage() }}</span>
     }
   </div>
 } @else {
   <!-- Control Input Mode -->
-  <mat-form-field [appearance]="appearance" class="full-width">
-    <mat-label>{{ label }}</mat-label>
-    
-    @if (prefixIcon) {
-      <mat-icon matPrefix>{{ prefixIcon }}</mat-icon>
+  <mat-form-field [appearance]="appearance()" class="w-full">
+    <mat-label>{{ label() }}</mat-label>
+
+    @if (prefixIcon()) {
+      <mat-icon matPrefix>{{ prefixIcon() }}</mat-icon>
     }
-    
-    @if (control) {
+
+    @if (control(); as ctrl) {
       <input
         matInput
-        [type]="inputType"
-        [formControl]="control"
-        [placeholder]="placeholder"
+        [type]="inputType()"
+        [formControl]="ctrl"
+        [placeholder]="placeholder()"
       />
     }
-    
-    @if (type === 'password' && showPasswordToggle) {
+
+    @if (type() === 'password' && showPasswordToggle()) {
       <button
         type="button"
         mat-icon-button
@@ -45,16 +45,16 @@
       >
         <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
       </button>
-    } @else if (suffixIcon) {
-      <mat-icon matSuffix>{{ suffixIcon }}</mat-icon>
+    } @else if (suffixIcon()) {
+      <mat-icon matSuffix>{{ suffixIcon() }}</mat-icon>
     }
-    
-    @if (hint) {
-      <mat-hint>{{ hint }}</mat-hint>
+
+    @if (hint()) {
+      <mat-hint>{{ hint() }}</mat-hint>
     }
-    
-    @if (control && control.errors && control.touched) {
-      <mat-error>{{ errorMessage }}</mat-error>
+
+    @if (hasError()) {
+      <mat-error>{{ errorMessage() }}</mat-error>
     }
   </mat-form-field>
 }

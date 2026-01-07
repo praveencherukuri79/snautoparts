@@ -1,4 +1,4 @@
-@use 'tokens' as *;
+// Badge Primitive - Minimal SCSS using tokens
 
 :host {
   display: inline-flex;
@@ -6,89 +6,30 @@
   justify-content: center;
 }
 
-.app-badge {
+.badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-family-base);
+  font-family: var(--font-family);
   font-weight: var(--font-weight-medium);
   white-space: nowrap;
   border-radius: var(--radius-sm);
 
   // Sizes
-  &--sm {
-    height: 20px;
-    padding: 0 var(--spacing-2);
-    font-size: var(--font-size-xs);
-  }
-
-  &--md {
-    height: 24px;
-    padding: 0 var(--spacing-3);
-    font-size: var(--font-size-sm);
-  }
-
-  &--lg {
-    height: 28px;
-    padding: 0 var(--spacing-4);
-    font-size: var(--font-size-base);
-  }
+  &--sm { height: 20px; padding: 0 var(--spacing-2); font-size: var(--font-size-xs); }
+  &--md { height: 24px; padding: 0 var(--spacing-3); font-size: var(--font-size-sm); }
+  &--lg { height: 28px; padding: 0 var(--spacing-4); font-size: var(--font-size-base); }
 
   // Variants
-  &--default {
-    background-color: var(--color-surface-secondary);
-    color: var(--color-text-muted);
-  }
-
-  &--primary {
-    background-color: var(--color-primary-light);
-    color: var(--color-primary-dark);
-  }
-
-  &--success {
-    background-color: var(--color-success-light);
-    color: var(--color-success-dark);
-  }
-
-  &--warning {
-    background-color: var(--color-warning-light);
-    color: var(--color-warning-dark);
-  }
-
-  &--error {
-    background-color: var(--color-error-light);
-    color: var(--color-error-dark);
-  }
-
-  &--info {
-    background-color: var(--color-info-light);
-    color: var(--color-info-dark);
-  }
-
-  &--neutral {
-    background-color: var(--color-surface-tertiary, #f5f5f5);
-    color: var(--color-text-secondary, #6b7280);
-    border: 1px solid var(--color-border, #e5e7eb);
-  }
+  &--default { background: var(--color-gray-100); color: var(--color-gray-600); }
+  &--primary { background: var(--color-primary-light); color: var(--color-primary-dark); }
+  &--success { background: var(--color-success-light); color: var(--color-success-dark); }
+  &--warning { background: var(--color-warning-light); color: var(--color-warning-dark); }
+  &--error { background: var(--color-error-light); color: var(--color-error-dark); }
+  &--info { background: var(--color-info-light); color: var(--color-info-dark); }
+  &--neutral { background: var(--color-gray-100); color: var(--color-gray-600); border: 1px solid var(--color-border); }
 
   // Modifiers
-  &--rounded {
-    border-radius: var(--radius-full);
-  }
-
-  &--dot {
-    width: 8px;
-    height: 8px;
-    min-width: 8px;
-    padding: 0;
-    border-radius: var(--radius-full);
-  }
-
-  &__dot {
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    background-color: currentColor;
-  }
+  &--rounded { border-radius: var(--radius-full); }
+  &--dot { width: 8px; height: 8px; min-width: 8px; padding: 0; border-radius: var(--radius-full); }
 }
-

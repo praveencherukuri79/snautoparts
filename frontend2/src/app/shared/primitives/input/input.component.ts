@@ -1,16 +1,28 @@
-import { Component, Input, forwardRef, signal } from '@angular/core';
+import { Component, input, forwardRef, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 export type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
 
+/**
+ * Input Primitive
+ * Uses Angular Material form field with outline appearance.
+ */
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
   providers: [
@@ -22,19 +34,19 @@ export type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url'
   ],
 })
 export class InputComponent implements ControlValueAccessor {
-  @Input() label = '';
-  @Input() placeholder = '';
-  @Input() type: InputType = 'text';
-  @Input() hint = '';
-  @Input() error = '';
-  @Input() icon?: string;
-  @Input() iconPosition: 'prefix' | 'suffix' = 'prefix';
-  @Input() required = false;
-  @Input() readonly = false;
-  @Input() autocomplete = '';
+  readonly label = input('');
+  readonly placeholder = input('');
+  readonly type = input<InputType>('text');
+  readonly hint = input('');
+  readonly error = input('');
+  readonly icon = input<string | undefined>(undefined);
+  readonly iconPosition = input<'prefix' | 'suffix'>('prefix');
+  readonly required = input(false);
+  readonly readonly = input(false);
+  readonly autocomplete = input('');
 
   // Internal state
-  value = signal<string>('');
+  value = signal('');
   isDisabled = signal(false);
   showPassword = signal(false);
 
@@ -42,10 +54,10 @@ export class InputComponent implements ControlValueAccessor {
   private onTouched: () => void = () => {};
 
   get inputType(): string {
-    if (this.type === 'password') {
+    if (this.type() === 'password') {
       return this.showPassword() ? 'text' : 'password';
     }
-    return this.type;
+    return this.type();
   }
 
   togglePasswordVisibility(): void {
@@ -62,7 +74,6 @@ export class InputComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
-  // ControlValueAccessor implementation
   writeValue(value: string): void {
     this.value.set(value ?? '');
   }
@@ -79,4 +90,3 @@ export class InputComponent implements ControlValueAccessor {
     this.isDisabled.set(isDisabled);
   }
 }
-

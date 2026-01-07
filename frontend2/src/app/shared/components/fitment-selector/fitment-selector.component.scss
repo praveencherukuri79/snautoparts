@@ -1,8 +1,10 @@
+// Fitment Selector - Minimal SCSS
+
 .fitment-selector {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  padding: var(--space-6);
+  gap: var(--spacing-4);
+  padding: var(--spacing-6);
   background: var(--color-surface);
   border-radius: var(--radius-lg);
 
@@ -10,27 +12,18 @@
     flex-direction: row;
     align-items: flex-end;
   }
-}
 
-.fitment-selector__fields {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  flex: 1;
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    flex: 1;
 
-  @media (min-width: 768px) {
-    flex-direction: row;
-    gap: var(--space-4);
+    @media (min-width: 768px) {
+      flex-direction: row;
+      gap: var(--spacing-4);
 
-    app-select {
-      flex: 1;
+      app-select { flex: 1; }
     }
   }
 }
-
-.fitment-selector__button {
-  @media (min-width: 768px) {
-    flex-shrink: 0;
-  }
-}
-

@@ -1,0 +1,182 @@
+@use 'tokens' as *;
+
+.orders-page {
+  padding: var(--spacing-6);
+  background: var(--color-dark-bg);
+  min-height: 100vh;
+  color: white;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-6);
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+
+  h1 {
+    font-size: var(--font-size-3xl);
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: -0.033em;
+  }
+
+  .subtitle {
+    color: var(--color-text-muted);
+    margin: var(--spacing-1) 0 0;
+    font-size: var(--font-size-sm);
+  }
+}
+
+.filters-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+  flex-wrap: wrap;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+
+  .search-icon {
+    position: absolute;
+    left: var(--spacing-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    font-size: 20px;
+  }
+
+  input {
+    width: 100%;
+    padding: var(--spacing-3) var(--spacing-4) var(--spacing-3) var(--spacing-10);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+    &::placeholder { color: var(--color-text-muted); }
+  }
+}
+
+.filter-chips {
+  display: flex;
+  gap: var(--spacing-2);
+  overflow-x: auto;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+
+  &:hover { border-color: var(--color-primary); }
+  &.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-12);
+}
+
+.orders-table-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: var(--spacing-3) var(--spacing-4);
+    text-align: left;
+  }
+
+  th {
+    background: var(--color-surface-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  tr { border-bottom: 1px solid var(--color-border); cursor: pointer; }
+  tr:hover { background: var(--color-surface-hover); }
+}
+
+.order-number {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+}
+
+.customer-name { font-weight: var(--font-weight-medium); }
+.customer-email { font-size: var(--font-size-xs); color: var(--color-text-muted); }
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.order-item {
+  font-size: var(--font-size-sm);
+  &:first-child { font-weight: var(--font-weight-medium); }
+}
+
+.more-items { font-size: var(--font-size-xs); color: var(--color-text-muted); }
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+
+  &.pending { background: rgba(234, 179, 8, 0.1); color: var(--color-warning); }
+  &.processing { background: rgba(59, 130, 246, 0.1); color: var(--color-info); }
+  &.shipped { background: rgba(168, 85, 247, 0.1); color: #a855f7; }
+  &.delivered { background: rgba(34, 197, 94, 0.1); color: var(--color-success); }
+  &.cancelled { background: rgba(239, 68, 68, 0.1); color: var(--color-error); }
+}
+
+.order-total { font-weight: var(--font-weight-bold); }
+
+.action-menu { display: flex; gap: var(--spacing-2); }
+
+app-pagination { margin-top: var(--spacing-4); }
+
+@media (max-width: 1024px) {
+  .orders-table-card { overflow-x: auto; }
+  .orders-table { min-width: 800px; }
+}
+

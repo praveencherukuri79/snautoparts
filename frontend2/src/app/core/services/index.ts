@@ -15,3 +15,4 @@ export * from './user.service';
 export * from './admin.service';
 export * from './product.service';
 export * from './mock-data.service';
+export * from './theme.service';

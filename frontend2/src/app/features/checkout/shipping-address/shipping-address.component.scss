@@ -1,42 +1,34 @@
 .shipping-address {
   h2 {
-    margin: 0 0 var(--space-2);
+    margin: 0 0 var(--spacing-2);
   }
 
   .subtitle {
     color: var(--color-text-secondary);
-    margin: 0 0 var(--space-6);
+    margin: 0 0 var(--spacing-6);
   }
 }
 
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-4);
-
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-  }
-}
-
+// .form-row is defined globally, extend here for 3-column variant
 .form-row--3 {
+  display: grid;
   grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--spacing-4);
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
   }
 }
 
+// Override form-actions for checkout flow
 .form-actions {
-  display: flex;
   justify-content: space-between;
-  gap: var(--space-4);
-  margin-top: var(--space-6);
-  padding-top: var(--space-6);
+  padding-top: var(--spacing-6);
   border-top: 1px solid var(--color-border);
 
   @media (max-width: 640px) {
     flex-direction: column-reverse;
   }
 }
+
 

@@ -1,75 +1,65 @@
+@use 'tokens' as *;
+
 .product-edit {
-  padding: var(--space-6);
+  padding: var(--spacing-6);
   max-width: 1000px;
   margin: 0 auto;
 }
 
 .page-header {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--spacing-6);
 
-  h1 {
-    margin: var(--space-2) 0 0;
-  }
+  h1 { margin: var(--spacing-2) 0 0; }
 }
 
 .loading-container {
   display: flex;
   justify-content: center;
-  padding: var(--space-12);
+  padding: var(--spacing-12);
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-6);
+  gap: var(--spacing-6);
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
+  @media (max-width: 768px) { grid-template-columns: 1fr; }
 }
 
 .span-2 {
   grid-column: span 2;
 
-  @media (max-width: 768px) {
-    grid-column: span 1;
-  }
+  @media (max-width: 768px) { grid-column: span 1; }
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-4);
+  gap: var(--spacing-4);
 
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-  }
+  @media (max-width: 640px) { grid-template-columns: 1fr; }
 }
 
 .status-toggles {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--spacing-3);
 }
 
 .toggle-label {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--spacing-3);
   cursor: pointer;
 
-  input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-  }
+  input[type="checkbox"] { width: 18px; height: 18px; }
 }
 
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  gap: var(--space-4);
-  margin-top: var(--space-6);
-  padding-top: var(--space-6);
+  gap: var(--spacing-4);
+  margin-top: var(--spacing-6);
+  padding-top: var(--spacing-6);
   border-top: 1px solid var(--color-border);
 }
-

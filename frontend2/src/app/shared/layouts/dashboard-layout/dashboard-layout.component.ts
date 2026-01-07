@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -7,12 +7,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import { FeatureConfigService, AuthService } from '../../../core/services';
+import { MatDividerModule } from '@angular/material/divider';
+import { FeatureConfigService, AuthService, ThemeService } from '../../../core/services';
 import { NavigationItem } from '../../../core/models';
 
 /**
  * Dashboard Layout
- * Manager/Admin layout with sidebar navigation
+ * Manager/Admin layout with sidebar navigation.
+ * Uses LIGHT theme for the dashboard experience.
  */
 @Component({
   selector: 'app-dashboard-layout',
@@ -26,13 +28,15 @@ import { NavigationItem } from '../../../core/models';
     MatButtonModule,
     MatListModule,
     MatMenuModule,
+    MatDividerModule,
   ],
   templateUrl: './dashboard-layout.component.html',
   styleUrl: './dashboard-layout.component.scss',
 })
-export class DashboardLayoutComponent {
+export class DashboardLayoutComponent implements OnInit {
   private featureConfig = inject(FeatureConfigService);
   private authService = inject(AuthService);
+  private themeService = inject(ThemeService);
 
   sidenavOpen = signal(true);
   
@@ -41,6 +45,11 @@ export class DashboardLayoutComponent {
   
   readonly primaryNav = computed(() => this.navigation()?.primary ?? []);
   readonly secondaryNav = computed(() => this.navigation()?.secondary ?? []);
+
+  ngOnInit(): void {
+    // Dashboard uses light theme
+    this.themeService.setTheme('light');
+  }
 
   toggleSidenav(): void {
     this.sidenavOpen.update(v => !v);
@@ -54,4 +63,3 @@ export class DashboardLayoutComponent {
     return item.id;
   }
 }
-

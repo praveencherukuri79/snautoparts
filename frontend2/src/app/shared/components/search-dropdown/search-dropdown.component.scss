@@ -1,3 +1,5 @@
+// Search Dropdown - Minimal SCSS
+
 .search-dropdown {
   width: 100%;
   max-width: 500px;
@@ -14,15 +16,15 @@
 .search-loading {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--spacing-2);
   color: var(--color-text-secondary);
 }
 
 .search-result {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-2) 0;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2) 0;
 }
 
 .result-image {
@@ -49,7 +51,7 @@
 
 .result-name {
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-primary);
+  color: var(--color-text);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -65,4 +67,3 @@
   color: var(--color-primary);
   white-space: nowrap;
 }
-

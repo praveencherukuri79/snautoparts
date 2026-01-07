@@ -1,4 +1,5 @@
-@use 'tokens' as *;
+// Main Layout - Minimal SCSS
+// Uses flexbox to ensure footer sticks to bottom
 
 .main-layout {
   display: flex;
@@ -11,4 +12,3 @@
     flex-direction: column;
   }
 }
-

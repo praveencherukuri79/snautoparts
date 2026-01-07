@@ -1,26 +1,26 @@
-<mat-form-field appearance="outline" class="app-input">
-  @if (label) {
-    <mat-label>{{ label }}</mat-label>
+<mat-form-field appearance="outline" class="input-field">
+  @if (label()) {
+    <mat-label>{{ label() }}</mat-label>
   }
 
-  @if (icon && iconPosition === 'prefix') {
-    <mat-icon matPrefix>{{ icon }}</mat-icon>
+  @if (icon() && iconPosition() === 'prefix') {
+    <mat-icon matPrefix>{{ icon() }}</mat-icon>
   }
 
   <input
     matInput
     [type]="inputType"
     [value]="value()"
-    [placeholder]="placeholder"
+    [placeholder]="placeholder()"
     [disabled]="isDisabled()"
-    [readonly]="readonly"
-    [required]="required"
-    [autocomplete]="autocomplete"
+    [readonly]="readonly()"
+    [required]="required()"
+    [autocomplete]="autocomplete()"
     (input)="onInput($event)"
     (blur)="onBlur()"
   />
 
-  @if (type === 'password') {
+  @if (type() === 'password') {
     <button
       mat-icon-button
       matSuffix
@@ -30,16 +30,15 @@
     >
       <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
     </button>
-  } @else if (icon && iconPosition === 'suffix') {
-    <mat-icon matSuffix>{{ icon }}</mat-icon>
+  } @else if (icon() && iconPosition() === 'suffix') {
+    <mat-icon matSuffix>{{ icon() }}</mat-icon>
   }
 
-  @if (hint && !error) {
-    <mat-hint>{{ hint }}</mat-hint>
+  @if (hint() && !error()) {
+    <mat-hint>{{ hint() }}</mat-hint>
   }
 
-  @if (error) {
-    <mat-error>{{ error }}</mat-error>
+  @if (error()) {
+    <mat-error>{{ error() }}</mat-error>
   }
 </mat-form-field>
-

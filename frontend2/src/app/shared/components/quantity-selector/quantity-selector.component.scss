@@ -1,9 +1,21 @@
+// Quantity Selector - Minimal SCSS
+
 .quantity-selector {
   display: inline-flex;
   align-items: center;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  background: var(--color-background);
+  background: var(--color-surface);
+
+  // Sizes
+  &--sm .quantity-input { width: 36px; font-size: var(--font-size-sm); }
+  &--sm button { width: 28px; height: 28px; }
+
+  &--md .quantity-input { width: 48px; }
+  &--md button { width: 36px; height: 36px; }
+
+  &--lg .quantity-input { width: 60px; font-size: var(--font-size-lg); }
+  &--lg button { width: 44px; height: 44px; }
 }
 
 .quantity-input {
@@ -13,57 +25,12 @@
   background: transparent;
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-primary);
+  color: var(--color-text);
   -moz-appearance: textfield;
 
   &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+  &::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
-  &:focus {
-    outline: none;
-  }
-
-  &:disabled {
-    opacity: 0.5;
-  }
+  &:focus { outline: none; }
+  &:disabled { opacity: 0.5; }
 }
-
-// Sizes
-.quantity-selector--sm {
-  .quantity-input {
-    width: 36px;
-    font-size: var(--font-size-sm);
-  }
-
-  button {
-    width: 28px;
-    height: 28px;
-  }
-}
-
-.quantity-selector--md {
-  .quantity-input {
-    width: 48px;
-  }
-
-  button {
-    width: 36px;
-    height: 36px;
-  }
-}
-
-.quantity-selector--lg {
-  .quantity-input {
-    width: 60px;
-    font-size: var(--font-size-lg);
-  }
-
-  button {
-    width: 44px;
-    height: 44px;
-  }
-}
-

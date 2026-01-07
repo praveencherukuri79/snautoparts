@@ -1,4 +1,4 @@
-import { Component, inject, signal, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, inject, signal, output, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -12,6 +12,10 @@ export interface FitmentSelection {
   model: string;
 }
 
+/**
+ * Fitment Selector Component
+ * Year/Make/Model vehicle selector for filtering products.
+ */
 @Component({
   selector: 'app-fitment-selector',
   standalone: true,
@@ -23,21 +27,22 @@ export class FitmentSelectorComponent implements OnInit {
   private catalogService = inject(CatalogService);
   private router = inject(Router);
 
-  @Output() fitmentSelected = new EventEmitter<FitmentSelection>();
+  readonly fitmentSelected = output<FitmentSelection>();
 
-  // Form controls
   yearControl = new FormControl<number | null>(null);
   makeControl = new FormControl<string | null>(null);
   modelControl = new FormControl<string | null>(null);
 
-  // Options
   years = signal<SelectOption<number>[]>([]);
   makes = signal<SelectOption<string>[]>([]);
   models = signal<SelectOption<string>[]>([]);
 
-  // Loading states
   loadingMakes = signal(false);
   loadingModels = signal(false);
+
+  readonly isComplete = computed(() =>
+    !!(this.yearControl.value && this.makeControl.value && this.modelControl.value)
+  );
 
   ngOnInit(): void {
     this.loadYears();
@@ -85,12 +90,8 @@ export class FitmentSelectorComponent implements OnInit {
     }
   }
 
-  get isComplete(): boolean {
-    return !!(this.yearControl.value && this.makeControl.value && this.modelControl.value);
-  }
-
   search(): void {
-    if (!this.isComplete) return;
+    if (!this.isComplete()) return;
 
     const selection: FitmentSelection = {
       year: this.yearControl.value!,
@@ -108,4 +109,3 @@ export class FitmentSelectorComponent implements OnInit {
     });
   }
 }
-

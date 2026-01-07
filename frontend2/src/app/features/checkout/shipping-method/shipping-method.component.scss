@@ -1,77 +1,60 @@
-.shipping-method {
-  h2 {
-    margin: 0 0 var(--space-2);
-  }
+@use 'tokens' as *;
 
-  .subtitle {
-    color: var(--color-text-secondary);
-    margin: 0 0 var(--space-6);
-  }
+.shipping-method {
+  h2 { margin: 0 0 var(--spacing-2); }
+  .subtitle { color: var(--color-text-secondary); margin: 0 0 var(--spacing-6); }
 }
 
 .loading-container {
   display: flex;
   justify-content: center;
-  padding: var(--space-8);
+  padding: var(--spacing-8);
 }
 
 .methods-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--spacing-3);
 }
 
 .method-option {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-3);
-  padding: var(--space-4);
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-fast);
 
-  &:hover {
-    border-color: var(--color-primary);
-  }
+  &:hover { border-color: var(--color-primary); }
 
   &--selected {
     border-color: var(--color-primary);
     background: var(--color-primary-light);
   }
 
-  input[type="radio"] {
-    margin-top: var(--space-1);
-  }
+  input[type="radio"] { margin-top: var(--spacing-1); }
 }
 
-.method-content {
-  flex: 1;
-}
+.method-content { flex: 1; }
 
 .method-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--spacing-1);
 }
 
-.method-name {
-  font-weight: var(--font-weight-semibold);
-}
-
+.method-name { font-weight: var(--font-weight-semibold); }
 .method-price {
   font-weight: var(--font-weight-semibold);
-  
-  .free {
-    color: var(--color-success);
-  }
+  .free { color: var(--color-success); }
 }
 
 .method-description {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  margin: 0 0 var(--space-1);
+  margin: 0 0 var(--spacing-1);
 }
 
 .method-estimate {
@@ -82,13 +65,10 @@
 .form-actions {
   display: flex;
   justify-content: space-between;
-  gap: var(--space-4);
-  margin-top: var(--space-6);
-  padding-top: var(--space-6);
+  gap: var(--spacing-4);
+  margin-top: var(--spacing-6);
+  padding-top: var(--spacing-6);
   border-top: 1px solid var(--color-border);
 
-  @media (max-width: 640px) {
-    flex-direction: column-reverse;
-  }
+  @media (max-width: 640px) { flex-direction: column-reverse; }
 }
-

@@ -1,15 +1,5 @@
+// Products List - Minimal SCSS
+
 .products-list {
-  padding: var(--space-6);
+  padding: var(--spacing-6);
 }
-
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-6);
-
-  h1 {
-    margin: 0;
-  }
-}
-

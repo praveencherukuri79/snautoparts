@@ -1,21 +1,21 @@
 <div class="auth-layout">
   <!-- Left Side: Hero Image (Hidden on mobile) -->
-  <div class="auth-layout__hero">
-    <div class="auth-layout__hero-overlay"></div>
-    <div class="auth-layout__hero-content">
-      <h1 class="auth-layout__hero-title">
+  <div class="auth-hero">
+    <div class="auth-hero__overlay"></div>
+    <div class="auth-hero__content">
+      <h1 class="text-5xl font-black leading-tight mb-4">
         Performance<br />starts here.
       </h1>
-      <p class="auth-layout__hero-subtitle">
+      <p class="text-lg text-[var(--color-text-muted)] max-w-md mb-8">
         Join over 50,000 gearheads who trust SN Auto Parts for their restoration and performance needs.
       </p>
-      <div class="auth-layout__hero-features">
-        <div class="auth-layout__hero-feature">
-          <span class="material-symbols-outlined">verified</span>
+      <div class="flex gap-6">
+        <div class="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+          <span class="material-symbols-outlined text-[var(--color-primary)]">verified</span>
           Quality Guaranteed
         </div>
-        <div class="auth-layout__hero-feature">
-          <span class="material-symbols-outlined">local_shipping</span>
+        <div class="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+          <span class="material-symbols-outlined text-[var(--color-primary)]">local_shipping</span>
           Fast Shipping
         </div>
       </div>
@@ -23,29 +23,28 @@
   </div>
 
   <!-- Right Side: Auth Content -->
-  <div class="auth-layout__content">
+  <div class="auth-content">
     <!-- Header -->
-    <header class="auth-layout__header">
-      <a routerLink="/" class="auth-layout__brand">
-        <span class="auth-layout__brand-icon material-symbols-outlined">directions_car</span>
-        <span class="auth-layout__brand-name">SN Auto Parts</span>
+    <header class="flex justify-between items-center p-4 lg:px-10 border-b border-[var(--color-border)]">
+      <a routerLink="/" class="flex items-center gap-2 no-underline text-[var(--color-text)]">
+        <span class="material-symbols-outlined text-[32px] text-[var(--color-primary)]">directions_car</span>
+        <span class="text-xl font-bold">SN Auto Parts</span>
       </a>
-      <a routerLink="/" class="auth-layout__back-link">
-        <span class="material-symbols-outlined">arrow_back</span>
+      <a routerLink="/" class="auth-back-link">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
         Return to Shop
       </a>
     </header>
 
     <!-- Form Container -->
-    <main class="auth-layout__main">
+    <main class="flex-1 flex items-center justify-center p-6 lg:p-10">
       <router-outlet></router-outlet>
     </main>
 
     <!-- Footer -->
-    <footer class="auth-layout__footer">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
+    <footer class="flex justify-center gap-6 p-6 border-t border-[var(--color-border)]">
+      <a href="#" class="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)]">Privacy Policy</a>
+      <a href="#" class="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)]">Terms of Service</a>
     </footer>
   </div>
 </div>
-

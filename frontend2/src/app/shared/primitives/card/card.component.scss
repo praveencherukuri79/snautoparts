@@ -1,85 +1,50 @@
-@use 'tokens' as *;
+// Card Primitive - Minimal SCSS using tokens
 
 :host {
   display: block;
 }
 
-.app-card {
+.card {
   background-color: var(--color-surface);
   border-radius: var(--radius-lg);
   overflow: hidden;
 
   // Variants
-  &--default {
-    background-color: var(--color-surface);
-  }
-
-  &--outlined {
-    border: 1px solid var(--color-border);
-  }
-
-  &--elevated {
-    box-shadow: var(--shadow-md);
-  }
+  &--outlined { border: 1px solid var(--color-border); }
+  &--elevated { box-shadow: var(--shadow-md); }
 
   // Padding
-  &--padding-none .app-card__body {
-    padding: 0;
-  }
+  &--p-none .card__body { padding: 0; }
+  &--p-sm .card__body { padding: var(--spacing-3); }
+  &--p-md .card__body { padding: var(--spacing-4); }
+  &--p-lg .card__body { padding: var(--spacing-6); }
 
-  &--padding-sm .app-card__body {
-    padding: var(--spacing-3);
-  }
-
-  &--padding-md .app-card__body {
-    padding: var(--spacing-4);
-  }
-
-  &--padding-lg .app-card__body {
-    padding: var(--spacing-6);
-  }
-
-  // Interactive states
-  &--hoverable {
+  // Interactive
+  &--hoverable, &--clickable {
     transition: box-shadow var(--transition-fast), transform var(--transition-fast);
-
-    &:hover {
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-2px);
-    }
+    &:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
   }
 
   &--clickable {
     cursor: pointer;
-    transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+    &:active { transform: scale(0.98); }
+    &:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+  }
 
-    &:hover {
-      box-shadow: var(--shadow-lg);
-    }
-
-    &:active {
-      transform: scale(0.98);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--color-primary);
-      outline-offset: 2px;
-    }
+  &__body {
+    padding: var(--spacing-4);
   }
 }
 
-// Header and Footer slots
-::ng-deep {
-  [card-header] {
-    padding: var(--spacing-4);
-    border-bottom: 1px solid var(--color-border);
-    font-weight: var(--font-weight-semibold);
-  }
-
-  [card-footer] {
-    padding: var(--spacing-4);
-    border-top: 1px solid var(--color-border);
-    background-color: var(--color-surface-secondary);
-  }
+// Slots
+::ng-deep [card-header] {
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--color-border);
+  font-weight: var(--font-weight-semibold);
 }
 
+::ng-deep [card-footer] {
+  padding: var(--spacing-4);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-gray-50);
+}

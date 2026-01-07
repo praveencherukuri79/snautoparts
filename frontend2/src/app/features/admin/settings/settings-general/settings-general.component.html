@@ -1,0 +1,151 @@
+@if (isLoading()) {
+  <div class="loading-container">
+    <app-spinner size="lg" />
+  </div>
+} @else {
+  <form class="settings-form" (ngSubmit)="onSave()">
+    <!-- Store Information -->
+    <app-card class="settings-section">
+      <div class="section-header">
+        <span class="material-symbols-outlined section-icon">storefront</span>
+        <div class="section-info">
+          <h2>Store Information</h2>
+          <p>Basic contact details for your business displayed on invoices.</p>
+        </div>
+      </div>
+
+      <div class="form-grid" [formGroup]="storeForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Store Name</mat-label>
+          <input matInput formControlName="storeName" placeholder="e.g. SN Auto Parts" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Store Email</mat-label>
+          <input matInput formControlName="storeEmail" type="email" placeholder="contact@example.com" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Support Phone</mat-label>
+          <input matInput formControlName="supportPhone" type="tel" placeholder="+1 (555) 000-0000" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Store Address</mat-label>
+          <textarea matInput formControlName="storeAddress" rows="3" placeholder="Enter your store address"></textarea>
+        </mat-form-field>
+      </div>
+    </app-card>
+
+    <!-- Business Standards -->
+    <app-card class="settings-section">
+      <div class="section-header">
+        <span class="material-symbols-outlined section-icon">language</span>
+        <div class="section-info">
+          <h2>Business Standards</h2>
+          <p>Configure regional settings and measurement units.</p>
+        </div>
+      </div>
+
+      <div class="form-grid" [formGroup]="businessForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Currency</mat-label>
+          <mat-select formControlName="currency">
+            @for (currency of currencies; track currency) {
+              <mat-option [value]="currency">{{ currency }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Timezone</mat-label>
+          <mat-select formControlName="timezone">
+            @for (tz of timezones; track tz) {
+              <mat-option [value]="tz">{{ tz }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date Format</mat-label>
+          <mat-select formControlName="dateFormat">
+            @for (df of dateFormats; track df) {
+              <mat-option [value]="df">{{ df }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Weight Unit</mat-label>
+          <mat-select formControlName="weightUnit">
+            @for (unit of weightUnits; track unit) {
+              <mat-option [value]="unit">{{ unit }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </app-card>
+
+    <!-- Order Processing -->
+    <app-card class="settings-section">
+      <div class="section-header">
+        <span class="material-symbols-outlined section-icon">receipt_long</span>
+        <div class="section-info">
+          <h2>Order Processing</h2>
+          <p>Customize how orders are generated and managed.</p>
+        </div>
+      </div>
+
+      <div class="form-grid cols-3" [formGroup]="orderForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Order Number Prefix</mat-label>
+          <input matInput formControlName="orderNumberPrefix" placeholder="ORD-" />
+          <mat-hint>Appears before order IDs</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Low Stock Threshold</mat-label>
+          <input matInput formControlName="lowStockThreshold" type="number" min="0" />
+          <mat-hint>Default trigger for low stock alerts</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cart Expiry (Days)</mat-label>
+          <input matInput formControlName="cartExpiryDays" type="number" min="1" />
+          <mat-hint>Days to keep abandoned carts</mat-hint>
+        </mat-form-field>
+      </div>
+    </app-card>
+
+    <!-- Email Configuration -->
+    <app-card class="settings-section">
+      <div class="section-header">
+        <span class="material-symbols-outlined section-icon">mail</span>
+        <div class="section-info">
+          <h2>Email Configuration</h2>
+          <p>Settings for automated system emails.</p>
+        </div>
+      </div>
+
+      <div class="form-grid" [formGroup]="emailForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Sender Name</mat-label>
+          <input matInput formControlName="senderName" placeholder="SN Auto Parts Team" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Reply-To Email</mat-label>
+          <input matInput formControlName="replyToEmail" type="email" placeholder="support@example.com" />
+        </mat-form-field>
+      </div>
+    </app-card>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <app-button type="button" variant="outline">Cancel</app-button>
+      <app-button type="submit" variant="primary" [loading]="isSaving()" icon="save">
+        Save Changes
+      </app-button>
+    </div>
+  </form>
+}

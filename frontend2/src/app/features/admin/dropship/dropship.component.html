@@ -1,0 +1,196 @@
+<div class="dropship-page">
+  <!-- Page Header -->
+  <header class="page-header">
+    <h1>Drop-ship Orders</h1>
+    <p class="header-subtitle">Manage affiliate order fulfillment and status.</p>
+    <div class="header-actions">
+      <app-button variant="outline" icon="download" (clicked)="exportOrders()">
+        Export
+      </app-button>
+      @if (getFailedCount() > 0) {
+        <app-button variant="primary" icon="refresh" (clicked)="retryAllFailed()">
+          Retry Failed ({{ getFailedCount() }})
+        </app-button>
+      }
+    </div>
+  </header>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-label">Pending Processing</span>
+          <span class="material-symbols-outlined stat-icon">pending</span>
+        </div>
+        <span class="stat-value">{{ stats().pendingProcessing }}</span>
+      </div>
+      
+      <div class="stat-card stat-card--info">
+        <div class="stat-header">
+          <span class="stat-label">Awaiting Confirmation</span>
+          <span class="material-symbols-outlined stat-icon">hourglass_top</span>
+        </div>
+        <span class="stat-value">{{ stats().awaitingConfirmation }}</span>
+      </div>
+      
+      <div class="stat-card stat-card--error">
+        <div class="stat-header">
+          <span class="stat-label">Failed (Needs Retry)</span>
+          <span class="material-symbols-outlined stat-icon">error</span>
+        </div>
+        <span class="stat-value">{{ stats().failed }}</span>
+      </div>
+      
+      <div class="stat-card stat-card--success">
+        <div class="stat-header">
+          <span class="stat-label">Confirmed Today</span>
+          <span class="material-symbols-outlined stat-icon">check_circle</span>
+        </div>
+        <span class="stat-value">{{ stats().confirmedToday }}</span>
+      </div>
+    </div>
+
+    <!-- Tabs & Filters -->
+    <div class="filters-bar">
+      <div class="tabs">
+        @for (tab of tabs; track tab.value) {
+          <button 
+            class="tab"
+            [class.active]="activeTab() === tab.value"
+            (click)="onTabChange(tab.value)"
+          >
+            {{ tab.label }}
+          </button>
+        }
+      </div>
+      
+      <div class="filters">
+        <select 
+          class="filter-select"
+          [ngModel]="dateFilter()"
+          (ngModelChange)="dateFilter.set($event)"
+        >
+          <option value="today">Today</option>
+          <option value="week">This Week</option>
+          <option value="month">This Month</option>
+          <option value="all">All Time</option>
+        </select>
+        
+        <select 
+          class="filter-select"
+          [ngModel]="supplierFilter()"
+          (ngModelChange)="supplierFilter.set($event); onSupplierChange()"
+        >
+          <option value="">All Suppliers</option>
+          @for (affiliate of affiliates(); track trackByAffiliate($index, affiliate)) {
+            <option [value]="affiliate.id">{{ affiliate.name }}</option>
+          }
+        </select>
+        
+        <div class="search-wrapper">
+          <span class="material-symbols-outlined">search</span>
+          <input 
+            type="text" 
+            placeholder="Search order #..."
+            [ngModel]="searchQuery()"
+            (ngModelChange)="searchQuery.set($event)"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Orders Table -->
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ORDER #</th>
+            <th>CUSTOMER #</th>
+            <th>SUPPLIER</th>
+            <th>ITEMS</th>
+            <th>TOTAL</th>
+            <th>STATUS</th>
+            <th>EXT ID</th>
+            <th>CREATED</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (order of orders(); track trackByOrder($index, order)) {
+            <tr [class.failed-row]="order.status === 'FAILED'">
+              <td>
+                <a [routerLink]="['/orders', order.orderId]" class="order-link">
+                  #{{ order.orderNumber }}
+                </a>
+              </td>
+              <td class="customer-id">{{ order.orderId.slice(0, 8) }}</td>
+              <td>
+                <div class="supplier-cell">
+                  <span class="supplier-badge">{{ order.affiliateName.slice(0, 2).toUpperCase() }}</span>
+                  <span>{{ order.affiliateName }}</span>
+                </div>
+              </td>
+              <td>-</td>
+              <td>-</td>
+              <td>
+                <app-badge [variant]="getStatusVariant(order.status)" size="sm">
+                  {{ order.status }}
+                </app-badge>
+              </td>
+              <td class="ext-id">{{ order.affiliateOrderId || '-' }}</td>
+              <td class="date-cell">{{ order.createdAt | date:'shortTime' }}</td>
+              <td>
+                <div class="actions-cell">
+                  @if (order.status === 'FAILED') {
+                    <button 
+                      class="action-btn action-btn--retry"
+                      title="Retry"
+                      (click)="retryOrder(order)"
+                      [disabled]="isRetrying() === order.id"
+                    >
+                      @if (isRetrying() === order.id) {
+                        <app-spinner size="sm" />
+                      } @else {
+                        <span class="material-symbols-outlined">refresh</span>
+                      }
+                    </button>
+                  }
+                  <a [routerLink]="['/orders', order.orderId]" class="action-btn" title="View Order">
+                    <span class="material-symbols-outlined">visibility</span>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="9" class="empty-row">
+                <div class="empty-state">
+                  <span class="material-symbols-outlined">local_shipping</span>
+                  <p>No drop-ship orders found</p>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    @if (totalItems() > pageSize) {
+      <div class="pagination-footer">
+        <span class="showing-text">Showing {{ (currentPage() - 1) * pageSize + 1 }} to {{ currentPage() * pageSize > totalItems() ? totalItems() : currentPage() * pageSize }} of {{ totalItems() }} orders</span>
+        <app-pagination
+          [currentPage]="currentPage()"
+          [total]="totalItems()"
+          [pageSize]="pageSize"
+          (pageChange)="onPageChange($event)"
+        />
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,40 @@
+<div class="profile-page">
+  <h1>My Profile</h1>
+  
+  <app-card>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <app-form-field
+          label="First Name"
+          [control]="form.controls.firstName"
+        />
+        <app-form-field
+          label="Last Name"
+          [control]="form.controls.lastName"
+        />
+      </div>
+
+      <app-form-field
+        label="Email"
+        type="email"
+        [control]="form.controls.email"
+      />
+
+      <app-form-field
+        label="Phone"
+        type="tel"
+        [control]="form.controls.phone"
+      />
+
+      <div class="form-actions">
+        <app-button
+          type="submit"
+          [loading]="isSubmitting()"
+        >
+          Save Changes
+        </app-button>
+      </div>
+    </form>
+  </app-card>
+</div>
+

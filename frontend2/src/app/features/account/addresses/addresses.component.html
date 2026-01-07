@@ -1,0 +1,51 @@
+<div class="addresses-page">
+  <div class="page-header">
+    <h1>My Addresses</h1>
+    <app-button icon="add">Add Address</app-button>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else if (addresses().length === 0) {
+    <app-empty-state
+      icon="location_on"
+      title="No addresses saved"
+      message="Add an address to make checkout faster"
+      actionLabel="Add Address"
+      actionIcon="add"
+    />
+  } @else {
+    <div class="addresses-grid">
+      @for (address of addresses(); track trackByAddress($index, address)) {
+        <app-card variant="outlined" [class.default-card]="address.isDefault">
+          @if (address.isDefault) {
+            <span class="default-badge">Default</span>
+          }
+          <div class="address-content">
+            <p class="name">{{ address.firstName }} {{ address.lastName }}</p>
+            <p>{{ address.address1 }}</p>
+            @if (address.address2) {
+              <p>{{ address.address2 }}</p>
+            }
+            <p>{{ address.city }}, {{ address.state }} {{ address.zipCode }}</p>
+            <p>{{ address.phone }}</p>
+          </div>
+          <div class="address-actions">
+            @if (!address.isDefault) {
+              <app-button variant="ghost" size="sm" (clicked)="setDefault(address)">
+                Set as Default
+              </app-button>
+            }
+            <app-button variant="ghost" size="sm" icon="edit">Edit</app-button>
+            <app-button variant="ghost" size="sm" icon="delete" (clicked)="deleteAddress(address)">
+              Delete
+            </app-button>
+          </div>
+        </app-card>
+      }
+    </div>
+  }
+</div>
+

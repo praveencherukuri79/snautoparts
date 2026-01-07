@@ -1,0 +1,52 @@
+<div class="search-dropdown">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-icon matPrefix>search</mat-icon>
+    <input
+      matInput
+      type="text"
+      [formControl]="searchControl"
+      [matAutocomplete]="auto"
+      placeholder="Search parts by name, SKU, or vehicle..."
+    />
+    @if (searchControl.value) {
+      <button mat-icon-button matSuffix (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+    
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      [displayWith]="displayFn"
+      (optionSelected)="onSelect($event)"
+    >
+      @if (isLoading()) {
+        <mat-option disabled>
+          <div class="search-loading">
+            <mat-icon>hourglass_empty</mat-icon>
+            <span>Searching...</span>
+          </div>
+        </mat-option>
+      } @else {
+        @for (product of results(); track product.id) {
+          <mat-option [value]="product">
+            <div class="search-result">
+              @if (product.imageUrl) {
+                <img [src]="product.imageUrl" [alt]="product.name" class="result-image" />
+              } @else {
+                <div class="result-image result-image--placeholder">
+                  <mat-icon>image</mat-icon>
+                </div>
+              }
+              <div class="result-info">
+                <span class="result-name">{{ product.name }}</span>
+                <span class="result-sku">{{ product.sku }}</span>
+              </div>
+              <span class="result-price">{{ product.price | currency }}</span>
+            </div>
+          </mat-option>
+        }
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+

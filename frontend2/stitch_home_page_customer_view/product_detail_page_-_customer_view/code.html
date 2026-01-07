@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Product Detail</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f97415",
+              "background-light": "#f8f7f5",
+              "background-dark": "#23170f",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for horizontal scrolling elements */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#181411]">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="flex flex-col bg-white border-b border-[#f5f2f0]">
+<div class="flex items-center justify-between px-6 lg:px-40 py-3">
+<div class="flex items-center gap-8">
+<!-- Logo -->
+<a class="flex items-center gap-4 text-[#181411]" href="#">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-4xl">build_circle</span>
+</div>
+<h2 class="text-[#181411] text-xl font-bold leading-tight tracking-[-0.015em]">SN Auto Parts</h2>
+</a>
+<!-- Search Bar -->
+<label class="hidden md:flex flex-col min-w-40 !h-10 w-[400px]">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#8c725f] flex border-none bg-[#f5f2f0] items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-[24px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181411] focus:outline-0 focus:ring-0 border-none bg-[#f5f2f0] focus:border-none h-full placeholder:text-[#8c725f] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Search by Part Name, SKU, or Vehicle..." value=""/>
+</div>
+</label>
+</div>
+<!-- Nav & Actions -->
+<div class="flex flex-1 justify-end gap-8 items-center">
+<nav class="hidden lg:flex items-center gap-9">
+<a class="text-[#181411] text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-[#181411] text-sm font-medium hover:text-primary transition-colors" href="#">Parts</a>
+<a class="text-[#181411] text-sm font-medium hover:text-primary transition-colors" href="#">Accessories</a>
+<a class="text-[#181411] text-sm font-medium hover:text-primary transition-colors" href="#">Deals</a>
+</nav>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary hover:bg-orange-600 transition-colors text-white text-sm font-bold">
+<span>Sign In</span>
+</button>
+<button class="flex items-center justify-center rounded-lg size-10 bg-[#f5f2f0] hover:bg-gray-200 text-[#181411] transition-colors relative">
+<span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+<span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">2</span>
+</button>
+<button class="flex items-center justify-center rounded-lg size-10 bg-[#f5f2f0] hover:bg-gray-200 text-[#181411] transition-colors">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 px-4 md:px-6 lg:px-40 py-6 max-w-[1440px] mx-auto w-full">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 mb-6 text-sm">
+<a class="text-[#8c725f] hover:text-primary font-medium" href="#">Home</a>
+<span class="text-[#8c725f] font-medium">/</span>
+<a class="text-[#8c725f] hover:text-primary font-medium" href="#">Brakes</a>
+<span class="text-[#8c725f] font-medium">/</span>
+<a class="text-[#8c725f] hover:text-primary font-medium" href="#">Brake Pads</a>
+<span class="text-[#8c725f] font-medium">/</span>
+<span class="text-[#181411] font-medium">Premium Ceramic Brake Pads</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+<!-- Left Column: Image Gallery -->
+<div class="flex flex-col gap-4">
+<div class="relative w-full aspect-square bg-gray-50 rounded-xl overflow-hidden group border border-gray-100 flex items-center justify-center">
+<div class="absolute top-4 left-4 z-10 flex flex-col gap-2">
+<span class="bg-primary text-white text-xs font-bold px-2 py-1 rounded">-20%</span>
+<span class="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded">Best Seller</span>
+</div>
+<img alt="Premium Ceramic Brake Pads Main View" class="object-contain w-[80%] h-[80%] mix-blend-multiply group-hover:scale-110 transition-transform duration-500" data-alt="High quality ceramic brake pads set on white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj7UNn4TRiM5CXanlIrrbxpZ7nxMyGKYY4bJlHaabu2NFNjPWhcsn_IVLUoDfnOHE631bgSROB8lVU4oYvJAyCPhFvqCsJJP026H6HXOAKlPFZ0wkPyi7QXLzPv46eCeidrlBOZmJUk9ss2yM_DLkxAz1BDlO2-rXhKBH5a4f-Yr0bpy9AAj_LRr9LdQww_yxEMUGQ9qcKjjR0heYOvPDve8FX_p_4mYwHnbUMjUYwgayRUZMc6XtcqdD4kerKLMVJBv2iZCio9vBf"/>
+<div class="absolute bottom-4 right-4 bg-white/90 p-2 rounded-full shadow-md text-gray-500">
+<span class="material-symbols-outlined">zoom_in</span>
+</div>
+</div>
+<div class="grid grid-cols-5 gap-3">
+<button class="aspect-square rounded-lg border-2 border-primary overflow-hidden bg-gray-50 p-1">
+<img alt="Front view" class="w-full h-full object-contain mix-blend-multiply" data-alt="Brake pads front view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3o6o49VRfhAFiVDWbfagHUUQPns8hZAYnJKKp7UKNytQ-a8VjAS-76CD4NE0JA-oxiKDGMbJEOvFphBqheh1r0JjW-bajnWGUECc1ztnnVygJXkrsm7_oOpl08_OiW235jTzKlArk0qgDsD0RQz1LCV1brytNoREcVVshWnGq6m3aY9Q1ty0cgn8M2tq9NBVuhRb9d4IozleOVSFydFMsf4W7-HJDuOBuNSmgJLDDDXLa_QX-NFVXnuoQUPZIt4Y0tP0B6_tpYpgG"/>
+</button>
+<button class="aspect-square rounded-lg border border-transparent hover:border-gray-300 overflow-hidden bg-gray-50 p-1">
+<div class="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400">
+<span class="material-symbols-outlined">image</span>
+</div>
+</button>
+<button class="aspect-square rounded-lg border border-transparent hover:border-gray-300 overflow-hidden bg-gray-50 p-1">
+<div class="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400">
+<span class="material-symbols-outlined">image</span>
+</div>
+</button>
+<button class="aspect-square rounded-lg border border-transparent hover:border-gray-300 overflow-hidden bg-gray-50 p-1">
+<div class="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400">
+<span class="material-symbols-outlined">image</span>
+</div>
+</button>
+<button class="aspect-square rounded-lg border border-transparent hover:border-gray-300 overflow-hidden bg-gray-50 p-1 relative">
+<div class="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400">
+<span class="material-symbols-outlined">play_circle</span>
+</div>
+</button>
+</div>
+</div>
+<!-- Right Column: Product Details -->
+<div class="flex flex-col h-full">
+<div class="border-b border-gray-100 pb-6 mb-6">
+<h1 class="text-3xl lg:text-4xl font-bold text-[#181411] tracking-tight mb-2">Premium Ceramic Front Brake Pads</h1>
+<div class="flex items-center justify-between mb-4">
+<p class="text-gray-500 text-sm">SKU: <span class="font-mono text-[#181411]">BP-9982-XC</span></p>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+<span class="material-symbols-outlined text-[14px] mr-1">check_circle</span>
+                                    Guaranteed Fitment
+                                </span>
+</div>
+</div>
+<div class="flex items-center gap-4 mb-6">
+<div class="flex items-center gap-0.5 text-primary">
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star</span>
+<span class="material-symbols-outlined text-[20px] fill-current">star_half</span>
+</div>
+<span class="text-sm text-gray-600 underline cursor-pointer">4.8 (128 reviews)</span>
+</div>
+<div class="flex items-baseline gap-4 mb-2">
+<span class="text-4xl font-bold text-[#181411]">$149.99</span>
+<span class="text-xl text-gray-400 line-through font-medium">$189.99</span>
+</div>
+<p class="text-sm text-gray-500 mb-6">Or 4 interest-free payments of $37.50.</p>
+<div class="bg-green-50 border border-green-100 rounded-lg p-3 flex items-start gap-3 mb-6">
+<span class="material-symbols-outlined text-green-700">inventory_2</span>
+<div>
+<p class="text-sm font-bold text-green-800">In Stock</p>
+<p class="text-xs text-green-700">Ready to ship. Delivery by Wednesday, Oct 25.</p>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 mb-6">
+<!-- Quantity -->
+<div class="flex items-center border border-gray-300 rounded-lg h-12 w-32">
+<button class="w-10 h-full flex items-center justify-center text-gray-600 hover:bg-gray-100 rounded-l-lg transition-colors">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<input class="w-full h-full text-center border-none focus:ring-0 p-0 text-[#181411] font-medium" readonly="" type="text" value="1"/>
+<button class="w-10 h-full flex items-center justify-center text-gray-600 hover:bg-gray-100 rounded-r-lg transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<!-- Add to Cart -->
+<button class="flex-1 h-12 bg-primary hover:bg-orange-600 text-white font-bold rounded-lg flex items-center justify-center gap-2 shadow-sm shadow-orange-200 transition-all hover:shadow-md">
+<span class="material-symbols-outlined">shopping_cart</span>
+                                Add to Cart
+                            </button>
+<!-- Buy Now -->
+<button class="h-12 px-6 border border-[#181411] text-[#181411] font-bold rounded-lg hover:bg-gray-50 transition-colors">
+                                Buy Now
+                            </button>
+</div>
+<!-- Shipping Info -->
+<div class="space-y-3">
+<div class="flex items-center gap-3 text-sm text-gray-700">
+<span class="material-symbols-outlined text-gray-400">local_shipping</span>
+<span>Free shipping on orders over <span class="font-bold">$75</span></span>
+</div>
+<div class="flex items-center gap-3 text-sm text-gray-700">
+<span class="material-symbols-outlined text-gray-400">verified_user</span>
+<span>2-Year Manufacturer Warranty included</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-gray-700">
+<span class="material-symbols-outlined text-gray-400">sync_alt</span>
+<span>30-Day Easy Returns</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tabbed Content Section -->
+<div class="mt-12 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+<!-- Tab Headers -->
+<div class="flex border-b border-gray-200 overflow-x-auto hide-scrollbar">
+<button class="px-8 py-4 text-sm font-bold text-primary border-b-2 border-primary bg-orange-50/50 whitespace-nowrap">
+                        Description
+                    </button>
+<button class="px-8 py-4 text-sm font-medium text-gray-500 hover:text-[#181411] hover:bg-gray-50 whitespace-nowrap transition-colors">
+                        Specifications
+                    </button>
+<button class="px-8 py-4 text-sm font-medium text-gray-500 hover:text-[#181411] hover:bg-gray-50 whitespace-nowrap transition-colors">
+                        Vehicle Compatibility
+                    </button>
+<button class="px-8 py-4 text-sm font-medium text-gray-500 hover:text-[#181411] hover:bg-gray-50 whitespace-nowrap transition-colors">
+                        Reviews (128)
+                    </button>
+</div>
+<!-- Tab Content: Description (Active) + Tables stacked for visibility -->
+<div class="p-8">
+<!-- Text Description -->
+<div class="max-w-4xl space-y-4 mb-10">
+<h3 class="text-xl font-bold text-[#181411]">Product Overview</h3>
+<p class="text-gray-600 leading-relaxed">
+                            Upgrade your vehicle's stopping power with our SN Premium Ceramic Brake Pads. Engineered for low dust and noise-free braking, these pads offer superior performance and durability compared to standard OEM pads. The advanced ceramic formula ensures consistent friction in all weather conditions, reducing brake fade during heavy use.
+                        </p>
+<p class="text-gray-600 leading-relaxed">
+                            Perfect for daily driving and spirited commuting, these pads come with hardware included for a hassle-free installation. Backed by our 2-year warranty, you can drive with confidence knowing your safety is our priority.
+                        </p>
+<ul class="list-disc pl-5 space-y-1 text-gray-600 mt-4">
+<li>Ultra-quiet ceramic formula</li>
+<li>Low dust for cleaner wheels</li>
+<li>Chamfered and slotted to prevent noise and vibration</li>
+<li>Includes stainless steel hardware kit</li>
+</ul>
+</div>
+<!-- Specs Table (Showing layout as requested) -->
+<div class="mb-10">
+<h3 class="text-xl font-bold text-[#181411] mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">list_alt</span>
+                            Technical Specifications
+                        </h3>
+<div class="overflow-hidden rounded-lg border border-gray-200">
+<table class="w-full text-sm text-left text-gray-600">
+<tbody class="divide-y divide-gray-200">
+<tr class="bg-gray-50">
+<td class="px-6 py-3 font-medium text-gray-900 w-1/4">Material</td>
+<td class="px-6 py-3">Premium Ceramic</td>
+<td class="px-6 py-3 font-medium text-gray-900 w-1/4">Position</td>
+<td class="px-6 py-3">Front Left &amp; Right</td>
+</tr>
+<tr class="bg-white">
+<td class="px-6 py-3 font-medium text-gray-900">Pad Shims Included</td>
+<td class="px-6 py-3">Yes</td>
+<td class="px-6 py-3 font-medium text-gray-900">Wear Sensor</td>
+<td class="px-6 py-3">Included</td>
+</tr>
+<tr class="bg-gray-50">
+<td class="px-6 py-3 font-medium text-gray-900">Warranty</td>
+<td class="px-6 py-3">2 Years / 24,000 Miles</td>
+<td class="px-6 py-3 font-medium text-gray-900">Part Number</td>
+<td class="px-6 py-3">BP-9982-XC</td>
+</tr>
+<tr class="bg-white">
+<td class="px-6 py-3 font-medium text-gray-900">Mounting Hardware</td>
+<td class="px-6 py-3">Included</td>
+<td class="px-6 py-3 font-medium text-gray-900">Country of Origin</td>
+<td class="px-6 py-3">Germany</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Compatibility Table -->
+<div>
+<h3 class="text-xl font-bold text-[#181411] mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">directions_car</span>
+                            Vehicle Compatibility
+                        </h3>
+<div class="overflow-x-auto rounded-lg border border-gray-200">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-gray-700 uppercase bg-gray-100">
+<tr>
+<th class="px-6 py-3" scope="col">Year</th>
+<th class="px-6 py-3" scope="col">Make</th>
+<th class="px-6 py-3" scope="col">Model</th>
+<th class="px-6 py-3" scope="col">Trim / Engine</th>
+<th class="px-6 py-3" scope="col">Notes</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 bg-white">
+<tr class="hover:bg-gray-50">
+<td class="px-6 py-4 font-medium">2018 - 2022</td>
+<td class="px-6 py-4">Honda</td>
+<td class="px-6 py-4">Accord</td>
+<td class="px-6 py-4">All Trims (2.0T &amp; 1.5T)</td>
+<td class="px-6 py-4 text-green-600 flex items-center gap-1"><span class="material-symbols-outlined text-sm">check</span> Exact Fit</td>
+</tr>
+<tr class="hover:bg-gray-50">
+<td class="px-6 py-4 font-medium">2019 - 2023</td>
+<td class="px-6 py-4">Toyota</td>
+<td class="px-6 py-4">Camry</td>
+<td class="px-6 py-4">SE / XSE / TRD</td>
+<td class="px-6 py-4 text-green-600 flex items-center gap-1"><span class="material-symbols-outlined text-sm">check</span> Exact Fit</td>
+</tr>
+<tr class="hover:bg-gray-50">
+<td class="px-6 py-4 font-medium">2017 - 2021</td>
+<td class="px-6 py-4">Honda</td>
+<td class="px-6 py-4">CR-V</td>
+<td class="px-6 py-4">All Models</td>
+<td class="px-6 py-4 text-green-600 flex items-center gap-1"><span class="material-symbols-outlined text-sm">check</span> Exact Fit</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Reviews Section (Visualizing RatingSummary component usage) -->
+<div class="mt-12 bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+<h3 class="text-2xl font-bold text-[#181411] mb-6">Customer Reviews</h3>
+<div class="flex flex-col lg:flex-row gap-12">
+<!-- Rating Breakdown -->
+<div class="w-full lg:w-1/3">
+<div class="flex items-end gap-4 mb-4">
+<span class="text-6xl font-bold text-[#181411]">4.5</span>
+<div class="flex flex-col mb-2">
+<div class="flex text-primary">
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star</span>
+<span class="material-symbols-outlined fill-current">star_half</span>
+</div>
+<span class="text-sm text-gray-500">Based on 128 reviews</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex items-center gap-3 text-sm">
+<span class="font-medium w-3">5</span>
+<div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[80%] rounded-full"></div>
+</div>
+<span class="text-gray-500 w-8 text-right">80%</span>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<span class="font-medium w-3">4</span>
+<div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[10%] rounded-full"></div>
+</div>
+<span class="text-gray-500 w-8 text-right">10%</span>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<span class="font-medium w-3">3</span>
+<div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[3%] rounded-full"></div>
+</div>
+<span class="text-gray-500 w-8 text-right">3%</span>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<span class="font-medium w-3">2</span>
+<div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[2%] rounded-full"></div>
+</div>
+<span class="text-gray-500 w-8 text-right">2%</span>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<span class="font-medium w-3">1</span>
+<div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[5%] rounded-full"></div>
+</div>
+<span class="text-gray-500 w-8 text-right">5%</span>
+</div>
+</div>
+<button class="mt-6 w-full py-2.5 border border-gray-300 rounded-lg text-sm font-bold text-[#181411] hover:bg-gray-50">
+                            Write a Review
+                        </button>
+</div>
+<!-- Review Cards -->
+<div class="flex-1 space-y-6">
+<div class="border-b border-gray-100 pb-6">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-600">JD</div>
+<span class="font-bold text-sm">John D.</span>
+<span class="text-green-600 text-xs flex items-center"><span class="material-symbols-outlined text-[14px] mr-0.5">verified</span> Verified Buyer</span>
+</div>
+<span class="text-xs text-gray-500">2 days ago</span>
+</div>
+<div class="flex text-primary mb-2">
+<span class="material-symbols-outlined text-[16px] fill-current">star</span>
+<span class="material-symbols-outlined text-[16px] fill-current">star</span>
+<span class="material-symbols-outlined text-[16px] fill-current">star</span>
+<span class="material-symbols-outlined text-[16px] fill-current">star</span>
+<span class="material-symbols-outlined text-[16px] fill-current">star</span>
+</div>
+<h4 class="font-bold text-sm mb-1">Great fit for my 2019 Accord</h4>
+<p class="text-sm text-gray-600">Installed these last weekend. Perfect fitment, no squeaks, and stopping power feels better than OEM.</p>
+</div>
+<div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-600">MS</div>
+<span class="font-bold text-sm">Mike S.</span>
+<span class="text-green-600 text-xs flex items-center"><span class="material-symbols-outlined text-[14px] mr-0.5">verified</span> Verified Buyer</span>
+</div>
+<span class="text-xs text-gray-500">1 week ago</span>
+</div>
+<div class="flex text-primary mb-2">
+<span class="material-symbols-outlined text-[16px] fill-current">star</span>
+<span class="material-symbols-outlined text-[16px] fill-current">star</span>
+<span class="material-symbols-outlined text-[16px] fill-current">star</span>
+<span class="material-symbols-outlined text-[16px] fill-current">star</span>
+<span class="material-symbols-outlined text-[16px] fill-current text-gray-300">star</span>
+</div>
+<h4 class="font-bold text-sm mb-1">Good value</h4>
+<p class="text-sm text-gray-600">Good pads for the price. Installation was straightforward.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Related Products -->
+<div class="mt-16">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-2xl font-bold text-[#181411]">Frequently Bought Together</h3>
+<a class="text-primary font-medium hover:underline text-sm" href="#">View all</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Product 1 -->
+<div class="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden group hover:shadow-md transition-shadow">
+<div class="relative h-48 bg-gray-50 p-4 flex items-center justify-center">
+<img alt="Brake Rotors" class="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform" data-alt="Pair of steel brake rotors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7woWxDMcMWGxcpLGu-XNpuh-suuy-OJM3v4S9bMGxUY3ngK3Mb8DOfh5iZEkhZrxIXBlNiDZOTHhLp84WMHaHKX1rWqohMuRxIr6POCWonDg5N-5FqCQQa2LEb0ZBwSaFD6AM2n8Ts89YVC3DskAJr6Kl9nRkZG1Y3ssnRSpxTnQWUldXGSb1vaKsIZipp_gqwlE0FZmyIv8vLKSbQQsZasF8uf1Jnw6aM_4lzeDBe-hjF6BpIiOgJpLO8MWh_mE6KKHJIVE0wwIr"/>
+<button class="absolute bottom-2 right-2 size-8 bg-white rounded-full shadow flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+<div class="p-4">
+<h4 class="font-bold text-[#181411] text-sm leading-tight mb-1 group-hover:text-primary transition-colors">Performance Drilled Rotors</h4>
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-primary text-[14px]">star</span>
+<span class="text-xs text-gray-500">4.9 (85)</span>
+</div>
+<span class="font-bold text-[#181411]">$112.50</span>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden group hover:shadow-md transition-shadow">
+<div class="relative h-48 bg-gray-50 p-4 flex items-center justify-center">
+<img alt="Brake Fluid" class="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform" data-alt="Bottle of brake fluid" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQhwuns5hJmJYVCqPpkVJwsyZEt6dtOm2YruL7BOcXC86TAUKgsYEG42pZUpMugSWxajNyKHyPvV5aXzxJY_XjnBDy-tKva5K5tN9HMBGVk_L_CeKUzP5J37zcpqziu-G42tbNkxcbzl-4swmh01SBdX3W76CV0VuOJHUWA7OUAmSutG-m7PVacroyx_aXBSjVUzMChbMnG2_RKB1Vmk5mvdW0XuAOWtdSvKqQjernUjYj4pUnZAm2rHQHV4eelyzegpOfGToYbZfn"/>
+<button class="absolute bottom-2 right-2 size-8 bg-white rounded-full shadow flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+<div class="p-4">
+<h4 class="font-bold text-[#181411] text-sm leading-tight mb-1 group-hover:text-primary transition-colors">DOT 4 Brake Fluid - 1L</h4>
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-primary text-[14px]">star</span>
+<span class="text-xs text-gray-500">4.7 (230)</span>
+</div>
+<span class="font-bold text-[#181411]">$12.99</span>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden group hover:shadow-md transition-shadow">
+<div class="relative h-48 bg-gray-50 p-4 flex items-center justify-center">
+<img alt="Brake Caliper Grease" class="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform" data-alt="Tube of brake caliper grease" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhJJGeyOL30dbNeJcxNm3eQfRA0za0bERPRcnRJ4mg4uYFIjcvFtSSI2N0yOYHJ9_yWdm_U5ULdeI5S-Iy-kTJ_Fv5tPvTphbkUYPOesUG7bP0dYcrQ2blOKyJVUNvC2Axr_BCxQbKj0UFYRys5UQcs8tb8_zdVvIpkoA4LM1aSYtw7KkbWv4Ag9RH_gOjImCsrhj9Ow5T1bujtlKJ8eO-wL6MdfW5n1ZPQlO0Csg4cXhSU4gdEU8mYQWVhq9iwfGubO84uGpVVFtU"/>
+<button class="absolute bottom-2 right-2 size-8 bg-white rounded-full shadow flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+<div class="p-4">
+<h4 class="font-bold text-[#181411] text-sm leading-tight mb-1 group-hover:text-primary transition-colors">High-Temp Caliper Grease</h4>
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-primary text-[14px]">star</span>
+<span class="text-xs text-gray-500">5.0 (42)</span>
+</div>
+<span class="font-bold text-[#181411]">$6.49</span>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden group hover:shadow-md transition-shadow">
+<div class="relative h-48 bg-gray-50 p-4 flex items-center justify-center">
+<img alt="Brake Cleaner" class="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform" data-alt="Can of brake cleaner spray" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz_BYt7aq-UOwlKGQhnXf9nDITsoZfkDRb-ioov-aZuseRRknbx4ImGpwDH4pJhl-S8Vsf6B9TjBXndBfcAq3p6J40r9stOikERQFqkhtlSUQoCGwr7iTAIxaOYEFykVcw4yjmTt31C4zUcieaydpM83MBdarRFeTSYaZ0AKxELuvXv56-DMU1iZoGxzMZ4NrTyuUC8valEqykXR692bZCwpC8izEZAL65BQmIUf7kohpWAPjzQsJuE4xKMSBC9_7ra3n5H8tMspD1"/>
+<button class="absolute bottom-2 right-2 size-8 bg-white rounded-full shadow flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+<div class="p-4">
+<h4 class="font-bold text-[#181411] text-sm leading-tight mb-1 group-hover:text-primary transition-colors">Brake Parts Cleaner Spray</h4>
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-primary text-[14px]">star</span>
+<span class="text-xs text-gray-500">4.8 (1120)</span>
+</div>
+<span class="font-bold text-[#181411]">$8.99</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple Footer -->
+<footer class="bg-white border-t border-[#f5f2f0] py-8 mt-12">
+<div class="px-6 lg:px-40 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-gray-500">© 2023 SN Auto Parts. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-sm text-gray-500 hover:text-primary" href="#">Privacy Policy</a>
+<a class="text-sm text-gray-500 hover:text-primary" href="#">Terms of Service</a>
+<a class="text-sm text-gray-500 hover:text-primary" href="#">Support</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

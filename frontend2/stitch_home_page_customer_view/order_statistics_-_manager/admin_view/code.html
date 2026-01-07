@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Statistics - SN Auto Parts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f97415",
+              "background-light": "#f8f7f5",
+              "background-dark": "#23170f",
+              "surface-dark": "#2e2118", // Slightly lighter than background-dark for cards
+              "surface-border": "#45362e",
+              "text-secondary": "#bba89b",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for dark mode feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #23170f; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #45362e; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5d4a40; 
+        }
+        
+        /* Simulating chart gradients */
+        .chart-gradient-primary {
+            background: linear-gradient(180deg, rgba(249, 116, 21, 0.2) 0%, rgba(249, 116, 21, 0) 100%);
+        }
+        .chart-bar-primary {
+            background: linear-gradient(180deg, #f97415 0%, #d45d0b 100%);
+        }
+        .chart-bar-secondary {
+            background: linear-gradient(180deg, #5d4a40 0%, #45362e 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="flex w-72 flex-col border-r border-surface-border bg-background-dark hidden md:flex">
+<div class="flex flex-col h-full p-4 justify-between">
+<div class="flex flex-col gap-6">
+<!-- Brand -->
+<div class="flex items-center gap-3 px-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 border border-surface-border shadow-sm shrink-0" data-alt="Abstract orange and black geometric logo pattern" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBII_kZFBlX6ceERtZqwmdMvWNP2p84SUoqQhwx8iL6mNm8Puv4CZmp4iC00t2a7g8PEhSVI9SUNMC_CsreOh1Hzk6-Z5MxhSCstxEus9ytOEPmGYm_z7Ud84Qlmh4pKcmGXvW2DH2sKB2-GUCYyoKYAB4Iww0QB10D42YYQmEx2kkNwFCr5L6kYNAE6K4nYAsPP9ia_QjZRfD1YG7B1B2DgntymNn9M6ipduQ737gERwmh0JqkWo8hwOmu65-HnUEwp_4OpfqiH6Bb");'></div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="text-white text-base font-bold leading-tight truncate">SN Auto Parts</h1>
+<p class="text-text-secondary text-xs font-normal truncate">Manager Panel</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-dark transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-white" style="font-size: 24px;">dashboard</span>
+<p class="text-text-secondary group-hover:text-white text-sm font-medium">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-dark transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-white" style="font-size: 24px;">shopping_bag</span>
+<p class="text-text-secondary group-hover:text-white text-sm font-medium">Orders</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-dark transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-white" style="font-size: 24px;">inventory_2</span>
+<p class="text-text-secondary group-hover:text-white text-sm font-medium">Products</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-dark transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-white" style="font-size: 24px;">group</span>
+<p class="text-text-secondary group-hover:text-white text-sm font-medium">Customers</p>
+</a>
+<!-- Active Item -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface-dark border border-surface-border" href="#">
+<span class="material-symbols-outlined text-primary" style="font-size: 24px; font-variation-settings: 'FILL' 1;">bar_chart</span>
+<p class="text-white text-sm font-bold">Statistics</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-dark transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-white" style="font-size: 24px;">settings</span>
+<p class="text-text-secondary group-hover:text-white text-sm font-medium">Settings</p>
+</a>
+</nav>
+</div>
+<!-- User Profile -->
+<div class="flex items-center gap-3 px-3 py-3 rounded-lg border border-surface-border bg-surface-dark/50 mt-auto">
+<div class="size-8 rounded-full bg-surface-border flex items-center justify-center text-xs font-bold text-white">JD</div>
+<div class="flex flex-col">
+<p class="text-white text-sm font-medium">John Doe</p>
+<p class="text-text-secondary text-xs">Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-y-auto bg-background-dark scroll-smooth">
+<div class="max-w-[1200px] w-full mx-auto p-4 md:p-8 flex flex-col gap-8">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2 border-b border-surface-border/50">
+<div class="flex flex-col gap-2">
+<h1 class="text-white text-3xl md:text-4xl font-black tracking-tight">Order Statistics</h1>
+<p class="text-text-secondary text-base">Operational insights and performance metrics.</p>
+</div>
+<!-- Date Filter -->
+<div class="flex flex-col sm:flex-row gap-3 items-end sm:items-center bg-surface-dark p-2 rounded-xl border border-surface-border">
+<div class="flex gap-1 overflow-x-auto max-w-full no-scrollbar">
+<button class="px-3 py-1.5 rounded-lg bg-surface-border text-white text-xs font-medium hover:bg-surface-border/80 whitespace-nowrap">Today</button>
+<button class="px-3 py-1.5 rounded-lg hover:bg-surface-border text-text-secondary hover:text-white text-xs font-medium transition whitespace-nowrap">7 Days</button>
+<button class="px-3 py-1.5 rounded-lg hover:bg-surface-border text-text-secondary hover:text-white text-xs font-medium transition whitespace-nowrap">30 Days</button>
+<button class="px-3 py-1.5 rounded-lg hover:bg-surface-border text-text-secondary hover:text-white text-xs font-medium transition whitespace-nowrap">Custom</button>
+</div>
+<div class="w-px h-6 bg-surface-border hidden sm:block"></div>
+<button class="flex items-center justify-center h-8 px-4 bg-primary hover:bg-primary/90 rounded-lg text-white text-xs font-bold transition shadow-lg shadow-primary/20">
+                            Apply
+                        </button>
+</div>
+</header>
+<!-- KPI Cards -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Total Orders -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-5 flex flex-col gap-3 hover:border-primary/30 transition-colors cursor-default group">
+<div class="flex justify-between items-start">
+<p class="text-text-secondary text-sm font-medium">Total Orders</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-md" style="font-size: 20px;">shopping_cart</span>
+</div>
+<div class="flex items-baseline gap-2 mt-1">
+<h2 class="text-3xl font-bold text-white tracking-tight">142</h2>
+<span class="text-[#0bda16] text-xs font-bold bg-[#0bda16]/10 px-1.5 py-0.5 rounded flex items-center">
+<span class="material-symbols-outlined" style="font-size: 12px;">arrow_upward</span> 12%
+                            </span>
+</div>
+<p class="text-xs text-text-secondary">vs. last 30 days</p>
+</div>
+<!-- Avg Order Value -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-5 flex flex-col gap-3 hover:border-primary/30 transition-colors cursor-default">
+<div class="flex justify-between items-start">
+<p class="text-text-secondary text-sm font-medium">Avg Order Value</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-md" style="font-size: 20px;">attach_money</span>
+</div>
+<div class="flex items-baseline gap-2 mt-1">
+<h2 class="text-3xl font-bold text-white tracking-tight">$172.68</h2>
+<span class="text-[#0bda16] text-xs font-bold bg-[#0bda16]/10 px-1.5 py-0.5 rounded flex items-center">
+<span class="material-symbols-outlined" style="font-size: 12px;">arrow_upward</span> 3.4%
+                            </span>
+</div>
+<p class="text-xs text-text-secondary">vs. last 30 days</p>
+</div>
+<!-- Fulfillment Rate -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-5 flex flex-col gap-3 hover:border-primary/30 transition-colors cursor-default">
+<div class="flex justify-between items-start">
+<p class="text-text-secondary text-sm font-medium">Fulfillment Rate</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-md" style="font-size: 20px;">local_shipping</span>
+</div>
+<div class="flex items-baseline gap-2 mt-1">
+<h2 class="text-3xl font-bold text-white tracking-tight">98.5%</h2>
+<span class="text-[#0bda16] text-xs font-bold bg-[#0bda16]/10 px-1.5 py-0.5 rounded flex items-center">
+<span class="material-symbols-outlined" style="font-size: 12px;">arrow_upward</span> 0.5%
+                            </span>
+</div>
+<p class="text-xs text-text-secondary">vs. last 30 days</p>
+</div>
+<!-- Return Rate -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-5 flex flex-col gap-3 hover:border-primary/30 transition-colors cursor-default">
+<div class="flex justify-between items-start">
+<p class="text-text-secondary text-sm font-medium">Return Rate</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-md" style="font-size: 20px;">keyboard_return</span>
+</div>
+<div class="flex items-baseline gap-2 mt-1">
+<h2 class="text-3xl font-bold text-white tracking-tight">1.2%</h2>
+<span class="text-[#fa3f38] text-xs font-bold bg-[#fa3f38]/10 px-1.5 py-0.5 rounded flex items-center">
+<span class="material-symbols-outlined" style="font-size: 12px;">arrow_downward</span> 0.2%
+                            </span>
+</div>
+<p class="text-xs text-text-secondary">vs. last 30 days</p>
+</div>
+</section>
+<!-- Charts Section Main -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Main Line Chart -->
+<div class="lg:col-span-2 bg-surface-dark border border-surface-border rounded-xl p-6 flex flex-col gap-6">
+<div class="flex justify-between items-center">
+<h3 class="text-lg font-bold text-white">Orders Over Time</h3>
+<button class="text-primary hover:text-white transition">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<!-- Simulated Chart Area -->
+<div class="relative w-full h-[300px] flex items-end justify-between gap-1 pt-4">
+<!-- Y-axis labels simulated -->
+<div class="absolute left-0 top-0 bottom-6 w-8 flex flex-col justify-between text-[10px] text-text-secondary text-right pr-2">
+<span>150</span>
+<span>100</span>
+<span>50</span>
+<span>0</span>
+</div>
+<!-- Chart Grid and Lines -->
+<div class="ml-8 w-full h-full relative border-l border-b border-surface-border">
+<!-- Horizontal Grid Lines -->
+<div class="absolute top-0 w-full h-px bg-surface-border/30"></div>
+<div class="absolute top-1/3 w-full h-px bg-surface-border/30"></div>
+<div class="absolute top-2/3 w-full h-px bg-surface-border/30"></div>
+<!-- The "Line" (simulated with SVG for accuracy in visualization) -->
+<svg class="absolute bottom-0 left-0 w-full h-full overflow-visible" preserveaspectratio="none">
+<defs>
+<lineargradient id="gradientPrimary" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#f97415" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#f97415" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0 250 L 50 200 L 100 220 L 150 150 L 200 180 L 250 100 L 300 120 L 350 80 L 400 90 L 450 40 L 500 60 L 550 20 L 600 50 L 700 30" fill="url(#gradientPrimary)" stroke="none"></path>
+<path d="M0 250 L 50 200 L 100 220 L 150 150 L 200 180 L 250 100 L 300 120 L 350 80 L 400 90 L 450 40 L 500 60 L 550 20 L 600 50 L 700 30" fill="none" stroke="#f97415" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<!-- Data Points -->
+<circle cx="250" cy="100" fill="#23170f" r="4" stroke="#f97415" stroke-width="2"></circle>
+<circle cx="550" cy="20" fill="#23170f" r="4" stroke="#f97415" stroke-width="2"></circle>
+</svg>
+<!-- X-axis labels -->
+<div class="absolute -bottom-6 w-full flex justify-between text-[10px] text-text-secondary px-2">
+<span>Mon</span>
+<span>Tue</span>
+<span>Wed</span>
+<span>Thu</span>
+<span>Fri</span>
+<span>Sat</span>
+<span>Sun</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Status Distribution -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-6 flex flex-col gap-6">
+<div class="flex justify-between items-center">
+<h3 class="text-lg font-bold text-white">Order Status</h3>
+</div>
+<div class="flex flex-col items-center justify-center flex-1 gap-6">
+<!-- Donut Chart Representation -->
+<div class="relative size-48 rounded-full border-[16px] border-[#3a2f27] flex items-center justify-center">
+<!-- CSS Conic Gradient for Pie Chart -->
+<div class="absolute inset-[-16px] rounded-full" style="background: conic-gradient(#f97415 0% 65%, #0bda16 65% 85%, #3b82f6 85% 95%, #ef4444 95% 100%); 
+                                            mask: radial-gradient(farthest-side, transparent calc(100% - 16px), #fff calc(100% - 16px)); 
+                                            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 16px), #fff calc(100% - 16px));">
+</div>
+<div class="text-center">
+<p class="text-3xl font-bold text-white">142</p>
+<p class="text-xs text-text-secondary">Total</p>
+</div>
+</div>
+<!-- Legend -->
+<div class="w-full grid grid-cols-2 gap-3">
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-[#f97415]"></div>
+<span class="text-xs text-text-secondary">Delivered (65%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-[#0bda16]"></div>
+<span class="text-xs text-text-secondary">Processing (20%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-[#3b82f6]"></div>
+<span class="text-xs text-text-secondary">Shipped (10%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-[#ef4444]"></div>
+<span class="text-xs text-text-secondary">Cancelled (5%)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Section: Customer Stats & Top Products -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-8">
+<!-- Customer Type Bar Chart -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-6 flex flex-col gap-6">
+<div class="flex justify-between items-center">
+<h3 class="text-lg font-bold text-white">Customers: New vs Returning</h3>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-2 min-h-[250px]">
+<!-- Chart Container -->
+<div class="flex justify-around items-end h-full gap-4 pb-6 border-b border-surface-border relative">
+<!-- Bars for Day 1 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="flex items-end gap-1 h-32">
+<div class="w-4 bg-[#f97415] rounded-t-sm h-[60%]"></div>
+<div class="w-4 bg-[#5d4a40] rounded-t-sm h-[40%]"></div>
+</div>
+<span class="text-[10px] text-text-secondary">Mon</span>
+</div>
+<!-- Bars for Day 2 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="flex items-end gap-1 h-32">
+<div class="w-4 bg-[#f97415] rounded-t-sm h-[80%]"></div>
+<div class="w-4 bg-[#5d4a40] rounded-t-sm h-[30%]"></div>
+</div>
+<span class="text-[10px] text-text-secondary">Tue</span>
+</div>
+<!-- Bars for Day 3 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="flex items-end gap-1 h-32">
+<div class="w-4 bg-[#f97415] rounded-t-sm h-[40%]"></div>
+<div class="w-4 bg-[#5d4a40] rounded-t-sm h-[50%]"></div>
+</div>
+<span class="text-[10px] text-text-secondary">Wed</span>
+</div>
+<!-- Bars for Day 4 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="flex items-end gap-1 h-32">
+<div class="w-4 bg-[#f97415] rounded-t-sm h-[90%]"></div>
+<div class="w-4 bg-[#5d4a40] rounded-t-sm h-[20%]"></div>
+</div>
+<span class="text-[10px] text-text-secondary">Thu</span>
+</div>
+<!-- Bars for Day 5 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="flex items-end gap-1 h-32">
+<div class="w-4 bg-[#f97415] rounded-t-sm h-[70%]"></div>
+<div class="w-4 bg-[#5d4a40] rounded-t-sm h-[60%]"></div>
+</div>
+<span class="text-[10px] text-text-secondary">Fri</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="flex justify-center gap-6 mt-2">
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-sm bg-[#f97415]"></div>
+<span class="text-xs text-text-secondary">New Customers</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-sm bg-[#5d4a40]"></div>
+<span class="text-xs text-text-secondary">Returning</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Top Selling Products -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-6 flex flex-col gap-4">
+<div class="flex justify-between items-center mb-2">
+<h3 class="text-lg font-bold text-white">Top Selling Products</h3>
+<a class="text-xs font-medium text-primary hover:text-white transition" href="#">View All</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-surface-border/50 text-xs text-text-secondary uppercase tracking-wider">
+<th class="pb-3 font-medium pl-2">Product Name</th>
+<th class="pb-3 font-medium text-right">Price</th>
+<th class="pb-3 font-medium text-right pr-2">Sold</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="group hover:bg-surface-border/30 transition-colors border-b border-surface-border/30 last:border-0">
+<td class="py-3 pl-2 flex items-center gap-3">
+<div class="size-10 rounded bg-surface-border shrink-0 bg-center bg-cover" data-alt="Brake Pads in packaging" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_VAU815eAXUjDAmKItnS3FMZh2x0suOp5ZFyv_7NNzZV93u0NgriOPKxZ6G57LkPngpeOL9AxwIqyexBGbeLAOT0cGsbjj-7YDt8UcNVlVpDonLJmielzqniCQGpuz3BuK3WmwW3_hUDaDdXzfdnTUVWGY5AihI97SjICaN04ljxXe6W84O7H9WhgVea6-YARuPgscnRNSyFZNsp5d5C-K92M9lbqt1jVmKnd9-FQnK1b6NK7gZTRFBUtHXsvr9u0f6yhfL_F8-5P");'></div>
+<div class="flex flex-col">
+<span class="text-white font-medium group-hover:text-primary transition-colors">Ceramic Brake Pads</span>
+<span class="text-[10px] text-text-secondary">SKU: BP-2024</span>
+</div>
+</td>
+<td class="py-3 text-right text-text-secondary">$45.00</td>
+<td class="py-3 text-right text-white font-bold pr-2">324</td>
+</tr>
+<tr class="group hover:bg-surface-border/30 transition-colors border-b border-surface-border/30 last:border-0">
+<td class="py-3 pl-2 flex items-center gap-3">
+<div class="size-10 rounded bg-surface-border shrink-0 bg-center bg-cover" data-alt="Synthetic Motor Oil bottle" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDKrFGfythGoDzYE-qZthZbQvJG0Ns54oySPDLwh57sVL2OhT8me_24i8b6Eh2NOhgvzdKxMycvCHmLYjUorf_EnyX4QvH7ekQhL5OJknVMUL4k-E06RVAUIq_hB4YKxhsI4rf0tn-msfGW8-3WPqBBgVRfgN7p3L5OxLKjJA68wyTSKQ4vNNzhMtekLe_F9XrW09LxT4XOMQ5VwaQYCprwv-_8UBMiO1FngQYVqPiWY_Kd8TA3gZNVC93Duz_lue0NJB33hLcsHiIo");'></div>
+<div class="flex flex-col">
+<span class="text-white font-medium group-hover:text-primary transition-colors">Synthetic Motor Oil 5W-30</span>
+<span class="text-[10px] text-text-secondary">SKU: OIL-5W30</span>
+</div>
+</td>
+<td class="py-3 text-right text-text-secondary">$28.50</td>
+<td class="py-3 text-right text-white font-bold pr-2">218</td>
+</tr>
+<tr class="group hover:bg-surface-border/30 transition-colors border-b border-surface-border/30 last:border-0">
+<td class="py-3 pl-2 flex items-center gap-3">
+<div class="size-10 rounded bg-surface-border shrink-0 bg-center bg-cover" data-alt="Spark Plug set" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBDtb_Flwkm8f5BLD_07Bscv4t19knVXSd48NpmW_YqWWefIS4Oo4bkCaWr5I8DXS75JdmMa9kHzMIwQx_iAqpY7QmgHaeEr4BCX1fGcnonzfAG5IkvpdOJUM-mQHQfyqwGhYmfANIeSaSY5QILsk2DY3SNO-WZKrS4NWQwW5GwLi0y12P2a6KFfYmThjYA8AxVPWTlotC8BwBpHioGYEWSgnNPwxEwDDCJWddYUmPp4PZknvfosva0rjViWXsSDsh2cCdhqVUeWnhY");'></div>
+<div class="flex flex-col">
+<span class="text-white font-medium group-hover:text-primary transition-colors">Iridium Spark Plug Set</span>
+<span class="text-[10px] text-text-secondary">SKU: SP-IR4</span>
+</div>
+</td>
+<td class="py-3 text-right text-text-secondary">$12.99</td>
+<td class="py-3 text-right text-white font-bold pr-2">189</td>
+</tr>
+<tr class="group hover:bg-surface-border/30 transition-colors border-b border-surface-border/30 last:border-0">
+<td class="py-3 pl-2 flex items-center gap-3">
+<div class="size-10 rounded bg-surface-border shrink-0 bg-center bg-cover" data-alt="Car Battery graphic" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDqqqGDhJQmYFrNAakJVX26tSwJXDhrutg2CNSqu-sYfOD-9JUEIcMCJb3Hh6-4SW3dcw3tF2jwl-kNzT49P-t92vzmwX6QwR9IjVtv7P1xUiYoLepz9_wej7L2YFEtetXNqScs1jwM17_48A6Vru1nrL95ZsIa-Sr-4kasMODlqkI6j08hO1zyP8opRcVDwyZdG_C7fwSEBEEJuwND_v4tppn11jYkyyrWiBuVvDmaZ6s9q3gLnoDuLCeMW1aaHqoW2epBrAknQZz_");'></div>
+<div class="flex flex-col">
+<span class="text-white font-medium group-hover:text-primary transition-colors">12V Car Battery</span>
+<span class="text-[10px] text-text-secondary">SKU: BAT-12V</span>
+</div>
+</td>
+<td class="py-3 text-right text-text-secondary">$120.00</td>
+<td class="py-3 text-right text-white font-bold pr-2">94</td>
+</tr>
+<tr class="group hover:bg-surface-border/30 transition-colors border-b border-surface-border/30 last:border-0">
+<td class="py-3 pl-2 flex items-center gap-3">
+<div class="size-10 rounded bg-surface-border shrink-0 bg-center bg-cover" data-alt="Air Filter graphic" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBk72BzTOZ1lUDWA22QmLp-ZPS6wxWVtclJ74e6r16TaaNU7mDNPL_ywNFSwT5YgbaqxCkihXMBXO_5XZnPZHYv2z1qrirHraIXMWhffwuWtMEMCeRyff4p-HL6f4MmyXwh_lPF0LDJuFr1DweQ0QobZCXIcoeZf99F4cNHiF98QcS--zS24Rz8B-46CRBiLy-yAp0ZAjo279BAJWLh4DXTtgiH4fKznUpED5kbfHbAa1lNQLAvO05YZ3b65nDYZl1LXxTOwf0ZSdcH");'></div>
+<div class="flex flex-col">
+<span class="text-white font-medium group-hover:text-primary transition-colors">Cabin Air Filter</span>
+<span class="text-[10px] text-text-secondary">SKU: AF-CAB</span>
+</div>
+</td>
+<td class="py-3 text-right text-text-secondary">$18.25</td>
+<td class="py-3 text-right text-white font-bold pr-2">87</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Footer Link -->
+<div class="flex justify-center pb-8">
+<a class="flex items-center gap-2 text-primary text-sm font-semibold hover:text-white transition group" href="#">
+                        View Detailed Order Log
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" style="font-size: 18px;">arrow_forward</span>
+</a>
+</div>
+</div>
+</main>
+</div>
+</body></html>

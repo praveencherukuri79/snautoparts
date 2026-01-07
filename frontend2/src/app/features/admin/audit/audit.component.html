@@ -1,0 +1,27 @@
+<div class="audit-page">
+  <div class="page-header">
+    <h1>Audit Logs</h1>
+    <div class="filters">
+      <app-select
+        label="Action"
+        [options]="actionOptions"
+        [control]="actionFilter"
+        (selectionChange)="onFilterChange()"
+      />
+    </div>
+  </div>
+
+  <app-data-table
+    [columns]="columns"
+    [data]="logs()"
+    [loading]="isLoading()"
+    [paginated]="true"
+    [total]="total()"
+    [pageSize]="pageSize"
+    [currentPage]="currentPage()"
+    (pageChange)="onPageChange($event)"
+    emptyTitle="No audit logs found"
+    emptyMessage="There are no logs matching your filters"
+  />
+</div>
+

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tax Settings - Admin View</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e5e7eb;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d1d5db;
+        }
+        
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #f97415;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #f97415;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181411] font-display antialiased overflow-hidden h-screen flex">
+<!-- Sidebar -->
+<aside class="w-64 bg-white border-r border-[#f5f2f0] flex-shrink-0 flex flex-col h-full z-20">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 shadow-sm" data-alt="Abstract orange and brown geometric shape logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA2kUFVKIhnTCnNv852JKV-LmTB0pk_NH-e_8s68z4k5cHh3XRwLcZj14YxD6HGoyF4Bzh_vOzquzwKh6uO6mNLnYO8spIVFDdpaAklixRCVq5rJnzYhzMAflv7YjFrAeoz1sGj6C2cKm54VfFtNCEXy1b6JWYPyPFq7_TIu8DiDCb3rHOL15lWFFo_sLVcBjMnzMYDxH5iXqZe3pLzN8wVe9NAbhEPdtmppEaQo7opLE8yc9sfEL6BJ-TtfMO_k3SfH1FXaVNcruJH");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#181411] text-base font-bold leading-tight">SN Auto Parts</h1>
+<p class="text-[#8c725f] text-xs font-normal">Admin Console</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-3 py-2 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c5c5c] hover:bg-[#f5f2f0] hover:text-[#181411] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c5c5c] hover:bg-[#f5f2f0] hover:text-[#181411] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">package_2</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c5c5c] hover:bg-[#f5f2f0] hover:text-[#181411] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">shopping_bag</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c5c5c] hover:bg-[#f5f2f0] hover:text-[#181411] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">group</span>
+<span class="text-sm font-medium">Customers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c5c5c] hover:bg-[#f5f2f0] hover:text-[#181411] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">bar_chart</span>
+<span class="text-sm font-medium">Analytics</span>
+</a>
+<div class="my-2 border-t border-[#f5f2f0]"></div>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] fill-1">settings</span>
+<span class="text-sm font-bold">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-[#f5f2f0]">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 border border-[#f5f2f0]" data-alt="Profile picture of a user smiling" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDpAU1o8v1d-LyQDvEOdJ_wznEuw55zSvDwgWu1KG2UkffsHxwavIg1t6u5eMDyPxlieTSmmPrja0mA2oT1DFfFLDK3DAfTtQKSy6SQvlEC305hPqMrV8Y5wjvgAns8waPG3OWI0n4bx5Xf15DRHMtFksls5Pp35KP0aym1Z-0Jan7mCgxFm3oWkjwgXUCiYWnIjVPCLsi5jhcXw2bMiazR6pKYf6a11D1g2CDEg_TCIEjY8NG_pVVt351vGqfPCiDFCklwZg7w6yQj");'></div>
+<div class="flex flex-col">
+<p class="text-[#181411] text-sm font-medium">Admin User</p>
+<p class="text-[#8c725f] text-xs">admin@snautoparts.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 h-full overflow-hidden relative">
+<!-- Top Nav -->
+<header class="flex items-center justify-between border-b border-[#f5f2f0] px-8 py-3 bg-white z-10 flex-shrink-0">
+<h2 class="text-lg font-bold text-[#181411]">Settings</h2>
+<div class="flex items-center gap-4">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#8c725f] text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-[#f8f7f5] border-none rounded-lg text-sm text-[#181411] placeholder-[#8c725f] focus:ring-2 focus:ring-primary/20" placeholder="Search settings..." type="text"/>
+</div>
+<button class="relative p-2 rounded-lg hover:bg-[#f8f7f5] text-[#181411] transition-colors">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white"></span>
+</button>
+<button class="p-2 rounded-lg hover:bg-[#f8f7f5] text-[#181411] transition-colors">
+<span class="material-symbols-outlined text-[22px]">help</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Area -->
+<div class="flex-1 overflow-y-auto p-8 bg-background-light">
+<div class="max-w-5xl mx-auto space-y-8">
+<!-- Page Header & Actions -->
+<div class="flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<div>
+<h1 class="text-3xl font-black text-[#181411] tracking-tight">Tax Settings</h1>
+<p class="text-[#8c725f] mt-1">Manage global tax rules, regional rates, and exemptions.</p>
+</div>
+<button class="bg-primary hover:bg-orange-600 text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow-sm shadow-orange-200 flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                            Add New Tax Rate
+                        </button>
+</div>
+<!-- Navigation Tabs -->
+<div class="border-b border-[#e6dfdb]">
+<nav aria-label="Tabs" class="flex gap-8">
+<a class="border-b-[3px] border-transparent py-3 px-1 text-sm font-medium text-[#8c725f] hover:text-[#181411] hover:border-gray-300" href="#">
+                                General
+                            </a>
+<a class="border-b-[3px] border-transparent py-3 px-1 text-sm font-medium text-[#8c725f] hover:text-[#181411] hover:border-gray-300" href="#">
+                                Payments
+                            </a>
+<a class="border-b-[3px] border-transparent py-3 px-1 text-sm font-medium text-[#8c725f] hover:text-[#181411] hover:border-gray-300" href="#">
+                                Shipping
+                            </a>
+<a aria-current="page" class="border-b-[3px] border-primary py-3 px-1 text-sm font-bold text-primary" href="#">
+                                Tax
+                            </a>
+<a class="border-b-[3px] border-transparent py-3 px-1 text-sm font-medium text-[#8c725f] hover:text-[#181411] hover:border-gray-300" href="#">
+                                Notifications
+                            </a>
+</nav>
+</div>
+</div>
+<!-- Global Configuration Card -->
+<section class="bg-white rounded-xl shadow-sm border border-[#f0ebe8] overflow-hidden">
+<div class="px-6 py-4 border-b border-[#f0ebe8] bg-white flex justify-between items-center">
+<h3 class="text-lg font-bold text-[#181411]">Global Configuration</h3>
+<span class="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full border border-green-100">System Active</span>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Left Col -->
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<label class="text-sm font-bold text-[#181411]">Enable Taxes</label>
+<span class="text-xs text-[#8c725f]">Calculate taxes at checkout</span>
+</div>
+<!-- Toggle -->
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-[#f0ebe8] checked:border-primary transition-all duration-300" id="toggle-tax" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-[#e5e7eb] cursor-pointer checked:bg-primary transition-colors duration-300" for="toggle-tax"></label>
+</div>
+</div>
+<div>
+<label class="block text-sm font-bold text-[#181411] mb-2">Tax Calculation Based On</label>
+<div class="relative">
+<select class="block w-full rounded-lg border-gray-200 bg-[#f8f7f5] py-2.5 px-3 text-sm focus:border-primary focus:ring-primary">
+<option>Customer Shipping Address</option>
+<option>Customer Billing Address</option>
+<option>Store Base Address</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Right Col -->
+<div class="space-y-6">
+<div>
+<label class="block text-sm font-bold text-[#181411] mb-2">Display Prices</label>
+<div class="relative">
+<select class="block w-full rounded-lg border-gray-200 bg-[#f8f7f5] py-2.5 px-3 text-sm focus:border-primary focus:ring-primary">
+<option>Excluding Tax</option>
+<option>Including Tax</option>
+</select>
+</div>
+<p class="text-xs text-[#8c725f] mt-2">Determines how prices are shown in the storefront catalog.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Tax Exemptions (Collapsible/Optional area) -->
+<section class="bg-white rounded-xl shadow-sm border border-[#f0ebe8] overflow-hidden">
+<div class="px-6 py-4 border-b border-[#f0ebe8] bg-white">
+<h3 class="text-lg font-bold text-[#181411]">Exemptions</h3>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div>
+<label class="block text-sm font-bold text-[#181411] mb-2">Exempt Customer Groups</label>
+<div class="flex flex-wrap items-center gap-2 p-2 bg-[#f8f7f5] rounded-lg border border-gray-200 min-h-[42px]">
+<span class="bg-white border border-gray-300 text-xs font-medium px-2 py-1 rounded flex items-center gap-1">
+                                    Wholesale
+                                    <button class="hover:text-red-500"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="bg-white border border-gray-300 text-xs font-medium px-2 py-1 rounded flex items-center gap-1">
+                                    Non-Profit
+                                    <button class="hover:text-red-500"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<input class="bg-transparent border-none text-sm focus:ring-0 p-0 w-24 placeholder-gray-400" placeholder="Add group..." type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-sm font-bold text-[#181411] mb-2">Exempt Product Categories</label>
+<div class="flex flex-wrap items-center gap-2 p-2 bg-[#f8f7f5] rounded-lg border border-gray-200 min-h-[42px]">
+<span class="bg-white border border-gray-300 text-xs font-medium px-2 py-1 rounded flex items-center gap-1">
+                                    Gift Cards
+                                    <button class="hover:text-red-500"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<input class="bg-transparent border-none text-sm focus:ring-0 p-0 w-24 placeholder-gray-400" placeholder="Add category..." type="text"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Tax Rates Table -->
+<section class="bg-white rounded-xl shadow-sm border border-[#f0ebe8] flex flex-col">
+<div class="px-6 py-4 border-b border-[#f0ebe8] flex items-center justify-between">
+<h3 class="text-lg font-bold text-[#181411]">Tax Rates</h3>
+<div class="flex gap-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[#8c725f] text-[18px]">filter_list</span>
+<button class="pl-8 pr-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium text-[#181411] hover:bg-gray-50 bg-white">Filter</button>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#f8f7f5] border-b border-[#e6dfdb]">
+<th class="py-3 px-6 text-xs font-semibold uppercase tracking-wider text-[#8c725f] cursor-pointer hover:text-primary group">
+<div class="flex items-center gap-1">
+                                            Name
+                                            <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100">arrow_upward</span>
+</div>
+</th>
+<th class="py-3 px-6 text-xs font-semibold uppercase tracking-wider text-[#8c725f]">Region</th>
+<th class="py-3 px-6 text-xs font-semibold uppercase tracking-wider text-[#8c725f]">Rate (%)</th>
+<th class="py-3 px-6 text-xs font-semibold uppercase tracking-wider text-[#8c725f]">Priority</th>
+<th class="py-3 px-6 text-xs font-semibold uppercase tracking-wider text-[#8c725f]">Status</th>
+<th class="py-3 px-6 text-right text-xs font-semibold uppercase tracking-wider text-[#8c725f]">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#f0ebe8]">
+<tr class="group hover:bg-[#fcfbf9] transition-colors">
+<td class="py-4 px-6 text-sm font-medium text-[#181411]">California State Tax</td>
+<td class="py-4 px-6 text-sm text-[#5c5c5c]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-[#8c725f]">location_on</span>
+                                            California, USA
+                                        </div>
+</td>
+<td class="py-4 px-6 text-sm font-bold text-[#181411]">7.25%</td>
+<td class="py-4 px-6 text-sm text-[#5c5c5c]">1</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-100">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+                                            Active
+                                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-md hover:bg-orange-50">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-[#fcfbf9] transition-colors">
+<td class="py-4 px-6 text-sm font-medium text-[#181411]">New York State Tax</td>
+<td class="py-4 px-6 text-sm text-[#5c5c5c]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-[#8c725f]">location_on</span>
+                                            New York, USA
+                                        </div>
+</td>
+<td class="py-4 px-6 text-sm font-bold text-[#181411]">4.00%</td>
+<td class="py-4 px-6 text-sm text-[#5c5c5c]">1</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-100">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+                                            Active
+                                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-md hover:bg-orange-50">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-[#fcfbf9] transition-colors">
+<td class="py-4 px-6 text-sm font-medium text-[#181411]">VAT (Standard)</td>
+<td class="py-4 px-6 text-sm text-[#5c5c5c]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-[#8c725f]">public</span>
+                                            United Kingdom
+                                        </div>
+</td>
+<td class="py-4 px-6 text-sm font-bold text-[#181411]">20.00%</td>
+<td class="py-4 px-6 text-sm text-[#5c5c5c]">0</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">
+<span class="size-1.5 rounded-full bg-gray-400"></span>
+                                            Inactive
+                                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-md hover:bg-orange-50">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-[#fcfbf9] transition-colors">
+<td class="py-4 px-6 text-sm font-medium text-[#181411]">Canada GST</td>
+<td class="py-4 px-6 text-sm text-[#5c5c5c]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-[#8c725f]">public</span>
+                                            Canada
+                                        </div>
+</td>
+<td class="py-4 px-6 text-sm font-bold text-[#181411]">5.00%</td>
+<td class="py-4 px-6 text-sm text-[#5c5c5c]">2</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-100">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+                                            Active
+                                        </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-md hover:bg-orange-50">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-[#f0ebe8] bg-gray-50 rounded-b-xl flex items-center justify-between">
+<p class="text-xs text-[#8c725f]">Showing <span class="font-bold text-[#181411]">1-4</span> of <span class="font-bold text-[#181411]">12</span> tax rates</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-xs font-bold text-[#181411] bg-white border border-gray-200 rounded-md hover:bg-gray-50 disabled:opacity-50" disabled="">Previous</button>
+<button class="px-3 py-1 text-xs font-bold text-[#181411] bg-white border border-gray-200 rounded-md hover:bg-gray-50">Next</button>
+</div>
+</div>
+</section>
+<div class="h-10"></div> <!-- Spacer -->
+</div>
+</div>
+</main>
+<!-- 
+      MODAL: Tax Rate Configuration
+      To view this modal, remove the "hidden" class from the div below.
+    -->
+<div aria-labelledby="modal-title" aria-modal="true" class="hidden fixed inset-0 z-50 overflow-y-auto" id="tax-modal" role="dialog">
+<!-- Backdrop -->
+<div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+<div aria-hidden="true" class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity"></div>
+<span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">​</span>
+<!-- Modal Panel -->
+<div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
+<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+<div class="sm:flex sm:items-start">
+<div class="w-full">
+<h3 class="text-lg leading-6 font-bold text-[#181411] mb-5" id="modal-title">Edit Tax Rate</h3>
+<div class="grid grid-cols-1 gap-4">
+<div>
+<label class="block text-sm font-bold text-[#181411] mb-1">Name</label>
+<input class="w-full rounded-lg border-gray-300 bg-[#f8f7f5] text-sm py-2 px-3 focus:border-primary focus:ring-primary" type="text" value="California State Tax"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-bold text-[#181411] mb-1">Region Type</label>
+<select class="w-full rounded-lg border-gray-300 bg-[#f8f7f5] text-sm py-2 px-3 focus:border-primary focus:ring-primary">
+<option>State</option>
+<option>Country</option>
+<option>Province</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-bold text-[#181411] mb-1">Region</label>
+<select class="w-full rounded-lg border-gray-300 bg-[#f8f7f5] text-sm py-2 px-3 focus:border-primary focus:ring-primary">
+<option>California</option>
+<option>New York</option>
+<option>Texas</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-bold text-[#181411] mb-1">Rate (%)</label>
+<input class="w-full rounded-lg border-gray-300 bg-[#f8f7f5] text-sm py-2 px-3 focus:border-primary focus:ring-primary" type="number" value="7.25"/>
+</div>
+<div>
+<label class="block text-sm font-bold text-[#181411] mb-1">Priority</label>
+<input class="w-full rounded-lg border-gray-300 bg-[#f8f7f5] text-sm py-2 px-3 focus:border-primary focus:ring-primary" type="number" value="1"/>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2">
+<label class="text-sm font-bold text-[#181411]">Active Status</label>
+<div class="relative inline-block w-12 mr-2 align-middle select-none">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-[#f0ebe8] checked:border-primary transition-all duration-300" id="toggle-modal" name="toggle-modal" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-[#e5e7eb] cursor-pointer checked:bg-primary transition-colors duration-300" for="toggle-modal"></label>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-3">
+<button class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm" type="button">
+                        Save Changes
+                    </button>
+<button class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" type="button">
+                        Cancel
+                    </button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

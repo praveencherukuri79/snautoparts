@@ -1,0 +1,252 @@
+<div class="affiliate-detail-page">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    @if (affiliate(); as aff) {
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="breadcrumb">
+        <a routerLink="/dropship/affiliates" class="back-link">
+          <span class="material-symbols-outlined">arrow_back</span>
+          Back to Affiliates
+        </a>
+      </div>
+      
+      <div class="header-main">
+        <div class="affiliate-identity">
+          <div class="affiliate-logo">
+            <span>{{ aff.name.charAt(0) }}</span>
+          </div>
+          <div class="affiliate-info">
+            <h1>{{ aff.name }}</h1>
+            <span class="affiliate-code">ID: #{{ aff.code }}</span>
+          </div>
+          <app-badge [variant]="getStatusVariant(aff)" size="lg">
+            {{ getStatusLabel(aff) }}
+          </app-badge>
+        </div>
+        
+        <div class="header-actions">
+          <app-button variant="outline" icon="sync" (clicked)="syncNow()">
+            Sync Now
+          </app-button>
+          <app-button variant="primary" icon="settings" [routerLink]="['configure']">
+            Configure
+          </app-button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <app-card class="stat-card">
+        <div class="stat-content">
+          <span class="material-symbols-outlined stat-icon">inventory_2</span>
+          <div class="stat-info">
+            <span class="stat-value">{{ aff.productMappingCount || 0 }}</span>
+            <span class="stat-label">Products Mapped</span>
+          </div>
+        </div>
+      </app-card>
+
+      <app-card class="stat-card">
+        <div class="stat-content">
+          <span class="material-symbols-outlined stat-icon">shopping_cart</span>
+          <div class="stat-info">
+            <span class="stat-value">{{ aff.orderCount || 0 }}</span>
+            <span class="stat-label">Total Orders</span>
+          </div>
+        </div>
+      </app-card>
+
+      <app-card class="stat-card">
+        <div class="stat-content">
+          <span class="material-symbols-outlined stat-icon">{{ getIntegrationIcon(aff.integrationType) }}</span>
+          <div class="stat-info">
+            <span class="stat-value">{{ aff.integrationType }}</span>
+            <span class="stat-label">Integration Type</span>
+          </div>
+        </div>
+      </app-card>
+
+      <app-card class="stat-card" [class.error]="aff.lastError">
+        <div class="stat-content">
+          <span class="material-symbols-outlined stat-icon">update</span>
+          <div class="stat-info">
+            <span class="stat-value">{{ aff.lastSyncAt ? (aff.lastSyncAt | date:'short') : 'Never' }}</span>
+            <span class="stat-label">Last Sync</span>
+          </div>
+        </div>
+      </app-card>
+    </div>
+
+    <!-- Error Alert -->
+    @if (aff.lastError) {
+      <div class="error-alert">
+        <span class="material-symbols-outlined">error</span>
+        <div class="error-content">
+          <strong>Integration Error</strong>
+          <p>{{ aff.lastError }}</p>
+        </div>
+        <app-button variant="outline" size="sm" icon="refresh">
+          Retry Connection
+        </app-button>
+      </div>
+    }
+
+    <div class="detail-grid">
+      <!-- Integration Details -->
+      <app-card class="detail-section">
+        <h2 class="section-title">Integration Details</h2>
+        
+        <div class="detail-list">
+          <div class="detail-item">
+            <span class="detail-label">Integration Type</span>
+            <span class="detail-value">{{ aff.integrationType }}</span>
+          </div>
+          
+          @if (aff.apiUrl) {
+            <div class="detail-item">
+              <span class="detail-label">API URL</span>
+              <span class="detail-value mono">{{ aff.apiUrl }}</span>
+            </div>
+          }
+          
+          @if (aff.email) {
+            <div class="detail-item">
+              <span class="detail-label">Email</span>
+              <span class="detail-value">{{ aff.email }}</span>
+            </div>
+          }
+          
+          @if (aff.ftpHost) {
+            <div class="detail-item">
+              <span class="detail-label">FTP Host</span>
+              <span class="detail-value mono">{{ aff.ftpHost }}</span>
+            </div>
+          }
+          
+          <div class="detail-item">
+            <span class="detail-label">Priority</span>
+            <span class="detail-value">{{ aff.priority || 1 }}</span>
+          </div>
+          
+          <div class="detail-item">
+            <span class="detail-label">Auto-Reorder</span>
+            <span class="detail-value">{{ aff.autoReorder ? 'Enabled' : 'Disabled' }}</span>
+          </div>
+          
+          <div class="detail-item">
+            <span class="detail-label">Low Stock Threshold</span>
+            <span class="detail-value">{{ aff.lowStockThreshold || 10 }} units</span>
+          </div>
+        </div>
+      </app-card>
+
+      <!-- Actions -->
+      <app-card class="detail-section actions-section">
+        <h2 class="section-title">Actions</h2>
+        
+        <div class="action-list">
+          <button class="action-item" (click)="syncNow()">
+            <span class="material-symbols-outlined">sync</span>
+            <div class="action-info">
+              <strong>Sync Inventory</strong>
+              <span>Fetch latest stock levels</span>
+            </div>
+            <span class="material-symbols-outlined action-arrow">chevron_right</span>
+          </button>
+          
+          <button class="action-item">
+            <span class="material-symbols-outlined">history</span>
+            <div class="action-info">
+              <strong>View Order History</strong>
+              <span>See all orders from this supplier</span>
+            </div>
+            <span class="material-symbols-outlined action-arrow">chevron_right</span>
+          </button>
+          
+          <button class="action-item" (click)="toggleAffiliate()">
+            <span class="material-symbols-outlined">{{ aff.isEnabled ? 'pause_circle' : 'play_circle' }}</span>
+            <div class="action-info">
+              <strong>{{ aff.isEnabled ? 'Disable' : 'Enable' }} Affiliate</strong>
+              <span>{{ aff.isEnabled ? 'Pause order processing' : 'Resume order processing' }}</span>
+            </div>
+            <span class="material-symbols-outlined action-arrow">chevron_right</span>
+          </button>
+          
+          <button class="action-item danger" (click)="deleteAffiliate()">
+            <span class="material-symbols-outlined">delete</span>
+            <div class="action-info">
+              <strong>Delete Affiliate</strong>
+              <span>Permanently remove this supplier</span>
+            </div>
+            <span class="material-symbols-outlined action-arrow">chevron_right</span>
+          </button>
+        </div>
+      </app-card>
+    </div>
+
+    <!-- Product Mappings -->
+    <app-card class="mappings-section">
+      <div class="mappings-header">
+        <h2 class="section-title">Product Mappings</h2>
+        <app-button variant="outline" size="sm" icon="add">
+          Add Mapping
+        </app-button>
+      </div>
+      
+      @if (productMappings().length === 0) {
+        <div class="empty-state">
+          <span class="material-symbols-outlined">link_off</span>
+          <p>No product mappings configured</p>
+          <app-button variant="primary" size="sm">
+            Map Products
+          </app-button>
+        </div>
+      } @else {
+        <div class="mappings-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Affiliate SKU</th>
+                <th>Price Modifier</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (mapping of productMappings(); track trackByMapping($index, mapping)) {
+                <tr>
+                  <td>
+                    <div class="product-cell">
+                      <span class="product-name">{{ mapping.productName }}</span>
+                      <span class="product-sku">{{ mapping.productSku }}</span>
+                    </div>
+                  </td>
+                  <td class="mono">{{ mapping.affiliateSku }}</td>
+                  <td>{{ mapping.priceMultiplier ? (mapping.priceMultiplier * 100) + '%' : '100%' }}</td>
+                  <td>
+                    <app-badge [variant]="mapping.isActive ? 'success' : 'neutral'" size="sm">
+                      {{ mapping.isActive ? 'Active' : 'Inactive' }}
+                    </app-badge>
+                  </td>
+                  <td>
+                    <button class="table-action">
+                      <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </app-card>
+    }
+  }
+</div>
+

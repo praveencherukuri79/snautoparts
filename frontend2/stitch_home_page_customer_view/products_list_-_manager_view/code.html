@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Product Management - SN Auto Parts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for table if needed */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d4d4d4;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a3a3a3;
+        }
+        /* Toggle Switch */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #f97415;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #f97415;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#181411] dark:text-gray-100 overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 flex flex-col bg-white dark:bg-[#1e140d] border-r border-[#e6dfdb] dark:border-[#3a261a]">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 shrink-0 shadow-sm" data-alt="Abstract orange geometric logo for SN Auto Parts" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBBEtKuRKGMP_g3tksDkCtMuOiRo7TykhVO9Lqfd-uatkxS7v4jvRcWyTjZMmfemF0CB2M5HIcXb1Bj8-dg2XCl4mG_fprVyxbIQjIbkjgwky7ebK9bpD9dGtCk7BnQlUivAK0nniLgl5ohel-ejF-4dU_Z62xCxUWEvhT8_UG-ApjuotSLormJY9PJYdASvlzm_8LDgd7wuwKtQfnaDtvBnfyUig760weIuK4TPDj_JA2oQMfjbBTNsd7awBBKxK45GjA8P2-v8eGr");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#181411] dark:text-white text-base font-bold leading-tight">SN Auto Parts</h1>
+<p class="text-[#8c725f] dark:text-gray-400 text-xs font-medium">Manager View</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto px-4 py-2 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5e5046] dark:text-gray-300 hover:bg-[#f5f2f0] dark:hover:bg-[#2c1f17] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-[#181411] dark:group-hover:text-white">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary" href="#">
+<span class="material-symbols-outlined text-[24px] font-variation-settings-'FILL'1">inventory_2</span>
+<span class="text-sm font-bold">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5e5046] dark:text-gray-300 hover:bg-[#f5f2f0] dark:hover:bg-[#2c1f17] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-[#181411] dark:group-hover:text-white">warehouse</span>
+<span class="text-sm font-medium">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5e5046] dark:text-gray-300 hover:bg-[#f5f2f0] dark:hover:bg-[#2c1f17] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-[#181411] dark:group-hover:text-white">shopping_cart</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5e5046] dark:text-gray-300 hover:bg-[#f5f2f0] dark:hover:bg-[#2c1f17] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-[#181411] dark:group-hover:text-white">group</span>
+<span class="text-sm font-medium">Customers</span>
+</a>
+<div class="h-px bg-[#e6dfdb] dark:bg-[#3a261a] my-2 mx-3"></div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5e5046] dark:text-gray-300 hover:bg-[#f5f2f0] dark:hover:bg-[#2c1f17] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:text-[#181411] dark:group-hover:text-white">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-[#e6dfdb] dark:border-[#3a261a]">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gray-200 bg-center bg-cover" data-alt="User avatar profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDE2MKQDl6rXu8eAaCMx4djv6lN6c1TlIiuXbu7bz-zZZ1ivP2I68ZFw39v0WWD2pC4ctLA2Vu1gyz4k_y4zwI03i7GgUVRp1OxNCQGKCWsvak8MPshGdO3YA7I7D9RTGLmQQoc0WaTQQrVgfRkGQUlp4C3yJnTUu_SkIBgg1lbHMeJmvoUyIlnaLOcolyjMpvTC3lOEEGagsePyODk2kr7BcEYJxepKjOUX3dpSxi3VhxuIEodxBBNIzF26QlPKp0-fMB0bFw_i-oq");'></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-[#181411] dark:text-white">Alex Morgan</p>
+<p class="text-xs text-[#8c725f] dark:text-gray-400">Inventory Mgr.</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Header Area -->
+<header class="bg-white dark:bg-[#1e140d] border-b border-[#e6dfdb] dark:border-[#3a261a] px-8 py-5 flex-shrink-0 z-20">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h1 class="text-2xl font-black tracking-tight text-[#181411] dark:text-white mb-1">Product Management</h1>
+<p class="text-[#8c725f] dark:text-gray-400 text-sm">Manage your product catalog, prices, and stock levels.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#e6dfdb] dark:border-[#3a261a] text-[#181411] dark:text-white bg-white dark:bg-[#2c1f17] hover:bg-gray-50 dark:hover:bg-[#36261d] text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[20px]">upload</span>
+                            Import
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#e6dfdb] dark:border-[#3a261a] text-[#181411] dark:text-white bg-white dark:bg-[#2c1f17] hover:bg-gray-50 dark:hover:bg-[#36261d] text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                            Export
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-[#e06611] text-white shadow-sm text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                            Add New Product
+                        </button>
+</div>
+</div>
+<!-- Filters & Tabs Container -->
+<div class="flex flex-col gap-4">
+<!-- Tabs -->
+<div class="flex gap-8 border-b border-[#e6dfdb] dark:border-[#3a261a]">
+<a class="pb-3 border-b-2 border-primary text-primary font-bold text-sm" href="#">All Products <span class="ml-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs">524</span></a>
+<a class="pb-3 border-b-2 border-transparent text-[#5e5046] dark:text-gray-400 hover:text-[#181411] dark:hover:text-gray-200 font-medium text-sm transition-colors" href="#">Active <span class="ml-1 px-2 py-0.5 rounded-full bg-gray-100 dark:bg-[#2c1f17] text-gray-600 dark:text-gray-400 text-xs">480</span></a>
+<a class="pb-3 border-b-2 border-transparent text-[#5e5046] dark:text-gray-400 hover:text-[#181411] dark:hover:text-gray-200 font-medium text-sm transition-colors" href="#">Draft <span class="ml-1 px-2 py-0.5 rounded-full bg-gray-100 dark:bg-[#2c1f17] text-gray-600 dark:text-gray-400 text-xs">24</span></a>
+<a class="pb-3 border-b-2 border-transparent text-[#5e5046] dark:text-gray-400 hover:text-[#181411] dark:hover:text-gray-200 font-medium text-sm transition-colors" href="#">Inactive <span class="ml-1 px-2 py-0.5 rounded-full bg-gray-100 dark:bg-[#2c1f17] text-gray-600 dark:text-gray-400 text-xs">20</span></a>
+</div>
+<!-- Search & Filters Toolbar -->
+<div class="flex flex-wrap items-center gap-4 pt-2">
+<div class="relative flex-1 min-w-[300px]">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[#e6dfdb] dark:border-[#3a261a] bg-white dark:bg-[#2c1f17] text-[#181411] dark:text-white placeholder-[#8c725f] dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-sm shadow-sm" placeholder="Search by Product Name, SKU, or Brand..." type="text"/>
+</div>
+<div class="flex gap-3">
+<select class="pl-3 pr-10 py-2.5 rounded-lg border border-[#e6dfdb] dark:border-[#3a261a] bg-white dark:bg-[#2c1f17] text-[#181411] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 cursor-pointer shadow-sm">
+<option>All Categories</option>
+<option>Braking Systems</option>
+<option>Engine Parts</option>
+<option>Suspension</option>
+<option>Electrical</option>
+</select>
+<select class="pl-3 pr-10 py-2.5 rounded-lg border border-[#e6dfdb] dark:border-[#3a261a] bg-white dark:bg-[#2c1f17] text-[#181411] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 cursor-pointer shadow-sm">
+<option>All Brands</option>
+<option>Bosch</option>
+<option>Denso</option>
+<option>Brembo</option>
+<option>NGK</option>
+</select>
+<select class="pl-3 pr-10 py-2.5 rounded-lg border border-[#e6dfdb] dark:border-[#3a261a] bg-white dark:bg-[#2c1f17] text-[#181411] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 cursor-pointer shadow-sm">
+<option>Availability</option>
+<option>In Stock</option>
+<option>Low Stock</option>
+<option>Out of Stock</option>
+</select>
+</div>
+</div>
+</div>
+</header>
+<!-- Bulk Actions Bar (Condition: Simulated for 2 items selected) -->
+<div class="bg-primary/5 dark:bg-primary/10 border-b border-primary/20 px-8 py-2 flex items-center justify-between animate-in fade-in slide-in-from-top-2">
+<div class="flex items-center gap-2">
+<div class="bg-primary text-white text-xs font-bold px-2 py-0.5 rounded">2</div>
+<span class="text-sm font-medium text-primary">products selected</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-xs font-medium text-[#181411] dark:text-white hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span> Activate
+                    </button>
+<button class="text-xs font-medium text-[#181411] dark:text-white hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">cancel</span> Deactivate
+                    </button>
+<button class="text-xs font-medium text-red-600 hover:text-red-700 transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">delete</span> Delete
+                    </button>
+<button class="text-xs font-medium text-[#181411] dark:text-white hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">ios_share</span> Export
+                    </button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="flex-1 overflow-auto custom-scrollbar px-8 py-4 bg-background-light dark:bg-background-dark">
+<div class="bg-white dark:bg-[#1e140d] rounded-xl shadow border border-[#e6dfdb] dark:border-[#3a261a] overflow-hidden min-w-[1000px]">
+<table class="w-full text-left border-collapse">
+<thead class="bg-[#f8f7f5] dark:bg-[#2c1f17] sticky top-0 z-10 text-xs uppercase text-[#8c725f] dark:text-gray-400 font-semibold tracking-wider">
+<tr>
+<th class="p-4 w-12 border-b border-[#e6dfdb] dark:border-[#3a261a]">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4 bg-white dark:bg-[#2c1f17]" type="checkbox"/>
+</th>
+<th class="p-4 border-b border-[#e6dfdb] dark:border-[#3a261a]">Product</th>
+<th class="p-4 border-b border-[#e6dfdb] dark:border-[#3a261a]">SKU</th>
+<th class="p-4 border-b border-[#e6dfdb] dark:border-[#3a261a]">Category</th>
+<th class="p-4 border-b border-[#e6dfdb] dark:border-[#3a261a]">Brand</th>
+<th class="p-4 border-b border-[#e6dfdb] dark:border-[#3a261a]">Price</th>
+<th class="p-4 border-b border-[#e6dfdb] dark:border-[#3a261a]">Stock</th>
+<th class="p-4 border-b border-[#e6dfdb] dark:border-[#3a261a]">Status</th>
+<th class="p-4 border-b border-[#e6dfdb] dark:border-[#3a261a]">Updated</th>
+<th class="p-4 border-b border-[#e6dfdb] dark:border-[#3a261a] text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-[#e6dfdb] dark:divide-[#3a261a] text-[#181411] dark:text-gray-200">
+<!-- Row 1: Selected, Active -->
+<tr class="hover:bg-primary/5 group bg-primary/[0.03]">
+<td class="p-4">
+<input checked="" class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4 bg-white dark:bg-[#2c1f17]" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-gray-100 bg-center bg-cover border border-gray-200" data-alt="Silver brake disc rotor on white background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCz94g9S6qL83uXpCw7f0EJUuwjG9u6RqIQQVGCI27XCeZeG4880HSXqdSC89RZHj3eyW9CvjTDdb-i7DLTW49KpFH5BpPrQeSaLLh-UJD4figmdqLFKYnWfOPTZIsajeZVMnFxScCJKFsLKq6WGqYOMnrtEPRH9Ax8p3nN6Tg5D1bVp1eikoBW0iZlV9qJSiMa0bEZ-EVPTDOocG5646RLGf9y_YGST1A-GtOuKIbJj3d6JwVW7cciV_ikbuBLgyVuT5WJU6xXX-k3");'></div>
+<input class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 w-full max-w-[220px] focus:ring-0 font-medium text-[#181411] dark:text-white transition-all" type="text" value="Premium Ceramic Brake Pads - Front"/>
+</div>
+</td>
+<td class="p-4 text-[#5e5046] dark:text-gray-400">BP-9200-F</td>
+<td class="p-4">
+<select class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 focus:ring-0 text-[#181411] dark:text-white cursor-pointer w-full max-w-[140px] text-sm appearance-none">
+<option selected="">Braking Systems</option>
+<option>Engine Parts</option>
+</select>
+</td>
+<td class="p-4">
+<select class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 focus:ring-0 text-[#181411] dark:text-white cursor-pointer w-full max-w-[100px] text-sm appearance-none">
+<option selected="">Bosch</option>
+<option>Denso</option>
+</select>
+</td>
+<td class="p-4">
+<div class="relative">
+<span class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-xs">$</span>
+<input class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded pl-4 pr-1 py-1 w-24 focus:ring-0 text-[#181411] dark:text-white text-right font-medium" type="number" value="45.99"/>
+</div>
+</td>
+<td class="p-4">
+<input class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 w-20 focus:ring-0 text-[#181411] dark:text-white text-right" type="number" value="124"/>
+</td>
+<td class="p-4">
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer checked:border-primary transition-all duration-300" id="toggle1" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-primary cursor-pointer transition-colors duration-300" for="toggle1"></label>
+</div>
+</td>
+<td class="p-4 text-xs text-[#8c725f] dark:text-gray-400">2 mins ago</td>
+<td class="p-4 text-right">
+<div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-gray-400 hover:text-primary rounded hover:bg-orange-50 dark:hover:bg-primary/10" title="View Fitment">
+<span class="material-symbols-outlined text-[20px]">directions_car</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-blue-600 rounded hover:bg-blue-50 dark:hover:bg-blue-900/20" title="Edit Details">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-red-600 rounded hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Selected, Active -->
+<tr class="hover:bg-primary/5 group bg-primary/[0.03]">
+<td class="p-4">
+<input checked="" class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4 bg-white dark:bg-[#2c1f17]" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-gray-100 bg-center bg-cover border border-gray-200" data-alt="Car oil filter canister close up" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBnlwRyFidU63rrSOiCErXNUy-C5Dnjxu_AZDs7wjOr95NOXh5luvyOyGjKTHMJsGvAs-3QpxBhAOqymv5crMDgqvJIoH0LLwlAzD_daA_457PUa3naDCRFn0QvfDwR5jHFyGagXCGwxOyiT74eLkvgArJUSz5hPiC_dcX41P9XOQwnjZVAMkpGWRAizOyNcSi4prrkxHdkRVqigY6OV1GxR4PZBLBxyGI08nKra4aYi5OhmY-CkFnwzdrxE8qpze1ubsm5tJRbybAx");'></div>
+<input class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 w-full max-w-[220px] focus:ring-0 font-medium text-[#181411] dark:text-white transition-all" type="text" value="High Performance Oil Filter"/>
+</div>
+</td>
+<td class="p-4 text-[#5e5046] dark:text-gray-400">OF-8812-X</td>
+<td class="p-4">
+<select class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 focus:ring-0 text-[#181411] dark:text-white cursor-pointer w-full max-w-[140px] text-sm appearance-none">
+<option>Braking Systems</option>
+<option selected="">Engine Parts</option>
+</select>
+</td>
+<td class="p-4">
+<select class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 focus:ring-0 text-[#181411] dark:text-white cursor-pointer w-full max-w-[100px] text-sm appearance-none">
+<option>Bosch</option>
+<option selected="">Denso</option>
+</select>
+</td>
+<td class="p-4">
+<div class="relative">
+<span class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-xs">$</span>
+<input class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded pl-4 pr-1 py-1 w-24 focus:ring-0 text-[#181411] dark:text-white text-right font-medium" type="number" value="12.50"/>
+</div>
+</td>
+<td class="p-4">
+<input class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 w-20 focus:ring-0 text-[#181411] dark:text-white text-right" type="number" value="560"/>
+</td>
+<td class="p-4">
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer checked:border-primary transition-all duration-300" id="toggle2" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-primary cursor-pointer transition-colors duration-300" for="toggle2"></label>
+</div>
+</td>
+<td class="p-4 text-xs text-[#8c725f] dark:text-gray-400">1 hour ago</td>
+<td class="p-4 text-right">
+<div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-gray-400 hover:text-primary rounded hover:bg-orange-50 dark:hover:bg-primary/10" title="View Fitment">
+<span class="material-symbols-outlined text-[20px]">directions_car</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-blue-600 rounded hover:bg-blue-50 dark:hover:bg-blue-900/20" title="Edit Details">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-red-600 rounded hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Inactive -->
+<tr class="hover:bg-gray-50 dark:hover:bg-[#2c1f17] group">
+<td class="p-4">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4 bg-white dark:bg-[#2c1f17]" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-gray-100 bg-center bg-cover border border-gray-200 opacity-60" data-alt="Spark plug isolated on white" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCaTcxyahIHZmJLuf7r6dd5g3O78kT9jNlgbTOimnhKfoMHd3F9tXctD1_8NAFVyydDQQbzvs1KBzYuoVy0ofwoLy2ZIGk2q9snQPkzhXsAGDPzEfSEWDXVlHBP6_MTxiRo--ouBW2416Wpg56i_s9SVUBYbgjCfCuisZLVBG9TgMLE36W6eG0eGirmID5F1NDIwJTitoAG6WvUqWwr1IZAOYHrLyUbidya-w1zf2Qsy5vtS0076rqILBdFIkDWokhs4kFKW6-Pk7fA");'></div>
+<input class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 w-full max-w-[220px] focus:ring-0 font-medium text-[#181411] dark:text-white transition-all text-gray-500" type="text" value="Iridium Spark Plug Set"/>
+</div>
+</td>
+<td class="p-4 text-[#5e5046] dark:text-gray-400">SP-IR-440</td>
+<td class="p-4">
+<select class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 focus:ring-0 text-[#181411] dark:text-white cursor-pointer w-full max-w-[140px] text-sm appearance-none">
+<option>Braking Systems</option>
+<option>Engine Parts</option>
+<option selected="">Ignition</option>
+</select>
+</td>
+<td class="p-4">
+<select class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 focus:ring-0 text-[#181411] dark:text-white cursor-pointer w-full max-w-[100px] text-sm appearance-none">
+<option>Bosch</option>
+<option selected="">NGK</option>
+</select>
+</td>
+<td class="p-4">
+<div class="relative">
+<span class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-xs">$</span>
+<input class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded pl-4 pr-1 py-1 w-24 focus:ring-0 text-[#181411] dark:text-white text-right font-medium" type="number" value="32.99"/>
+</div>
+</td>
+<td class="p-4">
+<input class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 w-20 focus:ring-0 text-red-500 dark:text-red-400 font-bold text-right" type="number" value="0"/>
+</td>
+<td class="p-4">
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-gray-300 appearance-none cursor-pointer checked:border-primary transition-all duration-300" id="toggle3" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer transition-colors duration-300" for="toggle3"></label>
+</div>
+</td>
+<td class="p-4 text-xs text-[#8c725f] dark:text-gray-400">Yesterday</td>
+<td class="p-4 text-right">
+<div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-gray-400 hover:text-primary rounded hover:bg-orange-50 dark:hover:bg-primary/10" title="View Fitment">
+<span class="material-symbols-outlined text-[20px]">directions_car</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-blue-600 rounded hover:bg-blue-50 dark:hover:bg-blue-900/20" title="Edit Details">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-red-600 rounded hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-[#2c1f17] group">
+<td class="p-4">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4 bg-white dark:bg-[#2c1f17]" type="checkbox"/>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-gray-100 bg-center bg-cover border border-gray-200" data-alt="Close up of a car suspension shock absorber" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBqa0RLymZF7fEGTe87DvTuiS_hBgEEqs8m1TpXkfH6myI3dOal6B6fwMjXFLy6cwPF6abT__MExW2ub1uHg94VHjxz5jGILUia0Wkhtj86FRfXf1r5atEOhXmLLwO0Q6sQuzbf1t1lTExctGSBVjJg18pXCJp2_GbqQwoHKRgDJbt26gnOOr4e0FT9o-6MjScL5DOwFbJGIp0aiD7oFPjE1RmLXVFHTXnKKEQnDpOdU3Q3OsbZWofUS16hz7C05aL4T92Nk3RT8R4D");'></div>
+<input class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 w-full max-w-[220px] focus:ring-0 font-medium text-[#181411] dark:text-white transition-all" type="text" value="Rear Shock Absorber"/>
+</div>
+</td>
+<td class="p-4 text-[#5e5046] dark:text-gray-400">SA-RR-101</td>
+<td class="p-4">
+<select class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 focus:ring-0 text-[#181411] dark:text-white cursor-pointer w-full max-w-[140px] text-sm appearance-none">
+<option selected="">Suspension</option>
+<option>Engine Parts</option>
+</select>
+</td>
+<td class="p-4">
+<select class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 focus:ring-0 text-[#181411] dark:text-white cursor-pointer w-full max-w-[100px] text-sm appearance-none">
+<option selected="">Monroe</option>
+<option>KYB</option>
+</select>
+</td>
+<td class="p-4">
+<div class="relative">
+<span class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-xs">$</span>
+<input class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded pl-4 pr-1 py-1 w-24 focus:ring-0 text-[#181411] dark:text-white text-right font-medium" type="number" value="89.00"/>
+</div>
+</td>
+<td class="p-4">
+<input class="bg-transparent border border-transparent hover:border-gray-300 focus:border-primary rounded px-2 py-1 w-20 focus:ring-0 text-orange-500 font-medium text-right" type="number" value="18"/>
+</td>
+<td class="p-4">
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer checked:border-primary transition-all duration-300" id="toggle4" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-primary cursor-pointer transition-colors duration-300" for="toggle4"></label>
+</div>
+</td>
+<td class="p-4 text-xs text-[#8c725f] dark:text-gray-400">3 days ago</td>
+<td class="p-4 text-right">
+<div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-gray-400 hover:text-primary rounded hover:bg-orange-50 dark:hover:bg-primary/10" title="View Fitment">
+<span class="material-symbols-outlined text-[20px]">directions_car</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-blue-600 rounded hover:bg-blue-50 dark:hover:bg-blue-900/20" title="Edit Details">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-red-600 rounded hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex justify-between items-center mt-6 mb-10 px-1">
+<p class="text-sm text-[#5e5046] dark:text-gray-400">
+                        Showing <span class="font-medium text-[#181411] dark:text-white">1</span> to <span class="font-medium text-[#181411] dark:text-white">20</span> of <span class="font-medium text-[#181411] dark:text-white">524</span> products
+                    </p>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg border border-[#e6dfdb] dark:border-[#3a261a] bg-white dark:bg-[#2c1f17] text-[#5e5046] dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-[#36261d] disabled:opacity-50">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="px-4 py-2 rounded-lg border border-primary bg-primary text-white text-sm font-medium">1</button>
+<button class="px-4 py-2 rounded-lg border border-[#e6dfdb] dark:border-[#3a261a] bg-white dark:bg-[#2c1f17] text-[#5e5046] dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-[#36261d] text-sm font-medium">2</button>
+<button class="px-4 py-2 rounded-lg border border-[#e6dfdb] dark:border-[#3a261a] bg-white dark:bg-[#2c1f17] text-[#5e5046] dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-[#36261d] text-sm font-medium">3</button>
+<span class="text-[#5e5046] dark:text-gray-400 px-2">...</span>
+<button class="px-4 py-2 rounded-lg border border-[#e6dfdb] dark:border-[#3a261a] bg-white dark:bg-[#2c1f17] text-[#5e5046] dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-[#36261d] text-sm font-medium">26</button>
+<button class="p-2 rounded-lg border border-[#e6dfdb] dark:border-[#3a261a] bg-white dark:bg-[#2c1f17] text-[#5e5046] dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-[#36261d]">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login - SN Auto Parts</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                        "surface-dark": "#181411", // Matching the example background
+                        "input-dark": "#27201b",   // Matching the example input bg
+                        "border-dark": "#55453a",  // Matching the example border
+                        "text-muted": "#bba89b",   // Matching the example muted text
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for a more polished look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #181411; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3a2f27; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #55453a; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-surface-dark font-display text-slate-900 dark:text-white min-h-screen flex flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#3a2f27] px-6 lg:px-10 py-4 bg-surface-dark sticky top-0 z-50">
+<div class="flex items-center gap-4 text-white cursor-pointer hover:opacity-80 transition-opacity">
+<div class="size-8 text-primary">
+<!-- Logo Icon -->
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_319)">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</g>
+<defs>
+<clippath id="clip0_6_319"><rect fill="white" height="48" width="48"></rect></clippath>
+</defs>
+</svg>
+</div>
+<h2 class="text-white text-xl font-bold leading-tight tracking-[-0.015em]">SN Auto Parts</h2>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/50 text-sm font-bold leading-normal tracking-[0.015em] transition-colors">
+<span class="mr-2 material-symbols-outlined text-[20px]">arrow_back</span>
+<span class="truncate">Return to Shop</span>
+</button>
+</header>
+<!-- Main Content Area: Split View -->
+<main class="flex flex-1 relative">
+<!-- Left Side: Hero Image (Hidden on small screens) -->
+<div class="hidden lg:flex w-1/2 relative overflow-hidden bg-background-dark">
+<div class="absolute inset-0 z-0">
+<img alt="Abstract close up of a car engine in dark lighting" class="w-full h-full object-cover opacity-60 mix-blend-overlay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRRUwH4iNejrBNLMKvJyEtHHmDNkCCA5sAppVTbeKNd5qvzcxdsYUslSpq5CCARHeBNH_WEt75BCDVrwIND2CwabOsW2UoMir9RxFNjDlfI2RC8dMRJzj70du5terG6K4tnVekP0UVL3C6FqiG4F7xGBzpZLSVMyudYK3WhpyjPAdnDHAC9obIXMXBuX-icJ1dT5wR1GPwLz1Ash8Y3KsrTcdoBRjxjO1yV_aqTF-vb2PobGqMvm8YRvBMkZYV8w5UjAPh_UqZ-1Cm"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dark via-transparent to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-dark/50 via-transparent to-transparent"></div>
+</div>
+<div class="relative z-10 flex flex-col justify-end p-16 w-full text-white">
+<h1 class="text-5xl font-black mb-4 leading-tight tracking-tighter">Performance <br/>starts here.</h1>
+<p class="text-text-muted text-lg max-w-md">Join over 50,000 gearheads who trust SN Auto Parts for their restoration and performance needs.</p>
+<div class="flex gap-4 mt-8">
+<div class="flex items-center gap-2 text-sm font-medium text-text-muted">
+<span class="material-symbols-outlined text-primary">verified</span>
+                        Quality Guaranteed
+                    </div>
+<div class="flex items-center gap-2 text-sm font-medium text-text-muted">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+                        Fast Shipping
+                    </div>
+</div>
+</div>
+</div>
+<!-- Right Side: Login Form -->
+<div class="w-full lg:w-1/2 flex items-center justify-center p-6 bg-surface-dark">
+<div class="w-full max-w-[480px] flex flex-col">
+<!-- Heading -->
+<div class="flex flex-col gap-2 mb-8">
+<p class="text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Welcome Back, Gearhead</p>
+<p class="text-text-muted text-base font-normal leading-normal">Access your order history and saved garage.</p>
+</div>
+<!-- Form -->
+<form class="flex flex-col gap-5">
+<!-- Email Field -->
+<label class="flex flex-col flex-1">
+<p class="text-white text-base font-medium leading-normal pb-2">Email Address</p>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-border-dark bg-input-dark focus:border-primary h-14 placeholder:text-text-muted/50 p-[15px] pl-[15px] text-base font-normal leading-normal transition-all" placeholder="name@example.com" type="email" value=""/>
+</div>
+</label>
+<!-- Password Field -->
+<label class="flex flex-col flex-1">
+<div class="flex justify-between items-center pb-2">
+<p class="text-white text-base font-medium leading-normal">Password</p>
+</div>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-border-dark bg-input-dark focus:border-primary h-14 placeholder:text-text-muted/50 p-[15px] text-base font-normal leading-normal transition-all" placeholder="Enter your password" type="password" value=""/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-white transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+</div>
+</label>
+<!-- Forgot Password Link -->
+<div class="flex justify-end -mt-2">
+<a class="text-primary text-sm font-medium leading-normal hover:underline decoration-primary/50 underline-offset-4" href="#">Forgot Password?</a>
+</div>
+<!-- Login Button -->
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-primary hover:bg-[#d66312] text-white text-base font-bold leading-normal tracking-[0.015em] transition-colors shadow-lg shadow-primary/20 mt-2">
+<span class="mr-2 material-symbols-outlined">lock</span>
+<span>Secure Login</span>
+</button>
+<!-- Divider -->
+<div class="relative flex py-2 items-center">
+<div class="flex-grow border-t border-border-dark"></div>
+<span class="flex-shrink mx-4 text-text-muted text-sm">Or continue with</span>
+<div class="flex-grow border-t border-border-dark"></div>
+</div>
+<!-- Social Login -->
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 h-12 rounded-lg border border-border-dark bg-input-dark hover:bg-border-dark/50 text-white font-medium transition-all group" type="button">
+<svg class="w-5 h-5" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M23.766 12.2764C23.766 11.4607 23.6999 10.6406 23.5588 9.83807H12.24V14.4591H18.7217C18.4528 15.9494 17.5885 17.2678 16.323 18.1056V21.1039H20.19C22.4608 19.0139 23.766 15.9274 23.766 12.2764Z" fill="#4285F4"></path>
+<path d="M12.24 24.0008C15.4765 24.0008 18.2059 22.9382 20.19 21.1039L16.323 18.1056C15.2517 18.8375 13.8627 19.252 12.24 19.252C9.11388 19.252 6.45946 17.1399 5.50705 14.2796H1.5166V17.3744C3.55371 21.4434 7.7029 24.0008 12.24 24.0008Z" fill="#34A853"></path>
+<path d="M5.50705 14.2796C5.00016 12.7805 5.00016 11.2195 5.50705 9.72036V6.62549H1.5166C-0.185548 10.0356 -0.185548 13.9644 1.5166 17.3744L5.50705 14.2796Z" fill="#FBBC05"></path>
+<path d="M12.24 4.74966C13.9509 4.7232 15.6044 5.36697 16.8434 6.54867L20.2695 3.12262C18.1001 1.0855 15.2208 -0.034466 12.24 0.000808666C7.7029 0.000808666 3.55371 2.55822 1.5166 6.62549L5.50705 9.72036C6.45332 6.86603 9.10452 4.74966 12.24 4.74966Z" fill="#EA4335"></path>
+</svg>
+<span>Google</span>
+</button>
+<button class="flex items-center justify-center gap-2 h-12 rounded-lg border border-border-dark bg-input-dark hover:bg-border-dark/50 text-white font-medium transition-all group" type="button">
+<svg class="w-5 h-5 text-[#1877F2]" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+</svg>
+<span>Facebook</span>
+</button>
+</div>
+</form>
+<!-- Footer Links -->
+<div class="mt-8 text-center">
+<p class="text-text-muted text-sm">
+                        Don't have an account? 
+                        <a class="text-primary font-semibold hover:text-white transition-colors ml-1" href="#">Sign up for free</a>
+</p>
+</div>
+<div class="mt-12 flex justify-center gap-6 text-xs text-text-muted/50">
+<a class="hover:text-text-muted transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-text-muted transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,124 @@
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <div class="hero__text">
+      <h1 class="hero__title">
+        Quality Auto Parts<br />
+        <span class="hero__title-accent">You Can Trust</span>
+      </h1>
+      <p class="hero__subtitle">
+        Find the perfect parts for your vehicle with our extensive catalog. 
+        Guaranteed fitment, fast shipping, and expert support.
+      </p>
+      <div class="hero__actions">
+        <app-button variant="primary" size="lg" routerLink="/products">
+          Shop Now
+        </app-button>
+        <app-button variant="outline" size="lg" routerLink="/deals">
+          View Deals
+        </app-button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Vehicle Fitment Selector -->
+<section class="fitment-selector">
+  <div class="fitment-selector__container">
+    <h2 class="fitment-selector__title">Select your vehicle for guaranteed fitment</h2>
+    <div class="fitment-selector__form">
+      <div class="fitment-selector__fields">
+        <app-select
+          label="Year"
+          placeholder="Select Year"
+          [options]="years()"
+          (selectionChange)="onYearChange($event)"
+        ></app-select>
+        <app-select
+          label="Make"
+          placeholder="Select Make"
+          [options]="makes()"
+          [disabled]="!selectedYear()"
+          (selectionChange)="onMakeChange($event)"
+        ></app-select>
+        <app-select
+          label="Model"
+          placeholder="Select Model"
+          [options]="models()"
+          [disabled]="!selectedMake()"
+          (selectionChange)="onModelChange($event)"
+        ></app-select>
+      </div>
+      <app-button
+        variant="primary"
+        size="lg"
+        [disabled]="!selectedModel()"
+        [routerLink]="['/products']"
+        [queryParams]="{year: selectedYear(), make: selectedMake(), model: selectedModel()}"
+      >
+        Find Parts
+      </app-button>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Grid -->
+<section class="categories">
+  <div class="categories__container">
+    <div class="categories__header">
+      <h2 class="categories__title">Shop by Category</h2>
+      <a routerLink="/categories" class="categories__link">
+        View all categories
+        <span class="material-symbols-outlined">arrow_forward</span>
+      </a>
+    </div>
+    <div class="categories__grid">
+      @for (category of categories().slice(0, 6); track trackByCategory($index, category)) {
+        <a [routerLink]="['/categories', category.slug]" class="category-card">
+          <div class="category-card__icon">
+            <span class="material-symbols-outlined">{{ getCategoryIcon(category.name) }}</span>
+          </div>
+          <h3 class="category-card__name">{{ category.name }}</h3>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products -->
+<section class="featured-products">
+  <div class="featured-products__container">
+    <h2 class="featured-products__title">Featured Products</h2>
+    <div class="featured-products__grid">
+      @for (product of featuredProducts(); track trackByProduct($index, product)) {
+        <app-product-card
+          [product]="product"
+          (addToCart)="addToCart($event)"
+        ></app-product-card>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter">
+  <div class="newsletter__container">
+    <div class="newsletter__content">
+      <h2 class="newsletter__title">Join the SN Auto Club</h2>
+      <p class="newsletter__subtitle">
+        Sign up for our newsletter to receive exclusive deals, maintenance tips, and 15% off your first order.
+      </p>
+    </div>
+    <form class="newsletter__form">
+      <input
+        type="email"
+        class="newsletter__input"
+        placeholder="Enter your email"
+        required
+      />
+      <app-button variant="secondary" type="submit">Subscribe</app-button>
+    </form>
+  </div>
+</section>
+

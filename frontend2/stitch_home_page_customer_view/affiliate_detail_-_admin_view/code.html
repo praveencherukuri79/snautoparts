@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Affiliate Detail - SN Auto Parts</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f", // Dark theme background
+                        "surface-dark": "#2f221a", // Slightly lighter dark background for cards
+                        "border-dark": "#4a3b32", // Border color for dark theme
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display antialiased selection:bg-primary/30">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="hidden md:flex flex-col w-64 border-r border-[#e5e7eb] dark:border-[#3a2f27] bg-white dark:bg-[#181411] h-full flex-shrink-0">
+<div class="p-6 flex flex-col h-full justify-between">
+<div class="flex flex-col gap-8">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 shrink-0 shadow-sm relative" data-alt="SN Auto Parts logo placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCJjfFVrEqsfX3Fq3swrRVGtlxTgQ6AA84kbxrVS12n00Xd55Rhn2-_jE75PBeiEQcdi-uIvTS4CvvMF6LcX4lb9aYc-GRybL0g1IBoTS-4PIQcA8RsPoKZOq6IxpGn8Y0g-GBJTo8MNUnH1x_JmQWdR3geBBFCHqp_0-4x0MeMOpy4JvQIj9rUWOi2-miYa1aHPzsMr4Hjta8cycgMaJfRzDWOH0b5J8qRkaFdCSFeeccM9yJMeezs6vbGrd0IhURoU11AVp3rmZfJ");'>
+<div class="absolute inset-0 rounded-full border border-white/10"></div>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-none">SN Auto Parts</h1>
+<p class="text-slate-500 dark:text-[#bba89b] text-xs font-normal mt-1">Admin Panel</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#9ca3af] hover:bg-slate-100 dark:hover:bg-[#3a2f27] hover:text-slate-900 dark:hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary dark:text-[#9ca3af] dark:group-hover:text-white" style="font-size: 20px;">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 dark:bg-[#3a2f27] text-primary dark:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-primary dark:text-white" style="font-size: 20px; font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-sm font-medium">Affiliates</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#9ca3af] hover:bg-slate-100 dark:hover:bg-[#3a2f27] hover:text-slate-900 dark:hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary dark:text-[#9ca3af] dark:group-hover:text-white" style="font-size: 20px;">inventory_2</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#9ca3af] hover:bg-slate-100 dark:hover:bg-[#3a2f27] hover:text-slate-900 dark:hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary dark:text-[#9ca3af] dark:group-hover:text-white" style="font-size: 20px;">shopping_bag</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-[#9ca3af] hover:bg-slate-100 dark:hover:bg-[#3a2f27] hover:text-slate-900 dark:hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary dark:text-[#9ca3af] dark:group-hover:text-white" style="font-size: 20px;">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<div class="flex items-center gap-3 px-3 py-3 rounded-lg border border-slate-200 dark:border-[#3a2f27]">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-8 w-8" data-alt="User avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCePj-6F9WUAQuaps2m6DKtMoZAj4GzYlSVCjCJnRkx-UREDSpv4NPsFY4SiLlflS_cJPY0hG1-BMUUTvTa8HPMPosHa6zaO8QIGRuiNLiZ4eFuVBkjFCaMgvR9eiAfSFzgkzSPFb23b6tCRypaz9yTLoLAsL18ITnQacFsUCZmQF6IhjYfKv-b1eG5FNwXw0QQIoosZPtg1B66X79Q0rFOMMOv5PDeb0mwasoAcSXjxtdcozXx0MR71LcB0xjIpMgVt4pbW-wMPZx-");'></div>
+<div class="flex flex-col overflow-hidden">
+<span class="text-slate-900 dark:text-white text-sm font-medium truncate">Admin User</span>
+<span class="text-slate-500 dark:text-[#9ca3af] text-xs truncate">admin@snautoparts.com</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header & Breadcrumbs -->
+<div class="sticky top-0 z-20 w-full border-b border-slate-200 dark:border-[#3a2f27] bg-white/80 dark:bg-[#181411]/90 backdrop-blur-md">
+<div class="max-w-[1200px] mx-auto w-full px-6 py-4">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 mb-4 text-sm">
+<a class="text-slate-500 hover:text-slate-900 dark:text-[#bba89b] dark:hover:text-white transition-colors font-medium" href="#">Affiliates</a>
+<span class="text-slate-300 dark:text-[#4a3b32] material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-semibold">Bosch Automotive</span>
+</div>
+<!-- Page Title & Main Actions -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<h1 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Bosch Automotive</h1>
+<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30">Active</span>
+</div>
+<p class="text-slate-500 dark:text-[#9ca3af] text-sm">Manage API configuration and product mappings for this supplier.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-[#4a3b32] bg-slate-50 dark:bg-[#23170f]">
+<span class="text-xs font-medium text-slate-500 dark:text-[#9ca3af]">Status:</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/50 dark:peer-focus:ring-primary/80 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#2f221a] hover:bg-slate-50 dark:hover:bg-[#3a2f27] text-slate-700 dark:text-white border border-slate-200 dark:border-[#4a3b32] rounded-lg text-sm font-semibold transition-all shadow-sm">
+<span class="material-symbols-outlined text-[20px] text-primary">wifi</span>
+                                Test Connection
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto w-full p-6">
+<div class="max-w-[1200px] mx-auto flex flex-col gap-6 pb-24">
+<!-- General Settings -->
+<section class="rounded-xl border border-slate-200 dark:border-[#3a2f27] bg-white dark:bg-[#181411] shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-[#3a2f27] flex items-center justify-between bg-slate-50/50 dark:bg-[#1f1915]">
+<h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+                                General Settings
+                            </h3>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Integration Type -->
+<div class="flex flex-col gap-1.5 md:col-span-2">
+<label class="text-sm font-medium text-slate-700 dark:text-[#bba89b]">Integration Type</label>
+<div class="relative">
+<input class="w-full bg-slate-100 dark:bg-[#23170f] text-slate-500 dark:text-[#7d6c5e] border border-slate-200 dark:border-[#3a2f27] rounded-lg px-3 py-2 text-sm font-medium cursor-not-allowed" disabled="" type="text" value="REST API"/>
+<span class="absolute right-3 top-2.5 material-symbols-outlined text-slate-400 dark:text-[#55453a] text-[18px]">lock</span>
+</div>
+</div>
+<!-- API Base URL -->
+<div class="flex flex-col gap-1.5 md:col-span-2">
+<label class="text-sm font-medium text-slate-700 dark:text-[#bba89b]">API Base URL</label>
+<input class="w-full bg-white dark:bg-[#181411] text-slate-900 dark:text-white border border-slate-200 dark:border-[#4a3b32] focus:border-primary focus:ring-1 focus:ring-primary rounded-lg px-3 py-2 text-sm font-mono placeholder-slate-400 dark:placeholder-[#55453a]" type="text" value="https://api.bosch-automotive-supplier.com/v3"/>
+</div>
+<!-- API Key -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium text-slate-700 dark:text-[#bba89b]">API Key</label>
+<div class="relative group">
+<input class="w-full bg-white dark:bg-[#181411] text-slate-900 dark:text-white border border-slate-200 dark:border-[#4a3b32] focus:border-primary focus:ring-1 focus:ring-primary rounded-lg px-3 py-2 text-sm font-mono pr-10" type="password" value="sk_live_51Mv9..."/>
+<button class="absolute right-2 top-2 text-slate-400 hover:text-primary dark:text-[#55453a] dark:hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- API Secret -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium text-slate-700 dark:text-[#bba89b]">API Secret</label>
+<div class="relative group">
+<input class="w-full bg-white dark:bg-[#181411] text-slate-900 dark:text-white border border-slate-200 dark:border-[#4a3b32] focus:border-primary focus:ring-1 focus:ring-primary rounded-lg px-3 py-2 text-sm font-mono pr-10" type="password" value="sk_secret_..."/>
+<button class="absolute right-2 top-2 text-slate-400 hover:text-primary dark:text-[#55453a] dark:hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Timeout -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium text-slate-700 dark:text-[#bba89b]">Timeout (seconds)</label>
+<input class="w-full bg-white dark:bg-[#181411] text-slate-900 dark:text-white border border-slate-200 dark:border-[#4a3b32] focus:border-primary focus:ring-1 focus:ring-primary rounded-lg px-3 py-2 text-sm" type="number" value="30"/>
+</div>
+<!-- Webhook URL -->
+<div class="flex flex-col gap-1.5 md:col-span-2">
+<label class="text-sm font-medium text-slate-700 dark:text-[#bba89b]">Webhook URL <span class="text-xs font-normal text-slate-400 dark:text-[#55453a] ml-1">(For inbound updates)</span></label>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 dark:text-[#55453a] text-[20px] rotate-90">subdirectory_arrow_right</span>
+<input class="flex-1 bg-white dark:bg-[#181411] text-slate-900 dark:text-white border border-slate-200 dark:border-[#4a3b32] focus:border-primary focus:ring-1 focus:ring-primary rounded-lg px-3 py-2 text-sm font-mono" placeholder="https://snautoparts.com/webhooks/bosch/callback" type="text"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Product Mapping Settings -->
+<section class="rounded-xl border border-slate-200 dark:border-[#3a2f27] bg-white dark:bg-[#181411] shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-[#3a2f27] flex items-center justify-between bg-slate-50/50 dark:bg-[#1f1915]">
+<h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">category</span>
+                                Product Mapping Settings
+                            </h3>
+<button class="text-xs font-semibold text-primary hover:text-orange-400 flex items-center gap-1">
+                                Manage Product Mappings
+                                <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</button>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<div class="flex flex-col md:flex-row gap-6">
+<!-- Default Category Mapping -->
+<div class="flex flex-col gap-1.5 flex-1">
+<label class="text-sm font-medium text-slate-700 dark:text-[#bba89b]">Default Category Mapping</label>
+<div class="relative">
+<select class="w-full appearance-none bg-white dark:bg-[#181411] text-slate-900 dark:text-white border border-slate-200 dark:border-[#4a3b32] focus:border-primary focus:ring-1 focus:ring-primary rounded-lg px-3 py-2 text-sm pr-10">
+<option>Uncategorized Parts</option>
+<option>Engine Components</option>
+<option>Braking Systems</option>
+</select>
+<span class="absolute right-3 top-2.5 material-symbols-outlined text-slate-400 dark:text-[#55453a] text-[20px] pointer-events-none">expand_more</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-[#55453a]">Used when supplier category is unknown.</p>
+</div>
+<!-- Auto-Map Toggle -->
+<div class="flex flex-col gap-1.5 flex-1 justify-end pb-2">
+<div class="flex items-center justify-between p-3 rounded-lg border border-slate-200 dark:border-[#3a2f27] bg-slate-50 dark:bg-[#23170f]">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">Auto-Map New Products</span>
+<span class="text-xs text-slate-500 dark:text-[#9ca3af]">Automatically import new SKUs</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Order Sync Settings -->
+<section class="rounded-xl border border-slate-200 dark:border-[#3a2f27] bg-white dark:bg-[#181411] shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-[#3a2f27] flex items-center justify-between bg-slate-50/50 dark:bg-[#1f1915]">
+<h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">sync_alt</span>
+                                Order Sync Settings
+                            </h3>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<!-- Inventory Sync Direction -->
+<div class="flex flex-col gap-1.5 max-w-md">
+<label class="text-sm font-medium text-slate-700 dark:text-[#bba89b]">Inventory Sync Direction</label>
+<div class="relative">
+<select class="w-full appearance-none bg-white dark:bg-[#181411] text-slate-900 dark:text-white border border-slate-200 dark:border-[#4a3b32] focus:border-primary focus:ring-1 focus:ring-primary rounded-lg px-3 py-2 text-sm pr-10">
+<option>Two-Way (Sync Stock &amp; Orders)</option>
+<option>One-Way (Import Stock Only)</option>
+<option>One-Way (Export Orders Only)</option>
+</select>
+<span class="absolute right-3 top-2.5 material-symbols-outlined text-slate-400 dark:text-[#55453a] text-[20px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Order Status Mapping Table -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-[#bba89b]">Order Status Mapping</label>
+<div class="overflow-hidden rounded-lg border border-slate-200 dark:border-[#3a2f27]">
+<table class="w-full text-left text-sm text-slate-600 dark:text-[#9ca3af]">
+<thead class="bg-slate-50 dark:bg-[#23170f] text-xs uppercase font-semibold text-slate-500 dark:text-[#bba89b]">
+<tr>
+<th class="px-4 py-3" scope="col">Internal Status</th>
+<th class="px-4 py-3" scope="col">
+<div class="flex items-center gap-1">
+                                                        Supplier Status Code
+                                                        <span class="material-symbols-outlined text-[14px] text-slate-400" title="The code used by the supplier's API">info</span>
+</div>
+</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-[#3a2f27] bg-white dark:bg-[#181411]">
+<tr>
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white">Pending</td>
+<td class="px-4 py-2">
+<input class="w-full max-w-[200px] bg-slate-50 dark:bg-[#23170f] text-slate-900 dark:text-white border border-slate-200 dark:border-[#4a3b32] focus:border-primary focus:ring-1 focus:ring-primary rounded px-2 py-1 text-xs font-mono" type="text" value="WAITING_APPROVAL"/>
+</td>
+</tr>
+<tr>
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white">Processing</td>
+<td class="px-4 py-2">
+<input class="w-full max-w-[200px] bg-slate-50 dark:bg-[#23170f] text-slate-900 dark:text-white border border-slate-200 dark:border-[#4a3b32] focus:border-primary focus:ring-1 focus:ring-primary rounded px-2 py-1 text-xs font-mono" type="text" value="IN_PROGRESS"/>
+</td>
+</tr>
+<tr>
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white">Shipped</td>
+<td class="px-4 py-2">
+<input class="w-full max-w-[200px] bg-slate-50 dark:bg-[#23170f] text-slate-900 dark:text-white border border-slate-200 dark:border-[#4a3b32] focus:border-primary focus:ring-1 focus:ring-primary rounded px-2 py-1 text-xs font-mono" type="text" value="DISPATCHED"/>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Sticky Footer Action Bar -->
+<div class="sticky bottom-0 z-20 w-full border-t border-slate-200 dark:border-[#3a2f27] bg-white dark:bg-[#181411] px-6 py-4 flex items-center justify-between">
+<button class="flex items-center gap-2 px-4 py-2 text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-sm font-semibold transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+                    Delete Affiliate
+                </button>
+<div class="flex items-center gap-3">
+<button class="px-5 py-2 text-slate-600 dark:text-white hover:bg-slate-100 dark:hover:bg-[#3a2f27] rounded-lg text-sm font-semibold transition-colors">
+                        Cancel
+                    </button>
+<button class="flex items-center gap-2 px-6 py-2 bg-primary hover:bg-orange-600 text-white rounded-lg text-sm font-bold shadow-lg shadow-primary/20 transition-all transform active:scale-95">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                        Save Changes
+                    </button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

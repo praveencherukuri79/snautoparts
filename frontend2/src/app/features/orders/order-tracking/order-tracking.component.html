@@ -1,0 +1,175 @@
+<div class="order-tracking-page">
+  <!-- Header -->
+  <header class="tracking-header">
+    <h1 class="tracking-title">Track Your Order</h1>
+    <p class="tracking-subtitle">Enter your order number below to check its status.</p>
+  </header>
+
+  <!-- Search Form -->
+  <form class="tracking-search" (ngSubmit)="trackOrder()">
+    <div class="search-input-wrapper">
+      <span class="material-symbols-outlined search-icon">search</span>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="SN-82939102"
+        [(ngModel)]="searchOrderNumber"
+        name="orderNumber"
+        [disabled]="isLoading()"
+      />
+    </div>
+    <app-button 
+      variant="primary" 
+      type="submit" 
+      [loading]="isLoading()"
+      [disabled]="!searchOrderNumber() || isLoading()"
+    >
+      Track Order
+    </app-button>
+  </form>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+      <p>Looking up your order...</p>
+    </div>
+  }
+
+  <!-- Order Found -->
+  @if (!isLoading() && order(); as o) {
+    <div class="tracking-result">
+      <!-- Order Card -->
+      <div class="order-card">
+        <!-- Order Header -->
+        <div class="order-card__header">
+          <div class="order-info">
+            <span class="order-number">Order #{{ o.orderNumber }}</span>
+            <h2 class="delivery-estimate">{{ getEstimatedDelivery() }}</h2>
+          </div>
+          <a class="view-invoice-link" routerLink="/orders">
+            View My Orders
+          </a>
+        </div>
+
+        <!-- Progress Timeline -->
+        <div class="progress-timeline">
+          @for (step of trackingSteps(); track trackByStep($index, step); let i = $index; let last = $last) {
+            <div class="timeline-step" [class.active]="step.isActive" [class.current]="step.isCurrent">
+              <div class="step-icon">
+                <span class="material-symbols-outlined">{{ step.icon }}</span>
+              </div>
+              <div class="step-info">
+                <span class="step-label" [class.current]="step.isCurrent">{{ step.label }}</span>
+                @if (step.date) {
+                  <span class="step-date">{{ step.date }}</span>
+                }
+              </div>
+            </div>
+            @if (!last) {
+              <div class="timeline-connector" [class.active]="trackingSteps()[i + 1].isActive"></div>
+            }
+          }
+        </div>
+
+        <!-- Details Grid -->
+        <div class="details-grid">
+          <!-- Carrier Information -->
+          <div class="details-section">
+            <h3 class="section-title">CARRIER INFORMATION</h3>
+            @if (o.shippingCarrier) {
+              <div class="carrier-info">
+                <div class="carrier-badge">
+                  {{ o.shippingCarrier }}
+                </div>
+                <div class="carrier-details">
+                  <span class="carrier-name">{{ o.shippingCarrier }} Ground</span>
+                  @if (o.trackingNumber) {
+                    <a 
+                      [href]="getCarrierTrackingUrl(o.shippingCarrier, o.trackingNumber)" 
+                      target="_blank"
+                      class="tracking-link"
+                    >
+                      Tracking #{{ o.trackingNumber }}
+                      <span class="material-symbols-outlined">open_in_new</span>
+                    </a>
+                  }
+                </div>
+              </div>
+            } @else {
+              <p class="no-carrier">Carrier information will be available once shipped.</p>
+            }
+
+            <h3 class="section-title shipping-title">SHIPPING ADDRESS</h3>
+            @if (o.shippingAddress) {
+              <div class="shipping-address">
+                <span class="material-symbols-outlined address-icon">location_on</span>
+                <div class="address-text">
+                  <span>{{ o.shippingAddress.firstName }} {{ o.shippingAddress.lastName }}</span>
+                  <span>{{ o.shippingAddress.street }}</span>
+                  @if (o.shippingAddress.apartment) {
+                    <span>{{ o.shippingAddress.apartment }}</span>
+                  }
+                  <span>{{ o.shippingAddress.city }}, {{ o.shippingAddress.state }} {{ o.shippingAddress.zipCode }}</span>
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Order Summary -->
+          <div class="details-section">
+            <h3 class="section-title">ORDER SUMMARY</h3>
+            <div class="order-items">
+              @if (o.items) {
+                @for (item of o.items; track trackByItem($index, item)) {
+                  <div class="order-item">
+                    <div class="item-image">
+                      @if (item.imageUrl) {
+                        <img [src]="item.imageUrl" [alt]="item.productName" />
+                      } @else {
+                        <span class="material-symbols-outlined">inventory_2</span>
+                      }
+                    </div>
+                    <div class="item-details">
+                      <span class="item-name">{{ item.productName }}</span>
+                      <span class="item-qty">Qty: {{ item.quantity }}</span>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+            <div class="order-total">
+              <span>Total Amount</span>
+              <span class="total-value">{{ o.total | currency }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Links -->
+      <div class="tracking-footer">
+        <a routerLink="/shipping-policy">Shipping Policy</a>
+        <span class="divider">•</span>
+        <a routerLink="/returns">Returns & Exchanges</a>
+        <span class="divider">•</span>
+        <a routerLink="/help">Help Center</a>
+      </div>
+    </div>
+  }
+
+  <!-- Order Not Found -->
+  @if (!isLoading() && hasSearched() && notFound()) {
+    <div class="not-found-card">
+      <div class="not-found-icon">
+        <span class="material-symbols-outlined">sentiment_dissatisfied</span>
+      </div>
+      <h2 class="not-found-title">Order Not Found</h2>
+      <p class="not-found-message">
+        We couldn't find an order with the number <code>{{ searchOrderNumber() }}</code>.
+        <br />
+        Please double-check your order number from your confirmation email and try again.
+      </p>
+      <a routerLink="/help" class="help-link">Need help finding it?</a>
+    </div>
+  }
+</div>

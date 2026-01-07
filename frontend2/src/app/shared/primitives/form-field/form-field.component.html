@@ -1,0 +1,60 @@
+@if (useContentProjection) {
+  <!-- Content Projection Mode -->
+  <div class="form-field-wrapper">
+    <label class="form-field-label">
+      {{ label }}
+      @if (required) {
+        <span class="required-indicator">*</span>
+      }
+    </label>
+    <div class="form-field-content">
+      <ng-content></ng-content>
+    </div>
+    @if (hint && !hasError) {
+      <span class="form-field-hint">{{ hint }}</span>
+    }
+    @if (hasError) {
+      <span class="form-field-error">{{ errorMessage }}</span>
+    }
+  </div>
+} @else {
+  <!-- Control Input Mode -->
+  <mat-form-field [appearance]="appearance" class="full-width">
+    <mat-label>{{ label }}</mat-label>
+    
+    @if (prefixIcon) {
+      <mat-icon matPrefix>{{ prefixIcon }}</mat-icon>
+    }
+    
+    @if (control) {
+      <input
+        matInput
+        [type]="inputType"
+        [formControl]="control"
+        [placeholder]="placeholder"
+      />
+    }
+    
+    @if (type === 'password' && showPasswordToggle) {
+      <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="togglePasswordVisibility()"
+        [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+      >
+        <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    } @else if (suffixIcon) {
+      <mat-icon matSuffix>{{ suffixIcon }}</mat-icon>
+    }
+    
+    @if (hint) {
+      <mat-hint>{{ hint }}</mat-hint>
+    }
+    
+    @if (control && control.errors && control.touched) {
+      <mat-error>{{ errorMessage }}</mat-error>
+    }
+  </mat-form-field>
+}

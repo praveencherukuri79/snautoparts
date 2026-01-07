@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Top Products Report - SN Auto Parts</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                        "surface-dark": "#2d241e", // Derived for cards
+                        "border-dark": "#55453a",  // From snippets
+                        "input-dark": "#27201b",   // From snippets
+                        "text-secondary": "#bba89b" // From snippets
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for dark theme matching */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #23170f; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #55453a; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f97415; 
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white h-screen overflow-hidden flex">
+<!-- Sidebar -->
+<aside class="w-64 bg-[#181411] flex flex-col border-r border-border-dark hidden md:flex shrink-0 z-20">
+<div class="p-6 flex flex-col gap-8 h-full">
+<!-- Brand -->
+<div class="flex gap-3 items-center">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shrink-0 shadow-lg" data-alt="Abstract orange and black gradient logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCmTDJKeADY3GRIzRVACcNK4kvtBm1cxn5TvsckblkqcY62v36gSmwEfMYTPJPiXAd3ToR6G7Wv8ppXwBZcyIxDtyClx0PN_r0FgLfHdzJccvoVoF7j0_En_tdYKJOS3xmZV7Fg2Y8Y9kRekDgneYdaYvh2V0Z5BvXBOnoTgtHHOU87aFTpGXIh6l1XXCSw6IGOssgtgzyETTBGwDJmdndObNr9GzT_yFCto2ccduvDpQ8YzZ-sSofH_IkEVCLA3Q34-wWNH8pKvS8d");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-medium leading-normal">SN Auto Parts</h1>
+<p class="text-text-secondary text-sm font-normal leading-normal">Admin Console</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-2 flex-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-surface-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-white">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-surface-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-white">shopping_bag</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-surface-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-white">inventory_2</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-surface-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-white">group</span>
+<span class="text-sm font-medium">Customers</span>
+</a>
+<!-- Active Item -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-dark border border-border-dark shadow-sm" href="#">
+<span class="material-symbols-outlined text-primary filled">bar_chart</span>
+<span class="text-white text-sm font-medium">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-surface-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-white">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<!-- User Profile (Bottom) -->
+<div class="mt-auto pt-6 border-t border-border-dark flex items-center gap-3">
+<div class="size-8 rounded-full bg-surface-dark flex items-center justify-center text-primary font-bold">JD</div>
+<div class="flex flex-col">
+<p class="text-white text-sm font-medium">John Doe</p>
+<p class="text-text-secondary text-xs">Manager</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-background-dark relative">
+<!-- Mobile Header -->
+<div class="md:hidden flex items-center justify-between p-4 bg-[#181411] border-b border-border-dark">
+<span class="font-bold text-white">SN Auto Parts</span>
+<button class="text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-10 pb-20">
+<div class="max-w-[1200px] mx-auto flex flex-col gap-8">
+<!-- Page Header & Actions -->
+<header class="flex flex-col gap-6">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-white text-3xl md:text-4xl font-black leading-tight tracking-tight">Top Products Report</h1>
+<p class="text-text-secondary text-base font-normal">Identify your best-selling products by revenue and units sold.</p>
+</div>
+<button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-surface-dark border border-border-dark text-white text-sm font-bold hover:bg-[#3a2f27] transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>Export CSV</span>
+</button>
+</div>
+<!-- Filter Bar -->
+<div class="bg-surface-dark/50 border border-border-dark rounded-xl p-4 flex flex-col md:flex-row gap-4 items-end md:items-center">
+<div class="flex gap-4 flex-1 w-full md:w-auto">
+<label class="flex flex-col gap-1.5 flex-1">
+<span class="text-text-secondary text-xs font-medium uppercase tracking-wider">Start Date</span>
+<div class="relative">
+<input class="w-full bg-input-dark border border-border-dark rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" type="date" value="2023-10-01"/>
+</div>
+</label>
+<label class="flex flex-col gap-1.5 flex-1">
+<span class="text-text-secondary text-xs font-medium uppercase tracking-wider">End Date</span>
+<div class="relative">
+<input class="w-full bg-input-dark border border-border-dark rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" type="date" value="2023-10-31"/>
+</div>
+</label>
+</div>
+<button class="w-full md:w-auto flex items-center justify-center rounded-lg h-[38px] px-6 bg-primary hover:bg-primary/90 text-white text-sm font-bold shadow-lg shadow-primary/20 transition-all mt-auto">
+                            Apply
+                        </button>
+</div>
+</header>
+<!-- Summary Cards -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Card 1 -->
+<div class="flex flex-col gap-3 rounded-xl p-6 bg-surface-dark border border-border-dark shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">emoji_events</span>
+</div>
+<div class="flex items-center gap-2 text-text-secondary mb-1">
+<span class="material-symbols-outlined text-[20px]">emoji_events</span>
+<span class="text-sm font-medium uppercase tracking-wider">Overall Top Product</span>
+</div>
+<p class="text-white text-xl md:text-2xl font-bold leading-tight line-clamp-2 z-10">Brembo GT Brake Kit</p>
+<div class="flex items-center gap-2 mt-auto">
+<span class="text-xs bg-green-500/20 text-green-500 px-2 py-1 rounded font-medium">+12% vs last month</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="flex flex-col gap-3 rounded-xl p-6 bg-surface-dark border border-border-dark shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-green-500">payments</span>
+</div>
+<div class="flex items-center gap-2 text-text-secondary mb-1">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span class="text-sm font-medium uppercase tracking-wider">Highest Revenue</span>
+</div>
+<p class="text-white text-xl md:text-2xl font-bold leading-tight line-clamp-2 z-10">Garrett GT2860R Turbo</p>
+<p class="text-white/60 text-sm font-medium">$42,500 Total Revenue</p>
+</div>
+<!-- Card 3 -->
+<div class="flex flex-col gap-3 rounded-xl p-6 bg-surface-dark border border-border-dark shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-blue-500">inventory_2</span>
+</div>
+<div class="flex items-center gap-2 text-text-secondary mb-1">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+<span class="text-sm font-medium uppercase tracking-wider">Most Units Sold</span>
+</div>
+<p class="text-white text-xl md:text-2xl font-bold leading-tight line-clamp-2 z-10">Bosch Iridium Spark Plug</p>
+<p class="text-white/60 text-sm font-medium">843 Units Sold</p>
+</div>
+</section>
+<!-- Chart Section -->
+<section class="flex flex-col gap-4">
+<h2 class="text-white text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">bar_chart</span>
+                        Top 10 Products by Revenue
+                    </h2>
+<div class="bg-surface-dark border border-border-dark rounded-xl p-6 overflow-hidden">
+<div class="flex flex-col gap-4">
+<!-- Chart Bars -->
+<div class="space-y-4">
+<!-- Item 1 -->
+<div class="flex items-center gap-4 text-sm">
+<div class="w-32 md:w-48 text-white truncate font-medium text-right" title="Garrett GT2860R Turbo">Garrett GT2860R Turbo</div>
+<div class="flex-1 h-3 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 100%"></div>
+</div>
+<div class="w-20 text-text-secondary tabular-nums text-right font-medium">$42,500</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-4 text-sm">
+<div class="w-32 md:w-48 text-white truncate font-medium text-right" title="Brembo GT Brake Kit">Brembo GT Brake Kit</div>
+<div class="flex-1 h-3 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary/90 rounded-full" style="width: 85%"></div>
+</div>
+<div class="w-20 text-text-secondary tabular-nums text-right font-medium">$36,125</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center gap-4 text-sm">
+<div class="w-32 md:w-48 text-white truncate font-medium text-right" title="KW V3 Coilovers">KW V3 Coilovers</div>
+<div class="flex-1 h-3 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary/80 rounded-full" style="width: 72%"></div>
+</div>
+<div class="w-20 text-text-secondary tabular-nums text-right font-medium">$30,600</div>
+</div>
+<!-- Item 4 -->
+<div class="flex items-center gap-4 text-sm">
+<div class="w-32 md:w-48 text-white truncate font-medium text-right" title="HKS Hi-Power Exhaust">HKS Hi-Power Exhaust</div>
+<div class="flex-1 h-3 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary/70 rounded-full" style="width: 60%"></div>
+</div>
+<div class="w-20 text-text-secondary tabular-nums text-right font-medium">$25,500</div>
+</div>
+<!-- Item 5 -->
+<div class="flex items-center gap-4 text-sm">
+<div class="w-32 md:w-48 text-white truncate font-medium text-right" title="Mishimoto Intercooler">Mishimoto Intercooler</div>
+<div class="flex-1 h-3 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary/60 rounded-full" style="width: 45%"></div>
+</div>
+<div class="w-20 text-text-secondary tabular-nums text-right font-medium">$19,125</div>
+</div>
+</div>
+<!-- X Axis Labels -->
+<div class="flex pl-32 md:pl-48 pr-20 justify-between text-xs text-text-secondary pt-2 border-t border-white/5 mt-2">
+<span>$0</span>
+<span>$10k</span>
+<span>$20k</span>
+<span>$30k</span>
+<span>$40k</span>
+<span>$50k</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Data Table Section -->
+<section class="flex flex-col gap-4">
+<!-- Controls -->
+<div class="flex flex-col md:flex-row justify-between items-end md:items-center gap-4">
+<h2 class="text-white text-xl font-bold">Detailed Breakdown</h2>
+<div class="flex gap-3">
+<select class="bg-surface-dark border border-border-dark text-white text-sm rounded-lg px-3 py-2 focus:ring-primary focus:border-primary">
+<option>Category: All</option>
+<option>Brakes</option>
+<option>Engine</option>
+<option>Suspension</option>
+<option>Interior</option>
+</select>
+<select class="bg-surface-dark border border-border-dark text-white text-sm rounded-lg px-3 py-2 focus:ring-primary focus:border-primary">
+<option>Brand: All</option>
+<option>Brembo</option>
+<option>Garrett</option>
+<option>Bosch</option>
+<option>KW</option>
+</select>
+</div>
+</div>
+<!-- Table -->
+<div class="bg-surface-dark border border-border-dark rounded-xl overflow-hidden shadow-lg">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm whitespace-nowrap">
+<thead class="bg-[#1e1713] text-text-secondary font-medium uppercase text-xs tracking-wider border-b border-border-dark">
+<tr>
+<th class="px-6 py-4 w-16">Rank</th>
+<th class="px-6 py-4">Product Name</th>
+<th class="px-6 py-4">SKU</th>
+<th class="px-6 py-4">Category</th>
+<th class="px-6 py-4 text-right">Revenue</th>
+<th class="px-6 py-4 text-right">Units Sold</th>
+<th class="px-6 py-4 text-right">Avg Price</th>
+<th class="px-6 py-4 text-center">Stock</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark">
+<!-- Row 1 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4 font-bold text-primary">#1</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-cover bg-center bg-white/10 shrink-0" data-alt="Brembo brake kit product shot" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDPCFdi575q9XMWxIaar-xnSLUPB1Mwu5CuAplEg8nvj9f4XRbO3b5Dk9GbTILCutW4e10cRksnMDnjTr1ZM00hSvitUuR6Y9mGiTVQHJjkpFdVfF-JsycAtgM6sYCPOxvQUDT8RxjZl8H2ryAGKA2fRz0qvzm2B4f_5mrQ84aMYE_UHNPjC2pwncr6iCzbji1PoLdO259QqtqPNwQtpy5hNwxikZo2VflEizjRI-fj-jkMdwDQpPWWxOqcHy7vUUqRCbnAYxR0c38K");'></div>
+<span class="font-medium text-white group-hover:text-primary transition-colors">Brembo GT Brake Kit</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary">BRM-GT-001</td>
+<td class="px-6 py-4 text-white">Brakes</td>
+<td class="px-6 py-4 text-right text-white font-medium tabular-nums">$36,125</td>
+<td class="px-6 py-4 text-right text-white tabular-nums">15</td>
+<td class="px-6 py-4 text-right text-text-secondary tabular-nums">$2,408</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/10 text-green-500 border border-green-500/20">
+                                                In Stock (42)
+                                            </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4 font-bold text-primary">#2</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-cover bg-center bg-white/10 shrink-0" data-alt="Turbocharger product shot" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA7roO1T8QF6KjKFeMurc2DvYh03bygxzYw46A456XDBSvQ_nIn83B86sPMppEmgcWwJ1WXcyAOgb3TgFcdSGQP5OzQ8AUp1FkWimBopVmWHeMgUUQLVGfQ0bEIfhBTJcpFbSU_9jG5PMlfDMThzkbqLzd-KvHo_nWegR07GH8c8brCcS9OV6O_d_ZJ3Rk2JbjxvpoUDva8qmaowuN0yvVF44b8Pgrs3Y7cMzT40xpIfwC5QBEaelLQibHq3AdT0P6HtqL9LbY1YFcH");'></div>
+<span class="font-medium text-white group-hover:text-primary transition-colors">Garrett GT2860R Turbo</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary">GRT-TB-2860</td>
+<td class="px-6 py-4 text-white">Engine</td>
+<td class="px-6 py-4 text-right text-white font-medium tabular-nums">$42,500</td>
+<td class="px-6 py-4 text-right text-white tabular-nums">25</td>
+<td class="px-6 py-4 text-right text-text-secondary tabular-nums">$1,700</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-500/10 text-yellow-500 border border-yellow-500/20">
+                                                Low (3)
+                                            </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4 font-bold text-primary">#3</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-cover bg-center bg-white/10 shrink-0" data-alt="Spark plug product shot" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBGqa8ojFJmwZauR75DlecUMbZQkbpV696vw-Qai7nnyRwBstKmwK0WldiLHomGLopXgUc36oh-VKeYoGRc4n2KyVmA1rf20NOVP4SYW-8pL-FYqXtriMMP_M2ICRdWUfo5HYTd8Awd1pYOSIbcJO68hlB_P1Nw4OrEJ9duqqU68mLkoDaHlTYWy58P2Joo5vfnu4uesuV-F-CZG9gRAwmynCtDfQ9cnL-FbfRsPcg_VDtBx6ytsQViIaRF4Pz4jApK9zQKZSFE0ihZ");'></div>
+<span class="font-medium text-white group-hover:text-primary transition-colors">Bosch Iridium Spark Plug</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary">BSH-SP-992</td>
+<td class="px-6 py-4 text-white">Ignition</td>
+<td class="px-6 py-4 text-right text-white font-medium tabular-nums">$10,116</td>
+<td class="px-6 py-4 text-right text-white tabular-nums">843</td>
+<td class="px-6 py-4 text-right text-text-secondary tabular-nums">$12</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/10 text-green-500 border border-green-500/20">
+                                                In Stock (1.2k)
+                                            </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4 font-bold text-primary">#4</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-cover bg-center bg-white/10 shrink-0" data-alt="Car suspension coilover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZjwVrBRwRGZ0VHVhUP3J1agLIq-SWn_c9q-M4lvcCT-6kqC9XTaZSp75XNIsXejq6Zjh-I31kr35UIFmmjlDO599rbEZmjPlvMjg1wgdWBbtcsQH5aG8F7vTFPE2ZQGuQLTpPAkijd5Le3AyRROTOTwk6vsfGqULbU56AnQ6MHQDSKMWz97ebq70Co-DtI5hkrP4dxJBMcS0u_UfP_GOyvTGyCBemowCJtfUsnYM4yv4ATY-bMirOV20BTc4gMg9YpVRFkb0O9JJp");'></div>
+<span class="font-medium text-white group-hover:text-primary transition-colors">KW V3 Coilovers</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary">KW-SUS-003</td>
+<td class="px-6 py-4 text-white">Suspension</td>
+<td class="px-6 py-4 text-right text-white font-medium tabular-nums">$30,600</td>
+<td class="px-6 py-4 text-right text-white tabular-nums">12</td>
+<td class="px-6 py-4 text-right text-text-secondary tabular-nums">$2,550</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500/10 text-red-500 border border-red-500/20">
+                                                OOS
+                                            </span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4 font-bold text-primary">#5</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-cover bg-center bg-white/10 shrink-0" data-alt="Car exhaust tip" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAP5GCoGsT88hJcppB_qHU_NvqpYiMIlLZ_1RinaE281_wLxwvpkfGGZhkXcSFsR6W1mbgEWVbzl9AcrTDl4-pYdzT5Tg7kH5EevD5hMDO4sB8NudP9pVSDhLXi-DS_X3MBJ2I8XOB-JwTPcYIJ2f9A-OLBsVu5lBAybcujO3PSI76NF2Dev0LGLtTtia-f6wazD5unGVWhnJm3cf3g-Wx4gfP7Tc8HDCW4GQ01YwJ9J147sJznNBq_368pm7QrBOfL07N62kD5fLUb");'></div>
+<span class="font-medium text-white group-hover:text-primary transition-colors">HKS Hi-Power Exhaust</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary">HKS-EX-005</td>
+<td class="px-6 py-4 text-white">Exhaust</td>
+<td class="px-6 py-4 text-right text-white font-medium tabular-nums">$25,500</td>
+<td class="px-6 py-4 text-right text-white tabular-nums">30</td>
+<td class="px-6 py-4 text-right text-text-secondary tabular-nums">$850</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/10 text-green-500 border border-green-500/20">
+                                                In Stock (8)
+                                            </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-border-dark flex items-center justify-between">
+<span class="text-sm text-text-secondary">Showing <span class="text-white font-medium">1-5</span> of <span class="text-white font-medium">48</span> results</span>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg text-text-secondary hover:text-white hover:bg-white/5 disabled:opacity-50 transition-colors" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="size-8 rounded-lg bg-primary text-white text-sm font-medium flex items-center justify-center">1</button>
+<button class="size-8 rounded-lg text-text-secondary hover:bg-white/5 text-sm font-medium flex items-center justify-center transition-colors">2</button>
+<button class="size-8 rounded-lg text-text-secondary hover:bg-white/5 text-sm font-medium flex items-center justify-center transition-colors">3</button>
+<span class="text-text-secondary text-sm">...</span>
+<button class="p-2 rounded-lg text-text-secondary hover:text-white hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</body></html>

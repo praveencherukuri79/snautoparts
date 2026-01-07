@@ -1,0 +1,159 @@
+<div class="low-stock-page">
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="header-content">
+      <h1>Low Stock Alerts</h1>
+      <p class="header-subtitle">Products with current stock below their defined threshold.</p>
+    </div>
+    <div class="header-actions">
+      <app-button variant="outline" icon="refresh" (clicked)="refreshAlerts()">
+        Refresh
+      </app-button>
+      <app-button variant="outline" icon="download" (clicked)="exportAlerts()">
+        Export
+      </app-button>
+    </div>
+  </header>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card stat-card--warning">
+        <div class="stat-content">
+          <span class="stat-label">TOTAL LOW STOCK</span>
+          <span class="stat-value">{{ totalLowStock() }}</span>
+          <span class="stat-desc">Requiring attention</span>
+        </div>
+        <span class="material-symbols-outlined stat-icon">inventory_2</span>
+      </div>
+      
+      <div class="stat-card stat-card--critical">
+        <div class="stat-content">
+          <span class="stat-label">CRITICAL (&lt; 5)</span>
+          <span class="stat-value critical">{{ criticalCount() }}</span>
+          <span class="stat-desc">Immediate action needed</span>
+        </div>
+        <span class="material-symbols-outlined stat-icon">error</span>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-content">
+          <span class="stat-label">RECENTLY ADDED</span>
+          <span class="stat-value">{{ recentlyAdded() }}</span>
+          <span class="stat-desc">In the last 24 hours</span>
+        </div>
+        <span class="material-symbols-outlined stat-icon">schedule</span>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-wrapper">
+        <span class="material-symbols-outlined search-icon">search</span>
+        <input 
+          type="text" 
+          class="search-input"
+          placeholder="Search low stock items..."
+          [ngModel]="searchQuery()"
+          (ngModelChange)="searchQuery.set($event); onSearch()"
+        />
+        <button class="filter-btn">
+          <span class="material-symbols-outlined">tune</span>
+        </button>
+      </div>
+      <div class="toolbar-actions">
+        <app-button variant="outline" (clicked)="adjustThresholds()">
+          Adjust Thresholds
+        </app-button>
+        <app-button variant="primary" (clicked)="updateAllStock()">
+          Update All Stock
+        </app-button>
+      </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>IMAGE</th>
+            <th>PRODUCT NAME</th>
+            <th>SKU</th>
+            <th class="sortable">
+              STOCK
+              <span class="material-symbols-outlined">arrow_drop_down</span>
+            </th>
+            <th>THRESHOLD</th>
+            <th>EST. DEPLETION</th>
+            <th>CATEGORY</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (alert of filteredAlerts(); track trackByAlert($index, alert)) {
+            <tr>
+              <td>
+                <div class="product-image">
+                  @if (alert.productImage) {
+                    <img [src]="alert.productImage" [alt]="alert.productName" />
+                  } @else {
+                    <span class="material-symbols-outlined">inventory_2</span>
+                  }
+                </div>
+              </td>
+              <td>
+                <div class="product-name-cell">
+                  <span class="product-name">{{ alert.productName }}</span>
+                </div>
+              </td>
+              <td class="sku-cell">{{ alert.productSku }}</td>
+              <td>
+                <div class="stock-cell">
+                  <span class="stock-value" [class]="getStockStatus(alert.currentQuantity)">
+                    {{ alert.currentQuantity }}
+                  </span>
+                  @if (alert.currentQuantity < 5) {
+                    <app-badge variant="error" size="sm">CRITICAL</app-badge>
+                  } @else if (alert.currentQuantity < 10) {
+                    <app-badge variant="warning" size="sm">LOW</app-badge>
+                  }
+                </div>
+              </td>
+              <td>{{ alert.threshold }}</td>
+              <td class="depletion-cell" [class.critical]="alert.currentQuantity < 5">
+                {{ getEstimatedDepletion(alert) }}
+              </td>
+              <td>
+                <span class="category-badge">Brakes</span>
+              </td>
+              <td>
+                <div class="actions-cell">
+                  <a [routerLink]="['/inventory', alert.productId]" class="action-btn" title="View Details">
+                    <span class="material-symbols-outlined">visibility</span>
+                  </a>
+                  <button class="action-btn action-btn--add" title="Quick Add Stock">
+                    <span class="material-symbols-outlined">add</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="8" class="empty-row">
+                <div class="empty-state">
+                  <span class="material-symbols-outlined">check_circle</span>
+                  <p>No low stock alerts! All products are well stocked.</p>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
+

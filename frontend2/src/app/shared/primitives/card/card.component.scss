@@ -1,0 +1,85 @@
+@use 'tokens' as *;
+
+:host {
+  display: block;
+}
+
+.app-card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+
+  // Variants
+  &--default {
+    background-color: var(--color-surface);
+  }
+
+  &--outlined {
+    border: 1px solid var(--color-border);
+  }
+
+  &--elevated {
+    box-shadow: var(--shadow-md);
+  }
+
+  // Padding
+  &--padding-none .app-card__body {
+    padding: 0;
+  }
+
+  &--padding-sm .app-card__body {
+    padding: var(--spacing-3);
+  }
+
+  &--padding-md .app-card__body {
+    padding: var(--spacing-4);
+  }
+
+  &--padding-lg .app-card__body {
+    padding: var(--spacing-6);
+  }
+
+  // Interactive states
+  &--hoverable {
+    transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+
+    &:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+  }
+
+  &--clickable {
+    cursor: pointer;
+    transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+
+    &:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Header and Footer slots
+::ng-deep {
+  [card-header] {
+    padding: var(--spacing-4);
+    border-bottom: 1px solid var(--color-border);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  [card-footer] {
+    padding: var(--spacing-4);
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-surface-secondary);
+  }
+}
+

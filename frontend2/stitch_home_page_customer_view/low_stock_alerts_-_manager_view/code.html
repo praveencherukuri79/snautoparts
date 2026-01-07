@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Low Stock Alerts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                        "critical": "#dc2626",
+                        "warning": "#f59e0b",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181411]">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<div class="flex flex-col w-[280px] h-full border-r border-[#e6dfdb] bg-white flex-shrink-0">
+<div class="flex flex-col h-full p-4 justify-between">
+<div class="flex flex-col gap-6">
+<!-- Brand -->
+<div class="flex items-center gap-3 px-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 bg-gray-200" data-alt="SN Auto Parts Logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA1uE0JU6KPgXykCdKwSTFJpLB5tGwAcvdlrlfaROYUPltsVSNTWT49DWJ-IET8mrRTQnFw5lYT8jrE_VONEfgFZw3A9eoG3G8YSFkDJbKpMPu_lPO7IXxZf9308_1UFOE_gwlK8VlU_pejRiJyQD6CeTVyGAphPLR3zMRZvJ2GS__5RJBezJOD2S-RQtaV5yimOhIBKbJU2Uj6EqRFybN5TISlM4ejFoGVzAiB7RBuRjdn7cicfolYIfG6elrSTPSrM47TIR02xCJO");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#181411] text-base font-bold leading-normal">SN Auto Parts</h1>
+<p class="text-[#8c725f] text-xs font-normal leading-normal">Manager View</p>
+</div>
+</div>
+<!-- Navigation -->
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f5f2f0] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#8c725f] group-hover:text-primary transition-colors">dashboard</span>
+<p class="text-[#181411] text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f5f2f0] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#8c725f] group-hover:text-primary transition-colors">inventory_2</span>
+<p class="text-[#181411] text-sm font-medium leading-normal">Inventory</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined text-primary fill-1">warning</span>
+<p class="text-[#181411] text-sm font-bold leading-normal">Low Stock</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f5f2f0] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#8c725f] group-hover:text-primary transition-colors">shopping_cart</span>
+<p class="text-[#181411] text-sm font-medium leading-normal">Orders</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f5f2f0] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#8c725f] group-hover:text-primary transition-colors">settings</span>
+<p class="text-[#181411] text-sm font-medium leading-normal">Settings</p>
+</a>
+</div>
+</div>
+<!-- Profile -->
+<div class="flex items-center gap-3 px-3 py-3 border-t border-[#e6dfdb]">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8 bg-gray-300" data-alt="User Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDKbPxbKC-B5PEUftHY0-oJ98TyvDmZBEnCx_LEvfudGutoyO7YOzSUxw63YywLpsnXycVi3ReDcZZvX8V_rauGvUoATBokk8QWImb1Xe57hdDpyj7kQv4-VnzJO321Zr-ZmPHEteTAY4ShuKlMN-OcTMuObNpcF0gCRjbiCPDQbTAdq26hiBfuSPnsx_ZyElBmW8yXEdkz8ACoZvE0tKBCgfaisaHSNArwXy1LNsFv0U9vAtNeSk1fz7Xj7_ZVcJsMiV0HJBlY4JHU");'></div>
+<div class="flex flex-col">
+<p class="text-[#181411] text-sm font-medium leading-tight">Alex Morgan</p>
+<p class="text-[#8c725f] text-xs leading-tight">Warehouse Manager</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col h-full overflow-y-auto bg-background-light dark:bg-background-dark relative">
+<!-- Page Header -->
+<header class="bg-white border-b border-[#e6dfdb] px-8 py-6 sticky top-0 z-10">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 max-w-7xl mx-auto">
+<div class="flex flex-col gap-1">
+<h1 class="text-[#181411] text-2xl md:text-3xl font-bold tracking-tight">Low Stock Alerts</h1>
+<p class="text-[#8c725f] text-sm md:text-base">Products with current stock below their defined threshold.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-white border border-[#e6dfdb] hover:bg-[#f5f2f0] text-[#181411] text-sm font-semibold transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+<span>Refresh</span>
+</button>
+<button class="flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-white border border-[#e6dfdb] hover:bg-[#f5f2f0] text-[#181411] text-sm font-semibold transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>Export</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 px-8 py-8 max-w-7xl mx-auto w-full flex flex-col gap-8">
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Total Low Stock -->
+<div class="bg-white rounded-xl p-6 border border-[#e6dfdb] shadow-sm flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-[#8c725f] text-sm font-medium uppercase tracking-wider">Total Low Stock</p>
+<p class="text-[#181411] text-4xl font-black">12</p>
+<p class="text-xs text-[#8c725f] mt-1">Requiring attention</p>
+</div>
+<div class="p-3 bg-primary/10 rounded-full text-primary">
+<span class="material-symbols-outlined text-3xl">inventory_2</span>
+</div>
+</div>
+<!-- Critical -->
+<div class="bg-white rounded-xl p-6 border border-l-4 border-[#e6dfdb] border-l-critical shadow-sm flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-critical text-sm font-bold uppercase tracking-wider">Critical (&lt; 5)</p>
+<p class="text-critical text-4xl font-black">3</p>
+<p class="text-xs text-[#8c725f] mt-1">Immediate action needed</p>
+</div>
+<div class="p-3 bg-critical/10 rounded-full text-critical">
+<span class="material-symbols-outlined text-3xl">priority_high</span>
+</div>
+</div>
+<!-- Recently Added -->
+<div class="bg-white rounded-xl p-6 border border-[#e6dfdb] shadow-sm flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-[#8c725f] text-sm font-medium uppercase tracking-wider">Recently Added</p>
+<p class="text-[#181411] text-4xl font-black">2</p>
+<p class="text-xs text-[#8c725f] mt-1">In the last 24 hours</p>
+</div>
+<div class="p-3 bg-blue-50 rounded-full text-blue-600">
+<span class="material-symbols-outlined text-3xl">history</span>
+</div>
+</div>
+</div>
+<!-- Global Actions Bar -->
+<div class="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-xl border border-[#e6dfdb] shadow-sm">
+<div class="flex items-center gap-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#8c725f] text-[20px]">search</span>
+<input class="pl-10 h-10 rounded-lg border border-[#e6dfdb] text-sm w-64 focus:ring-2 focus:ring-primary/20 focus:border-primary" placeholder="Search low stock items..." type="text"/>
+</div>
+<button class="h-10 px-3 rounded-lg border border-[#e6dfdb] hover:bg-[#f5f2f0] text-[#181411] flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center gap-2 h-10 px-5 rounded-lg bg-white border border-[#e6dfdb] text-[#181411] text-sm font-semibold hover:bg-gray-50 transition-colors">
+<span>Adjust Thresholds</span>
+</button>
+<button class="flex items-center justify-center gap-2 h-10 px-5 rounded-lg bg-primary hover:bg-primary/90 text-white text-sm font-bold shadow-md shadow-primary/20 transition-all">
+<span>Update All Stock</span>
+</button>
+</div>
+</div>
+<!-- Alerts Table -->
+<div class="bg-white rounded-xl border border-[#e6dfdb] shadow-sm overflow-hidden flex-1 flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#fcfbf9] border-b border-[#e6dfdb]">
+<th class="px-6 py-4 text-[#8c725f] text-xs font-bold uppercase tracking-wider w-[80px]">Image</th>
+<th class="px-6 py-4 text-[#8c725f] text-xs font-bold uppercase tracking-wider cursor-pointer hover:text-primary group">
+<div class="flex items-center gap-1">Product Name <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100">arrow_drop_down</span></div>
+</th>
+<th class="px-6 py-4 text-[#8c725f] text-xs font-bold uppercase tracking-wider cursor-pointer hover:text-primary group">
+<div class="flex items-center gap-1">SKU <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100">arrow_drop_down</span></div>
+</th>
+<th class="px-6 py-4 text-[#8c725f] text-xs font-bold uppercase tracking-wider cursor-pointer hover:text-primary group">
+<div class="flex items-center gap-1">Stock <span class="material-symbols-outlined text-[16px] opacity-100">arrow_drop_down</span></div>
+</th>
+<th class="px-6 py-4 text-[#8c725f] text-xs font-bold uppercase tracking-wider">Threshold</th>
+<th class="px-6 py-4 text-[#8c725f] text-xs font-bold uppercase tracking-wider cursor-pointer hover:text-primary group">
+<div class="flex items-center gap-1">Est. Depletion <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100">arrow_drop_down</span></div>
+</th>
+<th class="px-6 py-4 text-[#8c725f] text-xs font-bold uppercase tracking-wider">Category</th>
+<th class="px-6 py-4 text-[#8c725f] text-xs font-bold uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e6dfdb]">
+<!-- Row 1: Critical -->
+<tr class="hover:bg-[#fcfbf9] group transition-colors">
+<td class="px-6 py-4 align-middle">
+<div class="size-12 rounded-lg bg-gray-100 border border-gray-200 bg-center bg-cover" data-alt="Brake Pad Set image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCps3DT0i2jWfob97TrU30N5TZp_SrmCrcCv8oSPCDZlmajxwaeN2yotjdR6Fs9xEs21lUU-Z-BrPVJ6qhu7oTOlFBZPO9xACEcQqr16GCxaMVEgS6JV5RS2NApNG-xOaTufwgnHicanFh74zqq5RvUVt2SJWm2QiBF6gJsuKbU65JJ-frKE7BTeEHKgV_w7sN2p087bDAr5RPe6j06wV4U9U9ZVWaj_jUE2fxbt8cTPzGRV168Tr8qpmq7DfNKWbRROfiTqKMdOzid");'></div>
+</td>
+<td class="px-6 py-4 align-middle">
+<p class="text-[#181411] font-medium text-sm">Brake Pad Set Front</p>
+<p class="text-[#8c725f] text-xs">Premium Ceramic</p>
+</td>
+<td class="px-6 py-4 align-middle text-sm text-[#5e4e44]">BP-001</td>
+<td class="px-6 py-4 align-middle">
+<div class="flex items-center gap-2">
+<span class="text-critical font-bold text-base">2</span>
+<span class="bg-critical/10 text-critical text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Critical</span>
+</div>
+</td>
+<td class="px-6 py-4 align-middle text-sm text-[#5e4e44]">10</td>
+<td class="px-6 py-4 align-middle">
+<span class="text-critical font-semibold text-sm">~ 1 Day</span>
+</td>
+<td class="px-6 py-4 align-middle">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                            Brakes
+                                        </span>
+</td>
+<td class="px-6 py-4 align-middle text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="size-8 rounded-lg flex items-center justify-center text-[#8c725f] hover:bg-[#f5f2f0] hover:text-primary transition-colors" title="View Product">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="size-8 rounded-lg flex items-center justify-center text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors" title="Adjust Stock">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Critical -->
+<tr class="hover:bg-[#fcfbf9] group transition-colors">
+<td class="px-6 py-4 align-middle">
+<div class="size-12 rounded-lg bg-gray-100 border border-gray-200 bg-center bg-cover" data-alt="Spark Plug image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEOUHTXNs4kaWG4qpqYwOAZDn-wuyATd3635Wq_DphlKi30aW0mENdUBm_RGE5ZMMZcrBDGYAS2mUE9bfrJY91p8ue15_YuJPWwFKADXfOD1aIgCrYlSZhUdXgj3UtJe422YsZ1P8bf5IKAxGzXetDRnWzzmexkjLqXu10cBDxNRdUgS2kD1FFBtjoj0RdIHLnMio6IqtRubNGSBSIwobrfx84TNhqxToHOcCmK8G5Y-OAYg5unNCo1-wy4FU55RKgy4q6z11cqo7a");'></div>
+</td>
+<td class="px-6 py-4 align-middle">
+<p class="text-[#181411] font-medium text-sm">Spark Plug Platinum</p>
+<p class="text-[#8c725f] text-xs">High Performance</p>
+</td>
+<td class="px-6 py-4 align-middle text-sm text-[#5e4e44]">SP-999</td>
+<td class="px-6 py-4 align-middle">
+<div class="flex items-center gap-2">
+<span class="text-critical font-bold text-base">4</span>
+<span class="bg-critical/10 text-critical text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Critical</span>
+</div>
+</td>
+<td class="px-6 py-4 align-middle text-sm text-[#5e4e44]">50</td>
+<td class="px-6 py-4 align-middle">
+<span class="text-critical font-semibold text-sm">~ 2 Days</span>
+</td>
+<td class="px-6 py-4 align-middle">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                            Ignition
+                                        </span>
+</td>
+<td class="px-6 py-4 align-middle text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="size-8 rounded-lg flex items-center justify-center text-[#8c725f] hover:bg-[#f5f2f0] hover:text-primary transition-colors" title="View Product">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="size-8 rounded-lg flex items-center justify-center text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors" title="Adjust Stock">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Warning -->
+<tr class="hover:bg-[#fcfbf9] group transition-colors">
+<td class="px-6 py-4 align-middle">
+<div class="size-12 rounded-lg bg-gray-100 border border-gray-200 bg-center bg-cover" data-alt="Oil Filter image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCa8cFlpvfCEbwZKdf2IfvFk8ydwh-1GBd4OXzPFeYZOIBHSeueSnFNf0AwXh-kFC8hvbITd4eJAywF1aikCKhx7b2wIN7OfITHQHZcn6vUmGBIgd31l-IGLr7oZdKDHL83CTByZ_JNW6EhPyQrRvAmfOPCKfyj2POPHXbaMUe1R2uI-hOUECWXqInjcImFBrjWuGC3Fvr3Pqw3CPI37oWOn1FH2KI_wXp5T3aaVGWZ64cfLAIgRLxt067FPElFixjmXEkDNfTMGf8f");'></div>
+</td>
+<td class="px-6 py-4 align-middle">
+<p class="text-[#181411] font-medium text-sm">Oil Filter 5W-30</p>
+<p class="text-[#8c725f] text-xs">Standard</p>
+</td>
+<td class="px-6 py-4 align-middle text-sm text-[#5e4e44]">OF-550</td>
+<td class="px-6 py-4 align-middle">
+<div class="flex items-center gap-2">
+<span class="text-warning font-bold text-base">8</span>
+</div>
+</td>
+<td class="px-6 py-4 align-middle text-sm text-[#5e4e44]">20</td>
+<td class="px-6 py-4 align-middle">
+<span class="text-[#181411] text-sm">4 Days</span>
+</td>
+<td class="px-6 py-4 align-middle">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                            Engine
+                                        </span>
+</td>
+<td class="px-6 py-4 align-middle text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="size-8 rounded-lg flex items-center justify-center text-[#8c725f] hover:bg-[#f5f2f0] hover:text-primary transition-colors" title="View Product">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="size-8 rounded-lg flex items-center justify-center text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors" title="Adjust Stock">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Warning -->
+<tr class="hover:bg-[#fcfbf9] group transition-colors">
+<td class="px-6 py-4 align-middle">
+<div class="size-12 rounded-lg bg-gray-100 border border-gray-200 bg-center bg-cover" data-alt="Headlight Bulb image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCAdjLCIE9_V2GYK0RllZBdf2CY-1vBtpta4dUvSZidtNkNNAOuBlsDQZ14Qig1GYlSGBZRPLHensYHxvSxzsZK76mUYXchO_4Shn9cKLyGcpenxveuXNu4YZtydVkrrWSphYtDVxYsY5qYvyfGvQSbYZ7cDZSE285fTLgnlYr5kGF-_MdQwv_6P1gt1wZFgIKJbiwqiD2qxGSPsuWiuM3PRnpVb8gq2Tz763PXPJGV7eO1Yn8jrzEghGYmMGJ3wZ3KfIyx_WKSUrDB");'></div>
+</td>
+<td class="px-6 py-4 align-middle">
+<p class="text-[#181411] font-medium text-sm">H7 Headlight Bulb</p>
+<p class="text-[#8c725f] text-xs">Twin Pack</p>
+</td>
+<td class="px-6 py-4 align-middle text-sm text-[#5e4e44]">HL-777</td>
+<td class="px-6 py-4 align-middle">
+<div class="flex items-center gap-2">
+<span class="text-warning font-bold text-base">12</span>
+</div>
+</td>
+<td class="px-6 py-4 align-middle text-sm text-[#5e4e44]">25</td>
+<td class="px-6 py-4 align-middle">
+<span class="text-[#181411] text-sm">1 Week</span>
+</td>
+<td class="px-6 py-4 align-middle">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                            Lighting
+                                        </span>
+</td>
+<td class="px-6 py-4 align-middle text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="size-8 rounded-lg flex items-center justify-center text-[#8c725f] hover:bg-[#f5f2f0] hover:text-primary transition-colors" title="View Product">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="size-8 rounded-lg flex items-center justify-center text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors" title="Adjust Stock">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Warning -->
+<tr class="hover:bg-[#fcfbf9] group transition-colors">
+<td class="px-6 py-4 align-middle">
+<div class="size-12 rounded-lg bg-gray-100 border border-gray-200 bg-center bg-cover" data-alt="Air Filter image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBOOABScXJRijwz8KoSSZStIPV51U1CWAxUMExQ5cOlPcazIqvkDH9ylgDY9QS1C3H4fPLLj-qeKzZtgrRAIzERd7s5tD7MT0_Bv5fGzKRJU9P8d34-z0U6qjSgouQIaaorpvT4eFrX5Cw4O8BLo1lLU9HcJSMAccesxCx0Xj471hHm_gax5YwuEwq-N5SRlzrEVUVtbXD77Z0DUsYvVvjwc7BkOZZSZ5yDIJ8WlX3EdOJH5-vybJQWfqNVEZg3tWpmZn7X8eQUIQeM");'></div>
+</td>
+<td class="px-6 py-4 align-middle">
+<p class="text-[#181411] font-medium text-sm">Cabin Air Filter</p>
+<p class="text-[#8c725f] text-xs">Activated Carbon</p>
+</td>
+<td class="px-6 py-4 align-middle text-sm text-[#5e4e44]">AF-220</td>
+<td class="px-6 py-4 align-middle">
+<div class="flex items-center gap-2">
+<span class="text-warning font-bold text-base">5</span>
+<span class="bg-warning/10 text-warning text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Low</span>
+</div>
+</td>
+<td class="px-6 py-4 align-middle text-sm text-[#5e4e44]">15</td>
+<td class="px-6 py-4 align-middle">
+<span class="text-[#181411] text-sm">3 Days</span>
+</td>
+<td class="px-6 py-4 align-middle">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                            Interior
+                                        </span>
+</td>
+<td class="px-6 py-4 align-middle text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="size-8 rounded-lg flex items-center justify-center text-[#8c725f] hover:bg-[#f5f2f0] hover:text-primary transition-colors" title="View Product">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="size-8 rounded-lg flex items-center justify-center text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors" title="Adjust Stock">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-4 border-t border-[#e6dfdb] flex items-center justify-between bg-white">
+<p class="text-sm text-[#8c725f]">Showing <span class="font-medium text-[#181411]">1</span> to <span class="font-medium text-[#181411]">5</span> of <span class="font-medium text-[#181411]">12</span> results</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded border border-[#e6dfdb] text-[#8c725f] text-sm font-medium disabled:opacity-50 hover:bg-[#f5f2f0]" disabled="">Previous</button>
+<button class="px-3 py-1 rounded border border-[#e6dfdb] text-[#181411] text-sm font-medium hover:bg-[#f5f2f0]">Next</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

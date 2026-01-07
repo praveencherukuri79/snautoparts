@@ -1,0 +1,34 @@
+<div class="admin-orders">
+  <div class="page-header">
+    <h1>Orders</h1>
+    <div class="filters">
+      <app-select
+        label="Status"
+        [options]="statusOptions"
+        [control]="statusFilter"
+        (selectionChange)="onFilterChange()"
+      />
+    </div>
+  </div>
+
+  <app-data-table
+    [columns]="columns"
+    [data]="orders()"
+    [loading]="isLoading()"
+    [paginated]="true"
+    [total]="total()"
+    [pageSize]="pageSize"
+    [currentPage]="currentPage()"
+    (pageChange)="onPageChange($event)"
+    (rowClick)="routerLink(['/admin/orders', $event.id])"
+    emptyTitle="No orders found"
+    emptyMessage="There are no orders matching your filters"
+  >
+    <ng-template #statusCell let-row>
+      <app-badge [variant]="getStatusVariant(row.status)">
+        {{ row.status }}
+      </app-badge>
+    </ng-template>
+  </app-data-table>
+</div>
+

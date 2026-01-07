@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>General Settings - SN Auto Parts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2c1e16",
+                        "border-light": "#e6dfdb",
+                        "border-dark": "#4a3528",
+                        "text-main-light": "#181411",
+                        "text-main-dark": "#f0e6e0",
+                        "text-sec-light": "#8c725f",
+                        "text-sec-dark": "#b09b8c",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #4a3528;
+        }
+        
+        /* Form inputs focus ring override */
+        input:focus, select:focus, textarea:focus {
+            --tw-ring-color: #f97415;
+            border-color: #f97415 !important;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark font-display h-screen flex overflow-hidden selection:bg-primary/30">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 flex flex-col bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark overflow-y-auto z-20 transition-colors">
+<div class="p-6 flex items-center gap-3">
+<div class="size-10 rounded-full bg-gradient-to-br from-primary to-orange-700 flex items-center justify-center text-white shadow-md">
+<span class="material-symbols-outlined text-2xl">local_shipping</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-base font-bold leading-tight">SN Auto Parts</h1>
+<p class="text-text-sec-light dark:text-text-sec-dark text-xs">Admin Console</p>
+</div>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-sec-light dark:text-text-sec-dark group-hover:text-primary transition-colors">pie_chart</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-sec-light dark:text-text-sec-dark group-hover:text-primary transition-colors">shopping_bag</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-sec-light dark:text-text-sec-dark group-hover:text-primary transition-colors">group</span>
+<span class="text-sm font-medium">Customers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-sec-light dark:text-text-sec-dark group-hover:text-primary transition-colors">inventory_2</span>
+<span class="text-sm font-medium">Inventory</span>
+</a>
+<div class="my-2 border-t border-border-light dark:border-border-dark"></div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary" href="#">
+<span class="material-symbols-outlined fill-1">settings</span>
+<span class="text-sm font-bold">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-border-light dark:border-border-dark">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Admin user profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuALB18tFFh8spD3hulsU6BCnbxgEes9OBlq3ub4raBPF6U6CsSLlRNVBxGmiFKgdzfLTNKz0Ybd3wuxj7ezbZRv23MUKoGQsmFYN0C9n6BsN7VSA-tUNXX4mrczTW0Oa9QrMFO9W_Y7JyhjQvvbJXVbZ6fcCJUVZ3Sv0X5PLqX4VInVpvXn7z_ZRNK6H3UBVPQc9ZQw-v5M6Yn3iWsNIKIted_jnGM70Lraa1CWWRv35DGZEgG4OE9Q4D4B7JBisBb6S1VfbkH5Qv1T');"></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-text-main-light dark:text-text-main-dark">Admin User</p>
+<p class="text-xs text-text-sec-light dark:text-text-sec-dark">admin@snautoparts.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header Sticky -->
+<header class="bg-background-light dark:bg-background-dark pt-8 px-8 pb-4 z-10">
+<div class="max-w-5xl mx-auto w-full">
+<div class="flex flex-col gap-1 mb-6">
+<h1 class="text-3xl font-black tracking-tight text-text-main-light dark:text-text-main-dark">Settings</h1>
+<p class="text-text-sec-light dark:text-text-sec-dark">Manage your store configuration and preferences</p>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex gap-8 border-b border-border-light dark:border-border-dark">
+<a class="pb-3 border-b-2 border-primary text-primary font-bold text-sm px-1" href="#">General</a>
+<a class="pb-3 border-b-2 border-transparent hover:border-border-light dark:hover:border-border-dark text-text-sec-light dark:text-text-sec-dark hover:text-text-main-light dark:hover:text-text-main-dark font-medium text-sm px-1 transition-colors" href="#">Shipping</a>
+<a class="pb-3 border-b-2 border-transparent hover:border-border-light dark:hover:border-border-dark text-text-sec-light dark:text-text-sec-dark hover:text-text-main-light dark:hover:text-text-main-dark font-medium text-sm px-1 transition-colors" href="#">Tax</a>
+<a class="pb-3 border-b-2 border-transparent hover:border-border-light dark:hover:border-border-dark text-text-sec-light dark:text-text-sec-dark hover:text-text-main-light dark:hover:text-text-main-dark font-medium text-sm px-1 transition-colors" href="#">Integrations</a>
+</div>
+</div>
+</header>
+<!-- Scrollable Form Area -->
+<div class="flex-1 overflow-y-auto p-8 pt-4">
+<div class="max-w-5xl mx-auto w-full pb-24">
+<form action="#" class="flex flex-col gap-8">
+<!-- Section: Store Information -->
+<section class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden">
+<div class="p-6 border-b border-border-light dark:border-border-dark">
+<h2 class="text-lg font-bold text-text-main-light dark:text-text-main-dark flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">storefront</span>
+                                Store Information
+                            </h2>
+<p class="text-sm text-text-sec-light dark:text-text-sec-dark mt-1">Basic contact details for your business displayed on invoices.</p>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Store Name</span>
+<input class="form-input rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-[#1e140d] text-text-main-light dark:text-text-main-dark h-11 px-4 placeholder:text-text-sec-light dark:placeholder:text-text-sec-dark focus:ring-0 focus:border-primary transition-colors" placeholder="e.g. Acme Corp" type="text" value="SN Auto Parts"/>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Store Email</span>
+<input class="form-input rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-[#1e140d] text-text-main-light dark:text-text-main-dark h-11 px-4 placeholder:text-text-sec-light dark:placeholder:text-text-sec-dark focus:ring-0 focus:border-primary transition-colors" placeholder="admin@example.com" type="email" value="contact@snautoparts.com"/>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Support Phone</span>
+<input class="form-input rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-[#1e140d] text-text-main-light dark:text-text-main-dark h-11 px-4 placeholder:text-text-sec-light dark:placeholder:text-text-sec-dark focus:ring-0 focus:border-primary transition-colors" placeholder="+1 (555) 000-0000" type="tel" value="+1 (555) 123-4567"/>
+</label>
+<div class="md:col-span-2">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Store Address</span>
+<textarea class="form-textarea rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-[#1e140d] text-text-main-light dark:text-text-main-dark p-4 placeholder:text-text-sec-light dark:placeholder:text-text-sec-dark focus:ring-0 focus:border-primary transition-colors resize-none" rows="3">1234 Mechanic Ave, Suite 100
+Detroit, MI 48201
+United States</textarea>
+</label>
+</div>
+</div>
+</section>
+<!-- Section: Business Settings -->
+<section class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden">
+<div class="p-6 border-b border-border-light dark:border-border-dark">
+<h2 class="text-lg font-bold text-text-main-light dark:text-text-main-dark flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">language</span>
+                                Business Standards
+                            </h2>
+<p class="text-sm text-text-sec-light dark:text-text-sec-dark mt-1">Configure regional settings and measurement units.</p>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Currency</span>
+<select class="form-select rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-[#1e140d] text-text-main-light dark:text-text-main-dark h-11 px-4 focus:ring-0 focus:border-primary transition-colors">
+<option selected="" value="USD">USD - US Dollar ($)</option>
+<option value="CAD">CAD - Canadian Dollar (C$)</option>
+<option value="EUR">EUR - Euro (€)</option>
+</select>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Timezone</span>
+<select class="form-select rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-[#1e140d] text-text-main-light dark:text-text-main-dark h-11 px-4 focus:ring-0 focus:border-primary transition-colors">
+<option selected="" value="EST">Eastern Standard Time (EST)</option>
+<option value="PST">Pacific Standard Time (PST)</option>
+<option value="UTC">Coordinated Universal Time (UTC)</option>
+</select>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Date Format</span>
+<select class="form-select rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-[#1e140d] text-text-main-light dark:text-text-main-dark h-11 px-4 focus:ring-0 focus:border-primary transition-colors">
+<option selected="" value="MM/DD/YYYY">MM/DD/YYYY (e.g. 12/31/2023)</option>
+<option value="DD/MM/YYYY">DD/MM/YYYY (e.g. 31/12/2023)</option>
+<option value="YYYY-MM-DD">YYYY-MM-DD (e.g. 2023-12-31)</option>
+</select>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Weight Unit</span>
+<select class="form-select rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-[#1e140d] text-text-main-light dark:text-text-main-dark h-11 px-4 focus:ring-0 focus:border-primary transition-colors">
+<option selected="" value="lb">Pounds (lb)</option>
+<option value="kg">Kilograms (kg)</option>
+<option value="oz">Ounces (oz)</option>
+</select>
+</label>
+</div>
+</section>
+<!-- Section: Order Settings -->
+<section class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden">
+<div class="p-6 border-b border-border-light dark:border-border-dark">
+<h2 class="text-lg font-bold text-text-main-light dark:text-text-main-dark flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">receipt_long</span>
+                                Order Processing
+                            </h2>
+<p class="text-sm text-text-sec-light dark:text-text-sec-dark mt-1">Customize how orders are generated and managed.</p>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Order Number Prefix</span>
+<div class="relative">
+<input class="form-input w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-[#1e140d] text-text-main-light dark:text-text-main-dark h-11 px-4 placeholder:text-text-sec-light dark:placeholder:text-text-sec-dark focus:ring-0 focus:border-primary transition-colors" type="text" value="ORD-"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-text-sec-light dark:text-text-sec-dark">
+<span class="text-xs bg-black/5 dark:bg-white/10 px-2 py-0.5 rounded">e.g. 1001</span>
+</div>
+</div>
+<span class="text-xs text-text-sec-light dark:text-text-sec-dark">Appears before order IDs.</span>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Low Stock Threshold</span>
+<input class="form-input rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-[#1e140d] text-text-main-light dark:text-text-main-dark h-11 px-4 placeholder:text-text-sec-light dark:placeholder:text-text-sec-dark focus:ring-0 focus:border-primary transition-colors" type="number" value="5"/>
+<span class="text-xs text-text-sec-light dark:text-text-sec-dark">Default trigger for low stock alerts.</span>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Cart Expiry (Days)</span>
+<input class="form-input rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-[#1e140d] text-text-main-light dark:text-text-main-dark h-11 px-4 placeholder:text-text-sec-light dark:placeholder:text-text-sec-dark focus:ring-0 focus:border-primary transition-colors" type="number" value="7"/>
+<span class="text-xs text-text-sec-light dark:text-text-sec-dark">Days to keep abandoned carts.</span>
+</label>
+</div>
+</section>
+<!-- Section: Email Settings -->
+<section class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden">
+<div class="p-6 border-b border-border-light dark:border-border-dark">
+<h2 class="text-lg font-bold text-text-main-light dark:text-text-main-dark flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">mail</span>
+                               Email Configuration
+                           </h2>
+<p class="text-sm text-text-sec-light dark:text-text-sec-dark mt-1">Settings for automated system emails.</p>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Sender Name</span>
+<input class="form-input rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-[#1e140d] text-text-main-light dark:text-text-main-dark h-11 px-4 placeholder:text-text-sec-light dark:placeholder:text-text-sec-dark focus:ring-0 focus:border-primary transition-colors" type="text" value="SN Auto Parts Team"/>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">Reply-To Email</span>
+<input class="form-input rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-[#1e140d] text-text-main-light dark:text-text-main-dark h-11 px-4 placeholder:text-text-sec-light dark:placeholder:text-text-sec-dark focus:ring-0 focus:border-primary transition-colors" type="email" value="support@snautoparts.com"/>
+</label>
+</div>
+</section>
+<!-- Action Footer -->
+<div class="flex items-center justify-end gap-4 pt-4">
+<button class="px-6 py-3 rounded-lg text-text-sec-light dark:text-text-sec-dark font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-colors" type="button">
+                           Cancel
+                       </button>
+<button class="px-8 py-3 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold shadow-lg shadow-orange-500/20 transition-all flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                            Save Changes
+                       </button>
+</div>
+</form>
+</div>
+</div>
+</main>
+</body></html>

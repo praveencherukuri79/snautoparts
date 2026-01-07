@@ -1,0 +1,216 @@
+<div class="reports-page">
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="header-content">
+      <h1>Sales Report</h1>
+      <p class="subtitle">Track revenue, orders, and performance metrics.</p>
+    </div>
+    <app-button variant="outline" icon="download" (clicked)="exportReport()">
+      Export CSV
+    </app-button>
+  </header>
+
+  <!-- Period Filters -->
+  <div class="period-filters">
+    <div class="period-chips">
+      @for (period of periodOptions; track period.value) {
+        <button 
+          class="period-chip" 
+          [class.active]="selectedPeriod() === period.value"
+          (click)="selectPeriod(period.value)"
+        >
+          {{ period.label }}
+        </button>
+      }
+    </div>
+    <div class="date-range">
+      <div class="date-input-group">
+        <span class="material-symbols-outlined">calendar_today</span>
+        <input type="text" placeholder="Start Date" value="Oct 24, 2023" />
+        <span class="separator">-</span>
+        <input type="text" placeholder="End Date" value="Nov 23, 2023" />
+      </div>
+      <app-button variant="primary">Apply</app-button>
+    </div>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    @if (data(); as report) {
+    <!-- Summary Cards -->
+    <div class="summary-grid">
+      <div class="stat-card">
+        <div class="stat-icon revenue">
+          <span class="material-symbols-outlined">attach_money</span>
+        </div>
+        <span class="stat-label">Total Revenue</span>
+        <span class="stat-value">{{ report.totalRevenue | currency }}</span>
+        <div class="stat-change" [class.positive]="report.revenueChange > 0" [class.negative]="report.revenueChange < 0">
+          <span class="material-symbols-outlined">{{ report.revenueChange > 0 ? 'trending_up' : 'trending_down' }}</span>
+          {{ report.revenueChange | number:'1.1-1' }}%
+          <span class="vs-text">vs last period</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon orders">
+          <span class="material-symbols-outlined">shopping_cart</span>
+        </div>
+        <span class="stat-label">Total Orders</span>
+        <span class="stat-value">{{ report.totalOrders }}</span>
+        <div class="stat-change" [class.positive]="report.ordersChange > 0" [class.negative]="report.ordersChange < 0">
+          <span class="material-symbols-outlined">{{ report.ordersChange > 0 ? 'trending_up' : 'trending_down' }}</span>
+          {{ report.ordersChange | number:'1.1-1' }}%
+          <span class="vs-text">vs last period</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon aov">
+          <span class="material-symbols-outlined">payments</span>
+        </div>
+        <span class="stat-label">Avg Order Value</span>
+        <span class="stat-value">{{ report.averageOrderValue | currency }}</span>
+        <div class="stat-change" [class.positive]="report.aovChange > 0" [class.negative]="report.aovChange < 0">
+          <span class="material-symbols-outlined">{{ report.aovChange > 0 ? 'trending_up' : 'trending_down' }}</span>
+          {{ report.aovChange | number:'1.1-1' }}%
+          <span class="vs-text">vs last period</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon items">
+          <span class="material-symbols-outlined">inventory</span>
+        </div>
+        <span class="stat-label">Items Sold</span>
+        <span class="stat-value">{{ report.itemsSold }}</span>
+        <div class="stat-change" [class.positive]="report.itemsChange > 0" [class.negative]="report.itemsChange < 0">
+          <span class="material-symbols-outlined">{{ report.itemsChange > 0 ? 'trending_up' : 'trending_down' }}</span>
+          {{ report.itemsChange | number:'1.1-1' }}%
+          <span class="vs-text">vs last period</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Grid -->
+    <div class="charts-grid">
+      <!-- Revenue Trend Chart -->
+      <div class="chart-card main-chart">
+        <div class="chart-header">
+          <h3>Revenue Trend</h3>
+          <button class="chart-menu">
+            <span class="material-symbols-outlined">more_horiz</span>
+          </button>
+        </div>
+        <div class="chart-container">
+          <div class="y-axis">
+            <span>$3k</span>
+            <span>$2k</span>
+            <span>$1k</span>
+            <span>$0</span>
+          </div>
+          <div class="chart-area">
+            <svg class="chart-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="revenueGradient" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#f97415" stop-opacity="0.3"></stop>
+                  <stop offset="100%" stop-color="#f97415" stop-opacity="0"></stop>
+                </linearGradient>
+              </defs>
+              <path [attr.d]="getChartAreaPath()" fill="url(#revenueGradient)" />
+              <path [attr.d]="getChartPath()" fill="none" stroke="#f97415" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="x-axis">
+            <span>Nov 01</span>
+            <span>Nov 07</span>
+            <span>Nov 14</span>
+            <span>Nov 21</span>
+            <span>Nov 28</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Daily Orders Bar Chart -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h3>Daily Orders</h3>
+        </div>
+        <div class="bar-chart">
+          <div class="bars">
+            @for (height of getDailyOrdersData(); track $index; let i = $index) {
+              <div 
+                class="bar" 
+                [style.height.%]="height"
+                [class.active]="i === 3"
+              >
+                @if (i === 3) {
+                  <span class="bar-tooltip">28</span>
+                }
+              </div>
+            }
+          </div>
+          <div class="bar-labels">
+            @for (label of getDayLabels(); track $index; let i = $index) {
+              <span [class.active]="i === 3">{{ label }}</span>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed Breakdown Table -->
+    <div class="table-card">
+      <div class="table-header">
+        <h3>Detailed Breakdown</h3>
+        <div class="table-actions">
+          <button class="icon-btn">
+            <span class="material-symbols-outlined">filter_list</span>
+          </button>
+          <button class="icon-btn">
+            <span class="material-symbols-outlined">search</span>
+          </button>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Orders</th>
+            <th>Revenue</th>
+            <th>Avg Order Value</th>
+            <th>Top Category</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of report.dailyBreakdown; track trackByDay($index, row)) {
+            <tr>
+              <td class="date-cell">{{ row.date | date:'mediumDate' }}</td>
+              <td>{{ row.orders }}</td>
+              <td>{{ row.revenue | currency }}</td>
+              <td>{{ row.avgOrderValue | currency }}</td>
+              <td class="category-cell">{{ row.topCategory }}</td>
+              <td>
+                <app-badge [variant]="row.status === 'completed' ? 'success' : 'warning'" size="sm">
+                  {{ row.status === 'completed' ? 'Completed' : 'Pending Review' }}
+                </app-badge>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <div class="table-footer">
+        <span>Showing 5 of 142 days</span>
+        <div class="pagination">
+          <button class="page-btn" disabled>Previous</button>
+          <button class="page-btn" disabled>Next</button>
+        </div>
+      </div>
+    </div>
+    }
+  }
+</div>

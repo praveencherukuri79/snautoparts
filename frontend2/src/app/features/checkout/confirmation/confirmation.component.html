@@ -1,0 +1,51 @@
+<div class="confirmation">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    @if (order(); as o) {
+    <div class="confirmation-content">
+      <div class="success-icon">
+        <span class="material-symbols-outlined">check_circle</span>
+      </div>
+      
+      <h1>Order Confirmed!</h1>
+      <p class="subtitle">Thank you for your order</p>
+
+      <app-card variant="outlined" class="order-details">
+        <div class="detail-row">
+          <span class="label">Order Number</span>
+          <span class="value order-number">{{ o.orderNumber }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Order Date</span>
+          <span class="value">{{ o.createdAt | date:'medium' }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Total</span>
+          <span class="value">{{ o.total | currency }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Status</span>
+          <span class="value status">{{ o.status }}</span>
+        </div>
+      </app-card>
+
+      <p class="email-notice">
+        A confirmation email has been sent to your email address with your order details.
+      </p>
+
+      <div class="actions">
+        <app-button variant="outline" routerLink="/orders">
+          View My Orders
+        </app-button>
+        <app-button routerLink="/products">
+          Continue Shopping
+        </app-button>
+      </div>
+    </div>
+    }
+  }
+</div>
+

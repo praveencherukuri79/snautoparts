@@ -1,0 +1,21 @@
+<button
+  [type]="type"
+  [disabled]="isDisabled"
+  [class]="buttonClasses.join(' ')"
+  (click)="onClick($event)"
+>
+  @if (loading) {
+    <mat-spinner diameter="18" class="app-button__spinner"></mat-spinner>
+  } @else {
+    @if (icon && iconPosition === 'left') {
+      <mat-icon class="app-button__icon app-button__icon--left">{{ icon }}</mat-icon>
+    }
+    <span class="app-button__content">
+      <ng-content></ng-content>
+    </span>
+    @if (icon && iconPosition === 'right') {
+      <mat-icon class="app-button__icon app-button__icon--right">{{ icon }}</mat-icon>
+    }
+  }
+</button>
+

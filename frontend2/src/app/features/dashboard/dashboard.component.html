@@ -1,0 +1,417 @@
+<div class="dashboard">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg"></app-spinner>
+    </div>
+  } @else {
+    @switch (dashboardLayout()) {
+      <!-- ========== CUSTOMER DASHBOARD ========== -->
+      @case ('customer') {
+        <div class="customer-dashboard">
+          <!-- Header Section -->
+          <div class="dashboard-header">
+            <div class="header-content">
+              <h1 class="welcome-title">Welcome, {{ userName }}!</h1>
+              <p class="welcome-subtitle">Here is what is happening with your account today.</p>
+            </div>
+            <div class="header-actions">
+              <app-button variant="outline" routerLink="/account/vehicles">
+                Manage Vehicles
+              </app-button>
+              <app-button variant="primary" routerLink="/orders">
+                View Orders
+              </app-button>
+            </div>
+          </div>
+
+          <!-- Main Content Grid -->
+          <div class="dashboard-grid">
+            <!-- Recent Orders Widget -->
+            <div class="widget orders-widget">
+              <div class="widget-header">
+                <div class="widget-title">
+                  <span class="material-symbols-outlined widget-icon">shopping_bag</span>
+                  <h2>Recent Orders</h2>
+                </div>
+                <a routerLink="/orders" class="widget-link">View All</a>
+              </div>
+              
+              @if (recentOrders().length > 0) {
+                <div class="orders-table">
+                  <div class="table-header">
+                    <span class="col-order">Order #</span>
+                    <span class="col-date">Date</span>
+                    <span class="col-total">Total</span>
+                    <span class="col-status">Status</span>
+                    <span class="col-action"></span>
+                  </div>
+                  @for (order of recentOrders(); track trackByOrder($index, order)) {
+                    <div class="table-row">
+                      <span class="col-order order-number">#{{ order.orderNumber }}</span>
+                      <span class="col-date">{{ order.createdAt | date:'MMM d, y' }}</span>
+                      <span class="col-total">{{ order.total | currency }}</span>
+                      <span class="col-status">
+                        <app-badge [variant]="getStatusVariant(order.status)" size="sm">
+                          {{ order.status }}
+                        </app-badge>
+                      </span>
+                      <span class="col-action">
+                        <a [routerLink]="['/orders', order.id]" class="view-btn">
+                          <span class="material-symbols-outlined">visibility</span>
+                        </a>
+                      </span>
+                    </div>
+                  }
+                </div>
+              } @else {
+                <div class="empty-widget">
+                  <span class="material-symbols-outlined empty-icon">receipt_long</span>
+                  <p>No orders yet</p>
+                  <a routerLink="/products" class="empty-link">Start Shopping</a>
+                </div>
+              }
+            </div>
+
+            <!-- Saved Vehicles Widget -->
+            <div class="widget vehicles-widget">
+              <div class="widget-header">
+                <div class="widget-title">
+                  <span class="material-symbols-outlined widget-icon">directions_car</span>
+                  <h2>Saved Vehicles</h2>
+                </div>
+                <a routerLink="/account/vehicles" class="widget-link">Manage All</a>
+              </div>
+
+              <div class="vehicles-list">
+                @for (vehicle of savedVehicles().slice(0, 2); track trackByVehicle($index, vehicle)) {
+                  <div class="vehicle-card" [class.default]="vehicle.isDefault">
+                    <div class="vehicle-icon">
+                      <span class="material-symbols-outlined">directions_car</span>
+                    </div>
+                    <div class="vehicle-info">
+                      <div class="vehicle-header">
+                        <span class="vehicle-name">{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}</span>
+                        @if (vehicle.isDefault) {
+                          <app-badge variant="warning" size="sm">DEFAULT</app-badge>
+                        }
+                      </div>
+                      <span class="vehicle-details">
+                        @if (vehicle.submodel) {
+                          {{ vehicle.submodel }}
+                        }
+                        @if (vehicle.engine) {
+                          • {{ vehicle.engine }}
+                        }
+                      </span>
+                    </div>
+                    <a [routerLink]="['/account/vehicles']" class="vehicle-edit">
+                      <span class="material-symbols-outlined">edit</span>
+                    </a>
+                  </div>
+                } @empty {
+                  <div class="empty-vehicles">
+                    <span class="material-symbols-outlined">directions_car</span>
+                    <p>No saved vehicles</p>
+                  </div>
+                }
+
+                <!-- Add New Vehicle -->
+                <a routerLink="/account/vehicles" class="add-vehicle-btn">
+                  <span class="material-symbols-outlined">add_circle</span>
+                  <span>Add New Vehicle</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <section class="quick-actions-section">
+            <h2 class="section-title">Quick Actions</h2>
+            <div class="quick-actions-grid">
+              <a routerLink="/account/profile" class="quick-action-card">
+                <div class="action-icon">
+                  <span class="material-symbols-outlined">person</span>
+                </div>
+                <div class="action-content">
+                  <span class="action-title">Edit Profile</span>
+                  <span class="action-desc">Update your personal information</span>
+                </div>
+                <span class="material-symbols-outlined action-arrow">arrow_forward</span>
+              </a>
+              
+              <a routerLink="/account/addresses" class="quick-action-card">
+                <div class="action-icon">
+                  <span class="material-symbols-outlined">location_on</span>
+                </div>
+                <div class="action-content">
+                  <span class="action-title">Manage Addresses</span>
+                  <span class="action-desc">Add or remove shipping addresses</span>
+                </div>
+                <span class="material-symbols-outlined action-arrow">arrow_forward</span>
+              </a>
+            </div>
+          </section>
+        </div>
+      }
+
+      <!-- ========== OPERATIONS DASHBOARD ========== -->
+      @case ('operations') {
+        <div class="operations-dashboard">
+          <div class="dashboard-header">
+            <div class="header-content">
+              <h1 class="welcome-title">Operations Dashboard</h1>
+              <p class="welcome-subtitle">Overview for today, {{ '' | date:'MMMM d' }}</p>
+            </div>
+            <div class="header-actions">
+              <app-button variant="outline" icon="download">
+                Export Report
+              </app-button>
+            </div>
+          </div>
+          
+          <div class="stats-grid">
+            <div class="stat-card stat-card--success">
+              <div class="stat-header">
+                <span class="stat-label">Today's Orders</span>
+                <span class="material-symbols-outlined stat-icon">shopping_bag</span>
+              </div>
+              <span class="stat-value">{{ stats().ordersToday }}</span>
+              <span class="stat-change positive">↗ +12% vs yesterday</span>
+            </div>
+            
+            <div class="stat-card stat-card--warning">
+              <div class="stat-header">
+                <span class="stat-label">Pending Orders</span>
+                <span class="material-symbols-outlined stat-icon">pending_actions</span>
+              </div>
+              <span class="stat-value">{{ stats().pendingOrders }}</span>
+              <span class="stat-change">Needs immediate action</span>
+            </div>
+            
+            <div class="stat-card stat-card--primary">
+              <div class="stat-header">
+                <span class="stat-label">Revenue Today</span>
+                <span class="material-symbols-outlined stat-icon">payments</span>
+              </div>
+              <span class="stat-value">{{ stats().todayRevenue | currency }}</span>
+              <span class="stat-change positive">↗ +5% vs yesterday</span>
+            </div>
+            
+            <div class="stat-card stat-card--error">
+              <div class="stat-header">
+                <span class="stat-label">Low Stock Items</span>
+                <span class="material-symbols-outlined stat-icon">warning</span>
+              </div>
+              <span class="stat-value">{{ stats().lowStockItems }}</span>
+              <span class="stat-change">Critical Inventory Alerts</span>
+            </div>
+          </div>
+
+          <!-- Charts Placeholder -->
+          <div class="charts-grid">
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3>Order Volume</h3>
+                <span class="chart-period">Last 7 Days</span>
+              </div>
+              <div class="chart-placeholder">
+                <span class="material-symbols-outlined">show_chart</span>
+                <p>Chart visualization coming soon</p>
+              </div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3>Revenue Trend</h3>
+                <span class="chart-period">Last 7 Days</span>
+              </div>
+              <div class="chart-placeholder">
+                <span class="material-symbols-outlined">bar_chart</span>
+                <p>Chart visualization coming soon</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-sections">
+            <section class="recent-orders">
+              <div class="section-header">
+                <h2>Recent Orders</h2>
+                <a routerLink="/orders" class="section-link">View All Orders →</a>
+              </div>
+              <div class="orders-list">
+                @for (order of recentOrders(); track order.id) {
+                  <div class="order-item">
+                    <div class="order-info">
+                      <span class="order-number">#{{ order.orderNumber }}</span>
+                      <span class="order-customer">{{ order.customer?.email }}</span>
+                    </div>
+                    <div class="order-meta">
+                      <span class="order-total">{{ order.total | currency }}</span>
+                      <app-badge [variant]="getStatusVariant(order.status)" size="sm">
+                        {{ order.status }}
+                      </app-badge>
+                    </div>
+                  </div>
+                } @empty {
+                  <p class="no-orders">No recent orders</p>
+                }
+              </div>
+            </section>
+
+            <section class="low-stock-section">
+              <div class="section-header">
+                <h2>Low Stock</h2>
+                <span class="stock-count">{{ stats().lowStockItems }}</span>
+                <a routerLink="/inventory" class="section-link">View Inventory</a>
+              </div>
+              <div class="low-stock-placeholder">
+                <span class="material-symbols-outlined">inventory_2</span>
+                <p>Low stock items will appear here</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      }
+
+      <!-- ========== ADMIN DASHBOARD ========== -->
+      @case ('admin') {
+        <div class="admin-dashboard">
+          <div class="dashboard-header">
+            <div class="header-content">
+              <h1 class="welcome-title">Dashboard Overview</h1>
+              <p class="welcome-subtitle">Welcome back, Administrator. System status is normal.</p>
+            </div>
+            <div class="header-actions">
+              <span class="date-display">
+                <span class="material-symbols-outlined">calendar_month</span>
+                {{ '' | date:'MMMM d, y' }}
+              </span>
+              <app-button variant="primary" icon="download">
+                Export Report
+              </app-button>
+            </div>
+          </div>
+          
+          <div class="stats-grid stats-grid--4">
+            <div class="stat-card stat-card--primary">
+              <div class="stat-header">
+                <span class="stat-label">Total GMV</span>
+                <span class="material-symbols-outlined stat-icon">payments</span>
+              </div>
+              <span class="stat-value">{{ stats().todayRevenue | currency:'USD':'symbol':'1.2-2' }}</span>
+              <span class="stat-change positive">↗ +12% vs last month</span>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-label">Total Orders</span>
+                <span class="material-symbols-outlined stat-icon">shopping_bag</span>
+              </div>
+              <span class="stat-value">{{ stats().ordersToday }}</span>
+              <span class="stat-change positive">↗ +5% vs last month</span>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-label">Active Users</span>
+                <span class="material-symbols-outlined stat-icon">people</span>
+              </div>
+              <span class="stat-value">{{ stats().totalUsers }}</span>
+              <span class="stat-change positive">↗ +8% vs last month</span>
+            </div>
+            <div class="stat-card stat-card--success">
+              <div class="stat-header">
+                <span class="stat-label">System Health</span>
+                <span class="material-symbols-outlined stat-icon">check_circle</span>
+              </div>
+              <span class="stat-value">Operational</span>
+              <span class="stat-change success">● All systems normal</span>
+            </div>
+          </div>
+
+          <!-- Charts Placeholder -->
+          <div class="charts-grid">
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3>Orders Over Time</h3>
+                <span class="chart-period">Last 30 Days</span>
+              </div>
+              <div class="chart-placeholder">
+                <span class="material-symbols-outlined">show_chart</span>
+                <p>Chart visualization coming soon</p>
+              </div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3>Revenue by Month</h3>
+                <span class="chart-period">Last 12 Months</span>
+              </div>
+              <div class="chart-placeholder">
+                <span class="material-symbols-outlined">bar_chart</span>
+                <p>Chart visualization coming soon</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-sections dashboard-sections--3">
+            <!-- User Activity -->
+            <section class="activity-section">
+              <div class="section-header">
+                <h2>User Activity</h2>
+                <select class="activity-filter">
+                  <option>Today</option>
+                  <option>This Week</option>
+                  <option>This Month</option>
+                </select>
+              </div>
+              <div class="activity-placeholder">
+                <span class="material-symbols-outlined">groups</span>
+                <p>User activity feed coming soon</p>
+              </div>
+            </section>
+
+            <!-- Pending Alerts -->
+            <section class="alerts-section">
+              <div class="section-header">
+                <h2>Pending Alerts</h2>
+                <app-badge variant="error" size="sm">3 Critical</app-badge>
+              </div>
+              <div class="alerts-list">
+                <div class="alert-item alert-item--error">
+                  <span class="material-symbols-outlined">error</span>
+                  <div class="alert-content">
+                    <span class="alert-title">ERP Integration Failed</span>
+                    <span class="alert-desc">Connection timed out for SAP Sync module</span>
+                  </div>
+                </div>
+                <div class="alert-item alert-item--warning">
+                  <span class="material-symbols-outlined">warning</span>
+                  <div class="alert-content">
+                    <span class="alert-title">Unmapped Products</span>
+                    <span class="alert-desc">24 new items detected without category mapping</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="admin-actions-section">
+              <h2>Quick Actions</h2>
+              <div class="admin-actions-list">
+                <a routerLink="/users/new" class="admin-action-btn primary">
+                  <span class="material-symbols-outlined">person_add</span>
+                  Add New User
+                </a>
+                <a routerLink="/settings" class="admin-action-btn">
+                  <span class="material-symbols-outlined">settings</span>
+                  Manage Settings
+                </a>
+                <a routerLink="/audit" class="admin-action-btn">
+                  <span class="material-symbols-outlined">history</span>
+                  View Audit Log
+                </a>
+              </div>
+            </section>
+          </div>
+        </div>
+      }
+    }
+  }
+</div>

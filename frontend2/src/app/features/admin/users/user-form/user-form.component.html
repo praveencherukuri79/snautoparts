@@ -1,0 +1,191 @@
+<div class="user-form-page">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a routerLink="/users">Users</a>
+    <span class="separator">/</span>
+    <span>{{ isEditMode() ? 'Edit User' : 'Create New' }}</span>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <h1>{{ isEditMode() ? 'Edit User' : 'Create New User' }}</h1>
+    <app-button variant="outline" icon="arrow_back" routerLink="/users">
+      Back to Users
+    </app-button>
+  </header>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+      <!-- Personal Information -->
+      <div class="form-section">
+        <div class="section-header">
+          <span class="material-symbols-outlined section-icon">person</span>
+          <h2>Personal Information</h2>
+        </div>
+        <div class="section-content">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="firstName">First Name</label>
+              <input 
+                id="firstName"
+                type="text"
+                formControlName="firstName"
+                class="form-input"
+                placeholder="e.g. Jane"
+              />
+              @if (getFieldError('firstName')) {
+                <span class="field-error">{{ getFieldError('firstName') }}</span>
+              }
+            </div>
+            <div class="form-field">
+              <label for="lastName">Last Name</label>
+              <input 
+                id="lastName"
+                type="text"
+                formControlName="lastName"
+                class="form-input"
+                placeholder="e.g. Smith"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="email">Email Address <span class="required">*</span></label>
+              <input 
+                id="email"
+                type="email"
+                formControlName="email"
+                class="form-input"
+                placeholder="jane.smith@example.com"
+              />
+              @if (getFieldError('email')) {
+                <span class="field-error">{{ getFieldError('email') }}</span>
+              }
+            </div>
+            <div class="form-field">
+              <label for="phone">Phone Number <span class="optional">(Optional)</span></label>
+              <input 
+                id="phone"
+                type="tel"
+                formControlName="phone"
+                class="form-input"
+                placeholder="(555) 123-4567"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Details -->
+      <div class="form-section">
+        <div class="section-header">
+          <span class="material-symbols-outlined section-icon">badge</span>
+          <h2>Account Details</h2>
+        </div>
+        <div class="section-content">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="role">Role Assignment</label>
+              <select id="role" formControlName="roleId" class="form-select">
+                <option value="">Select a role</option>
+                @for (role of roleOptions(); track role.value) {
+                  <option [value]="role.value">{{ role.label }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Account Status</label>
+              <div class="toggle-field">
+                <button 
+                  type="button"
+                  class="toggle-btn"
+                  [class.active]="isActive()"
+                  (click)="toggleActive()"
+                >
+                  <span class="toggle-track">
+                    <span class="toggle-thumb"></span>
+                  </span>
+                </button>
+                <span class="toggle-label">{{ isActive() ? 'Active' : 'Inactive' }}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-field">
+              <div class="label-row">
+                <label for="password">Password</label>
+                <button type="button" class="auto-generate-btn" (click)="autoGeneratePassword()">
+                  Auto-generate
+                </button>
+              </div>
+              <input 
+                id="password"
+                type="password"
+                formControlName="password"
+                class="form-input"
+                placeholder="••••••••"
+              />
+              @if (getFieldError('password')) {
+                <span class="field-error">{{ getFieldError('password') }}</span>
+              }
+            </div>
+            <div class="form-field">
+              <label for="confirmPassword">Confirm Password</label>
+              <input 
+                id="confirmPassword"
+                type="password"
+                formControlName="confirmPassword"
+                class="form-input"
+                placeholder="••••••••"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications & Security -->
+      @if (!isEditMode()) {
+        <div class="form-section">
+          <div class="section-header">
+            <span class="material-symbols-outlined section-icon">notifications</span>
+            <h2>Notifications & Security</h2>
+          </div>
+          <div class="section-content">
+            <div class="checkbox-field" (click)="toggleWelcomeEmail()">
+              <div class="checkbox" [class.checked]="sendWelcomeEmail()">
+                @if (sendWelcomeEmail()) {
+                  <span class="material-symbols-outlined">check</span>
+                }
+              </div>
+              <div class="checkbox-content">
+                <span class="checkbox-label">Send Welcome Email</span>
+                <span class="checkbox-desc">User will receive login instructions via email immediately.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <app-button variant="outline" routerLink="/users">
+          Cancel
+        </app-button>
+        <app-button 
+          variant="primary" 
+          type="submit"
+          [loading]="isSaving()"
+          [disabled]="form.invalid"
+        >
+          {{ isEditMode() ? 'Save Changes' : 'Create User' }}
+        </app-button>
+      </div>
+    </form>
+  }
+</div>
+

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Categories</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2d1f16",
+                        "text-main": "#181411",
+                        "text-muted": "#8c725f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display antialiased min-h-screen flex flex-col">
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 shadow-sm">
+<div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16 gap-4">
+<!-- Logo -->
+<div class="flex items-center gap-2 flex-shrink-0">
+<div class="size-8 text-primary">
+<svg class="h-full w-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="text-xl font-bold tracking-tight text-gray-900 dark:text-white hidden sm:block">SN Auto Parts</span>
+</div>
+<!-- Navigation - Desktop -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium text-primary dark:text-primary" href="#">Categories</a>
+<a class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" href="#">Deals</a>
+<a class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" href="#">Support</a>
+</nav>
+<!-- Search and Actions -->
+<div class="flex items-center gap-4 flex-1 justify-end max-w-xl">
+<div class="hidden sm:flex flex-1 max-w-sm relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border-none rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary sm:text-sm" placeholder="Search parts..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="relative p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors group">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1 right-1 size-2 bg-primary rounded-full"></span>
+</button>
+<button class="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow">
+<div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="flex mb-6">
+<ol class="flex items-center space-x-2">
+<li>
+<a class="text-text-muted hover:text-primary text-sm font-medium transition-colors" href="#">Home</a>
+</li>
+<li>
+<span class="text-text-muted text-sm">/</span>
+</li>
+<li>
+<a aria-current="page" class="text-text-main dark:text-white text-sm font-medium" href="#">Categories</a>
+</li>
+</ol>
+</nav>
+<!-- Page Heading -->
+<div class="mb-10">
+<h1 class="text-3xl md:text-4xl font-black text-gray-900 dark:text-white tracking-tight mb-3">Shop by Category</h1>
+<p class="text-lg text-text-muted max-w-2xl">Browse our extensive catalog of quality auto parts. Find exactly what you need for your vehicle maintenance and upgrades.</p>
+</div>
+<!-- Category Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Card 1: Engine Parts -->
+<a class="group relative flex flex-col overflow-hidden rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" href="#">
+<div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Detailed view of a car engine bay" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDqxVu0dt5CZ5oR43DuZMtAbHAwDFG32EhpOx_a5DI58HmsYpYUYIWRa_Tos2GZTkxOz-49_oDQCpxHpNvsmKz6v0-5zrWJOUBjccZV20cf-g-rs529YzTCF9LGSsc30w9ytSZyjIGjR4pJQ0tp6stOOjqnPKHQzlAO3lsl7n-w7FzxyjJM55Ud2JzRzNkxI7J0cRhd2DC3BPU5klqMt9YkfjisYb-YsYJPu-fudg4SBp-vPrYYzfY66ZiXwpbZE6Gbl7OIJGXm4iLV");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<span class="material-symbols-outlined text-4xl mb-2 text-primary">engineering</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Engine Parts</h3>
+<p class="text-sm text-text-muted mt-1">234 products</p>
+</div>
+</a>
+<!-- Card 2: Brakes & Rotors -->
+<a class="group relative flex flex-col overflow-hidden rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" href="#">
+<div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Car brake disc and caliper close up" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDoFgbhGDbhFJ0Lk4sLDoRsZBJaWnBWQ7xNWjTDn1xq66x55H6jnRqaF1av_Nf8zHv7Ytife360NOJU7PsI1dzQqwUxR_oEtVTrdoQK2jdaOvXzjKT3Dv2sfsQQJ9EL8pd6uKSNQGDCE7e3Z1L3D64OJbl982YlfFheQ2Ye9ptdrOjJXwo1xMhK6gBiLPFvSkSC2h9_lPgGdjm2SbKZMNnqfz8JbfLFmqXsXisJ6Ix-YQnALpGkS_qEAwhsWInuPQKNB4cMRFb2AllA");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<span class="material-symbols-outlined text-4xl mb-2 text-primary">album</span> <!-- using album as disc shape -->
+</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Brakes &amp; Rotors</h3>
+<p class="text-sm text-text-muted mt-1">150+ products</p>
+</div>
+</a>
+<!-- Card 3: Suspension & Steering -->
+<a class="group relative flex flex-col overflow-hidden rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" href="#">
+<div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Underneath car suspension system parts" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD9Sg8ZOxeXn2qnU9bg7BM6ub5aYOYcYxkJtMHK0gwrSU8mqU34yj8kS5-aShEjN_ajxK-nW1V_R7283pRMWzTBMvaHpNxTvSLdOJxAaUqi9v6vb_bxBnw0V0BBkJiFYiyrVcBr4trerJHBeLc_pGKXGUBDHOvmtdvizxK00lMt0_rnLUAwJIODcD_vdUTAQ9dC9BX005pf5kSkrBOoHO9ooKBVQAMRpz0rXThC-tQ6-1vXPx-5SWaTl2M4i8_AgMpkF33rUNlhiu-R");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<span class="material-symbols-outlined text-4xl mb-2 text-primary">handyman</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Suspension &amp; Steering</h3>
+<p class="text-sm text-text-muted mt-1">89 products</p>
+</div>
+</a>
+<!-- Card 4: Electrical & Lighting -->
+<a class="group relative flex flex-col overflow-hidden rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" href="#">
+<div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Modern car headlight detail glowing" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYxNWs6e6fn7Q_b6VC2Q8Gg4BRgnIjgdKOJWSuIQVQ_j6f9OdwxSMFM-owarx4tbahmrF06PAG-i7EYeL-V8tZDwtoJXQyqvIWy_B2aSq0EZO-_1RoEqYmHsqAc0bdUgeGoR7dh7Lt3kZDtVTTYpDWQEYp2Xo3HOCkSu3DehypQLrawTHd2St114hsvlbKv2JgfVcmsMPRI_imm2zOJsiFTA6WhIFaYPlmKPnFH52STiuiw8u8YQmkdhw-a8yjIG0Kta7yd7r9nsDV");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<span class="material-symbols-outlined text-4xl mb-2 text-primary">bolt</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Electrical &amp; Lighting</h3>
+<p class="text-sm text-text-muted mt-1">300+ products</p>
+</div>
+</a>
+<!-- Card 5: Body & Exterior -->
+<a class="group relative flex flex-col overflow-hidden rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" href="#">
+<div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Close up of shiny car door and handle" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDn8KJ_hJEO_HY5Lu64OQFCXtaqg-lg-qlVQ7W6UcwujIN799r8xSRNuwAjW0Htxz7PuJs6EaFUDX2TwDJiCy02QKLAOEya0LNdbgf3FS5XHHC9aKOcfoMQDO2jDaEZ35lbJFhuXQC0lP-jm9aFH3WnfA6fcOt7z7CG_2YgxZXECNgOas42cYSeho4YzO_SBDh_GjPBj8x6pBBjsaomjWF4iWr5FpnHMcCn3f9c_5FWpZbi0JnxVSmu-mLdu8DdADDMbdANkCfAQ8xd");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<span class="material-symbols-outlined text-4xl mb-2 text-primary">directions_car</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Body &amp; Exterior</h3>
+<p class="text-sm text-text-muted mt-1">120 products</p>
+</div>
+</a>
+<!-- Card 6: Filters & Fluids -->
+<a class="group relative flex flex-col overflow-hidden rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" href="#">
+<div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Mechanic pouring motor oil into car engine" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuARIJCw93PSAER0SSyk6pzW722PRaUR1akBtvUfOcl67zG2-lX3Xid1PInE9LGGeuj1awvPpwo8RNv1hdVR52FpdyA7AbaxLqlZcxbyS0kJW8kMfUfs_ujN7on2Fv8rcKCC3FZ8d1d1DmODZwOslqwHoQiMqjUFjhk76EtTKuFiAQCklGtBB1QF0aPLC9Rqb8j-hLD1RUaqlP5DsH15apehrTaqjhee9Riv9bPiBHWklVoRwnDEdZNxkWYBSnCVNvqovItOmTK0KlFM");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<span class="material-symbols-outlined text-4xl mb-2 text-primary">water_drop</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Filters &amp; Fluids</h3>
+<p class="text-sm text-text-muted mt-1">95 products</p>
+</div>
+</a>
+<!-- Card 7: Exhaust Systems -->
+<a class="group relative flex flex-col overflow-hidden rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" href="#">
+<div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Chrome dual exhaust pipes on a sports car" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuArevjkQ9Ss1vZoxeeZOcAs1NljgwnaSz89xk5Zx0mU0B08BDXbNzsuYrZdVDXd8g7uLS-fgAdIdJXHTzYeYzKHPRATYC0HN3wC1gAzjCQocL8GZE7JXJcLICHUgX4gz_5xwQqazNROtVXjRtH5bew_RY9QH2Dv6PUu-Y9MEMqTbVifzobnJN4Qiqc8XCvTnn4dPSlgPti7mQuneV6G3wmWyvGeYxr1uM0-eOdj5HonI59A-omRNzfuoHBmDqeaL2wEhw-ek9MV710k");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<span class="material-symbols-outlined text-4xl mb-2 text-primary">air</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Exhaust Systems</h3>
+<p class="text-sm text-text-muted mt-1">60 products</p>
+</div>
+</a>
+<!-- Card 8: Cooling System -->
+<a class="group relative flex flex-col overflow-hidden rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" href="#">
+<div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Close up of a car radiator grill" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDLLYuwLmcWpdeuAYjHpPPTvySViT69_rm_ZuWIXEHsxvQBVxs1eTcLzb9l5hMlUUiucGSWLplSVBnH3YOO4KBfUkcu6m-Q3ywbSjipjkxmpwz_MDof3o3TOOR2PuuRceehy9vFmZAXeek-ZzKOlCbJOcW87rtE7lJjMLh3z3GNHP1Dr4-1RikOLR-BnMtJOIBTDsuCrjkraW6vinaNX-6T1oosfyEx_GSqP9hKsr1yOwWAmYviVYeCCsFjI_aVUCPg9O2mup_jx48n");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<span class="material-symbols-outlined text-4xl mb-2 text-primary">ac_unit</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Cooling System</h3>
+<p class="text-sm text-text-muted mt-1">45 products</p>
+</div>
+</a>
+<!-- Card 9: Transmission -->
+<a class="group relative flex flex-col overflow-hidden rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" href="#">
+<div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Gear shift knob in a modern car interior" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC8TdV_3o7HPmAxqYUejG0YG0K35LdQAglQCGFzBV6tHIkZTuFfsgPEabrSBzRKNPy0hk7pyU2CMj1qaCXABRLjjUv9hWK3Ojo95j7RctWs4jTBZ7xsMv1LoAvenIKmJbQRP0-oC-lByWDsS-PLGh8EjeZAKarF3kRlif86H5Gncj0Mws0u7MnvB8q0q5SJMiazm218VtCtKl12_xeMbywseV-WPllfezhkoWB107_tkwNQ6wF75b-AiYrKkm91fqa0MAqYEuhmXBGY");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<span class="material-symbols-outlined text-4xl mb-2 text-primary">settings</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Transmission</h3>
+<p class="text-sm text-text-muted mt-1">30 products</p>
+</div>
+</a>
+<!-- Card 10: Fuel System -->
+<a class="group relative flex flex-col overflow-hidden rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" href="#">
+<div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Fuel pump nozzle at a gas station" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBCFbr6GubA-VOpVCfCYD_tNLfEcXYeXRctBn3pgUWnrivH_9OT_QnUOGfqa0YQPdfxjKAS1I3ixQhQBX69-BNgSvv1HxoJxcQFghWsmc0kpkGudPR3PJfOReW8P7yrKZJoti_i8VaS0HqFgtqj5NaaFUxri1uHKMQbvjoS9FBIanWoM4h53c5j9zvX1_3QVvTlZTl3N-8pO46yQQK303Q7HdQoHGFPIONZ2gypuUQYyc4YuA7Wb-uYiPUtb_APyKXqSTAvBznH3Eje");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<span class="material-symbols-outlined text-4xl mb-2 text-primary">local_gas_station</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Fuel System</h3>
+<p class="text-sm text-text-muted mt-1">70 products</p>
+</div>
+</a>
+<!-- Card 11: Interior Accessories -->
+<a class="group relative flex flex-col overflow-hidden rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" href="#">
+<div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Clean luxury car leather seats interior" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDiEnags2rVUjEb2PLqrV1pnzhejPeIJFMO0T5u-NGti0Y1GzxslvknQvFef5S4Xx2BkExWD0HCeS80aAcFR-_NbWEzoh1CcavfiYXZu9ahM01-UeIxXm1HB3mp_bdqLucB5X1aNRzI0DsBt1IIq5BI2mN--T84BBeuE9_NFnnMJpQ8qyVuu_b1pauRVIvId3Culvvi35FTLFPEYJuYm0KOhrToRIYQO_C6_UYJN1-B7Vf2pyv3t6Wx-pcZdw-E5g4cyoyDmZAbLDd1");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<span class="material-symbols-outlined text-4xl mb-2 text-primary">chair</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Interior Accessories</h3>
+<p class="text-sm text-text-muted mt-1">200+ products</p>
+</div>
+</a>
+<!-- Card 12: Wheels & Tires -->
+<a class="group relative flex flex-col overflow-hidden rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" href="#">
+<div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Sport car alloy wheel with low profile tire" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCDiENU4X64SLcbVkMt22QLcUo39yaE7T8EYN5ZUNUF84CbU3cRzec1cBCG3HTQenafaPORxZ31SSr5zZ2iwFAhs3Neq-agntJQJ468K0A4mR6kZqkP3zVIHWPkZubWToovTBz04wXIZr30vtDTPK_OPFyDMOY7AR2CrNQ_zvN-yqrYgolmeJwqpBDrXk7jeswMx5ZCr5zAx6aq5PHYtMEh1mj51yrTHU_IBaRhBQ5BUigw_NgOq-hto5iQSYVoK6LZEZ78I7oW1JyX");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<span class="material-symbols-outlined text-4xl mb-2 text-primary">tire_repair</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">Wheels &amp; Tires</h3>
+<p class="text-sm text-text-muted mt-1">110 products</p>
+</div>
+</a>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-white dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 mt-12">
+<div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-wrap items-center justify-center gap-8 md:justify-start">
+<a class="text-text-muted hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-text-muted hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-text-muted hover:text-primary transition-colors" href="#">Contact Us</a>
+<a class="text-text-muted hover:text-primary transition-colors" href="#">Shipping Info</a>
+</div>
+<div class="flex items-center gap-6">
+<a class="text-text-muted hover:text-primary transition-colors group" href="#">
+<!-- Facebook Icon -->
+<span class="text-2xl group-hover:scale-110 transition-transform block">
+<svg aria-hidden="true" class="size-6" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path></svg>
+</span>
+</a>
+<a class="text-text-muted hover:text-primary transition-colors group" href="#">
+<!-- Twitter Icon -->
+<span class="text-2xl group-hover:scale-110 transition-transform block">
+<svg aria-hidden="true" class="size-6" fill="currentColor" viewbox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
+</span>
+</a>
+<a class="text-text-muted hover:text-primary transition-colors group" href="#">
+<!-- Instagram Icon -->
+<span class="text-2xl group-hover:scale-110 transition-transform block">
+<svg aria-hidden="true" class="size-6" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465C9.673 2.013 10.03 2 12.457 2h-.142zm0 1.802c-2.427 0-2.732.01-3.693.054-.959.044-1.475.216-1.822.35-.453.177-.773.387-1.109.724-.337.336-.547.656-.724 1.109-.135.347-.307.863-.35 1.822-.044.96-.054 1.266-.054 3.693s.01 2.732.054 3.693c.044.959.216 1.475.35 1.822.177.453.387.773.724 1.109.336.337.656.547 1.109.724.347.135.863.307 1.822.35.96.044 1.266.054 3.693.054s2.732-.01 3.693-.054c.959-.044 1.475-.216 1.822-.35a2.91 2.91 0 001.109-.724c.336-.337.547-.656.724-1.109.135-.347.307-.863.35-1.822.044-.96.054-1.266.054-3.693s-.01-2.732-.054-3.693c-.044-.959-.216-1.475-.35-1.822a2.91 2.91 0 00-.724-1.109 2.91 2.91 0 00-1.109-.724c-.347-.135-.863-.307-1.822-.35-.96-.044-1.266-.054-3.693-.054zm0 4.302a5.897 5.897 0 100 11.794 5.897 5.897 0 000-11.794zm0 1.802a4.095 4.095 0 110 8.19 4.095 4.095 0 010-8.19zm5.334-3.875a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" fill-rule="evenodd"></path></svg>
+</span>
+</a>
+</div>
+</div>
+<div class="mt-8 text-center md:text-left">
+<p class="text-sm text-text-muted">© 2023 SN Auto Parts. All rights reserved.</p>
+</div>
+</div>
+</footer>
+</body></html>

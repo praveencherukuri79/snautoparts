@@ -1,0 +1,129 @@
+@if (isLoading()) {
+  <div class="loading-container">
+    <app-spinner size="lg" />
+  </div>
+} @else {
+  <div class="shipping-settings">
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <app-button variant="outline" icon="add_location_alt" (clicked)="addZone()">
+        Add Zone
+      </app-button>
+      <app-button variant="primary" icon="add" (clicked)="addMethod()">
+        Add New Method
+      </app-button>
+    </div>
+
+    <!-- Shipping Zones -->
+    <section class="section">
+      <h2 class="section-title">Shipping Zones</h2>
+      <div class="zones-grid">
+        @for (zone of zones(); track trackByZone($index, zone)) {
+          <app-card class="zone-card" [class.default]="zone.isDefault">
+            @if (zone.isDefault) {
+              <div class="zone-indicator"></div>
+            }
+            <div class="zone-header">
+              <div class="zone-icon" [class.primary]="zone.isDefault">
+                <span class="material-symbols-outlined">{{ zone.type === 'domestic' ? 'public' : 'flag' }}</span>
+              </div>
+              <div class="zone-info">
+                <h3>{{ zone.name }}</h3>
+                <span class="zone-type">{{ zone.type | titlecase }}</span>
+              </div>
+              <button class="edit-btn">
+                <span class="material-symbols-outlined">edit</span>
+              </button>
+            </div>
+            <div class="zone-regions">
+              @for (region of zone.regions; track region) {
+                <span class="region-tag">{{ region }}</span>
+              }
+            </div>
+          </app-card>
+        }
+      </div>
+    </section>
+
+    <!-- Shipping Methods -->
+    <section class="section">
+      <div class="methods-header">
+        <div class="methods-title">
+          <h2 class="section-title">Shipping Methods</h2>
+          <app-badge variant="info" size="sm">
+            {{ activeMethodsCount }} Active
+          </app-badge>
+        </div>
+        <div class="methods-controls">
+          <select [(ngModel)]="selectedZone" class="zone-filter">
+            <option value="all">All Zones</option>
+            @for (zone of zones(); track zone.id) {
+              <option [value]="zone.name">{{ zone.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <app-card class="methods-table-card">
+        <table class="methods-table">
+          <thead>
+            <tr>
+              <th>Method Name</th>
+              <th>Cost Type</th>
+              <th>Price / Rule</th>
+              <th>Zone</th>
+              <th class="center">Status</th>
+              <th class="right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (method of filteredMethods; track trackByMethod($index, method)) {
+              <tr [class.inactive]="!method.isActive">
+                <td>
+                  <div class="method-cell">
+                    <div class="method-icon" [attr.data-type]="method.costType">
+                      <span class="material-symbols-outlined">
+                        {{ method.costType === 'flat' ? 'local_shipping' : method.costType === 'weight' ? 'rocket_launch' : 'storefront' }}
+                      </span>
+                    </div>
+                    <div class="method-info">
+                      <span class="method-name">{{ method.name }}</span>
+                      <span class="method-desc">{{ method.description }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <app-badge [variant]="getCostTypeBadgeVariant(method.costType)" size="sm">
+                    {{ getCostTypeLabel(method.costType) }}
+                  </app-badge>
+                </td>
+                <td class="price">{{ formatPrice(method) }}</td>
+                <td class="zone">{{ method.zone }}</td>
+                <td class="center">
+                  <label class="toggle">
+                    <input 
+                      type="checkbox" 
+                      [checked]="method.isActive" 
+                      (change)="toggleMethod(method)"
+                    />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </td>
+                <td class="right">
+                  <button class="action-btn" (click)="editMethod(method)">
+                    <span class="material-symbols-outlined">edit</span>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        <div class="table-footer">
+          <span class="showing">Showing {{ filteredMethods.length }} of {{ methods().length }} methods</span>
+        </div>
+      </app-card>
+    </section>
+  </div>
+}
+

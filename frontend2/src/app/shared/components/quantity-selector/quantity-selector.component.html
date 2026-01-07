@@ -1,0 +1,33 @@
+<div class="quantity-selector" [class]="'quantity-selector--' + size">
+  <button
+    mat-icon-button
+    type="button"
+    [disabled]="!canDecrement"
+    (click)="decrement()"
+    aria-label="Decrease quantity"
+  >
+    <mat-icon>remove</mat-icon>
+  </button>
+  
+  <input
+    type="number"
+    class="quantity-input"
+    [value]="quantity"
+    [min]="min"
+    [max]="max"
+    [disabled]="disabled"
+    (change)="onInputChange($any($event.target).value)"
+    aria-label="Quantity"
+  />
+  
+  <button
+    mat-icon-button
+    type="button"
+    [disabled]="!canIncrement"
+    (click)="increment()"
+    aria-label="Increase quantity"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+

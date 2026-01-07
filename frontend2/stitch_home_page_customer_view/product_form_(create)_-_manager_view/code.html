@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create New Product - SN Auto Parts</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f97415",
+              "background-light": "#f8f7f5",
+              "background-dark": "#23170f",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom styles for rich text editor simulation */
+        .rich-text-toolbar button {
+            @apply p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-gray-900 transition-colors;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#181411] overflow-x-hidden antialiased">
+<div class="flex min-h-screen w-full">
+<!-- Sidebar -->
+<aside class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-[#e6dfdb] dark:border-[#3a2d25] dark:bg-[#1a110a] hidden lg:flex flex-col">
+<div class="flex items-center gap-3 p-6 border-b border-[#e6dfdb] dark:border-[#3a2d25]">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 shadow-sm" data-alt="SN Auto Parts abstract logo or car part icon" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC7ZFiEZXkV23ILL8RWC-DT2zfPwuAhG8QdjND9Y523ON1z4cObtmukpc6v__sj8N4SGretgfEoQGd7ZrZUT3q3Lo18GNjflyRWaA1J-Uobq1JmiBkkRs4P5RyrNCQhAEd1H0nOeVs7WB3sWrOPktH2RqhCm16tYg9If1j6D-8dvgm3C0Psr5eDgk7rYNUlK6qmo7xhu06Tfa45L78oCU09gbkXqxmyzxLli4RWFISDdKpUCWRJi_aQyA9Ejr0bPd_nI55oDgjv84t1");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#181411] dark:text-white text-base font-bold leading-normal">SN Auto Parts</h1>
+<p class="text-[#8c725f] text-xs font-normal leading-normal">Manager Portal</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5e4e44] dark:text-[#a09085] hover:bg-[#f5f2f0] dark:hover:bg-[#2c2018] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary" href="#">
+<span class="material-symbols-outlined text-[24px] fill-1">inventory_2</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5e4e44] dark:text-[#a09085] hover:bg-[#f5f2f0] dark:hover:bg-[#2c2018] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">shopping_cart</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5e4e44] dark:text-[#a09085] hover:bg-[#f5f2f0] dark:hover:bg-[#2c2018] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">group</span>
+<span class="text-sm font-medium">Customers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5e4e44] dark:text-[#a09085] hover:bg-[#f5f2f0] dark:hover:bg-[#2c2018] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">bar_chart</span>
+<span class="text-sm font-medium">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5e4e44] dark:text-[#a09085] hover:bg-[#f5f2f0] dark:hover:bg-[#2c2018] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-[#e6dfdb] dark:border-[#3a2d25]">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwEDt0nRZxC_-DmXH7RZLB4EQe_1wNnBjnpP66_1djZnhyIO9Mu2KPpCHp61FqwA0ZAagJudE0n3n7J-2HReZrV74OEvHQVdXopMPWdHmXF2QD5OPhODPwulrS0Bw1GmrbRE2MF_UlsLzJJbL5_M8tXNO8KOdD_FyiJRKuGCTJs1Z-po9uyA3A_CH_PTsFRi1MG_e98IlfuQK7-TUXKfUUeTvUjSQsyS2SBAIdYJRX1twtmP9I0IbE5Bd5YgkC1WiU_nhhSrUnYE0F"/>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-[#181411] dark:text-white">John Doe</span>
+<span class="text-xs text-[#8c725f]">Store Manager</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 lg:ml-64 flex flex-col min-w-0">
+<!-- Header Sticky -->
+<header class="sticky top-0 z-40 bg-white/80 dark:bg-[#1a110a]/80 backdrop-blur-md border-b border-[#e6dfdb] dark:border-[#3a2d25]">
+<div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<a class="lg:hidden p-2 -ml-2 text-gray-500 hover:text-gray-700" href="#">
+<span class="material-symbols-outlined">menu</span>
+</a>
+<div class="flex flex-col">
+<div class="flex items-center gap-2 text-xs font-medium text-[#8c725f]">
+<a class="hover:text-primary transition-colors" href="#">Products</a>
+<span class="material-symbols-outlined text-[10px] align-middle">chevron_right</span>
+<span class="text-[#181411] dark:text-white">Create New</span>
+</div>
+<h1 class="text-xl font-bold text-[#181411] dark:text-white leading-tight">Create New Product</h1>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="hidden sm:flex px-4 py-2 rounded-lg text-sm font-medium text-[#5e4e44] dark:text-[#a09085] hover:bg-gray-100 dark:hover:bg-[#2c2018] transition-colors" type="button">
+                            Cancel
+                        </button>
+<button class="px-4 py-2 rounded-lg border border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-sm font-medium text-[#181411] dark:text-white hover:bg-gray-50 dark:hover:bg-[#3a2d25] transition-colors shadow-sm" type="button">
+                            Save as Draft
+                        </button>
+<button class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-[#e0650e] shadow-sm transition-colors flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>Save Product</span>
+</button>
+</div>
+</div>
+</header>
+<div class="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1200px] mx-auto w-full">
+<!-- Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column (Main Form) -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<!-- General Info -->
+<section class="bg-white dark:bg-[#1a110a] rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#3a2d25] overflow-hidden">
+<div class="px-6 py-4 border-b border-[#e6dfdb] dark:border-[#3a2d25]">
+<h2 class="text-lg font-bold text-[#181411] dark:text-white">General Information</h2>
+</div>
+<div class="p-6 space-y-5">
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Product Name <span class="text-red-500">*</span></span>
+<input class="mt-1 block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3" placeholder="e.g. Brake Pad Set - Front" type="text"/>
+</label>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<label class="block">
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">SKU</span>
+<button class="text-xs text-primary font-medium hover:underline" type="button">Auto-generate</button>
+</div>
+<input class="block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3" placeholder="e.g. BP-F-001" type="text"/>
+</label>
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Barcode / UPC</span>
+<input class="mt-1 block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3" placeholder="" type="text"/>
+</label>
+</div>
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200 mb-1 block">Description</span>
+<div class="border border-[#e6dfdb] dark:border-[#3a2d25] rounded-lg overflow-hidden bg-white dark:bg-[#2c2018]">
+<div class="flex items-center gap-1 p-2 border-b border-[#e6dfdb] dark:border-[#3a2d25] bg-gray-50 dark:bg-[#23170f] rich-text-toolbar">
+<button aria-label="Bold" type="button"><span class="material-symbols-outlined text-[18px]">format_bold</span></button>
+<button aria-label="Italic" type="button"><span class="material-symbols-outlined text-[18px]">format_italic</span></button>
+<button aria-label="Underline" type="button"><span class="material-symbols-outlined text-[18px]">format_underlined</span></button>
+<div class="w-px h-4 bg-gray-300 mx-1"></div>
+<button aria-label="List" type="button"><span class="material-symbols-outlined text-[18px]">format_list_bulleted</span></button>
+<button aria-label="Ordered List" type="button"><span class="material-symbols-outlined text-[18px]">format_list_numbered</span></button>
+<div class="w-px h-4 bg-gray-300 mx-1"></div>
+<button aria-label="Link" type="button"><span class="material-symbols-outlined text-[18px]">link</span></button>
+<button aria-label="Image" type="button"><span class="material-symbols-outlined text-[18px]">image</span></button>
+</div>
+<textarea class="w-full h-32 p-3 border-none resize-y focus:ring-0 bg-transparent text-[#181411] dark:text-white" placeholder="Describe the product details..."></textarea>
+</div>
+</label>
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Short Summary</span>
+<p class="text-xs text-[#8c725f] mb-1">Displayed in product lists and SEO meta description if left empty.</p>
+<textarea class="mt-1 block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-20 p-3 resize-none" placeholder="Brief summary of the product..."></textarea>
+</label>
+</div>
+</section>
+<!-- Media -->
+<section class="bg-white dark:bg-[#1a110a] rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#3a2d25] overflow-hidden">
+<div class="px-6 py-4 border-b border-[#e6dfdb] dark:border-[#3a2d25] flex justify-between items-center">
+<h2 class="text-lg font-bold text-[#181411] dark:text-white">Product Images</h2>
+<span class="text-xs font-medium px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-gray-500">0 of 10 Used</span>
+</div>
+<div class="p-6">
+<div class="border-2 border-dashed border-[#e6dfdb] dark:border-[#3a2d25] rounded-xl bg-gray-50 dark:bg-[#23170f] p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-100 dark:hover:bg-[#2c2018] transition-colors group">
+<div class="bg-white dark:bg-[#1a110a] p-3 rounded-full shadow-sm mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-[32px]">cloud_upload</span>
+</div>
+<p class="text-sm font-medium text-[#181411] dark:text-white">Click to upload or drag and drop</p>
+<p class="text-xs text-[#8c725f] mt-1">SVG, PNG, JPG or GIF (max. 800x400px)</p>
+</div>
+<div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
+<!-- Preview Placeholder 1 -->
+<div class="relative aspect-square rounded-lg border border-[#e6dfdb] dark:border-[#3a2d25] overflow-hidden group">
+<img alt="Car brake disc close up" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBKNfTGS4nWH2o02W9HA39S5Gk80ry0uZh5nFZY1qyY61rjMgeI9EbhtlsAzNR_UAvhaW8h58qop3qu67HhJ2lnPk508s2cubD1MsHqSITO9GsIRxZA0-qfmmwVBE2YRA3wImL90bnbWGxu3hzZd1fIcYH6ZF_ryGEk5j9Jdf5-95BsXjrxkF9P0zm9jlC0exbX-27vscQMbNGzuFxd2dAE49QNpIt-LlfC-WO8QTX__VfVzRhnDG_oJeZ5YlmDD5ILZHZyjo_wNln"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+<button class="p-1.5 bg-white rounded-md text-gray-700 hover:text-primary"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1.5 bg-white rounded-md text-gray-700 hover:text-red-500"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+<div class="absolute top-2 left-2 px-2 py-0.5 bg-black/60 text-white text-[10px] rounded backdrop-blur-sm">Main</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing -->
+<section class="bg-white dark:bg-[#1a110a] rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#3a2d25] overflow-hidden">
+<div class="px-6 py-4 border-b border-[#e6dfdb] dark:border-[#3a2d25]">
+<h2 class="text-lg font-bold text-[#181411] dark:text-white">Pricing</h2>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Retail Price ($)</span>
+<input class="mt-1 block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3" placeholder="0.00" step="0.01" type="number"/>
+</label>
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Cost Price ($)</span>
+<input class="mt-1 block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3" placeholder="0.00" step="0.01" type="number"/>
+<span class="text-xs text-[#8c725f] mt-1">Customers won't see this</span>
+</label>
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Sale Price ($)</span>
+<input class="mt-1 block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3" placeholder="0.00" step="0.01" type="number"/>
+</label>
+</div>
+<!-- Sale Dates -->
+<div class="px-6 pb-6 pt-0 grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Sale Start Date</span>
+<input class="mt-1 block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3 text-sm" type="date"/>
+</label>
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Sale End Date</span>
+<input class="mt-1 block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3 text-sm" type="date"/>
+</label>
+</div>
+</section>
+<!-- SEO -->
+<section class="bg-white dark:bg-[#1a110a] rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#3a2d25] overflow-hidden">
+<div class="px-6 py-4 border-b border-[#e6dfdb] dark:border-[#3a2d25]">
+<h2 class="text-lg font-bold text-[#181411] dark:text-white">SEO Settings</h2>
+</div>
+<div class="p-6 space-y-5">
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Meta Title</span>
+<input class="mt-1 block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3" type="text"/>
+</label>
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Meta Description</span>
+<textarea class="mt-1 block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-20 p-3 resize-none"></textarea>
+</label>
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">URL Slug</span>
+<div class="mt-1 flex rounded-lg shadow-sm">
+<span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-[#e6dfdb] dark:border-[#3a2d25] bg-gray-50 dark:bg-[#23170f] text-gray-500 text-sm">
+                                            snautoparts.com/product/
+                                        </span>
+<input class="flex-1 min-w-0 block w-full rounded-none rounded-r-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3" type="text"/>
+</div>
+</label>
+</div>
+</section>
+</div>
+<!-- Right Column (Sidebar Settings) -->
+<div class="flex flex-col gap-6">
+<!-- Status & Visibility (Optional addition for better UX) -->
+<div class="bg-white dark:bg-[#1a110a] rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#3a2d25] overflow-hidden">
+<div class="p-5 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Status</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+                                        Active
+                                    </span>
+</div>
+<div class="h-px bg-[#e6dfdb] dark:bg-[#3a2d25]"></div>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex flex-col">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Online Store</span>
+<span class="text-xs text-[#8c725f]">Visible to customers</span>
+</span>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/20 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+</div>
+</div>
+<!-- Organization -->
+<div class="bg-white dark:bg-[#1a110a] rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#3a2d25] overflow-hidden">
+<div class="px-5 py-4 border-b border-[#e6dfdb] dark:border-[#3a2d25]">
+<h3 class="text-base font-bold text-[#181411] dark:text-white">Organization</h3>
+</div>
+<div class="p-5 space-y-5">
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200 mb-1 block">Category</span>
+<select class="block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3">
+<option>Select Category...</option>
+<option>Brakes &amp; Rotors</option>
+<option>Engine Parts</option>
+<option>Suspension</option>
+<option>Accessories</option>
+</select>
+</label>
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200 mb-1 block">Brand</span>
+<select class="block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3">
+<option>Select Brand...</option>
+<option>Bosch</option>
+<option>Brembo</option>
+<option>Michelin</option>
+</select>
+</label>
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200 mb-1 block">Tags</span>
+<input class="block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3" placeholder="e.g. Vintage, heavy-duty" type="text"/>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="inline-flex items-center px-2 py-1 rounded bg-[#f5f2f0] text-[#181411] text-xs font-medium dark:bg-[#2c2018] dark:text-gray-300">
+                                            OEM
+                                            <button class="ml-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Inventory -->
+<div class="bg-white dark:bg-[#1a110a] rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#3a2d25] overflow-hidden">
+<div class="px-5 py-4 border-b border-[#e6dfdb] dark:border-[#3a2d25]">
+<h3 class="text-base font-bold text-[#181411] dark:text-white">Inventory</h3>
+</div>
+<div class="p-5 space-y-5">
+<label class="flex items-center justify-between cursor-pointer group mb-2">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Track Inventory</span>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/20 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+<div class="grid grid-cols-2 gap-4">
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Stock</span>
+<input class="mt-1 block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3" placeholder="0" type="number"/>
+</label>
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Low Limit</span>
+<input class="mt-1 block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3" placeholder="5" type="number"/>
+</label>
+</div>
+</div>
+</div>
+<!-- Shipping -->
+<div class="bg-white dark:bg-[#1a110a] rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#3a2d25] overflow-hidden">
+<div class="px-5 py-4 border-b border-[#e6dfdb] dark:border-[#3a2d25]">
+<h3 class="text-base font-bold text-[#181411] dark:text-white">Shipping</h3>
+</div>
+<div class="p-5 space-y-5">
+<label class="flex items-center justify-between cursor-pointer group mb-2">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Physical Product</span>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/20 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+<label class="block">
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200">Weight (lbs)</span>
+<input class="mt-1 block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50 h-11 px-3" placeholder="0.0" step="0.1" type="number"/>
+</label>
+<div>
+<span class="text-sm font-medium text-[#181411] dark:text-gray-200 mb-1 block">Dimensions (L x W x H)</span>
+<div class="flex items-center gap-2">
+<input class="block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring h-11 px-3 text-center" placeholder="L" type="number"/>
+<span class="text-gray-400">×</span>
+<input class="block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring h-11 px-3 text-center" placeholder="W" type="number"/>
+<span class="text-gray-400">×</span>
+<input class="block w-full rounded-lg border-[#e6dfdb] dark:border-[#3a2d25] bg-white dark:bg-[#2c2018] text-[#181411] dark:text-white shadow-sm focus:border-primary focus:ring h-11 px-3 text-center" placeholder="H" type="number"/>
+</div>
+</div>
+<label class="flex items-center gap-3 p-3 rounded-lg border border-[#e6dfdb] dark:border-[#3a2d25] bg-gray-50 dark:bg-[#23170f] cursor-pointer">
+<input class="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary/50" type="checkbox"/>
+<span class="text-sm font-medium text-[#181411] dark:text-white">Eligible for free shipping</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions (Mobile Only) -->
+<div class="sm:hidden sticky bottom-0 z-40 bg-white border-t border-[#e6dfdb] p-4 flex gap-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+<button class="flex-1 px-4 py-3 rounded-lg border border-[#e6dfdb] bg-white text-sm font-bold text-[#181411] shadow-sm" type="button">
+                    Draft
+                </button>
+<button class="flex-1 px-4 py-3 rounded-lg bg-primary text-white text-sm font-bold shadow-sm" type="button">
+                    Save
+                </button>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Tracking - SN Auto Parts</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181411] dark:text-white font-display min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<div class="relative flex w-full flex-col bg-white dark:bg-[#1a110a] border-b border-[#e6dfdb] dark:border-[#3a2e26]">
+<div class="layout-container flex w-full px-4 md:px-10 py-3 justify-center">
+<div class="layout-content-container flex max-w-[960px] w-full items-center justify-between">
+<div class="flex items-center gap-4 text-[#181411] dark:text-white">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">SN Auto Parts | Order Tracking</h2>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="layout-container flex grow flex-col items-center">
+<div class="layout-content-container flex flex-col w-full max-w-[960px] px-4 md:px-10 py-12 gap-10">
+<!-- Search Section -->
+<div class="flex flex-col gap-6 items-center text-center">
+<div class="flex flex-col gap-3">
+<h1 class="text-4xl md:text-5xl font-black leading-tight tracking-[-0.033em] text-[#181411] dark:text-white">Track Your Order</h1>
+<p class="text-[#8c725f] dark:text-[#b0a69e] text-lg font-normal">Enter your order number below to check its status.</p>
+</div>
+<div class="w-full max-w-[560px] flex flex-col sm:flex-row gap-3">
+<div class="flex-1 relative">
+<div class="absolute left-4 top-1/2 -translate-y-1/2 text-[#8c725f]">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="w-full h-14 pl-12 pr-4 rounded-xl border border-[#e6dfdb] dark:border-[#4a3e36] bg-white dark:bg-[#1a110a] text-[#181411] dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-[#8c725f]" placeholder="Order Number (e.g. SN-8293)" value="SN-82939102"/>
+</div>
+<button class="h-14 px-8 rounded-xl bg-primary hover:bg-orange-600 text-white font-bold text-base transition-colors shadow-lg shadow-orange-500/20 whitespace-nowrap">
+                        Track Order
+                    </button>
+</div>
+</div>
+<!-- SUCCESS STATE: Tracking Results -->
+<div class="flex flex-col gap-6 animate-fade-in-up">
+<!-- Status Card -->
+<div class="bg-white dark:bg-[#1a110a] rounded-2xl shadow-sm border border-[#e6dfdb] dark:border-[#3a2e26] overflow-hidden">
+<!-- Header -->
+<div class="p-6 md:p-8 border-b border-[#f5f2f0] dark:border-[#3a2e26] flex flex-wrap justify-between items-center gap-4 bg-gray-50/50 dark:bg-[#23170f]/50">
+<div class="flex flex-col gap-1">
+<span class="text-sm font-medium text-[#8c725f] dark:text-[#b0a69e]">Order #SN-82939102</span>
+<div class="flex items-center gap-2">
+<h3 class="text-2xl font-bold text-[#181411] dark:text-white">Arriving by Friday, Oct 27</h3>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<a class="text-sm font-bold text-primary hover:text-orange-600 underline decoration-2 underline-offset-4" href="#">View Invoice</a>
+</div>
+</div>
+<!-- Timeline -->
+<div class="p-6 md:p-10">
+<div class="relative">
+<!-- Progress Bar Background -->
+<div class="absolute top-5 left-0 w-full h-1 bg-[#e6dfdb] dark:bg-[#3a2e26] rounded-full -z-0"></div>
+<!-- Active Progress -->
+<div class="absolute top-5 left-0 w-[66%] h-1 bg-primary rounded-full -z-0"></div>
+<!-- Steps -->
+<div class="relative z-10 flex justify-between w-full">
+<!-- Step 1: Confirmed -->
+<div class="flex flex-col items-center gap-3 group">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center shadow-md ring-4 ring-white dark:ring-[#1a110a]">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="text-sm font-bold text-[#181411] dark:text-white">Ordered</span>
+<span class="text-xs text-[#8c725f] mt-0.5">Oct 24</span>
+</div>
+</div>
+<!-- Step 2: Processing -->
+<div class="flex flex-col items-center gap-3 group">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center shadow-md ring-4 ring-white dark:ring-[#1a110a]">
+<span class="material-symbols-outlined text-sm">inventory_2</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="text-sm font-bold text-[#181411] dark:text-white">Processing</span>
+<span class="text-xs text-[#8c725f] mt-0.5">Oct 25</span>
+</div>
+</div>
+<!-- Step 3: On The Way (Active) -->
+<div class="flex flex-col items-center gap-3 group">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center shadow-lg shadow-orange-500/30 ring-4 ring-white dark:ring-[#1a110a] animate-pulse">
+<span class="material-symbols-outlined text-sm">local_shipping</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="text-sm font-bold text-primary">On the way</span>
+<span class="text-xs text-[#8c725f] mt-0.5">Today</span>
+</div>
+</div>
+<!-- Step 4: Delivered -->
+<div class="flex flex-col items-center gap-3 group opacity-50">
+<div class="w-10 h-10 rounded-full bg-[#e6dfdb] dark:bg-[#3a2e26] text-[#8c725f] flex items-center justify-center ring-4 ring-white dark:ring-[#1a110a]">
+<span class="material-symbols-outlined text-sm">home</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="text-sm font-medium text-[#8c725f]">Delivered</span>
+<span class="text-xs text-transparent mt-0.5 select-none">.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Details Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 border-t border-[#f5f2f0] dark:border-[#3a2e26] divide-y md:divide-y-0 md:divide-x divide-[#f5f2f0] dark:divide-[#3a2e26]">
+<!-- Shipment Info -->
+<div class="p-6 md:p-8 flex flex-col gap-6">
+<div>
+<h4 class="text-xs font-bold uppercase tracking-wider text-[#8c725f] mb-3">Carrier Information</h4>
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 bg-[#4b2c93] rounded-lg flex items-center justify-center text-white font-bold text-xs shrink-0">
+                                        FedEx
+                                    </div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-[#181411] dark:text-white">Federal Express Ground</span>
+<a class="text-primary hover:underline text-sm font-medium mt-1 flex items-center gap-1 group" href="#">
+                                            Tracking #98327102938
+                                            <span class="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+<div>
+<h4 class="text-xs font-bold uppercase tracking-wider text-[#8c725f] mb-3">Shipping Address</h4>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-[#8c725f]">location_on</span>
+<div class="text-sm text-[#181411] dark:text-white leading-relaxed">
+<p>James D.</p>
+<p>123 Main Street, Apt 4B</p>
+<p>New York, NY 10001</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Items Summary -->
+<div class="p-6 md:p-8 flex flex-col gap-4">
+<h4 class="text-xs font-bold uppercase tracking-wider text-[#8c725f] mb-1">Order Summary</h4>
+<!-- Item 1 -->
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg bg-gray-100 dark:bg-[#23170f] border border-[#e6dfdb] dark:border-[#3a2e26] flex items-center justify-center overflow-hidden shrink-0">
+<span class="material-symbols-outlined text-gray-400 text-2xl">build</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-[#181411] dark:text-white line-clamp-1">Ceramic Brake Pads (Front Set)</p>
+<p class="text-xs text-[#8c725f]">Qty: 1</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-lg bg-gray-100 dark:bg-[#23170f] border border-[#e6dfdb] dark:border-[#3a2e26] flex items-center justify-center overflow-hidden shrink-0">
+<span class="material-symbols-outlined text-gray-400 text-2xl">opacity</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-[#181411] dark:text-white line-clamp-1">Synthetic Motor Oil 5W-30 (5QT)</p>
+<p class="text-xs text-[#8c725f]">Qty: 2</p>
+</div>
+</div>
+<div class="pt-4 mt-auto border-t border-[#f5f2f0] dark:border-[#3a2e26] flex justify-between items-center">
+<span class="text-sm text-[#8c725f]">Total Amount</span>
+<span class="text-base font-bold text-[#181411] dark:text-white">$142.50</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center gap-6 text-sm text-[#8c725f]">
+<a class="hover:text-primary transition-colors" href="#">Shipping Policy</a>
+<span>•</span>
+<a class="hover:text-primary transition-colors" href="#">Returns &amp; Exchanges</a>
+<span>•</span>
+<a class="hover:text-primary transition-colors" href="#">Help Center</a>
+</div>
+</div>
+<!-- DEMO: Error State (Visually separated for preview purposes) -->
+<div class="mt-8 pt-8 border-t-2 border-dashed border-[#e6dfdb] dark:border-[#3a2e26] flex flex-col items-center gap-4 opacity-80 hover:opacity-100 transition-opacity">
+<p class="text-xs font-mono uppercase text-[#8c725f] tracking-widest">UI State Demonstration: Error</p>
+<div class="w-full bg-white dark:bg-[#1a110a] rounded-xl border border-red-100 dark:border-red-900/30 p-8 flex flex-col items-center text-center gap-4 max-w-[560px]">
+<div class="w-16 h-16 rounded-full bg-red-50 dark:bg-red-900/20 text-red-500 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-3xl">sentiment_dissatisfied</span>
+</div>
+<h3 class="text-lg font-bold text-[#181411] dark:text-white">Order Not Found</h3>
+<p class="text-sm text-[#8c725f] max-w-sm">
+                        We couldn't find an order with the number <span class="font-mono text-[#181411] dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded">SN-000000</span>. Please double-check your order number from your confirmation email and try again.
+                    </p>
+<button class="mt-2 text-primary font-bold text-sm hover:underline">Need help finding it?</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

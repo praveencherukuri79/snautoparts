@@ -1,0 +1,52 @@
+@use 'tokens' as *;
+
+.register {
+  width: 100%;
+  max-width: 480px;
+
+  &__header {
+    margin-bottom: var(--spacing-8);
+  }
+
+  &__title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: var(--font-weight-black);
+    margin-bottom: var(--spacing-2);
+  }
+
+  &__subtitle {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-5);
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4);
+  }
+
+  &__login {
+    margin-top: var(--spacing-8);
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  &__login-link {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    margin-left: var(--spacing-1);
+
+    &:hover {
+      color: var(--color-text);
+    }
+  }
+}
+

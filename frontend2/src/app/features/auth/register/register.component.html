@@ -1,0 +1,68 @@
+<div class="register">
+  <div class="register__header">
+    <h1 class="register__title">Create an Account</h1>
+    <p class="register__subtitle">Join the SN Auto Parts family today.</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="register__form">
+    <div class="register__row">
+      <app-input
+        label="First Name"
+        placeholder="John"
+        formControlName="firstName"
+        [error]="getError('firstName')"
+        autocomplete="given-name"
+      ></app-input>
+      <app-input
+        label="Last Name"
+        placeholder="Doe"
+        formControlName="lastName"
+        [error]="getError('lastName')"
+        autocomplete="family-name"
+      ></app-input>
+    </div>
+
+    <app-input
+      label="Email Address"
+      type="email"
+      placeholder="name@example.com"
+      formControlName="email"
+      [error]="getError('email')"
+      autocomplete="email"
+    ></app-input>
+
+    <app-input
+      label="Password"
+      type="password"
+      placeholder="At least 8 characters"
+      formControlName="password"
+      [error]="getError('password')"
+      autocomplete="new-password"
+    ></app-input>
+
+    <app-input
+      label="Confirm Password"
+      type="password"
+      placeholder="Confirm your password"
+      formControlName="confirmPassword"
+      [error]="getError('confirmPassword')"
+      autocomplete="new-password"
+    ></app-input>
+
+    <app-button
+      variant="primary"
+      type="submit"
+      [fullWidth]="true"
+      [loading]="isLoading()"
+      icon="person_add"
+    >
+      Create Account
+    </app-button>
+  </form>
+
+  <p class="register__login">
+    Already have an account?
+    <a routerLink="/login" class="register__login-link">Sign in</a>
+  </p>
+</div>
+

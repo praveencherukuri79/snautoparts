@@ -1,0 +1,127 @@
+<div class="cart-page">
+  <h1 class="cart-title">Shopping Cart</h1>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else if (items.length === 0) {
+    <app-empty-state
+      icon="shopping_cart"
+      title="Your cart is empty"
+      message="Looks like you haven't added any items to your cart yet."
+      actionLabel="Start Shopping"
+      actionIcon="arrow_forward"
+      (actionClick)="goToProducts()"
+    />
+  } @else {
+    <div class="cart-content">
+      <!-- Cart Items -->
+      <div class="cart-items">
+        <div class="cart-header">
+          <span class="header-product">Product</span>
+          <span class="header-price">Price</span>
+          <span class="header-quantity">Quantity</span>
+          <span class="header-total">Total</span>
+          <span class="header-actions"></span>
+        </div>
+
+        @for (item of items; track trackByItem($index, item)) {
+          <div class="cart-item" [class.cart-item--updating]="updatingItem() === item.id">
+            <div class="item-product">
+              <a [routerLink]="['/products', item.product.slug]" class="item-image">
+                @if (item.product.imageUrl) {
+                  <img [src]="item.product.imageUrl" [alt]="item.product.name" />
+                } @else {
+                  <span class="material-symbols-outlined">image</span>
+                }
+              </a>
+              <div class="item-details">
+                <a [routerLink]="['/products', item.product.slug]" class="item-name">
+                  {{ item.product.name }}
+                </a>
+                <span class="item-sku">SKU: {{ item.product.sku }}</span>
+              </div>
+            </div>
+
+            <div class="item-price">
+              {{ item.unitPrice | currency }}
+            </div>
+
+            <div class="item-quantity">
+              <app-quantity-selector
+                [quantity]="item.quantity"
+                [max]="item.product.stockQuantity"
+                size="sm"
+                (quantityChange)="updateQuantity(item, $event)"
+              />
+            </div>
+
+            <div class="item-total">
+              {{ item.unitPrice * item.quantity | currency }}
+            </div>
+
+            <div class="item-actions">
+              <button class="remove-btn" (click)="removeItem(item)" title="Remove item">
+                <span class="material-symbols-outlined">delete</span>
+              </button>
+            </div>
+          </div>
+        }
+
+        <div class="cart-footer">
+          <app-button variant="ghost" icon="delete" (clicked)="clearCart()">
+            Clear Cart
+          </app-button>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <app-card title="Order Summary">
+          <div class="summary-lines">
+            <div class="summary-line">
+              <span>Subtotal ({{ itemCount }} items)</span>
+              <span>{{ subtotal | currency }}</span>
+            </div>
+            <div class="summary-line">
+              <span>Estimated Shipping</span>
+              <span>
+                @if (estimatedShipping === 0) {
+                  <span class="free-shipping">FREE</span>
+                } @else {
+                  {{ estimatedShipping | currency }}
+                }
+              </span>
+            </div>
+            @if (subtotal < 50) {
+              <p class="shipping-message">
+                Add {{ 50 - subtotal | currency }} more for free shipping!
+              </p>
+            }
+          </div>
+
+          <div class="summary-total">
+            <span>Estimated Total</span>
+            <span class="total-amount">{{ total | currency }}</span>
+          </div>
+
+          <app-button
+            [fullWidth]="true"
+            size="lg"
+            icon="lock"
+            routerLink="/checkout"
+          >
+            Proceed to Checkout
+          </app-button>
+
+          <p class="secure-checkout">
+            <span class="material-symbols-outlined">verified_user</span>
+            Secure checkout powered by Stripe
+          </p>
+        </app-card>
+      </div>
+    </div>
+  }
+</div>
+

@@ -1,0 +1,75 @@
+<a [routerLink]="['/products', product.slug]" class="product-card">
+  <!-- Image -->
+  <div class="product-card__image-wrapper">
+    @if (isOnSale) {
+      <span class="product-card__badge product-card__badge--sale">
+        -{{ discountPercentage }}%
+      </span>
+    }
+    @if (product.isFeatured) {
+      <span class="product-card__badge product-card__badge--featured">
+        HOT
+      </span>
+    }
+    <div 
+      class="product-card__image"
+      [style.backgroundImage]="product.imageUrl ? 'url(' + product.imageUrl + ')' : 'none'"
+    >
+      @if (!product.imageUrl) {
+        <span class="material-symbols-outlined product-card__placeholder-icon">image</span>
+      }
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="product-card__content">
+    <!-- Rating -->
+    @if (showRating && product.rating) {
+      <div class="product-card__rating">
+        @for (star of starArray; track star) {
+          <span 
+            class="material-symbols-outlined product-card__star"
+            [class.product-card__star--filled]="star <= (product.rating || 0)"
+          >
+            star
+          </span>
+        }
+        @if (product.reviewCount) {
+          <span class="product-card__review-count">({{ product.reviewCount }})</span>
+        }
+      </div>
+    }
+
+    <!-- Name -->
+    <h3 class="product-card__name">{{ product.name }}</h3>
+
+    <!-- Price -->
+    <div class="product-card__price-row">
+      <div class="product-card__prices">
+        <span class="product-card__price">${{ product.price | number:'1.2-2' }}</span>
+        @if (isOnSale && product.compareAtPrice) {
+          <span class="product-card__compare-price">${{ product.compareAtPrice | number:'1.2-2' }}</span>
+        }
+      </div>
+
+      <!-- Add to Cart Button -->
+      @if (showAddToCart) {
+        <button
+          class="product-card__add-btn"
+          [class.product-card__add-btn--disabled]="product.stockStatus === 'out_of_stock'"
+          [disabled]="product.stockStatus === 'out_of_stock'"
+          (click)="onAddToCart($event)"
+          [attr.aria-label]="'Add ' + product.name + ' to cart'"
+        >
+          <span class="material-symbols-outlined">add_shopping_cart</span>
+        </button>
+      }
+    </div>
+
+    <!-- Stock Status -->
+    <span class="product-card__stock {{ stockStatusClass }}">
+      {{ stockStatusLabel }}
+    </span>
+  </div>
+</a>
+

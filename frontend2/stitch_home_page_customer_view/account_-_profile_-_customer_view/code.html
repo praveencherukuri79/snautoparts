@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Account - Profile - Customer View</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181411] dark:text-gray-100 font-display transition-colors duration-200">
+<div class="flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-white dark:bg-[#1e1e1e] border-b border-[#f5f2f0] dark:border-gray-800 sticky top-0 z-50">
+<div class="px-4 md:px-10 py-3 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<!-- Logo -->
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-[32px]">directions_car</span>
+</div>
+<h2 class="text-lg font-bold tracking-tight text-[#181411] dark:text-white hidden sm:block">SN Auto Parts</h2>
+</div>
+<!-- Nav Links -->
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Shop</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Deals</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Services</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Support</a>
+</nav>
+</div>
+<!-- Right Side Actions -->
+<div class="flex items-center gap-4">
+<!-- Search Bar (Desktop) -->
+<div class="hidden lg:flex w-64 xl:w-80 h-10 bg-[#f5f2f0] dark:bg-gray-800 rounded-lg items-center px-3 gap-2">
+<span class="material-symbols-outlined text-[#8c725f] dark:text-gray-400">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full dark:text-white placeholder-[#8c725f]" placeholder="Search parts..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-[#181411] dark:text-white transition-colors">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1 right-1 size-2 bg-primary rounded-full"></span>
+</button>
+<div class="hidden sm:flex items-center gap-3 ml-2 pl-2 border-l border-gray-200 dark:border-gray-700">
+<div class="h-8 w-8 rounded-full bg-cover bg-center border border-gray-200 dark:border-gray-700" data-alt="Small user avatar thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA3BnfUdIPvhMCqaZupVlQaV7J4PTd7iVEZTBLcHrDK2-PwCJIs-chr06LHXF9owLsUHQzSFf2NVuP7pPtc_QmKFNaqI9PJ-w8jv-yOZj9-SNjwqzhLxST7zBWtYJyP8Ou6oNeS5ZM1lWpokxFOEl3_JtUHxYnHwj3OYsJk4y6zkuzAY0r2T4CIgzQJcH-c3jFS0ht8ymlv8569CYfhM5yYfqD2TDnnFTqjEE1LQEvbgyy1QM1oywhehUAuEgdbYejY8jrEw5YtL5uM');"></div>
+<span class="text-sm font-bold text-[#181411] dark:text-white">John Doe</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Wrapper -->
+<main class="flex-grow w-full max-w-[1280px] mx-auto px-4 md:px-10 py-6">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 mb-6 text-sm">
+<a class="text-[#8c725f] dark:text-gray-400 hover:text-primary transition-colors" href="#">Home</a>
+<span class="text-[#8c725f] dark:text-gray-400">/</span>
+<a class="text-[#8c725f] dark:text-gray-400 hover:text-primary transition-colors" href="#">Account</a>
+<span class="text-[#8c725f] dark:text-gray-400">/</span>
+<span class="text-[#181411] dark:text-white font-medium">Profile</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Sidebar Navigation -->
+<aside class="lg:col-span-3">
+<div class="bg-white dark:bg-[#1e1e1e] rounded-xl shadow-sm border border-[#f5f2f0] dark:border-gray-800 overflow-hidden">
+<!-- User Summary Widget -->
+<div class="p-6 border-b border-[#f5f2f0] dark:border-gray-800 flex flex-col items-center text-center">
+<div class="relative group cursor-pointer">
+<div class="size-20 rounded-full bg-cover bg-center mb-3 border-2 border-white dark:border-gray-700 shadow-md" data-alt="User profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCKZpx0TJtoeHZAwRDQAW91mDn-x_zaRpia2srE0ViPsw1BMGxUhVkTtBuzNTGD0L1WQ_etw5-n9jNFFGdxkHoe-0f1KP0nvjYdyyu9lV3epFQmkWqMJmA5cC23kgf2xbSTm7LSYv0TcpQmmSODf46Lu5eDIqUnKT3tzvgnY_YLrzmO1ZDmNsQ3UhaGPtI6Ti2CgXWKmZZZw25aTBOsjVMGUHAnTl4Zo_j7shrkyo0zt6jqoqQCLkreLfXDhXrr6Yubx2tn-wA8NEIr');"></div>
+<div class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white text-lg">edit</span>
+</div>
+</div>
+<h3 class="font-bold text-[#181411] dark:text-white text-lg">John Doe</h3>
+<p class="text-[#8c725f] dark:text-gray-400 text-sm">john.doe@example.com</p>
+</div>
+<!-- Menu Items -->
+<nav class="p-2 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary font-medium transition-colors" href="#">
+<span class="material-symbols-outlined filled">person</span>
+                                My Profile
+                            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#181411] dark:text-gray-300 hover:bg-[#f5f2f0] dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#8c725f] group-hover:text-[#181411] dark:text-gray-500 dark:group-hover:text-gray-200 transition-colors">history</span>
+                                Order History
+                            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#181411] dark:text-gray-300 hover:bg-[#f5f2f0] dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#8c725f] group-hover:text-[#181411] dark:text-gray-500 dark:group-hover:text-gray-200 transition-colors">location_on</span>
+                                Saved Addresses
+                            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#181411] dark:text-gray-300 hover:bg-[#f5f2f0] dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#8c725f] group-hover:text-[#181411] dark:text-gray-500 dark:group-hover:text-gray-200 transition-colors">credit_card</span>
+                                Payment Methods
+                            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#181411] dark:text-gray-300 hover:bg-[#f5f2f0] dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#8c725f] group-hover:text-[#181411] dark:text-gray-500 dark:group-hover:text-gray-200 transition-colors">directions_car</span>
+                                My Garage
+                            </a>
+<div class="h-px bg-[#f5f2f0] dark:bg-gray-800 my-1 mx-2"></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+                                Log Out
+                            </a>
+</nav>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="lg:col-span-9 flex flex-col gap-6">
+<!-- Page Header -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<h1 class="text-3xl font-bold text-[#181411] dark:text-white">My Profile</h1>
+<!-- Optional Badge -->
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-semibold">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+                                Verified Member
+                            </div>
+</div>
+<p class="text-[#8c725f] dark:text-gray-400">Manage your personal information to control and secure your account.</p>
+</div>
+<!-- Profile Form Card -->
+<div class="bg-white dark:bg-[#1e1e1e] rounded-xl shadow-sm border border-[#f5f2f0] dark:border-gray-800 p-6 md:p-8">
+<!-- Personal Information Section -->
+<div class="mb-10">
+<h2 class="text-xl font-bold text-[#181411] dark:text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">badge</span>
+                                Personal Information
+                            </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- First Name -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-[#181411] dark:text-gray-300">First Name</label>
+<div class="relative">
+<input class="w-full h-11 px-4 rounded-lg bg-[#f8f7f5] dark:bg-gray-800 border-transparent focus:border-primary focus:bg-white dark:focus:bg-gray-900 focus:ring-0 transition-all text-[#181411] dark:text-white" type="text" value="John"/>
+</div>
+</div>
+<!-- Last Name -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-[#181411] dark:text-gray-300">Last Name</label>
+<div class="relative">
+<input class="w-full h-11 px-4 rounded-lg bg-[#f8f7f5] dark:bg-gray-800 border-transparent focus:border-primary focus:bg-white dark:focus:bg-gray-900 focus:ring-0 transition-all text-[#181411] dark:text-white" type="text" value="Doe"/>
+</div>
+</div>
+<!-- Email -->
+<div class="flex flex-col gap-1.5 md:col-span-2">
+<label class="text-sm font-semibold text-[#181411] dark:text-gray-300">Email Address</label>
+<div class="relative group">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400">mail</span>
+<input class="w-full h-11 pl-11 pr-4 rounded-lg bg-[#f8f7f5] dark:bg-gray-800 border-transparent focus:border-primary focus:bg-white dark:focus:bg-gray-900 focus:ring-0 transition-all text-[#181411] dark:text-white" type="email" value="john.doe@example.com"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-primary text-xs font-bold hover:underline">VERIFIED</button>
+</div>
+</div>
+<!-- Phone -->
+<div class="flex flex-col gap-1.5 md:col-span-2">
+<label class="text-sm font-semibold text-[#181411] dark:text-gray-300">Phone Number</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400">call</span>
+<input class="w-full h-11 pl-11 pr-4 rounded-lg bg-[#f8f7f5] dark:bg-gray-800 border-transparent focus:border-primary focus:bg-white dark:focus:bg-gray-900 focus:ring-0 transition-all text-[#181411] dark:text-white" type="tel" value="+1 (555) 123-4567"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<hr class="border-[#f5f2f0] dark:border-gray-800 mb-10"/>
+<!-- Password Section -->
+<div class="mb-8">
+<h2 class="text-xl font-bold text-[#181411] dark:text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">lock</span>
+                                Security Settings
+                            </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+<!-- Current Password -->
+<div class="flex flex-col gap-1.5 md:col-span-2">
+<label class="text-sm font-semibold text-[#181411] dark:text-gray-300">Current Password</label>
+<div class="relative">
+<input class="w-full h-11 px-4 rounded-lg bg-[#f8f7f5] dark:bg-gray-800 border-transparent focus:border-primary focus:bg-white dark:focus:bg-gray-900 focus:ring-0 transition-all text-[#181411] dark:text-white" placeholder="••••••••••••" type="password"/>
+</div>
+</div>
+<!-- New Password -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-[#181411] dark:text-gray-300">New Password</label>
+<div class="relative">
+<input class="w-full h-11 px-4 rounded-lg bg-[#f8f7f5] dark:bg-gray-800 border-transparent focus:border-primary focus:bg-white dark:focus:bg-gray-900 focus:ring-0 transition-all text-[#181411] dark:text-white" type="password"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 cursor-pointer hover:text-gray-600 text-sm">visibility</span>
+</div>
+</div>
+<!-- Confirm New Password -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-[#181411] dark:text-gray-300">Confirm New Password</label>
+<div class="relative">
+<input class="w-full h-11 px-4 rounded-lg bg-[#f8f7f5] dark:bg-gray-800 border-transparent focus:border-primary focus:bg-white dark:focus:bg-gray-900 focus:ring-0 transition-all text-[#181411] dark:text-white" type="password"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-4 pt-4">
+<button class="h-11 px-8 rounded-lg bg-primary hover:bg-orange-600 text-white font-bold text-sm tracking-wide shadow-sm hover:shadow-md transition-all transform hover:-translate-y-0.5">
+                                Save Changes
+                            </button>
+<button class="h-11 px-6 rounded-lg bg-transparent border border-[#f5f2f0] dark:border-gray-700 hover:bg-[#f5f2f0] dark:hover:bg-gray-800 text-[#181411] dark:text-gray-300 font-bold text-sm tracking-wide transition-all">
+                                Cancel
+                            </button>
+</div>
+</div>
+<!-- Delete Account Zone (Optional extra for completeness) -->
+<div class="flex justify-end">
+<button class="text-red-500 hover:text-red-700 text-sm font-medium flex items-center gap-1 opacity-70 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">delete</span>
+                            Deactivate Account
+                        </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple Footer for Context -->
+<footer class="mt-auto border-t border-[#f5f2f0] dark:border-gray-800 bg-white dark:bg-[#1e1e1e] py-8 px-10">
+<div class="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-[#8c725f] dark:text-gray-500 text-sm">© 2023 SN Auto Parts. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-[#8c725f] dark:text-gray-500 hover:text-primary text-sm" href="#">Privacy Policy</a>
+<a class="text-[#8c725f] dark:text-gray-500 hover:text-primary text-sm" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

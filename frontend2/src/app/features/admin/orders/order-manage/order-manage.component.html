@@ -1,0 +1,305 @@
+<div class="order-manage">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    @if (order(); as o) {
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a routerLink="/orders">Orders</a>
+      <span class="separator">/</span>
+      <span>Order #{{ o.orderNumber }}</span>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="header-left">
+        <div class="title-row">
+          <h1>Order #{{ o.orderNumber }}</h1>
+          <app-badge [variant]="getStatusVariant(o.status)" size="lg">
+            {{ o.status }}
+          </app-badge>
+        </div>
+        <p class="order-meta">
+          Customer: <a [routerLink]="['/users', o.customerId]" class="customer-link">{{ o.customerEmail }}</a>
+          • Placed on {{ o.createdAt | date:'MMMM d, y' }} at {{ o.createdAt | date:'h:mm a' }}
+        </p>
+      </div>
+      <div class="header-actions">
+        <app-button variant="outline" icon="print" (clicked)="printInvoice()">
+          Print Invoice
+        </app-button>
+        <div class="status-dropdown" [class.open]="showStatusDropdown()">
+          <app-button 
+            variant="primary" 
+            icon="expand_more"
+            [iconPosition]="'right'"
+            [loading]="isUpdating()"
+            (clicked)="toggleStatusDropdown()"
+          >
+            Update Status
+          </app-button>
+          @if (showStatusDropdown()) {
+            <div class="dropdown-menu">
+              @for (option of statusOptions; track option.value) {
+                <button 
+                  class="dropdown-item"
+                  [class.active]="option.value === o.status"
+                  [disabled]="option.value === o.status"
+                  (click)="updateStatus(option.value)"
+                >
+                  {{ option.label }}
+                  @if (option.value === o.status) {
+                    <span class="current-badge">Current</span>
+                  }
+                </button>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <div class="order-grid">
+      <!-- Left Column: Timeline & Actions -->
+      <div class="left-column">
+        <!-- Timeline -->
+        <div class="section-card">
+          <div class="section-header">
+            <span class="material-symbols-outlined section-icon">show_chart</span>
+            <h2>Timeline</h2>
+          </div>
+          <div class="timeline">
+            @for (step of timelineSteps(); track trackByStep($index, step); let last = $last) {
+              <div 
+                class="timeline-step"
+                [class.completed]="step.isCompleted"
+                [class.current]="step.isCurrent"
+                [class.pending]="step.isPending"
+              >
+                <div class="step-icon">
+                  @if (step.isCompleted && !step.isCurrent) {
+                    <span class="material-symbols-outlined">check</span>
+                  } @else {
+                    <span class="material-symbols-outlined">{{ step.icon }}</span>
+                  }
+                </div>
+                <div class="step-content">
+                  <span class="step-label" [class.current]="step.isCurrent">{{ step.label }}</span>
+                  @if (step.date) {
+                    <span class="step-date">{{ step.date }}</span>
+                  } @else if (step.isPending) {
+                    <span class="step-pending">Pending</span>
+                  }
+                  @if (step.description && step.isCompleted) {
+                    <span class="step-desc">{{ step.description }}</span>
+                  }
+                </div>
+              </div>
+              @if (!last) {
+                <div class="timeline-line" [class.completed]="timelineSteps()[$index + 1]?.isCompleted"></div>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="section-card">
+          <h2 class="actions-title">Actions</h2>
+          <div class="actions-list">
+            @if (o.status !== 'CANCELLED' && o.status !== 'DELIVERED') {
+              <button class="action-btn action-btn--danger" (click)="cancelOrder()">
+                <span class="material-symbols-outlined">cancel</span>
+                Cancel Order
+              </button>
+            }
+            <button class="action-btn">
+              <span class="material-symbols-outlined">currency_exchange</span>
+              Refund Items
+            </button>
+            <button class="action-btn" (click)="emailCustomer()">
+              <span class="material-symbols-outlined">mail</span>
+              Email Customer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle Column: Items & Notes -->
+      <div class="middle-column">
+        <!-- Items Ordered -->
+        <div class="section-card">
+          <div class="section-header">
+            <h2>Items Ordered</h2>
+            <span class="items-count">{{ o.items?.length || 0 }} Items</span>
+          </div>
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th class="text-center">Qty</th>
+                <th class="text-right">Unit Price</th>
+                <th class="text-right">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of o.items; track trackByItem($index, item)) {
+                <tr>
+                  <td class="product-cell">
+                    <div class="product-image">
+                      @if (item.product?.images?.[0]) {
+                        <img [src]="item.product.images[0]" [alt]="item.productName" />
+                      } @else {
+                        <span class="material-symbols-outlined">inventory_2</span>
+                      }
+                    </div>
+                    <div class="product-info">
+                      <span class="product-name">{{ item.productName }}</span>
+                      <span class="product-sku">SKU: {{ item.productSku }}</span>
+                    </div>
+                  </td>
+                  <td class="text-center">{{ item.quantity }}</td>
+                  <td class="text-right">{{ item.price | currency }}</td>
+                  <td class="text-right">{{ item.price * item.quantity | currency }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Internal Notes -->
+        <div class="section-card">
+          <div class="section-header">
+            <span class="material-symbols-outlined section-icon">sticky_note_2</span>
+            <h2>Internal Notes</h2>
+          </div>
+          <div class="notes-list">
+            @for (note of notes(); track trackByNote($index, note)) {
+              <div class="note-item">
+                <div class="note-header">
+                  <span class="note-author">{{ note.author }}</span>
+                  <span class="note-date">{{ note.createdAt | date:'MMM d, h:mm a' }}</span>
+                </div>
+                <p class="note-content">{{ note.content }}</p>
+              </div>
+            } @empty {
+              <p class="no-notes">No internal notes yet.</p>
+            }
+          </div>
+          <div class="add-note">
+            <textarea 
+              class="note-input" 
+              placeholder="Add a note..."
+              [(ngModel)]="newNote"
+              rows="3"
+            ></textarea>
+            <app-button variant="outline" (clicked)="addNote()" [disabled]="!newNote.trim()">
+              Add Note
+            </app-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Summary & Addresses -->
+      <div class="right-column">
+        <!-- Order Summary -->
+        <div class="section-card summary-card">
+          <h2>Summary</h2>
+          <div class="summary-rows">
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span>{{ o.subtotal | currency }}</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span>{{ o.shippingCost | currency }}</span>
+            </div>
+            @if (o.tax) {
+              <div class="summary-row">
+                <span>Tax ({{ o.taxRate || 8 }}%)</span>
+                <span>{{ o.tax | currency }}</span>
+              </div>
+            }
+            @if (o.discount) {
+              <div class="summary-row discount">
+                <span>Discount</span>
+                <span>-{{ o.discount | currency }}</span>
+              </div>
+            }
+            <div class="summary-row total">
+              <span>Total</span>
+              <span class="total-value">{{ o.total | currency }}</span>
+            </div>
+          </div>
+          <div class="payment-status">
+            <span class="material-symbols-outlined paid-icon">check_circle</span>
+            <span class="paid-text">Paid</span>
+            <span class="payment-method">via Visa ending 4242</span>
+          </div>
+        </div>
+
+        <!-- Shipping Address -->
+        <div class="section-card">
+          <div class="section-header">
+            <h2>SHIPPING ADDRESS</h2>
+            <a routerLink="#" class="edit-link">Edit</a>
+          </div>
+          @if (o.shippingAddress; as addr) {
+            <div class="address-content">
+              <p class="address-name">{{ addr.firstName }} {{ addr.lastName }}</p>
+              <p>{{ addr.street }}</p>
+              @if (addr.apartment) {
+                <p>{{ addr.apartment }}</p>
+              }
+              <p>{{ addr.city }}, {{ addr.state }} {{ addr.zipCode }}</p>
+              <p>{{ addr.country || 'United States' }}</p>
+              @if (addr.phone) {
+                <p class="address-phone">
+                  <span class="material-symbols-outlined">call</span>
+                  {{ addr.phone }}
+                </p>
+              }
+            </div>
+            <div class="address-map">
+              <!-- Placeholder for map -->
+              <div class="map-placeholder">
+                <span class="material-symbols-outlined">map</span>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Billing Address -->
+        <div class="section-card">
+          <h2 class="section-title-sm">BILLING ADDRESS</h2>
+          @if (o.billingAddress) {
+            <div class="address-content">
+              <p>{{ o.billingAddress.firstName }} {{ o.billingAddress.lastName }}</p>
+              <p>{{ o.billingAddress.street }}</p>
+            </div>
+          } @else {
+            <div class="same-as-shipping">
+              <span class="material-symbols-outlined">check</span>
+              <span>Same as shipping address</span>
+            </div>
+          }
+        </div>
+
+        <!-- Shipping Method -->
+        <div class="section-card">
+          <h2 class="section-title-sm">SHIPPING METHOD</h2>
+          <div class="shipping-method">
+            <span class="material-symbols-outlined method-icon">local_shipping</span>
+            <div class="method-info">
+              <span class="method-name">{{ o.shippingMethod || 'Standard Ground' }}</span>
+              <span class="method-time">3-5 Business Days</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  }
+</div>

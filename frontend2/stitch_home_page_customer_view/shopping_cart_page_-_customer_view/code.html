@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Shopping Cart</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2d241f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#181411] dark:text-[#f5f2f0] antialiased min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="bg-surface-light dark:bg-surface-dark border-b border-[#f5f2f0] dark:border-[#3e342f] sticky top-0 z-50">
+<div class="max-w-[1280px] mx-auto px-4 md:px-10 py-3">
+<div class="flex items-center justify-between gap-4 md:gap-8">
+<!-- Logo & Search -->
+<div class="flex items-center gap-4 md:gap-8 flex-1">
+<a class="flex items-center gap-4 text-[#181411] dark:text-white shrink-0" href="#">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="hidden md:block text-lg font-bold leading-tight tracking-[-0.015em]">SN Auto Parts</h2>
+</a>
+<label class="flex flex-col w-full max-w-md">
+<div class="flex w-full items-stretch rounded-lg h-10 bg-[#f5f2f0] dark:bg-[#3e342f] overflow-hidden">
+<div class="flex items-center justify-center pl-4 pr-2 text-[#8c725f] dark:text-[#a08e80]">
+<span class="material-symbols-outlined text-[24px]">search</span>
+</div>
+<input class="w-full bg-transparent border-none text-sm text-[#181411] dark:text-white placeholder:text-[#8c725f] focus:ring-0" placeholder="Search for parts, brands, or SKU..."/>
+</div>
+</label>
+</div>
+<!-- Nav Links & Icons -->
+<div class="flex items-center gap-4 md:gap-8">
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Shop Parts</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Accessories</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Deals</a>
+</nav>
+<div class="flex gap-3">
+<button class="flex items-center justify-center size-10 rounded-lg bg-[#f5f2f0] dark:bg-[#3e342f] hover:bg-[#e6dfdb] dark:hover:bg-[#4d423c] transition-colors text-[#181411] dark:text-white relative">
+<span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+<span class="absolute top-1 right-1 size-2 bg-primary rounded-full"></span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-lg bg-[#f5f2f0] dark:bg-[#3e342f] hover:bg-[#e6dfdb] dark:hover:bg-[#4d423c] transition-colors text-[#181411] dark:text-white">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow layout-container px-4 md:px-10 py-8 max-w-[1280px] mx-auto w-full">
+<!-- Page Heading -->
+<div class="mb-8">
+<h1 class="text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em] text-[#181411] dark:text-white">
+                Shopping Cart <span class="text-lg font-medium text-[#8c725f] ml-2 align-middle">(3 items)</span>
+</h1>
+</div>
+<div class="flex flex-col lg:flex-row gap-8 items-start">
+<!-- Left Column: Cart Items -->
+<div class="w-full lg:w-[65%] flex flex-col gap-6">
+<!-- Cart Table Container -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e6dfdb] dark:border-[#3e342f] overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#fcfbfb] dark:bg-[#362e29] border-b border-[#e6dfdb] dark:border-[#3e342f]">
+<th class="px-6 py-4 text-sm font-medium text-[#8c725f] dark:text-[#a08e80] w-[45%]">Product</th>
+<th class="px-6 py-4 text-sm font-medium text-[#8c725f] dark:text-[#a08e80] w-[15%]">Price</th>
+<th class="px-6 py-4 text-sm font-medium text-[#8c725f] dark:text-[#a08e80] w-[20%]">Quantity</th>
+<th class="px-6 py-4 text-sm font-medium text-[#8c725f] dark:text-[#a08e80] w-[15%]">Total</th>
+<th class="px-6 py-4 w-[5%]"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e6dfdb] dark:divide-[#3e342f]">
+<!-- Item 1 -->
+<tr class="group hover:bg-[#f9f9f9] dark:hover:bg-[#362e29] transition-colors">
+<td class="px-6 py-5">
+<div class="flex gap-4 items-center">
+<div class="size-20 shrink-0 rounded-lg bg-gray-100 dark:bg-gray-800 overflow-hidden border border-[#e6dfdb] dark:border-[#3e342f]">
+<img alt="Silver automotive oil filter on white background" class="w-full h-full object-cover" data-alt="Bosch Oil Filter product image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs3GjX1SPWNA3KkD00HjJiOvMtQ43Vlza9ehe_rZxLjZFKxDrS_0EphU_38fpUsObbtpn4NTdJz9DuUEOPQPMCSV3cpMcGc8Jlms_2pawcMT1Oe5Y62X1ZkeBhtpkbR0NH3f8pMJasHCX35q2WlzFDRQ3R2zUom0AvFkkahLlkNvW8QX5WCSE3TdV-_Yu2jWNsZzIZaVQzKvI9B0G10nNxdTX1kKrv6XvKc35pGGJUdQUwU-CZxYJ8uKZ-QE2J_1P-qjTvK6hNTXAQ"/>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-base font-bold text-[#181411] dark:text-white leading-tight">Bosch Oil Filter - 3323</h3>
+<span class="text-xs text-[#8c725f] dark:text-[#a08e80]">SKU: BSH-3323</span>
+<span class="text-xs text-green-600 font-medium mt-1">In Stock</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 align-middle">
+<span class="text-sm font-medium text-[#181411] dark:text-white">$12.99</span>
+</td>
+<td class="px-6 py-5 align-middle">
+<div class="flex items-center w-[100px] border border-[#e6dfdb] dark:border-[#3e342f] rounded-lg bg-white dark:bg-[#3e342f]">
+<button class="px-2 py-1 hover:text-primary transition-colors disabled:opacity-50 text-[#8c725f] dark:text-[#a08e80]">
+<span class="material-symbols-outlined text-[16px] font-bold">remove</span>
+</button>
+<input class="w-full text-center border-none p-1 bg-transparent text-sm focus:ring-0 font-medium text-[#181411] dark:text-white" readonly="" type="text" value="1"/>
+<button class="px-2 py-1 hover:text-primary transition-colors text-[#8c725f] dark:text-[#a08e80]">
+<span class="material-symbols-outlined text-[16px] font-bold">add</span>
+</button>
+</div>
+</td>
+<td class="px-6 py-5 align-middle">
+<span class="text-sm font-bold text-[#181411] dark:text-white">$12.99</span>
+</td>
+<td class="px-6 py-5 align-middle text-right">
+<button class="text-[#8c725f] hover:text-red-600 dark:hover:text-red-400 transition-colors p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+<!-- Item 2 -->
+<tr class="group hover:bg-[#f9f9f9] dark:hover:bg-[#362e29] transition-colors">
+<td class="px-6 py-5">
+<div class="flex gap-4 items-center">
+<div class="size-20 shrink-0 rounded-lg bg-gray-100 dark:bg-gray-800 overflow-hidden border border-[#e6dfdb] dark:border-[#3e342f]">
+<img alt="Set of four spark plugs on a table" class="w-full h-full object-cover" data-alt="NGK Spark Plugs product image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHSux7l-pFabjxPFi6OqAxbLt3mhJhjbqBuBvygHbixLhuO0dL7GYwwZ25SW_TwFwYlTEXuvKRyr9khZOHYt_mwpxKbZBeox9xa2uP0wLM-g_7gX91YEDZ3mkX_kIsq2aqXCAKXyHDPnnWXb4TS39D9MqK-KnW9P3ICzfQ-cJY-3DFNrRYqxSDWx8j_mQVdUsCGzP9uOYPyhGZzVD3D3SEYnPK3DqwtSabBxAEebDXZ4t2SYFFzJwipm8qwzzObuoIImY8ZJnEDWj3"/>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-base font-bold text-[#181411] dark:text-white leading-tight">NGK Spark Plug (Set of 4)</h3>
+<span class="text-xs text-[#8c725f] dark:text-[#a08e80]">SKU: NGK-TR6</span>
+<span class="text-xs text-green-600 font-medium mt-1">In Stock</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 align-middle">
+<span class="text-sm font-medium text-[#181411] dark:text-white">$24.50</span>
+</td>
+<td class="px-6 py-5 align-middle">
+<div class="flex items-center w-[100px] border border-[#e6dfdb] dark:border-[#3e342f] rounded-lg bg-white dark:bg-[#3e342f]">
+<button class="px-2 py-1 hover:text-primary transition-colors disabled:opacity-50 text-[#8c725f] dark:text-[#a08e80]">
+<span class="material-symbols-outlined text-[16px] font-bold">remove</span>
+</button>
+<input class="w-full text-center border-none p-1 bg-transparent text-sm focus:ring-0 font-medium text-[#181411] dark:text-white" readonly="" type="text" value="1"/>
+<button class="px-2 py-1 hover:text-primary transition-colors text-[#8c725f] dark:text-[#a08e80]">
+<span class="material-symbols-outlined text-[16px] font-bold">add</span>
+</button>
+</div>
+</td>
+<td class="px-6 py-5 align-middle">
+<span class="text-sm font-bold text-[#181411] dark:text-white">$24.50</span>
+</td>
+<td class="px-6 py-5 align-middle text-right">
+<button class="text-[#8c725f] hover:text-red-600 dark:hover:text-red-400 transition-colors p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+<!-- Item 3 -->
+<tr class="group hover:bg-[#f9f9f9] dark:hover:bg-[#362e29] transition-colors">
+<td class="px-6 py-5">
+<div class="flex gap-4 items-center">
+<div class="size-20 shrink-0 rounded-lg bg-gray-100 dark:bg-gray-800 overflow-hidden border border-[#e6dfdb] dark:border-[#3e342f]">
+<img alt="New car brake pads isolated on white" class="w-full h-full object-cover" data-alt="Ceramic Brake Pads product image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjVX9vf_zWTO6YvM96iM6e-8wmmWVB3FQBvFPvVuGWAp2bhSY7OcRYhzzU8DGJmBqSRRNqouH1A304XOaFFqlz5ksDvQ1sF7S3umH5nvAsr3l4CSYHJAsz8SFws5Twsm4YoGnEnzBKQROov8bWPbRLvpTLQRiWlgy93sdJPXhgqIDSeaQY9Gn2KqSD-S442MkPsHgjluVwgioaicLYU1D7HOE-yUpdgLKq9wlGMHq04w9jFSPLRFuF2hS8ZC3GxR-OE1pGeuBIh1_V"/>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-base font-bold text-[#181411] dark:text-white leading-tight">Ceramic Brake Pads - Front</h3>
+<span class="text-xs text-[#8c725f] dark:text-[#a08e80]">SKU: CBP-990</span>
+<span class="text-xs text-yellow-600 font-medium mt-1">Low Stock (2 left)</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 align-middle">
+<span class="text-sm font-medium text-[#181411] dark:text-white">$45.00</span>
+</td>
+<td class="px-6 py-5 align-middle">
+<div class="flex items-center w-[100px] border border-[#e6dfdb] dark:border-[#3e342f] rounded-lg bg-white dark:bg-[#3e342f]">
+<button class="px-2 py-1 hover:text-primary transition-colors disabled:opacity-50 text-[#8c725f] dark:text-[#a08e80]">
+<span class="material-symbols-outlined text-[16px] font-bold">remove</span>
+</button>
+<input class="w-full text-center border-none p-1 bg-transparent text-sm focus:ring-0 font-medium text-[#181411] dark:text-white" readonly="" type="text" value="1"/>
+<button class="px-2 py-1 hover:text-primary transition-colors text-[#8c725f] dark:text-[#a08e80]">
+<span class="material-symbols-outlined text-[16px] font-bold">add</span>
+</button>
+</div>
+</td>
+<td class="px-6 py-5 align-middle">
+<span class="text-sm font-bold text-[#181411] dark:text-white">$45.00</span>
+</td>
+<td class="px-6 py-5 align-middle text-right">
+<button class="text-[#8c725f] hover:text-red-600 dark:hover:text-red-400 transition-colors p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Mobile view for small screens (Simple list) - Hidden on desktop, visible on mobile would be ideal, but for this output keeping table horizontal scroll is standard for cart -->
+</div>
+<!-- Continue Shopping Link -->
+<div>
+<a class="inline-flex items-center gap-2 text-sm font-bold text-[#181411] dark:text-white hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+                        Continue Shopping
+                    </a>
+</div>
+</div>
+<!-- Right Column: Order Summary -->
+<div class="w-full lg:w-[35%]">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e6dfdb] dark:border-[#3e342f] shadow-lg p-6 sticky top-24">
+<h2 class="text-xl font-bold text-[#181411] dark:text-white mb-6">Order Summary</h2>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-sm text-[#8c725f] dark:text-[#a08e80]">Subtotal</span>
+<span class="text-sm font-medium text-[#181411] dark:text-white">$82.49</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm text-[#8c725f] dark:text-[#a08e80]">Shipping</span>
+<span class="text-xs text-[#8c725f] dark:text-[#a08e80] italic">Calculated at checkout</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm text-[#8c725f] dark:text-[#a08e80]">Estimated Tax</span>
+<span class="text-xs text-[#8c725f] dark:text-[#a08e80] italic">Calculated at checkout</span>
+</div>
+</div>
+<div class="my-6 border-t border-[#e6dfdb] dark:border-[#3e342f]"></div>
+<div class="flex justify-between items-end mb-6">
+<span class="text-base font-bold text-[#181411] dark:text-white">Order Total</span>
+<span class="text-2xl font-black text-[#181411] dark:text-white tracking-tight">$82.49</span>
+</div>
+<button class="w-full bg-primary hover:bg-orange-600 text-white font-bold text-base py-3.5 px-6 rounded-lg shadow-md transition-all duration-200 transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                        Proceed to Checkout
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<!-- Trust Signals -->
+<div class="mt-6 flex flex-col items-center gap-4">
+<div class="flex items-center gap-3 opacity-60 dark:opacity-80">
+<!-- Generic Payment Icons (CSS shapes or SVGs) -->
+<!-- Visa -->
+<div class="h-6 w-10 bg-white border border-gray-200 rounded flex items-center justify-center" title="Visa">
+<span class="font-bold text-[10px] text-blue-900 italic tracking-tighter">VISA</span>
+</div>
+<!-- Mastercard -->
+<div class="h-6 w-10 bg-white border border-gray-200 rounded flex items-center justify-center gap-[1px]" title="Mastercard">
+<div class="size-3 bg-red-500 rounded-full opacity-80"></div>
+<div class="size-3 bg-yellow-500 rounded-full opacity-80 -ml-1"></div>
+</div>
+<!-- Amex -->
+<div class="h-6 w-10 bg-blue-500 border border-blue-600 rounded flex items-center justify-center" title="Amex">
+<span class="font-bold text-[8px] text-white">AMEX</span>
+</div>
+<!-- PayPal -->
+<div class="h-6 w-10 bg-white border border-gray-200 rounded flex items-center justify-center" title="PayPal">
+<span class="font-bold text-[10px] text-blue-800 italic">Pay</span><span class="font-bold text-[10px] text-blue-400 italic">Pal</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-[#8c725f] dark:text-[#a08e80]">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span class="text-xs font-medium">Secure checkout</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

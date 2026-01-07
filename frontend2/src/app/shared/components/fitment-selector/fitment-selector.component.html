@@ -1,0 +1,38 @@
+<div class="fitment-selector">
+  <div class="fitment-selector__fields">
+    <app-select
+      label="Year"
+      [options]="years()"
+      [control]="yearControl"
+      placeholder="Select Year"
+      (selectionChange)="onYearChange($event)"
+    />
+    
+    <app-select
+      label="Make"
+      [options]="makes()"
+      [control]="makeControl"
+      placeholder="Select Make"
+      [disabled]="!yearControl.value || loadingMakes()"
+      (selectionChange)="onMakeChange($event)"
+    />
+    
+    <app-select
+      label="Model"
+      [options]="models()"
+      [control]="modelControl"
+      placeholder="Select Model"
+      [disabled]="!makeControl.value || loadingModels()"
+    />
+  </div>
+  
+  <app-button
+    icon="search"
+    [disabled]="!isComplete"
+    (clicked)="search()"
+    class="fitment-selector__button"
+  >
+    Find Parts
+  </app-button>
+</div>
+

@@ -1,0 +1,101 @@
+<div class="order-detail-page">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    @if (order(); as o) {
+    <div class="page-header">
+      <div>
+        <app-button variant="ghost" icon="arrow_back" routerLink="/orders">
+          Back to Orders
+        </app-button>
+        <h1>Order {{ o.orderNumber }}</h1>
+        <p class="order-date">Placed on {{ o.createdAt | date:'fullDate' }}</p>
+      </div>
+      <app-badge [variant]="getStatusVariant(o.status)" size="lg">
+        {{ o.status }}
+      </app-badge>
+    </div>
+
+    <div class="order-content">
+      <!-- Order Items -->
+      <app-card title="Order Items">
+        <div class="items-list">
+          @for (item of o.items; track trackByItem($index, item)) {
+            <div class="order-item">
+              <div class="item-image">
+                @if (item.imageUrl) {
+                  <img [src]="item.imageUrl" [alt]="item.productName" />
+                } @else {
+                  <span class="material-symbols-outlined">image</span>
+                }
+              </div>
+              <div class="item-details">
+                <a [routerLink]="['/products', item.productSlug]" class="item-name">
+                  {{ item.productName }}
+                </a>
+                <span class="item-sku">SKU: {{ item.productSku }}</span>
+              </div>
+              <div class="item-qty">x{{ item.quantity }}</div>
+              <div class="item-price">{{ item.price * item.quantity | currency }}</div>
+            </div>
+          }
+        </div>
+
+        <div class="order-totals">
+          <div class="total-row">
+            <span>Subtotal</span>
+            <span>{{ o.subtotal | currency }}</span>
+          </div>
+          <div class="total-row">
+            <span>Shipping</span>
+            <span>{{ o.shippingCost | currency }}</span>
+          </div>
+          @if (o.taxAmount) {
+            <div class="total-row">
+              <span>Tax</span>
+              <span>{{ o.taxAmount | currency }}</span>
+            </div>
+          }
+          <div class="total-row total-row--final">
+            <span>Total</span>
+            <span>{{ o.total | currency }}</span>
+          </div>
+        </div>
+      </app-card>
+
+      <!-- Shipping Address -->
+      <app-card title="Shipping Address">
+        <div class="address-block">
+          <p>{{ o.shippingAddress.firstName }} {{ o.shippingAddress.lastName }}</p>
+          <p>{{ o.shippingAddress.address1 }}</p>
+          @if (o.shippingAddress.address2) {
+            <p>{{ o.shippingAddress.address2 }}</p>
+          }
+          <p>{{ o.shippingAddress.city }}, {{ o.shippingAddress.state }} {{ o.shippingAddress.zipCode }}</p>
+        </div>
+      </app-card>
+
+      <!-- Order Timeline -->
+      <app-card title="Order Timeline">
+        <div class="timeline">
+          @for (event of timeline(); track trackByTimeline($index, event)) {
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-title">{{ event.title }}</span>
+                @if (event.description) {
+                  <p class="timeline-description">{{ event.description }}</p>
+                }
+                <span class="timeline-date">{{ event.createdAt | date:'medium' }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </app-card>
+    </div>
+    }
+  }
+</div>
+

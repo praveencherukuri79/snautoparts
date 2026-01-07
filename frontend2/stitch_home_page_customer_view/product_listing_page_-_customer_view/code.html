@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Engine Parts - SN Auto Parts</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom styles for details/summary marker customization if needed */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181411] font-display min-h-screen flex flex-col">
+<!-- Header -->
+<header class="bg-white dark:bg-[#1e1e1e] border-b border-[#e6dfdb] dark:border-[#333] sticky top-0 z-50">
+<div class="px-4 lg:px-10 py-3 flex items-center justify-between gap-4 max-w-[1440px] mx-auto w-full">
+<!-- Logo & Search -->
+<div class="flex items-center gap-8 flex-1">
+<a class="flex items-center gap-4 text-[#181411] dark:text-white group" href="#">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em] hidden sm:block">SN Auto Parts</h2>
+</a>
+<label class="hidden md:flex flex-col flex-1 max-w-[400px]">
+<div class="flex w-full items-stretch rounded-lg bg-[#f5f2f0] dark:bg-[#2a2a2a] focus-within:ring-2 ring-primary/50 transition-all">
+<div class="text-[#8c725f] flex items-center justify-center pl-4">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="w-full bg-transparent border-none text-base text-[#181411] dark:text-white placeholder:text-[#8c725f] focus:ring-0 px-4 py-2.5" placeholder="Search for parts, brands, or SKU..."/>
+</div>
+</label>
+</div>
+<!-- Nav & Actions -->
+<div class="flex items-center gap-8">
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-[#181411] dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-primary text-sm font-medium" href="#">Shop</a>
+<a class="text-[#181411] dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">About</a>
+<a class="text-[#181411] dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">Contact</a>
+</nav>
+<div class="flex gap-2">
+<button class="relative flex items-center justify-center rounded-lg size-10 bg-[#f5f2f0] dark:bg-[#2a2a2a] text-[#181411] dark:text-white hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+<span class="absolute top-1 right-1 size-2 bg-red-500 rounded-full"></span>
+</button>
+<button class="flex items-center justify-center rounded-lg size-10 bg-[#f5f2f0] dark:bg-[#2a2a2a] text-[#181411] dark:text-white hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Wrapper -->
+<div class="flex-1 w-full max-w-[1440px] mx-auto px-4 lg:px-10 py-6">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 mb-6 text-sm">
+<a class="text-[#8c725f] hover:text-primary transition-colors font-medium" href="#">Home</a>
+<span class="text-[#8c725f] font-medium">/</span>
+<a class="text-[#8c725f] hover:text-primary transition-colors font-medium" href="#">Replacement Parts</a>
+<span class="text-[#8c725f] font-medium">/</span>
+<span class="text-[#181411] dark:text-white font-medium">Engine Parts</span>
+</div>
+<!-- Page Heading -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+<div>
+<h1 class="text-[#181411] dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Engine Parts</h1>
+<p class="text-[#8c725f] mt-1 text-base font-normal">234 products</p>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row gap-8 items-start">
+<!-- Left Sidebar (Filters) -->
+<aside class="w-full lg:w-[280px] shrink-0 space-y-6">
+<div class="flex items-center justify-between pb-4 border-b border-[#e6dfdb] dark:border-[#333]">
+<h3 class="font-bold text-lg dark:text-white">Filters</h3>
+<a class="text-sm font-medium text-primary hover:text-orange-600 transition-colors" href="#">Clear All</a>
+</div>
+<!-- Category Filter -->
+<details class="group" open="">
+<summary class="flex items-center justify-between font-bold text-[#181411] dark:text-white cursor-pointer list-none py-2">
+<span>Category</span>
+<span class="material-symbols-outlined transform group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pt-2 pb-4 flex flex-col gap-3">
+<label class="flex items-center gap-3 cursor-pointer group/item">
+<input checked="" class="rounded border-[#e6dfdb] text-primary focus:ring-primary/20 size-5 cursor-pointer" type="checkbox"/>
+<span class="text-sm text-[#4b453f] dark:text-[#a0a0a0] group-hover/item:text-primary transition-colors">Pistons &amp; Rings</span>
+<span class="ml-auto text-xs text-[#8c725f]">(45)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group/item">
+<input class="rounded border-[#e6dfdb] text-primary focus:ring-primary/20 size-5 cursor-pointer" type="checkbox"/>
+<span class="text-sm text-[#4b453f] dark:text-[#a0a0a0] group-hover/item:text-primary transition-colors">Valves &amp; Parts</span>
+<span class="ml-auto text-xs text-[#8c725f]">(23)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group/item">
+<input class="rounded border-[#e6dfdb] text-primary focus:ring-primary/20 size-5 cursor-pointer" type="checkbox"/>
+<span class="text-sm text-[#4b453f] dark:text-[#a0a0a0] group-hover/item:text-primary transition-colors">Gaskets &amp; Seals</span>
+<span class="ml-auto text-xs text-[#8c725f]">(86)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group/item">
+<input class="rounded border-[#e6dfdb] text-primary focus:ring-primary/20 size-5 cursor-pointer" type="checkbox"/>
+<span class="text-sm text-[#4b453f] dark:text-[#a0a0a0] group-hover/item:text-primary transition-colors">Camshafts</span>
+<span class="ml-auto text-xs text-[#8c725f]">(12)</span>
+</label>
+</div>
+</details>
+<div class="h-px bg-[#e6dfdb] dark:bg-[#333]"></div>
+<!-- Brand Filter -->
+<details class="group" open="">
+<summary class="flex items-center justify-between font-bold text-[#181411] dark:text-white cursor-pointer list-none py-2">
+<span>Brand</span>
+<span class="material-symbols-outlined transform group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pt-2 pb-4 flex flex-col gap-3">
+<div class="relative mb-2">
+<input class="w-full text-sm rounded bg-[#f5f2f0] dark:bg-[#2a2a2a] border-none py-2 px-3 focus:ring-1 focus:ring-primary placeholder:text-[#8c725f]" placeholder="Search brands..." type="text"/>
+<span class="material-symbols-outlined absolute right-2 top-2 text-[#8c725f] text-sm">search</span>
+</div>
+<div class="max-h-40 overflow-y-auto pr-2 space-y-3 custom-scrollbar">
+<label class="flex items-center gap-3 cursor-pointer group/item">
+<input class="rounded border-[#e6dfdb] text-primary focus:ring-primary/20 size-5 cursor-pointer" type="checkbox"/>
+<span class="text-sm text-[#4b453f] dark:text-[#a0a0a0] group-hover/item:text-primary transition-colors">Bosch</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group/item">
+<input checked="" class="rounded border-[#e6dfdb] text-primary focus:ring-primary/20 size-5 cursor-pointer" type="checkbox"/>
+<span class="text-sm text-[#4b453f] dark:text-[#a0a0a0] group-hover/item:text-primary transition-colors">Denso</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group/item">
+<input class="rounded border-[#e6dfdb] text-primary focus:ring-primary/20 size-5 cursor-pointer" type="checkbox"/>
+<span class="text-sm text-[#4b453f] dark:text-[#a0a0a0] group-hover/item:text-primary transition-colors">NGK</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group/item">
+<input class="rounded border-[#e6dfdb] text-primary focus:ring-primary/20 size-5 cursor-pointer" type="checkbox"/>
+<span class="text-sm text-[#4b453f] dark:text-[#a0a0a0] group-hover/item:text-primary transition-colors">Mahle</span>
+</label>
+</div>
+</div>
+</details>
+<div class="h-px bg-[#e6dfdb] dark:bg-[#333]"></div>
+<!-- Price Range Filter -->
+<details class="group" open="">
+<summary class="flex items-center justify-between font-bold text-[#181411] dark:text-white cursor-pointer list-none py-2">
+<span>Price Range</span>
+<span class="material-symbols-outlined transform group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pt-2 pb-4">
+<div class="flex items-center gap-2">
+<div class="relative flex-1">
+<span class="absolute left-3 top-2 text-sm text-[#8c725f]">$</span>
+<input class="w-full rounded bg-white dark:bg-[#2a2a2a] border border-[#e6dfdb] dark:border-[#444] py-2 pl-6 pr-2 text-sm focus:ring-primary focus:border-primary" placeholder="Min" type="number"/>
+</div>
+<span class="text-[#8c725f]">-</span>
+<div class="relative flex-1">
+<span class="absolute left-3 top-2 text-sm text-[#8c725f]">$</span>
+<input class="w-full rounded bg-white dark:bg-[#2a2a2a] border border-[#e6dfdb] dark:border-[#444] py-2 pl-6 pr-2 text-sm focus:ring-primary focus:border-primary" placeholder="Max" type="number"/>
+</div>
+</div>
+</div>
+</details>
+<div class="h-px bg-[#e6dfdb] dark:bg-[#333]"></div>
+<!-- Availability Toggle -->
+<div class="py-2 flex items-center justify-between">
+<span class="font-bold text-[#181411] dark:text-white">In Stock Only</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<button class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-orange-600 transition-colors shadow-sm mt-4">
+                    Apply Filters
+                </button>
+</aside>
+<!-- Main Product Grid -->
+<main class="flex-1 w-full min-w-0">
+<!-- Toolbar -->
+<div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 bg-white dark:bg-[#1e1e1e] p-3 rounded-lg border border-[#e6dfdb] dark:border-[#333]">
+<div class="flex items-center gap-2">
+<span class="text-sm text-[#8c725f] hidden sm:inline">Sort by:</span>
+<select class="form-select border-none bg-[#f5f2f0] dark:bg-[#2a2a2a] rounded text-sm font-medium focus:ring-0 cursor-pointer py-1.5 pl-3 pr-8">
+<option>Best Selling</option>
+<option>Newest Arrivals</option>
+<option>Price: Low to High</option>
+<option>Price: High to Low</option>
+</select>
+</div>
+<div class="flex gap-1 bg-[#f5f2f0] dark:bg-[#2a2a2a] p-1 rounded">
+<button class="p-1.5 rounded bg-white dark:bg-[#333] shadow-sm text-primary">
+<span class="material-symbols-outlined text-[20px] block">grid_view</span>
+</button>
+<button class="p-1.5 rounded hover:bg-white dark:hover:bg-[#333] text-[#8c725f] transition-all">
+<span class="material-symbols-outlined text-[20px] block">view_list</span>
+</button>
+</div>
+</div>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Product Card 1 -->
+<div class="group bg-white dark:bg-[#1e1e1e] rounded-lg border border-[#e6dfdb] dark:border-[#333] hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
+<div class="relative aspect-square bg-[#f8f7f5] dark:bg-[#2a2a2a] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of a metallic car engine piston" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvjT07YCiZW8p78zlrtW1e6ep0ZDrEYfDYosXyZZl35kG6PflFHBluTbuIXBZGAPUm_XQFoLBlD8ottSB6VbgnEhyPpuDbDFrQKfDj3sqOMWYDWQaqsXhzZtutOI91UO0S3QKSwkire3dpzf4ABgLRPKBfNqzyZvYgz8XPqc-GDaVUcaYfONbwbmDE_5Rsgzketi5-r_d6RCC8csuhrRnn0bI0fD3pRHJ7pKamhcE1GqLULM-bTBcM1kbMF9dxqQ0zlElJHXN-DIrE"/>
+<!-- Quick View Overlay -->
+<div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white text-[#181411] hover:text-primary rounded-full size-10 flex items-center justify-center shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+<span class="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">-20%</span>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="text-xs text-[#8c725f] mb-1">SKU: ENG-PST-001</div>
+<h3 class="font-bold text-[#181411] dark:text-white leading-tight mb-2 hover:text-primary cursor-pointer line-clamp-2">Forged Aluminum Piston Set - Standard Bore</h3>
+<div class="mt-auto pt-4 flex items-end justify-between">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-lg font-black text-primary">$245.00</span>
+<span class="text-sm text-[#8c725f] line-through">$306.25</span>
+</div>
+<div class="inline-flex items-center gap-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold px-2 py-0.5 rounded-full">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+                                        In Stock
+                                    </div>
+</div>
+<button class="bg-primary hover:bg-orange-600 text-white p-2.5 rounded-lg transition-colors shadow-sm group/btn">
+<span class="material-symbols-outlined block group-hover/btn:scale-110 transition-transform text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group bg-white dark:bg-[#1e1e1e] rounded-lg border border-[#e6dfdb] dark:border-[#333] hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
+<div class="relative aspect-square bg-[#f8f7f5] dark:bg-[#2a2a2a] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Intricate metallic engine block details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDKxkgsKADLd15JPFSkBmrAXmlIeWqe63ieKKnpB_quQQ3EBwS8hQ9ohtRxt9Ojwe2R6azcLnIFf-JvZZcRuarchfP8ppIex9OZuMV4dP5S4ol7lIzIJJPRA1dnnQ484C4I6Q4t7Esb8keWqor197NPtsqY1z7PnCleLniPfg_AcEgnY_rR_vgYZDS-nMEchY1d9ZbI0rvypeoUmVaCOwGqOMFUBBDqSWposiysrULBjYwz5NklprWsRmhv5Vo1weu8ynmquKJbslV"/>
+<!-- Quick View Overlay -->
+<div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white text-[#181411] hover:text-primary rounded-full size-10 flex items-center justify-center shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="text-xs text-[#8c725f] mb-1">SKU: ENG-VLV-402</div>
+<h3 class="font-bold text-[#181411] dark:text-white leading-tight mb-2 hover:text-primary cursor-pointer line-clamp-2">Titanium Intake Valves (Set of 8)</h3>
+<div class="mt-auto pt-4 flex items-end justify-between">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-lg font-black text-[#181411] dark:text-white">$189.99</span>
+</div>
+<div class="inline-flex items-center gap-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-xs font-bold px-2 py-0.5 rounded-full">
+<span class="size-1.5 rounded-full bg-yellow-500"></span>
+                                        Low Stock
+                                    </div>
+</div>
+<button class="bg-primary hover:bg-orange-600 text-white p-2.5 rounded-lg transition-colors shadow-sm group/btn">
+<span class="material-symbols-outlined block group-hover/btn:scale-110 transition-transform text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group bg-white dark:bg-[#1e1e1e] rounded-lg border border-[#e6dfdb] dark:border-[#333] hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
+<div class="relative aspect-square bg-[#f8f7f5] dark:bg-[#2a2a2a] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Car engine oil filter isolated" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVjLJhhZ6LJJoDCjRDcQUkWpg7vVnh0PQ0W6UB9Tkbc1M7qdlyS5aCir_5J6sr0JopxRuiR2ae4tujrsyaNXCjrdpo7rS7an5_23CMH1iSq-nfe15aMatvMnRJPQ_iPry6JGASAZ3CZ2LLblDdeWZpdLjtlzOcqi38SucZQ01LY0j_FEmkjmyUSiHBk4un0BTMC1yMi7yC7Gp8X8mfCKMNJfpk5k4EEbOj9Oc1zw2xfLh6t9cHRtJ9QY8EHc3tP1JbgIKkAmFZQmLg"/>
+<!-- Quick View Overlay -->
+<div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white text-[#181411] hover:text-primary rounded-full size-10 flex items-center justify-center shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="text-xs text-[#8c725f] mb-1">SKU: FLT-OIL-99X</div>
+<h3 class="font-bold text-[#181411] dark:text-white leading-tight mb-2 hover:text-primary cursor-pointer line-clamp-2">Premium Oil Filter - High Capacity</h3>
+<div class="mt-auto pt-4 flex items-end justify-between">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-lg font-black text-[#181411] dark:text-white">$12.50</span>
+</div>
+<div class="inline-flex items-center gap-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold px-2 py-0.5 rounded-full">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+                                        In Stock
+                                    </div>
+</div>
+<button class="bg-primary hover:bg-orange-600 text-white p-2.5 rounded-lg transition-colors shadow-sm group/btn">
+<span class="material-symbols-outlined block group-hover/btn:scale-110 transition-transform text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group bg-white dark:bg-[#1e1e1e] rounded-lg border border-[#e6dfdb] dark:border-[#333] hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
+<div class="relative aspect-square bg-[#f8f7f5] dark:bg-[#2a2a2a] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Generic car engine spark plug" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCetfr5QVTgyCy45wucN8B5g2dmVIQsewbd7JF96hpLx24EGdK4A3iuIVDoudReAZb2VFs-NzOxGt52_fy9yuKRzv7gVla6jVa5pQ7_mNdgDSqxfUc97hkkCCsTfVkA0I8xcFYwzjavIMhKI20_I9LtVi4iDwR6xAg6i-hJfWgPweYKoL1vcNY-Eeg_bk0xkrF4vAWxMT4QsiulruaYmBildbPEI5jOn7WRBRAcvBn1wiyySw2lnZq3pDWSm2qax6XIkzU3HNg5d8uk"/>
+<!-- Quick View Overlay -->
+<div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white text-[#181411] hover:text-primary rounded-full size-10 flex items-center justify-center shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="text-xs text-[#8c725f] mb-1">SKU: SPK-PLG-004</div>
+<h3 class="font-bold text-[#181411] dark:text-white leading-tight mb-2 hover:text-primary cursor-pointer line-clamp-2">Iridium Spark Plug - Performance Series</h3>
+<div class="mt-auto pt-4 flex items-end justify-between">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-lg font-black text-[#181411] dark:text-white">$8.95</span>
+</div>
+<div class="inline-flex items-center gap-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold px-2 py-0.5 rounded-full">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+                                        In Stock
+                                    </div>
+</div>
+<button class="bg-primary hover:bg-orange-600 text-white p-2.5 rounded-lg transition-colors shadow-sm group/btn">
+<span class="material-symbols-outlined block group-hover/btn:scale-110 transition-transform text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="group bg-white dark:bg-[#1e1e1e] rounded-lg border border-[#e6dfdb] dark:border-[#333] hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
+<div class="relative aspect-square bg-[#f8f7f5] dark:bg-[#2a2a2a] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Car timing belt mechanism close up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCoqezcLT9e80IUhdzBt00TisNPNrRvAIHXeqOWWtTSfM6znV6vfqTQbFPaPB5YQrA-rh9roIPVMdcah_auqnm8ulKcp1664vkVeD3EIxIGnlZRAxOazm7nG-aCdhsu4u7AE4jc6F72Bg37CDrXnbXQSHj5p6gi8U-pvEVVXb_wSDv9-IxYiP_Cs8kf174TuxrCvHN0BOL5QqKr-eaj1ts0R2Cnt-vc_4Ly_5kKEN9jBBnPDPX0WwXmLo3raiGcmoFpnhLx25CSfuw"/>
+<!-- Quick View Overlay -->
+<div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white text-[#181411] hover:text-primary rounded-full size-10 flex items-center justify-center shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="text-xs text-[#8c725f] mb-1">SKU: TMG-BLT-550</div>
+<h3 class="font-bold text-[#181411] dark:text-white leading-tight mb-2 hover:text-primary cursor-pointer line-clamp-2">Heavy Duty Timing Belt Kit</h3>
+<div class="mt-auto pt-4 flex items-end justify-between">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-lg font-black text-[#181411] dark:text-white">$85.00</span>
+</div>
+<div class="inline-flex items-center gap-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-bold px-2 py-0.5 rounded-full">
+<span class="size-1.5 rounded-full bg-red-500"></span>
+                                        Out of Stock
+                                    </div>
+</div>
+<button class="bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed p-2.5 rounded-lg transition-colors shadow-sm" disabled="">
+<span class="material-symbols-outlined block text-[20px]">remove_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="group bg-white dark:bg-[#1e1e1e] rounded-lg border border-[#e6dfdb] dark:border-[#333] hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
+<div class="relative aspect-square bg-[#f8f7f5] dark:bg-[#2a2a2a] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="New metallic car alternator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAcuv9okoWEyAfwmS1sg28Fctwo0BsyJF1ksHBj7Qij4OVHeHDI2ePEF9iKUyTXqlFpsap7go7LdwD0oUoyHDwehf2cOYTWzdx3lgeA9jZUI2lCDpsVOB0OVwYuip7bdV87Q1hfbgEkNM5aHFVivZHt2SDPclJubrkqj3KSYKwl4hE_eHiezOfmfKZdeEC3zPxH4fA0X9B_egFv2shBaNza8oyWEFG47-hn45eiS2STYyva8k1rR2e2_eLcPqWtcKWQzYgs6MjqZ44"/>
+<!-- Quick View Overlay -->
+<div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white text-[#181411] hover:text-primary rounded-full size-10 flex items-center justify-center shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+<span class="absolute top-3 left-3 bg-primary text-white text-xs font-bold px-2 py-1 rounded">New</span>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="text-xs text-[#8c725f] mb-1">SKU: ALT-GEN-200</div>
+<h3 class="font-bold text-[#181411] dark:text-white leading-tight mb-2 hover:text-primary cursor-pointer line-clamp-2">High Output Alternator 180 Amp</h3>
+<div class="mt-auto pt-4 flex items-end justify-between">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-lg font-black text-[#181411] dark:text-white">$315.00</span>
+</div>
+<div class="inline-flex items-center gap-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold px-2 py-0.5 rounded-full">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+                                        In Stock
+                                    </div>
+</div>
+<button class="bg-primary hover:bg-orange-600 text-white p-2.5 rounded-lg transition-colors shadow-sm group/btn">
+<span class="material-symbols-outlined block group-hover/btn:scale-110 transition-transform text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-center mt-12 gap-2">
+<button class="flex items-center justify-center size-10 rounded border border-[#e6dfdb] dark:border-[#333] bg-white dark:bg-[#1e1e1e] hover:bg-[#f5f2f0] dark:hover:bg-[#333] text-[#181411] dark:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded bg-primary text-white font-bold shadow-sm">
+                        1
+                    </button>
+<button class="flex items-center justify-center size-10 rounded border border-[#e6dfdb] dark:border-[#333] bg-white dark:bg-[#1e1e1e] hover:bg-[#f5f2f0] dark:hover:bg-[#333] text-[#181411] dark:text-white transition-colors font-medium">
+                        2
+                    </button>
+<button class="flex items-center justify-center size-10 rounded border border-[#e6dfdb] dark:border-[#333] bg-white dark:bg-[#1e1e1e] hover:bg-[#f5f2f0] dark:hover:bg-[#333] text-[#181411] dark:text-white transition-colors font-medium">
+                        3
+                    </button>
+<span class="text-[#8c725f] px-1">...</span>
+<button class="flex items-center justify-center size-10 rounded border border-[#e6dfdb] dark:border-[#333] bg-white dark:bg-[#1e1e1e] hover:bg-[#f5f2f0] dark:hover:bg-[#333] text-[#181411] dark:text-white transition-colors font-medium">
+                        12
+                    </button>
+<button class="flex items-center justify-center size-10 rounded border border-[#e6dfdb] dark:border-[#333] bg-white dark:bg-[#1e1e1e] hover:bg-[#f5f2f0] dark:hover:bg-[#333] text-[#181411] dark:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</main>
+</div>
+</div>
+<!-- Simple Footer (Placeholder) -->
+<footer class="bg-white dark:bg-[#1e1e1e] border-t border-[#e6dfdb] dark:border-[#333] mt-12 py-8">
+<div class="max-w-[1440px] mx-auto px-4 lg:px-10 text-center text-[#8c725f] text-sm">
+<p>© 2023 SN Auto Parts. All rights reserved.</p>
+</div>
+</footer>
+</body></html>

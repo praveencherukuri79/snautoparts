@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Checkout</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "primary-dark": "#1068c2",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2632",
+                        "text-main": "#111418",
+                        "text-secondary": "#617589",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-main dark:text-white min-h-screen flex flex-col">
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-[#f0f2f4] dark:border-gray-700 px-4 md:px-10 py-4 shadow-sm">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<!-- Logo -->
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g>
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</g>
+</svg>
+</div>
+<h1 class="text-text-main dark:text-white text-xl font-bold tracking-tight">SN Auto Parts</h1>
+</div>
+<!-- Secure Badge -->
+<div class="flex items-center gap-2 text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-3 py-1.5 rounded-full border border-green-100 dark:border-green-800">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+<span class="text-xs font-bold uppercase tracking-wider">Secure Checkout</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-7xl mx-auto px-4 md:px-8 py-8">
+<div class="flex flex-col lg:flex-row gap-8 xl:gap-16">
+<!-- LEFT COLUMN: Payment Form -->
+<div class="flex-1 lg:w-3/5 flex flex-col">
+<!-- Progress Stepper -->
+<nav class="mb-8 flex flex-wrap items-center gap-y-2 text-sm font-medium">
+<a class="flex items-center gap-2 text-green-600 dark:text-green-400 hover:text-green-700" href="#">
+<span class="material-symbols-outlined text-[20px] fill-1">check_circle</span>
+<span>Shipping Address</span>
+</a>
+<span class="mx-3 text-gray-300 dark:text-gray-600">/</span>
+<a class="flex items-center gap-2 text-green-600 dark:text-green-400 hover:text-green-700" href="#">
+<span class="material-symbols-outlined text-[20px] fill-1">check_circle</span>
+<span>Shipping Method</span>
+</a>
+<span class="mx-3 text-gray-300 dark:text-gray-600">/</span>
+<span class="flex items-center gap-2 text-primary dark:text-blue-400 font-bold">
+<span class="flex items-center justify-center w-5 h-5 rounded-full bg-primary text-white text-xs">3</span>
+<span>Payment</span>
+</span>
+<span class="mx-3 text-gray-300 dark:text-gray-600">/</span>
+<span class="text-text-secondary dark:text-gray-500">Review</span>
+</nav>
+<div class="bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-[#f0f2f4] dark:border-gray-700 p-6 md:p-8">
+<h2 class="text-2xl font-bold text-text-main dark:text-white mb-6">Payment Information</h2>
+<!-- Card Form -->
+<form class="space-y-6" onsubmit="event.preventDefault();">
+<!-- Card Number -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-text-main dark:text-gray-200">Card Number</label>
+<div class="relative flex items-center">
+<input class="w-full h-12 pl-4 pr-14 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-surface-dark text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent placeholder-gray-400" placeholder="0000 0000 0000 0000" type="text"/>
+<div class="absolute right-3 flex items-center gap-1 pointer-events-none">
+<!-- Use a generic card icon representing brands -->
+<span class="material-symbols-outlined text-gray-400">credit_card</span>
+</div>
+</div>
+<div class="flex gap-2 mt-1">
+<div class="w-8 h-5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600 flex items-center justify-center overflow-hidden">
+<!-- Simple CSS representation of Visa blue/yellow -->
+<div class="h-2 w-full bg-blue-600 relative top-[-2px]"></div>
+</div>
+<div class="w-8 h-5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600 flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-red-500 -mr-1 mix-blend-multiply dark:mix-blend-normal"></div>
+<div class="w-2 h-2 rounded-full bg-yellow-500 mix-blend-multiply dark:mix-blend-normal"></div>
+</div>
+</div>
+</div>
+<!-- Expiry & CVC -->
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="block text-sm font-medium text-text-main dark:text-gray-200">Expiry Date</label>
+<div class="relative">
+<input class="w-full h-12 pl-4 pr-10 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-surface-dark text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent placeholder-gray-400" placeholder="MM/YY" type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-3 text-gray-400 text-[20px]">calendar_today</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-medium text-text-main dark:text-gray-200 flex items-center gap-1">
+                                    CVC 
+                                    <span class="material-symbols-outlined text-gray-400 text-[16px] cursor-help" title="3 digits on back of card">help</span>
+</label>
+<div class="relative">
+<input class="w-full h-12 pl-4 pr-10 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-surface-dark text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent placeholder-gray-400" placeholder="123" type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-3 text-gray-400 text-[20px]">lock</span>
+</div>
+</div>
+</div>
+<!-- Cardholder Name -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-text-main dark:text-gray-200">Name on Card</label>
+<input class="w-full h-12 px-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-surface-dark text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent placeholder-gray-400" placeholder="e.g. John Doe" type="text"/>
+</div>
+<!-- Billing Checkbox -->
+<div class="flex items-start gap-3 pt-2">
+<div class="flex h-6 items-center">
+<input checked="" class="h-5 w-5 rounded border-gray-300 text-primary focus:ring-primary dark:border-gray-600 dark:bg-surface-dark" id="billing_same" type="checkbox"/>
+</div>
+<div class="text-sm leading-6">
+<label class="font-medium text-text-main dark:text-white" for="billing_same">Billing address same as shipping</label>
+<p class="text-text-secondary dark:text-gray-400">We'll use your shipping address for billing purposes.</p>
+</div>
+</div>
+<!-- Navigation & Actions -->
+<div class="pt-6 border-t border-gray-100 dark:border-gray-700 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
+<a class="text-primary dark:text-blue-400 font-medium hover:underline flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                                Back to Shipping
+                            </a>
+<button class="w-full sm:w-auto px-8 py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2" type="submit">
+<span>Continue to Review</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</form>
+<!-- Trust Footer -->
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-700 flex flex-wrap justify-center md:justify-start gap-6 items-center text-text-secondary dark:text-gray-500">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-green-600 dark:text-green-500 text-[20px]">verified_user</span>
+<span class="text-xs font-medium">SSL Encrypted</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-green-600 dark:text-green-500 text-[20px]">shield</span>
+<span class="text-xs font-medium">PCI Compliant</span>
+</div>
+<div class="h-4 w-[1px] bg-gray-300 dark:bg-gray-600 hidden md:block"></div>
+<p class="text-xs">Your data is processed securely.</p>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Order Summary -->
+<div class="w-full lg:w-2/5">
+<div class="bg-gray-50 dark:bg-[#1a2632]/50 rounded-xl p-6 md:p-8 sticky top-24 border border-[#f0f2f4] dark:border-gray-700">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-text-main dark:text-white">Order Summary</h3>
+<a class="text-sm text-primary hover:underline" href="#">Edit Cart</a>
+</div>
+<!-- Items -->
+<div class="space-y-4 mb-6">
+<!-- Item 1 -->
+<div class="flex gap-4">
+<div class="relative w-16 h-16 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-600 bg-white dark:bg-surface-dark flex-shrink-0">
+<img alt="Brake Disc" class="object-cover w-full h-full" data-alt="Close up of metallic car brake disc" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0fMhoylHNkcaK0ipkB-8ifZq354Cft_jRXm3OSGf48QxrWgq2uYda4O_KwbEbThh6FS1Q4azWjU0-cgr4J2tE08tOMb-ghZkmzTG-fCQ3GT7enfBVuQzOifC0YhEk8-7DF_9POGGExTgfhUYvFY_oqPGema89TYO8TO5oGoYWYyXbJN2AAjUtFPW4ipU3f8wN1WRe0syF6CSUXsben6O7avoyEqZSuT-IAxQoMz_8hOWZQjPBG3ng4foxGoPFXcOBQllTwTOpl7wC"/>
+<span class="absolute top-0 right-0 bg-gray-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-bl">x2</span>
+</div>
+<div class="flex-1">
+<h4 class="text-sm font-medium text-text-main dark:text-white leading-tight">Ceramic Brake Pads - Front Set</h4>
+<p class="text-xs text-text-secondary dark:text-gray-400 mt-1">Part #: BP-9921</p>
+</div>
+<div class="text-sm font-semibold text-text-main dark:text-white">$89.98</div>
+</div>
+<!-- Item 2 -->
+<div class="flex gap-4">
+<div class="relative w-16 h-16 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-600 bg-white dark:bg-surface-dark flex-shrink-0">
+<img alt="Oil Filter" class="object-cover w-full h-full" data-alt="Car oil filter product shot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsZc84ORP2BMhVTjR1sQKHm3H076uWaMGI1hXh9c8jX6nMPwlMKohiKuCEwjCA5A64n261tqTBPsqTBpK63VknpTDftBJjcyUWLCLF_2yxDtsA79UQ85WVZdKquG61Rskkur7mhQsV2w4_LFVx3lICp8hEzMsB__SIRKtRprewSweon4fpoKGFoHf850hTmlfo_TOLvpRtGjnpelbKYdgw8M4c41SKQbFvz9wH3VZUIMY6-Tr5aENhESb1z-lsKMLEKTucn2U1VPg0"/>
+<span class="absolute top-0 right-0 bg-gray-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-bl">x1</span>
+</div>
+<div class="flex-1">
+<h4 class="text-sm font-medium text-text-main dark:text-white leading-tight">Premium Oil Filter</h4>
+<p class="text-xs text-text-secondary dark:text-gray-400 mt-1">Part #: OF-4402</p>
+</div>
+<div class="text-sm font-semibold text-text-main dark:text-white">$12.50</div>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-600 my-4"></div>
+<!-- Cost Breakdown -->
+<div class="space-y-2 text-sm text-text-secondary dark:text-gray-400">
+<div class="flex justify-between">
+<span>Subtotal</span>
+<span class="font-medium text-text-main dark:text-white">$102.48</span>
+</div>
+<div class="flex justify-between">
+<span>Shipping</span>
+<span class="font-medium text-text-main dark:text-white">$15.00</span>
+</div>
+<div class="flex justify-between">
+<span>Estimated Tax</span>
+<span class="font-medium text-text-main dark:text-white">$8.20</span>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-600 my-4"></div>
+<!-- Total -->
+<div class="flex justify-between items-baseline mb-6">
+<span class="text-base font-semibold text-text-main dark:text-white">Total</span>
+<div class="flex items-baseline gap-1">
+<span class="text-sm text-text-secondary dark:text-gray-400">USD</span>
+<span class="text-2xl font-bold text-text-main dark:text-white">$125.68</span>
+</div>
+</div>
+<!-- Info Previews -->
+<div class="space-y-3 pt-2">
+<div class="p-3 bg-white dark:bg-surface-dark rounded-lg border border-gray-200 dark:border-gray-600 text-sm">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-bold text-text-secondary dark:text-gray-400 uppercase tracking-wide">Ship To</span>
+<a class="text-xs text-primary hover:underline" href="#">Change</a>
+</div>
+<p class="text-text-main dark:text-gray-200 font-medium">Alex Johnson</p>
+<p class="text-text-secondary dark:text-gray-400">1234 Motorsports Drive, Apt 4B<br/>Austin, TX 78701</p>
+</div>
+<div class="p-3 bg-white dark:bg-surface-dark rounded-lg border border-gray-200 dark:border-gray-600 text-sm">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-bold text-text-secondary dark:text-gray-400 uppercase tracking-wide">Method</span>
+<a class="text-xs text-primary hover:underline" href="#">Change</a>
+</div>
+<p class="text-text-main dark:text-gray-200 font-medium">Standard Ground</p>
+<p class="text-text-secondary dark:text-gray-400">Arrives Thu, Oct 24</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Simple -->
+<footer class="mt-auto border-t border-[#f0f2f4] dark:border-gray-700 py-6 bg-white dark:bg-surface-dark">
+<div class="max-w-7xl mx-auto px-4 text-center text-sm text-text-secondary dark:text-gray-500">
+<p>© 2023 SN Auto Parts. All rights reserved.</p>
+<div class="flex justify-center gap-4 mt-2">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+<a class="hover:text-primary" href="#">Return Policy</a>
+</div>
+</div>
+</footer>
+</body></html>

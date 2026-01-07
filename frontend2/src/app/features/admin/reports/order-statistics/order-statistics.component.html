@@ -1,0 +1,237 @@
+<div class="order-statistics-page">
+  <!-- Header -->
+  <header class="page-header">
+    <div class="header-content">
+      <h1>Order Statistics</h1>
+      <p class="subtitle">Operational insights and performance metrics.</p>
+    </div>
+    <div class="period-filter">
+      <div class="period-chips">
+        @for (period of periodOptions; track period) {
+          <button 
+            class="period-chip"
+            [class.active]="selectedPeriod() === period.toLowerCase().replace(' ', '')"
+            (click)="selectPeriod(period)"
+          >
+            {{ period }}
+          </button>
+        }
+      </div>
+      <app-button variant="primary" size="sm">Apply</app-button>
+    </div>
+  </header>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    @if (data(); as stats) {
+    <!-- KPI Cards -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">Total Orders</span>
+          <div class="kpi-icon">
+            <span class="material-symbols-outlined">shopping_cart</span>
+          </div>
+        </div>
+        <div class="kpi-value">{{ stats.totalOrders }}</div>
+        <div class="kpi-change positive">
+          <span class="material-symbols-outlined">arrow_upward</span>
+          {{ stats.ordersChange }}%
+        </div>
+        <span class="kpi-period">vs. last 30 days</span>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">Avg Order Value</span>
+          <div class="kpi-icon">
+            <span class="material-symbols-outlined">attach_money</span>
+          </div>
+        </div>
+        <div class="kpi-value">{{ stats.avgOrderValue | currency }}</div>
+        <div class="kpi-change positive">
+          <span class="material-symbols-outlined">arrow_upward</span>
+          {{ stats.aovChange }}%
+        </div>
+        <span class="kpi-period">vs. last 30 days</span>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">Fulfillment Rate</span>
+          <div class="kpi-icon">
+            <span class="material-symbols-outlined">local_shipping</span>
+          </div>
+        </div>
+        <div class="kpi-value">{{ stats.fulfillmentRate }}%</div>
+        <div class="kpi-change positive">
+          <span class="material-symbols-outlined">arrow_upward</span>
+          {{ stats.fulfillmentChange }}%
+        </div>
+        <span class="kpi-period">vs. last 30 days</span>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">Return Rate</span>
+          <div class="kpi-icon">
+            <span class="material-symbols-outlined">keyboard_return</span>
+          </div>
+        </div>
+        <div class="kpi-value">{{ stats.returnRate }}%</div>
+        <div class="kpi-change" [class.positive]="stats.returnChange < 0" [class.negative]="stats.returnChange > 0">
+          <span class="material-symbols-outlined">{{ stats.returnChange < 0 ? 'arrow_downward' : 'arrow_upward' }}</span>
+          {{ stats.returnChange | number:'1.1-1' }}%
+        </div>
+        <span class="kpi-period">vs. last 30 days</span>
+      </div>
+    </section>
+
+    <!-- Charts Row -->
+    <section class="charts-row">
+      <!-- Orders Over Time -->
+      <div class="chart-card main-chart">
+        <div class="chart-header">
+          <h3>Orders Over Time</h3>
+          <button class="chart-menu">
+            <span class="material-symbols-outlined">more_horiz</span>
+          </button>
+        </div>
+        <div class="line-chart-container">
+          <div class="y-axis">
+            <span>150</span>
+            <span>100</span>
+            <span>50</span>
+            <span>0</span>
+          </div>
+          <div class="chart-area">
+            <svg class="chart-svg" viewBox="0 0 700 280" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="orderGradient" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#f97415" stop-opacity="0.2"></stop>
+                  <stop offset="100%" stop-color="#f97415" stop-opacity="0"></stop>
+                </linearGradient>
+              </defs>
+              <!-- Grid lines -->
+              <line x1="20" y1="70" x2="680" y2="70" stroke="#45362e" stroke-opacity="0.3" />
+              <line x1="20" y1="140" x2="680" y2="140" stroke="#45362e" stroke-opacity="0.3" />
+              <line x1="20" y1="210" x2="680" y2="210" stroke="#45362e" stroke-opacity="0.3" />
+              <!-- Area -->
+              <path [attr.d]="getChartAreaPath()" fill="url(#orderGradient)" />
+              <!-- Line -->
+              <path [attr.d]="getChartPath()" fill="none" stroke="#f97415" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="x-axis">
+            @for (day of stats.ordersByDay; track trackByDay($index, day)) {
+              <span>{{ day.day }}</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Status Distribution -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h3>Order Status</h3>
+        </div>
+        <div class="donut-chart-container">
+          <div class="donut-chart" [style.background]="getDonutStyle()">
+            <div class="donut-center">
+              <span class="donut-value">{{ stats.totalOrders }}</span>
+              <span class="donut-label">Total</span>
+            </div>
+          </div>
+          <div class="donut-legend">
+            @for (status of stats.ordersByStatus; track trackByStatus($index, status)) {
+              <div class="legend-item">
+                <span class="legend-dot" [style.background-color]="status.color"></span>
+                <span class="legend-text">{{ status.status }} ({{ status.percentage }}%)</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Section -->
+    <section class="bottom-row">
+      <!-- Customer Stats -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h3>Customers: New vs Returning</h3>
+        </div>
+        <div class="bar-chart-container">
+          <div class="grouped-bars">
+            @for (day of stats.customerStats; track trackByDay($index, day)) {
+              <div class="bar-group">
+                <div class="bars">
+                  <div class="bar new" [style.height.%]="getBarHeight(day.newCustomers, getMaxCustomers())"></div>
+                  <div class="bar returning" [style.height.%]="getBarHeight(day.returning, getMaxCustomers())"></div>
+                </div>
+                <span class="bar-label">{{ day.day }}</span>
+              </div>
+            }
+          </div>
+          <div class="bar-legend">
+            <div class="legend-item">
+              <span class="legend-dot new"></span>
+              <span>New Customers</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot returning"></span>
+              <span>Returning</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Products -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h3>Top Selling Products</h3>
+          <a routerLink="/products-manage" class="view-all">View All</a>
+        </div>
+        <table class="products-table">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th class="right">Price</th>
+              <th class="right">Sold</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (product of stats.topProducts; track trackByProduct($index, product)) {
+              <tr>
+                <td>
+                  <div class="product-cell">
+                    <div class="product-thumb"></div>
+                    <div class="product-info">
+                      <span class="product-name">{{ product.name }}</span>
+                      <span class="product-sku">SKU: {{ product.sku }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="right price">{{ product.price | currency }}</td>
+                <td class="right sold">{{ product.sold }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Footer Link -->
+    <div class="footer-link">
+      <a routerLink="/orders">
+        View Detailed Order Log
+        <span class="material-symbols-outlined">arrow_forward</span>
+      </a>
+    </div>
+    }
+  }
+</div>
+

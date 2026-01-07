@@ -1,0 +1,26 @@
+<div class="settings-page">
+  <!-- Page Header -->
+  <header class="page-header">
+    <h1>Settings</h1>
+    <p class="subtitle">Manage your store configuration and preferences</p>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="settings-tabs">
+    @for (tab of tabs; track tab.path) {
+      <a 
+        [routerLink]="tab.path" 
+        routerLinkActive="active"
+        class="tab-link"
+      >
+        <span class="material-symbols-outlined">{{ tab.icon }}</span>
+        {{ tab.label }}
+      </a>
+    }
+  </nav>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <router-outlet />
+  </div>
+</div>

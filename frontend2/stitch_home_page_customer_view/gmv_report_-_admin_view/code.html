@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GMV Report - Admin View</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111318",
+                        "surface-dark": "#1f232d", // Slightly lighter than background-dark for cards
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111318;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b4354;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+        /* Chart grid line simulation */
+        .chart-grid-line {
+            background-image: linear-gradient(to right, #3b4354 1px, transparent 1px);
+            background-size: 100% 1px;
+            background-repeat: repeat-x;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<div class="hidden lg:flex w-[280px] h-full flex-col bg-background-dark border-r border-[#282e39] overflow-y-auto shrink-0">
+<div class="p-4 flex flex-col gap-8 h-full">
+<!-- Brand -->
+<div class="flex gap-3 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Abstract blue geometric logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCHYmwU9Jlkd74pLkccU7DW7H5tEah4O19vR5z2zmIBufW-zblJXBvXh7gWHFVq8piZQKsKeoKzIdSmaq9pRofnluv9v0XwVjnqT2uXevTTKgHMaca25dpIpLCDkZRRRI2urKK0JYjDTMm8K3N9PEU87-AIa1mQYnb3eanWOXLiZWxqQvL_44ytHlKYKLzjDhAsypyCy3IfPjbjuKN0iJwSMziWHW-PR7flYhgtzZb_pUWz92q3tvAJrNPjB7xTUsN5F4wXIZD8Es3B");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-bold leading-normal">SN Auto Parts</h1>
+<p class="text-[#9da6b9] text-xs font-normal leading-normal">Admin Console</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-2 flex-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b9] hover:bg-[#1f232d] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#9da6b9] group-hover:text-white" style="font-size: 24px;">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b9] hover:bg-[#1f232d] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#9da6b9] group-hover:text-white" style="font-size: 24px;">inventory_2</span>
+<span class="text-sm font-medium">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b9] hover:bg-[#1f232d] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#9da6b9] group-hover:text-white" style="font-size: 24px;">group</span>
+<span class="text-sm font-medium">Users</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary" style="font-size: 24px; font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-sm font-bold">Reports</span>
+</a>
+<div class="pl-12 flex flex-col gap-1 pb-2">
+<a class="text-white text-sm py-1.5 px-2 font-medium bg-[#1f232d] rounded" href="#">GMV Report</a>
+<a class="text-[#9da6b9] text-sm py-1.5 px-2 hover:text-white transition-colors" href="#">Sales Report</a>
+<a class="text-[#9da6b9] text-sm py-1.5 px-2 hover:text-white transition-colors" href="#">Inventory Value</a>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b9] hover:bg-[#1f232d] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#9da6b9] group-hover:text-white" style="font-size: 24px;">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<!-- Profile -->
+<div class="flex items-center gap-3 px-3 py-3 border-t border-[#282e39] mt-auto">
+<div class="size-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">AD</div>
+<div class="flex flex-col">
+<p class="text-white text-sm font-medium">Admin User</p>
+<p class="text-[#9da6b9] text-xs">admin@snautoparts.com</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-[#111318]">
+<!-- Header -->
+<header class="h-16 shrink-0 border-b border-[#282e39] bg-[#111318] flex items-center justify-between px-6 lg:px-8">
+<div class="flex items-center gap-4">
+<!-- Mobile Menu Trigger -->
+<button class="lg:hidden text-white p-1">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="text-xl font-bold text-white tracking-tight">GMV Dashboard</h2>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center gap-2 bg-[#1f232d] border border-[#282e39] rounded-lg px-3 py-1.5">
+<span class="material-symbols-outlined text-[#9da6b9]" style="font-size: 20px;">calendar_today</span>
+<span class="text-sm text-white font-medium">Oct 1, 2023 - Oct 31, 2023</span>
+<span class="material-symbols-outlined text-[#9da6b9]" style="font-size: 18px;">expand_more</span>
+</div>
+<button class="flex items-center justify-center gap-2 bg-primary hover:bg-blue-600 text-white text-sm font-bold rounded-lg h-9 px-4 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+<span>Export</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-6 lg:p-8">
+<div class="max-w-[1400px] mx-auto flex flex-col gap-6">
+<!-- KPI Cards Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Total GMV -->
+<div class="bg-[#1f232d] border border-[#282e39] rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-white" style="font-size: 96px;">payments</span>
+</div>
+<div class="relative z-10 flex flex-col gap-1">
+<p class="text-[#9da6b9] text-sm font-medium uppercase tracking-wider">Total GMV</p>
+<div class="flex items-baseline gap-2 mt-2">
+<h3 class="text-white text-3xl lg:text-4xl font-black tracking-tight">$1,245,678</h3>
+<span class="text-2xl text-[#9da6b9] font-normal">.00</span>
+</div>
+<div class="flex items-center gap-2 mt-3">
+<span class="bg-emerald-500/10 text-emerald-500 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">trending_up</span>
+                                        +15.2%
+                                    </span>
+<span class="text-[#9da6b9] text-xs">vs last period</span>
+</div>
+</div>
+</div>
+<!-- Projected -->
+<div class="bg-[#1f232d] border border-[#282e39] rounded-xl p-6 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-white" style="font-size: 96px;">monitoring</span>
+</div>
+<div class="relative z-10 flex flex-col gap-1">
+<p class="text-[#9da6b9] text-sm font-medium uppercase tracking-wider">Projected Monthly</p>
+<div class="flex items-baseline gap-2 mt-2">
+<h3 class="text-white text-3xl lg:text-4xl font-black tracking-tight">$1,450,000</h3>
+</div>
+<div class="flex items-center gap-2 mt-3">
+<span class="bg-emerald-500/10 text-emerald-500 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">trending_up</span>
+                                        +4.1%
+                                    </span>
+<span class="text-[#9da6b9] text-xs">vs forecast</span>
+</div>
+</div>
+</div>
+<!-- Breakdown Summary -->
+<div class="bg-[#1f232d] border border-[#282e39] rounded-xl p-6 flex flex-col justify-between">
+<p class="text-[#9da6b9] text-sm font-medium uppercase tracking-wider mb-4">Channel Breakdown</p>
+<div class="flex flex-col gap-4">
+<!-- Local Inventory -->
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="text-white font-medium text-sm">Local Inventory</span>
+<span class="text-white font-bold">$845,000 <span class="text-[#9da6b9] font-normal text-xs">(68%)</span></span>
+</div>
+<div class="w-full bg-[#282e39] rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 68%"></div>
+</div>
+</div>
+<!-- Drop-ship -->
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="text-white font-medium text-sm">Drop-ship</span>
+<span class="text-white font-bold">$400,678 <span class="text-[#9da6b9] font-normal text-xs">(32%)</span></span>
+</div>
+<div class="w-full bg-[#282e39] rounded-full h-2">
+<div class="bg-purple-500 h-2 rounded-full" style="width: 32%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Chart Row -->
+<div class="bg-[#1f232d] border border-[#282e39] rounded-xl p-6">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="text-white text-lg font-bold">GMV Trend</h3>
+<p class="text-[#9da6b9] text-sm">Gross Merchandise Value over last 12 months</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="flex items-center gap-1.5 text-xs text-[#9da6b9]">
+<span class="size-2 rounded-full bg-primary"></span> Current Year
+                                </span>
+<span class="flex items-center gap-1.5 text-xs text-[#9da6b9] ml-2">
+<span class="size-2 rounded-full bg-[#3b4354]"></span> Previous Year
+                                </span>
+</div>
+</div>
+<!-- CSS Chart -->
+<div class="relative h-64 w-full mt-4 flex items-end gap-2 sm:gap-4 justify-between px-2">
+<!-- Y-Axis Lines (Background) -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none">
+<div class="w-full h-px bg-[#282e39]"></div>
+<div class="w-full h-px bg-[#282e39]"></div>
+<div class="w-full h-px bg-[#282e39]"></div>
+<div class="w-full h-px bg-[#282e39]"></div>
+<div class="w-full h-px bg-[#282e39]"></div>
+</div>
+<!-- Bars/Points Simulation - Simplified for HTML/CSS -->
+<!-- Oct -->
+<div class="relative z-10 flex-1 flex flex-col items-center justify-end h-full group">
+<div class="w-2 bg-primary rounded-t-sm h-[40%] group-hover:bg-blue-400 transition-colors"></div>
+<span class="text-[10px] text-[#9da6b9] mt-2">Oct</span>
+</div>
+<!-- Nov -->
+<div class="relative z-10 flex-1 flex flex-col items-center justify-end h-full group">
+<div class="w-2 bg-primary rounded-t-sm h-[55%] group-hover:bg-blue-400 transition-colors"></div>
+<span class="text-[10px] text-[#9da6b9] mt-2">Nov</span>
+</div>
+<!-- Dec -->
+<div class="relative z-10 flex-1 flex flex-col items-center justify-end h-full group">
+<div class="w-2 bg-primary rounded-t-sm h-[85%] group-hover:bg-blue-400 transition-colors"></div>
+<span class="text-[10px] text-[#9da6b9] mt-2">Dec</span>
+</div>
+<!-- Jan -->
+<div class="relative z-10 flex-1 flex flex-col items-center justify-end h-full group">
+<div class="w-2 bg-primary rounded-t-sm h-[45%] group-hover:bg-blue-400 transition-colors"></div>
+<span class="text-[10px] text-[#9da6b9] mt-2">Jan</span>
+</div>
+<!-- Feb -->
+<div class="relative z-10 flex-1 flex flex-col items-center justify-end h-full group">
+<div class="w-2 bg-primary rounded-t-sm h-[50%] group-hover:bg-blue-400 transition-colors"></div>
+<span class="text-[10px] text-[#9da6b9] mt-2">Feb</span>
+</div>
+<!-- Mar -->
+<div class="relative z-10 flex-1 flex flex-col items-center justify-end h-full group">
+<div class="w-2 bg-primary rounded-t-sm h-[60%] group-hover:bg-blue-400 transition-colors"></div>
+<span class="text-[10px] text-[#9da6b9] mt-2">Mar</span>
+</div>
+<!-- Apr -->
+<div class="relative z-10 flex-1 flex flex-col items-center justify-end h-full group">
+<div class="w-2 bg-primary rounded-t-sm h-[58%] group-hover:bg-blue-400 transition-colors"></div>
+<span class="text-[10px] text-[#9da6b9] mt-2">Apr</span>
+</div>
+<!-- May -->
+<div class="relative z-10 flex-1 flex flex-col items-center justify-end h-full group">
+<div class="w-2 bg-primary rounded-t-sm h-[65%] group-hover:bg-blue-400 transition-colors"></div>
+<span class="text-[10px] text-[#9da6b9] mt-2">May</span>
+</div>
+<!-- Jun -->
+<div class="relative z-10 flex-1 flex flex-col items-center justify-end h-full group">
+<div class="w-2 bg-primary rounded-t-sm h-[70%] group-hover:bg-blue-400 transition-colors"></div>
+<span class="text-[10px] text-[#9da6b9] mt-2">Jun</span>
+</div>
+<!-- Jul -->
+<div class="relative z-10 flex-1 flex flex-col items-center justify-end h-full group">
+<div class="w-2 bg-primary rounded-t-sm h-[75%] group-hover:bg-blue-400 transition-colors"></div>
+<span class="text-[10px] text-[#9da6b9] mt-2">Jul</span>
+</div>
+<!-- Aug -->
+<div class="relative z-10 flex-1 flex flex-col items-center justify-end h-full group">
+<div class="w-2 bg-primary rounded-t-sm h-[82%] group-hover:bg-blue-400 transition-colors"></div>
+<span class="text-[10px] text-[#9da6b9] mt-2">Aug</span>
+</div>
+<!-- Sep -->
+<div class="relative z-10 flex-1 flex flex-col items-center justify-end h-full group">
+<div class="w-2 bg-primary rounded-t-sm h-[90%] group-hover:bg-blue-400 transition-colors"></div>
+<span class="text-[10px] text-[#9da6b9] mt-2">Sep</span>
+</div>
+</div>
+</div>
+<!-- Secondary Charts Row -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<!-- Supplier Performance -->
+<div class="bg-[#1f232d] border border-[#282e39] rounded-xl p-6">
+<h3 class="text-white text-lg font-bold mb-4">GMV by Supplier</h3>
+<div class="space-y-4">
+<!-- A-Premium -->
+<div class="group">
+<div class="flex justify-between text-sm mb-1">
+<span class="text-white group-hover:text-primary transition-colors">A-Premium</span>
+<span class="text-white font-medium">$342,100</span>
+</div>
+<div class="w-full bg-[#282e39] rounded-full h-3">
+<div class="bg-blue-500 h-3 rounded-full" style="width: 75%"></div>
+</div>
+</div>
+<!-- BuyAutoParts -->
+<div class="group">
+<div class="flex justify-between text-sm mb-1">
+<span class="text-white group-hover:text-primary transition-colors">BuyAutoParts</span>
+<span class="text-white font-medium">$210,500</span>
+</div>
+<div class="w-full bg-[#282e39] rounded-full h-3">
+<div class="bg-indigo-500 h-3 rounded-full" style="width: 50%"></div>
+</div>
+</div>
+<!-- TRQ -->
+<div class="group">
+<div class="flex justify-between text-sm mb-1">
+<span class="text-white group-hover:text-primary transition-colors">TRQ</span>
+<span class="text-white font-medium">$145,200</span>
+</div>
+<div class="w-full bg-[#282e39] rounded-full h-3">
+<div class="bg-cyan-500 h-3 rounded-full" style="width: 35%"></div>
+</div>
+</div>
+<!-- Other -->
+<div class="group">
+<div class="flex justify-between text-sm mb-1">
+<span class="text-white group-hover:text-primary transition-colors">Others</span>
+<span class="text-white font-medium">$98,400</span>
+</div>
+<div class="w-full bg-[#282e39] rounded-full h-3">
+<div class="bg-slate-600 h-3 rounded-full" style="width: 25%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Category Performance -->
+<div class="bg-[#1f232d] border border-[#282e39] rounded-xl p-6">
+<h3 class="text-white text-lg font-bold mb-4">GMV by Category (Top 5)</h3>
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-3">
+<span class="text-[#9da6b9] text-xs font-mono w-6">01</span>
+<div class="flex-1">
+<div class="flex justify-between mb-1">
+<span class="text-sm text-white">Brakes &amp; Rotors</span>
+<span class="text-sm font-bold text-white">$215k</span>
+</div>
+<div class="h-1.5 w-full bg-[#282e39] rounded-full">
+<div class="h-1.5 bg-emerald-500 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[#9da6b9] text-xs font-mono w-6">02</span>
+<div class="flex-1">
+<div class="flex justify-between mb-1">
+<span class="text-sm text-white">Suspension Kits</span>
+<span class="text-sm font-bold text-white">$180k</span>
+</div>
+<div class="h-1.5 w-full bg-[#282e39] rounded-full">
+<div class="h-1.5 bg-emerald-500 rounded-full" style="width: 70%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[#9da6b9] text-xs font-mono w-6">03</span>
+<div class="flex-1">
+<div class="flex justify-between mb-1">
+<span class="text-sm text-white">Alternators</span>
+<span class="text-sm font-bold text-white">$120k</span>
+</div>
+<div class="h-1.5 w-full bg-[#282e39] rounded-full">
+<div class="h-1.5 bg-emerald-500 rounded-full" style="width: 55%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[#9da6b9] text-xs font-mono w-6">04</span>
+<div class="flex-1">
+<div class="flex justify-between mb-1">
+<span class="text-sm text-white">Headlights</span>
+<span class="text-sm font-bold text-white">$95k</span>
+</div>
+<div class="h-1.5 w-full bg-[#282e39] rounded-full">
+<div class="h-1.5 bg-emerald-500 rounded-full" style="width: 40%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[#9da6b9] text-xs font-mono w-6">05</span>
+<div class="flex-1">
+<div class="flex justify-between mb-1">
+<span class="text-sm text-white">Radiators</span>
+<span class="text-sm font-bold text-white">$60k</span>
+</div>
+<div class="h-1.5 w-full bg-[#282e39] rounded-full">
+<div class="h-1.5 bg-emerald-500 rounded-full" style="width: 25%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tables Section -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6 pb-6">
+<!-- Top Products Table -->
+<div class="xl:col-span-2 bg-[#1f232d] border border-[#282e39] rounded-xl overflow-hidden">
+<div class="p-6 border-b border-[#282e39] flex justify-between items-center">
+<h3 class="text-white text-lg font-bold">Top Products by GMV</h3>
+<button class="text-primary text-sm font-medium hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-[#9da6b9]">
+<thead class="bg-[#282e39] text-xs uppercase font-semibold text-white">
+<tr>
+<th class="px-6 py-4">Product Name</th>
+<th class="px-6 py-4 text-right">Units Sold</th>
+<th class="px-6 py-4 text-right">Avg Price</th>
+<th class="px-6 py-4 text-right">Total GMV</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#282e39]">
+<tr class="hover:bg-[#282e39]/50 transition-colors">
+<td class="px-6 py-4 font-medium text-white flex items-center gap-3">
+<div class="bg-white/10 rounded size-8 shrink-0 bg-center bg-cover" data-alt="product image of alternator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDx8FXANxU3ZJiA4PxNy_JUEfMIcOtkd6b5YB6hp5Hw-l80VY75w0vjR4mbLzadjK9cQPyd5dcq61DbqGc1YgQDgWVmjWcNis9LTxS-GRJj6RmPozW56cbOwUunk2jmap-dbozmXVUbX2WCj4iGYFVLWdoQOHSAqmNlBVv1-VvRAtnEU-9OmBOsgk2lbvJ9JefzhRftCoUYJAg39B9LuOHTHjkXsIHXNhWI79UPHK6dU-rNnrR6ztwIykCwQN6ZJzrsniXEnxNIfJJw");'></div>
+                                                Alternator 200Amp High Output
+                                            </td>
+<td class="px-6 py-4 text-right">145</td>
+<td class="px-6 py-4 text-right">$220.00</td>
+<td class="px-6 py-4 text-right font-bold text-white">$31,900</td>
+</tr>
+<tr class="hover:bg-[#282e39]/50 transition-colors">
+<td class="px-6 py-4 font-medium text-white flex items-center gap-3">
+<div class="bg-white/10 rounded size-8 shrink-0 bg-center bg-cover" data-alt="product image of brake pads" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCG7UvGpxhhdF_v4makogK7ZHriXDprl1yFK7TuAV0SbVvR_IVrmfY_DT_pVHgNs01kMSxOcBmq8t3pWoKDjMOvW00Zzl1x2BATGPV01xkf3ppuMG_n3VkhM60iSBjKjUWWGw2D4vuCUzKvQAqAwd6acOrt3K796uC8FB5GCNnZyTC2sYPPN5fZdA1BpMwv_5CGJseYbfrM2TnJfyul4RT9zWxT_tYixkutbI6ovv73ILCtNP381SCSAQJhSLVL0Ps4_BvWTxXnv77W");'></div>
+                                                Ceramic Brake Pad Set (Front)
+                                            </td>
+<td class="px-6 py-4 text-right">532</td>
+<td class="px-6 py-4 text-right">$45.50</td>
+<td class="px-6 py-4 text-right font-bold text-white">$24,206</td>
+</tr>
+<tr class="hover:bg-[#282e39]/50 transition-colors">
+<td class="px-6 py-4 font-medium text-white flex items-center gap-3">
+<div class="bg-white/10 rounded size-8 shrink-0 bg-center bg-cover" data-alt="product image of shock absorbers" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCMwLs9AjNUbRLlWkB_X30BkKTRGd4fwH5i67asc03wfoF3qr2ByfFJbY7dyZwMhD8xmAM8jGwhuT7ZWgkv-AM05Fiel_Nz5GeRkOdGIsAG6g_Vv349PW9XRqznngu5wf0JoR3hc-Eh60hUps0LTOPe5duSrTLGlwkpijnooTm3UFmpDtVN8jMOiZ6yUFc5OtVbkd0A4M4td-pMl74eLqfHi9faRC-ViSR8tz1fmNKZeTX2JY9fAkfHiLPwOiYCBrVGkH1KosrLVgRy");'></div>
+                                                Rear Shock Absorber Pair
+                                            </td>
+<td class="px-6 py-4 text-right">210</td>
+<td class="px-6 py-4 text-right">$89.99</td>
+<td class="px-6 py-4 text-right font-bold text-white">$18,897</td>
+</tr>
+<tr class="hover:bg-[#282e39]/50 transition-colors">
+<td class="px-6 py-4 font-medium text-white flex items-center gap-3">
+<div class="bg-white/10 rounded size-8 shrink-0 bg-center bg-cover" data-alt="product image of radiator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDYXCMAwgc7jGwLdNEOli6ohdfiPSiE10voeOpv1-1-ctdqcJzC_tc01KF93yL6th5dJc97Ts571nmh0EjfYuWm9tPJKtk7MvzwdyhxN2u3FXbxTOwG5MvXFPTc5cx-stIfC60P9_55bwPVENGWLcOPMagJZ_yZsVJ3jLDWk8b37qscA3L3i7K5V9TKEBl4Mc4FOjPbByL-rWpbo-OJ0GSfM33LPYd6sWx5GnMmbR4NEV8-vZgIH-Ta0SeJ-1kGmLEAGa90octdzoG9");'></div>
+                                                Aluminum Radiator Assembly
+                                            </td>
+<td class="px-6 py-4 text-right">89</td>
+<td class="px-6 py-4 text-right">$155.00</td>
+<td class="px-6 py-4 text-right font-bold text-white">$13,795</td>
+</tr>
+<tr class="hover:bg-[#282e39]/50 transition-colors">
+<td class="px-6 py-4 font-medium text-white flex items-center gap-3">
+<div class="bg-white/10 rounded size-8 shrink-0 bg-center bg-cover" data-alt="product image of control arm" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAXupXwdUPgLCGkqsbfvFk9lWvWNKVwwhfvd1MHxLd0-qg1_x1tg-934d23kNKtuWYWwgUyisI6TSeAq7CCabkZ_baML7SgXTqw6XtnExHqdZ3nGH1XrEYE8ocPKh2qDdq5t_xDB-9-l6s6orynZdvz0TYr5-7k52Vf1HIcEQ9jJ1bMx8LSrVbGVFgKV4jm09BLk7xbOLqYwoM6TwUihjgCFlBbSIMoifMV2btrrmhAk_e-I8JPpFGidvP9AydcXXAO_Tfhv7865Ed1");'></div>
+                                                Lower Control Arm w/ Ball Joint
+                                            </td>
+<td class="px-6 py-4 text-right">112</td>
+<td class="px-6 py-4 text-right">$75.25</td>
+<td class="px-6 py-4 text-right font-bold text-white">$8,428</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Supplier Stats -->
+<div class="bg-[#1f232d] border border-[#282e39] rounded-xl overflow-hidden h-full">
+<div class="p-6 border-b border-[#282e39]">
+<h3 class="text-white text-lg font-bold">Supplier Insights</h3>
+</div>
+<div class="p-4 flex flex-col gap-4">
+<!-- Card 1 -->
+<div class="bg-[#282e39]/50 p-4 rounded-lg flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<p class="text-white font-medium">A-Premium</p>
+<span class="bg-green-500/20 text-green-500 text-xs px-2 py-0.5 rounded">98% Fill Rate</span>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-2">
+<div>
+<p class="text-[#9da6b9] text-xs">Total Orders</p>
+<p class="text-white font-bold text-lg">1,245</p>
+</div>
+<div>
+<p class="text-[#9da6b9] text-xs">Avg Order Val</p>
+<p class="text-white font-bold text-lg">$274</p>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-[#282e39]/50 p-4 rounded-lg flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<p class="text-white font-medium">BuyAutoParts</p>
+<span class="bg-yellow-500/20 text-yellow-500 text-xs px-2 py-0.5 rounded">92% Fill Rate</span>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-2">
+<div>
+<p class="text-[#9da6b9] text-xs">Total Orders</p>
+<p class="text-white font-bold text-lg">892</p>
+</div>
+<div>
+<p class="text-[#9da6b9] text-xs">Avg Order Val</p>
+<p class="text-white font-bold text-lg">$235</p>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-[#282e39]/50 p-4 rounded-lg flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<p class="text-white font-medium">TRQ</p>
+<span class="bg-green-500/20 text-green-500 text-xs px-2 py-0.5 rounded">99% Fill Rate</span>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-2">
+<div>
+<p class="text-[#9da6b9] text-xs">Total Orders</p>
+<p class="text-white font-bold text-lg">650</p>
+</div>
+<div>
+<p class="text-[#9da6b9] text-xs">Avg Order Val</p>
+<p class="text-white font-bold text-lg">$223</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

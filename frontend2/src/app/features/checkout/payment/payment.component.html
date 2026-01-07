@@ -1,0 +1,37 @@
+<div class="payment">
+  <h2>Payment</h2>
+  <p class="subtitle">Enter your payment details</p>
+
+  <app-card variant="outlined">
+    <div class="payment-placeholder">
+      <span class="material-symbols-outlined">credit_card</span>
+      <p>Stripe payment integration will be rendered here</p>
+      <p class="note">Card details are securely processed by Stripe</p>
+    </div>
+  </app-card>
+
+  <div class="payment-methods">
+    <span class="payment-label">We accept:</span>
+    <div class="payment-icons">
+      <span class="payment-icon">Visa</span>
+      <span class="payment-icon">Mastercard</span>
+      <span class="payment-icon">Amex</span>
+      <span class="payment-icon">Discover</span>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <app-button variant="outline" routerLink="/checkout/method">
+      Back
+    </app-button>
+    <app-button
+      [loading]="isLoading()"
+      icon="arrow_forward"
+      iconPosition="right"
+      (clicked)="onContinue()"
+    >
+      Review Order
+    </app-button>
+  </div>
+</div>
+

@@ -1,0 +1,68 @@
+// Global Component Utilities
+
+// Container
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+
+  @media (min-width: 640px) {
+    padding: 0 var(--space-6);
+  }
+
+  @media (min-width: 1024px) {
+    padding: 0 var(--space-8);
+  }
+}
+
+// Section spacing
+.section {
+  padding: var(--space-12) 0;
+
+  @media (min-width: 768px) {
+    padding: var(--space-16) 0;
+  }
+}
+
+// Toast/Snackbar styles (Angular Material override)
+.toast-success {
+  --mdc-snackbar-container-color: var(--color-success);
+}
+
+.toast-error {
+  --mdc-snackbar-container-color: var(--color-error);
+}
+
+.toast-info {
+  --mdc-snackbar-container-color: var(--color-info);
+}
+
+.toast-warning {
+  --mdc-snackbar-container-color: var(--color-warning);
+}
+
+// Angular Material form field full width
+.mat-mdc-form-field.full-width {
+  width: 100%;
+}
+
+// Card hover effect
+.card-hover {
+  transition: all var(--transition-normal);
+
+  &:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+}
+
+// Gradient overlays
+.gradient-overlay-right {
+  background: linear-gradient(to right, var(--color-header-bg), transparent);
+}
+
+.gradient-overlay-bottom {
+  background: linear-gradient(to bottom, transparent, var(--color-dark-surface));
+}
+

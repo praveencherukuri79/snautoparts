@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Detail - SN Auto Parts</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181411] dark:text-white flex flex-col min-h-screen">
+<!-- Top Navigation -->
+<div class="relative flex w-full flex-col bg-white dark:bg-[#1e1e1e] border-b border-[#f5f2f0] dark:border-[#333]">
+<div class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-5">
+<div class="flex flex-col max-w-[1200px] flex-1">
+<header class="flex flex-wrap items-center justify-between gap-y-4">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-[#181411] dark:text-white">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-[32px]">build_circle</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">SN Auto Parts</h2>
+</div>
+<div class="hidden lg:flex items-center gap-9">
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Shop Parts</a>
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Garage</a>
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Deals</a>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-4 md:gap-8 items-center">
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#8c725f] flex border-none bg-[#f5f2f0] dark:bg-[#333] items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181411] dark:text-white focus:outline-0 focus:ring-0 border-none bg-[#f5f2f0] dark:bg-[#333] focus:border-none h-full placeholder:text-[#8c725f] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Search parts..." value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex items-center justify-center overflow-hidden rounded-lg size-10 bg-[#f5f2f0] dark:bg-[#333] hover:bg-primary/20 text-[#181411] dark:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+</button>
+<button class="flex items-center justify-center overflow-hidden rounded-lg size-10 bg-[#f5f2f0] dark:bg-[#333] hover:bg-primary/20 text-[#181411] dark:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+</div>
+</div>
+</div>
+<!-- Main Layout Container -->
+<div class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-8">
+<div class="flex flex-col max-w-[1200px] flex-1 gap-8">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 text-sm">
+<a class="text-[#8c725f] hover:text-primary transition-colors font-medium" href="#">Home</a>
+<span class="text-[#8c725f] font-medium">/</span>
+<a class="text-[#8c725f] hover:text-primary transition-colors font-medium" href="#">My Account</a>
+<span class="text-[#8c725f] font-medium">/</span>
+<a class="text-[#8c725f] hover:text-primary transition-colors font-medium" href="#">Orders</a>
+<span class="text-[#8c725f] font-medium">/</span>
+<span class="text-[#181411] dark:text-white font-medium">Order #SN-88291</span>
+</div>
+<!-- Page Header -->
+<div class="flex flex-wrap justify-between items-end gap-4 border-b border-[#e6dfdb] dark:border-[#444] pb-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-4">
+<h1 class="text-[#181411] dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Order #SN-88291</h1>
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold border border-primary/20">Shipped</span>
+</div>
+<p class="text-[#8c725f] text-base font-normal">Placed on Oct 24, 2023 • 3 Items • Total $71.49</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-10 px-4 border border-[#e6dfdb] dark:border-[#555] bg-white dark:bg-[#333] text-[#181411] dark:text-white text-sm font-bold hover:bg-gray-50 dark:hover:bg-[#444] transition-colors gap-2">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span>Invoice</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold shadow-sm hover:bg-primary/90 transition-colors gap-2">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+<span>Reorder All</span>
+</button>
+</div>
+</div>
+<!-- Two Column Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column (Items & Timeline) -->
+<div class="lg:col-span-8 flex flex-col gap-8">
+<!-- Timeline Section -->
+<section class="bg-white dark:bg-[#1e1e1e] rounded-xl p-6 shadow-sm border border-[#e6dfdb] dark:border-[#333]">
+<h3 class="text-lg font-bold mb-6 text-[#181411] dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+                            Shipment Status
+                        </h3>
+<div class="grid grid-cols-[40px_1fr] gap-x-2">
+<!-- Step 1: Placed -->
+<div class="flex flex-col items-center gap-1 pt-1">
+<div class="size-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="w-[2px] bg-green-200 h-full grow min-h-[2rem]"></div>
+</div>
+<div class="flex flex-1 flex-col pb-6 pt-0.5">
+<p class="text-[#181411] dark:text-white text-base font-bold leading-none">Order Placed</p>
+<p class="text-[#8c725f] text-sm mt-1">Oct 24, 10:00 AM</p>
+</div>
+<!-- Step 2: Processing -->
+<div class="flex flex-col items-center gap-1">
+<div class="w-[2px] bg-green-200 h-full min-h-[1rem]"></div>
+<div class="size-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="w-[2px] bg-green-200 h-full grow min-h-[2rem]"></div>
+</div>
+<div class="flex flex-1 flex-col py-6">
+<p class="text-[#181411] dark:text-white text-base font-bold leading-none">Processing</p>
+<p class="text-[#8c725f] text-sm mt-1">Oct 24, 2:00 PM</p>
+</div>
+<!-- Step 3: Shipped (Active) -->
+<div class="flex flex-col items-center gap-1">
+<div class="w-[2px] bg-green-200 h-full min-h-[1rem]"></div>
+<div class="size-8 rounded-full bg-primary text-white flex items-center justify-center z-10 shadow-md ring-4 ring-white dark:ring-[#1e1e1e]">
+<span class="material-symbols-outlined text-[18px]">local_shipping</span>
+</div>
+<div class="w-[2px] bg-[#e6dfdb] dark:bg-[#444] h-full grow min-h-[2rem]"></div>
+</div>
+<div class="flex flex-1 flex-col py-6">
+<p class="text-primary text-base font-bold leading-none">Shipped</p>
+<p class="text-[#8c725f] text-sm mt-1">Oct 25, 9:30 AM via FedEx</p>
+<div class="mt-3 p-3 bg-[#f8f7f5] dark:bg-[#2a2a2a] rounded-lg border border-[#e6dfdb] dark:border-[#444] inline-block max-w-md">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#8c725f]">barcode</span>
+<div class="flex flex-col">
+<span class="text-xs text-[#8c725f] uppercase font-bold tracking-wider">Tracking Number</span>
+<a class="text-primary font-bold hover:underline" href="#">7822-1920-9921</a>
+</div>
+<button class="ml-4 text-xs font-bold bg-white dark:bg-[#333] border border-[#e6dfdb] dark:border-[#555] px-2 py-1 rounded hover:bg-gray-50 transition-colors">Track Package</button>
+</div>
+</div>
+</div>
+<!-- Step 4: Delivered -->
+<div class="flex flex-col items-center gap-1 pb-1">
+<div class="w-[2px] bg-[#e6dfdb] dark:bg-[#444] h-full min-h-[1rem]"></div>
+<div class="size-6 rounded-full bg-[#f5f2f0] dark:bg-[#333] border-2 border-[#e6dfdb] dark:border-[#555] text-[#ccc] flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-[14px]">home</span>
+</div>
+</div>
+<div class="flex flex-1 flex-col pt-6">
+<p class="text-[#8c725f] text-base font-medium leading-none">Delivered</p>
+<p class="text-[#8c725f] text-sm mt-1">Estimated Oct 28</p>
+</div>
+</div>
+</section>
+<!-- Items Ordered Section -->
+<section class="bg-white dark:bg-[#1e1e1e] rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#333] overflow-hidden">
+<div class="px-6 py-4 border-b border-[#e6dfdb] dark:border-[#444]">
+<h2 class="text-[#181411] dark:text-white text-lg font-bold">Items Ordered</h2>
+</div>
+<!-- Item 1 -->
+<div class="p-6 border-b border-[#e6dfdb] dark:border-[#444] flex flex-col sm:flex-row gap-6">
+<div class="w-24 h-24 shrink-0 bg-[#f8f7f5] dark:bg-[#2a2a2a] rounded-lg border border-[#e6dfdb] dark:border-[#444] flex items-center justify-center p-2">
+<img alt="Car brake disc rotor on white background" class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal" data-alt="Brembo ceramic brake pads front view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNFyNOUP_Ic7hAdJ53mjiAmh6VaH7-jHYg5v0El3yBTMBTa-H232p818YmHVoPCsEwPeApVboOz-Zwkw2l3xG5Bh0yeSNkcSVZTcnixVcQrqcYs1xMy-Ud4LyDf2oyKLwdyBYW0kXZpBrbMLd5zbULS97cIfmqmzcvd5qFhabbjOGx0IvRozNN1lwdxL8jkBl2Q-8UNrdKjBFEWYORnTl43d-AF9u_Ib2XPVZfjz7vVRPRhEJbwqLg8cXHa54UTTB2ax7hol8QUunb"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<div>
+<h4 class="text-base font-bold text-[#181411] dark:text-white">Brembo Ceramic Brake Pads - Front Pair</h4>
+<p class="text-sm text-[#8c725f] mb-2">SKU: BRM-9921</p>
+</div>
+<p class="text-lg font-bold text-[#181411] dark:text-white">$54.99</p>
+</div>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-green-600 text-[18px]">check_circle</span>
+<span class="text-xs font-bold text-green-600 bg-green-50 dark:bg-green-900/30 px-2 py-0.5 rounded">Fits your 2018 Ford F-150</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-[#181411] dark:text-white">Qty: 1</span>
+<div class="flex gap-3">
+<a class="text-primary text-sm font-bold hover:underline" href="#">Write Review</a>
+<span class="text-[#e6dfdb]">|</span>
+<a class="text-[#8c725f] text-sm font-medium hover:text-[#181411] dark:hover:text-white" href="#">Buy Again</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-6 flex flex-col sm:flex-row gap-6">
+<div class="w-24 h-24 shrink-0 bg-[#f8f7f5] dark:bg-[#2a2a2a] rounded-lg border border-[#e6dfdb] dark:border-[#444] flex items-center justify-center p-2">
+<img alt="Car oil filter product shot" class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal" data-alt="Oil filter standard size" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5XlJr4VWB5kZYhwOAFMRVjBZivDW7IeT6D51VpKdiClR_xARFi86y8GCw20SbfnZC7_38YwVIq1FgEkgaOGOH-g9To3qNUbsgd7YosPE_pX_6piCjaSFNcfW6QLqzRJP6XkNBOUyH9wKaIx4tvtQCY17q1P6YYYJ3NXbjNp_OWVnKmleePJy6UKiCuowRFrHbZJqJFl8Qlj4V-c6mObCtgtPgTXrUt_bwm9eWSoXRat5ysQcwRWzW7fdoYwYNbXdnNFagzVmTsDJz"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<div>
+<h4 class="text-base font-bold text-[#181411] dark:text-white">High Performance Oil Filter</h4>
+<p class="text-sm text-[#8c725f] mb-2">SKU: FLT-8820</p>
+</div>
+<p class="text-lg font-bold text-[#181411] dark:text-white">$12.00</p>
+</div>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-green-600 text-[18px]">check_circle</span>
+<span class="text-xs font-bold text-green-600 bg-green-50 dark:bg-green-900/30 px-2 py-0.5 rounded">Fits your 2018 Ford F-150</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-[#181411] dark:text-white">Qty: 2</span>
+<div class="flex gap-3">
+<a class="text-primary text-sm font-bold hover:underline" href="#">Write Review</a>
+<span class="text-[#e6dfdb]">|</span>
+<a class="text-[#8c725f] text-sm font-medium hover:text-[#181411] dark:hover:text-white" href="#">Buy Again</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column (Summary & Info) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Order Summary Card -->
+<div class="bg-white dark:bg-[#1e1e1e] rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#333] p-6">
+<h3 class="text-lg font-bold mb-4 text-[#181411] dark:text-white">Order Summary</h3>
+<div class="flex flex-col gap-3 pb-4 border-b border-[#e6dfdb] dark:border-[#444]">
+<div class="flex justify-between text-[#8c725f]">
+<span>Subtotal</span>
+<span>$78.99</span>
+</div>
+<div class="flex justify-between text-[#8c725f]">
+<span>Shipping</span>
+<span>$12.00</span>
+</div>
+<div class="flex justify-between text-[#8c725f]">
+<span>Discount</span>
+<span class="text-green-600">-$24.00</span>
+</div>
+<div class="flex justify-between text-[#8c725f]">
+<span>Tax</span>
+<span>$4.50</span>
+</div>
+</div>
+<div class="flex justify-between pt-4 mb-6">
+<span class="font-bold text-lg text-[#181411] dark:text-white">Grand Total</span>
+<span class="font-bold text-lg text-primary">$71.49</span>
+</div>
+<button class="w-full flex items-center justify-center rounded-lg h-12 bg-primary text-white text-base font-bold shadow-sm hover:bg-primary/90 transition-colors mb-3">
+                            Reorder All Items
+                        </button>
+</div>
+<!-- Shipping Address Card -->
+<div class="bg-white dark:bg-[#1e1e1e] rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#333] p-6">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-bold text-[#181411] dark:text-white">Shipping Address</h3>
+</div>
+<div class="text-[#181411] dark:text-white font-medium mb-1">John Doe</div>
+<div class="text-[#8c725f] text-sm leading-relaxed">
+                            123 Garage Lane<br/>
+                            Apartment 4B<br/>
+                            Detroit, MI 48201<br/>
+                            United States
+                        </div>
+<div class="mt-4 pt-4 border-t border-[#e6dfdb] dark:border-[#444]">
+<h4 class="text-sm font-bold text-[#181411] dark:text-white mb-2">Shipping Method</h4>
+<p class="text-[#8c725f] text-sm">Standard Ground (3-5 Days)</p>
+</div>
+</div>
+<!-- Payment Info Card -->
+<div class="bg-white dark:bg-[#1e1e1e] rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#333] p-6">
+<h3 class="text-lg font-bold mb-4 text-[#181411] dark:text-white">Payment Information</h3>
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-6 bg-[#f5f2f0] dark:bg-[#333] rounded border border-[#e6dfdb] dark:border-[#555] flex items-center justify-center">
+<span class="text-[10px] font-bold text-[#8c725f]">VISA</span>
+</div>
+<div class="text-sm text-[#181411] dark:text-white font-medium">Ending in 4242</div>
+</div>
+<div class="text-[#8c725f] text-sm">
+<p>Billing address same as shipping</p>
+</div>
+</div>
+<!-- Help Section -->
+<div class="bg-primary/5 rounded-xl border border-primary/10 p-6">
+<h3 class="text-base font-bold mb-2 text-[#181411] dark:text-white">Need help with your order?</h3>
+<p class="text-sm text-[#8c725f] mb-4">If you have any questions or want to return an item, our support team is here to help.</p>
+<div class="flex flex-col gap-2">
+<button class="w-full bg-white dark:bg-[#333] border border-[#e6dfdb] dark:border-[#555] rounded-lg py-2 px-4 text-sm font-bold text-[#181411] dark:text-white hover:bg-gray-50 transition-colors">Start a Return</button>
+<button class="w-full text-primary text-sm font-bold py-2 hover:underline">Contact Support</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

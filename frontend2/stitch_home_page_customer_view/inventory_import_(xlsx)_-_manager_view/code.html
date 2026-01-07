@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inventory Import - SN Auto Parts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f97415",
+              "background-light": "#f8f7f5",
+              "background-dark": "#23170f",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #4b5563;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181411] dark:text-white font-display transition-colors duration-200">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 flex flex-col bg-white dark:bg-[#1a120b] border-r border-[#e6dfdb] dark:border-[#44362d] h-full overflow-y-auto">
+<div class="p-4 border-b border-[#e6dfdb] dark:border-[#44362d]">
+<div class="flex gap-3 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="SN Auto Parts Logo with abstract gear shape" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAj-UnJWKR3Aa39wi_tX_9x3bNMnQDpCqRZoPhq9bMtQ_nVyCsRiOa9AMwoypE7QaaFptwOjrsB8lR-jCfKPRJ2A1FMbZw7fjfIPb3YkLi2y4lI8mQIXMM5Bo3vaQCE1dQvPYpBetsZhQjcZybNMekFJtk6EafTPv3KIeFJ0x8Woe5jX-VlZNkunj3lCX5uDUbbuqH7sHrquRRKmvowjHdGF8sG9OpxYslGA7Je7m1hojszEoQRH6_0c6z4aSFTEMAP_TsQc1Bs_1nd");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#181411] dark:text-white text-base font-bold leading-normal">SN Auto Parts</h1>
+<p class="text-[#8c725f] dark:text-gray-400 text-xs font-normal leading-normal">Manager Portal</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-2 p-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#181411] dark:text-gray-300 hover:bg-[#f5f2f0] dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#8c725f] dark:text-gray-400 group-hover:text-primary transition-colors">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#181411] dark:text-gray-300 hover:bg-[#f5f2f0] dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#8c725f] dark:text-gray-400 group-hover:text-primary transition-colors">inventory_2</span>
+<p class="text-sm font-medium leading-normal">Products</p>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary dark:text-primary" href="#">
+<span class="material-symbols-outlined fill-current">category</span>
+<p class="text-sm font-bold leading-normal">Inventory</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#181411] dark:text-gray-300 hover:bg-[#f5f2f0] dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#8c725f] dark:text-gray-400 group-hover:text-primary transition-colors">shopping_cart</span>
+<p class="text-sm font-medium leading-normal">Orders</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#181411] dark:text-gray-300 hover:bg-[#f5f2f0] dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#8c725f] dark:text-gray-400 group-hover:text-primary transition-colors">settings</span>
+<p class="text-sm font-medium leading-normal">Settings</p>
+</a>
+</nav>
+<div class="p-4 border-t border-[#e6dfdb] dark:border-[#44362d]">
+<div class="flex items-center gap-3 px-3 py-2 cursor-pointer text-[#8c725f] dark:text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">logout</span>
+<p class="text-sm font-medium leading-normal">Log Out</p>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header -->
+<header class="bg-white dark:bg-[#1a120b] border-b border-[#e6dfdb] dark:border-[#44362d] px-8 py-6 flex-shrink-0">
+<div class="max-w-[1200px] mx-auto w-full flex flex-wrap justify-between items-end gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-[#181411] dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">Import Inventory from XLSX</h1>
+<p class="text-[#8c725f] dark:text-gray-400 text-base font-normal leading-normal">Upload an XLSX file to update product stock levels in bulk.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-10 px-4 border border-[#e6dfdb] dark:border-[#44362d] text-[#181411] dark:text-white text-sm font-bold bg-white dark:bg-transparent hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                            Cancel
+                        </button>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-[1200px] mx-auto w-full flex flex-col gap-8 pb-20">
+<!-- Upload Section -->
+<section class="flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<h2 class="text-lg font-bold text-[#181411] dark:text-white">1. File Upload</h2>
+<a class="text-primary hover:text-orange-600 text-sm font-medium flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-lg">download</span>
+                                Download sample template
+                            </a>
+</div>
+<div class="bg-white dark:bg-[#1a120b] rounded-xl border-2 border-dashed border-[#e6dfdb] dark:border-[#44362d] p-10 flex flex-col items-center justify-center gap-6 group hover:border-primary/50 transition-colors cursor-pointer">
+<div class="size-16 rounded-full bg-[#f5f2f0] dark:bg-white/5 flex items-center justify-center">
+<span class="material-symbols-outlined text-[#8c725f] dark:text-gray-400 text-3xl group-hover:text-primary transition-colors">cloud_upload</span>
+</div>
+<div class="text-center space-y-1">
+<p class="text-[#181411] dark:text-white text-lg font-bold">Upload Inventory File</p>
+<p class="text-[#8c725f] dark:text-gray-400 text-sm">Drag &amp; drop your .xlsx file here or click to browse (Max 10MB)</p>
+</div>
+<button class="bg-primary hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg transition-colors shadow-sm shadow-orange-900/10">
+                                Browse Files
+                            </button>
+</div>
+</section>
+<!-- Configuration Section -->
+<section class="flex flex-col gap-3">
+<h2 class="text-lg font-bold text-[#181411] dark:text-white">2. Import Options &amp; Mapping</h2>
+<div class="bg-white dark:bg-[#1a120b] rounded-xl border border-[#e6dfdb] dark:border-[#44362d] overflow-hidden">
+<details class="group" open="">
+<summary class="flex cursor-pointer items-center justify-between gap-6 p-5 bg-white dark:bg-[#1a120b] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors select-none">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 rounded-full p-1.5">
+<span class="material-symbols-outlined text-primary text-xl">tune</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[#181411] dark:text-white text-sm font-bold">Configuration</span>
+<span class="text-[#8c725f] dark:text-gray-400 text-xs">Manage duplicates and column mapping</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#8c725f] group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-5 pb-6 pt-2 border-t border-[#e6dfdb] dark:border-[#44362d]">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Handling -->
+<div class="flex flex-col gap-2">
+<label class="text-[#181411] dark:text-gray-200 text-sm font-medium">Duplicate SKU Handling</label>
+<div class="relative">
+<select class="w-full appearance-none bg-[#f8f7f5] dark:bg-[#2a201a] border border-[#e6dfdb] dark:border-[#44362d] rounded-lg h-10 px-3 text-sm text-[#181411] dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+<option>Update Existing Stock</option>
+<option>Skip Duplicates</option>
+<option>Overwrite Product Details</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-[#8c725f]">arrow_drop_down</span>
+</div>
+<p class="text-xs text-[#8c725f] dark:text-gray-500">How should we handle SKUs that already exist?</p>
+</div>
+<!-- SKU Map -->
+<div class="flex flex-col gap-2">
+<label class="text-[#181411] dark:text-gray-200 text-sm font-medium">Map SKU Column</label>
+<div class="relative">
+<select class="w-full appearance-none bg-[#f8f7f5] dark:bg-[#2a201a] border border-[#e6dfdb] dark:border-[#44362d] rounded-lg h-10 px-3 text-sm text-[#181411] dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+<option disabled="" value="">Select column header</option>
+<option selected="">Column A: Product_SKU</option>
+<option>Column B: Item_Name</option>
+<option>Column C: Qty_On_Hand</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-[#8c725f]">arrow_drop_down</span>
+</div>
+</div>
+<!-- Qty Map -->
+<div class="flex flex-col gap-2">
+<label class="text-[#181411] dark:text-gray-200 text-sm font-medium">Map Quantity Column</label>
+<div class="relative">
+<select class="w-full appearance-none bg-[#f8f7f5] dark:bg-[#2a201a] border border-[#e6dfdb] dark:border-[#44362d] rounded-lg h-10 px-3 text-sm text-[#181411] dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50">
+<option disabled="" value="">Select column header</option>
+<option>Column A: Product_SKU</option>
+<option>Column B: Item_Name</option>
+<option selected="">Column C: Qty_On_Hand</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-[#8c725f]">arrow_drop_down</span>
+</div>
+</div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<!-- Preview Section -->
+<section class="flex flex-col gap-3">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-lg font-bold text-[#181411] dark:text-white">3. Data Preview</h2>
+<p class="text-[#8c725f] dark:text-gray-400 text-sm">Reviewing first 5 rows of 1,240 detected entries.</p>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 rounded bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-200 text-xs font-bold">
+<span class="material-symbols-outlined text-sm">warning</span>
+                                1 Warning Found
+                            </div>
+</div>
+<div class="bg-white dark:bg-[#1a120b] border border-[#e6dfdb] dark:border-[#44362d] rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="bg-[#f8f7f5] dark:bg-[#2a201a] text-[#8c725f] dark:text-gray-400 font-medium border-b border-[#e6dfdb] dark:border-[#44362d]">
+<tr>
+<th class="px-6 py-3">Row</th>
+<th class="px-6 py-3">Mapped SKU</th>
+<th class="px-6 py-3">Product Name (System)</th>
+<th class="px-6 py-3">Current Stock</th>
+<th class="px-6 py-3">New Stock</th>
+<th class="px-6 py-3 text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e6dfdb] dark:divide-[#44362d]">
+<!-- Row 1 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-[#8c725f] dark:text-gray-500 font-mono text-xs">1</td>
+<td class="px-6 py-4 font-medium text-[#181411] dark:text-white">BRK-PAD-001</td>
+<td class="px-6 py-4 text-[#181411] dark:text-gray-300">Ceramic Brake Pads - Front</td>
+<td class="px-6 py-4 text-[#8c725f] dark:text-gray-400">45</td>
+<td class="px-6 py-4 font-bold text-primary">120</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1 text-green-600 dark:text-green-400 text-xs font-bold bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[16px]">check</span> Valid
+                                                </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-[#8c725f] dark:text-gray-500 font-mono text-xs">2</td>
+<td class="px-6 py-4 font-medium text-[#181411] dark:text-white">OIL-FIL-X55</td>
+<td class="px-6 py-4 text-[#181411] dark:text-gray-300">Premium Oil Filter X55</td>
+<td class="px-6 py-4 text-[#8c725f] dark:text-gray-400">12</td>
+<td class="px-6 py-4 font-bold text-primary">50</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1 text-green-600 dark:text-green-400 text-xs font-bold bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[16px]">check</span> Valid
+                                                </span>
+</td>
+</tr>
+<!-- Row 3 (Warning) -->
+<tr class="bg-orange-50/50 dark:bg-orange-900/10 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors">
+<td class="px-6 py-4 text-[#8c725f] dark:text-gray-500 font-mono text-xs">3</td>
+<td class="px-6 py-4 font-medium text-[#181411] dark:text-white">ALT-GEN-200</td>
+<td class="px-6 py-4 text-[#181411] dark:text-gray-300">Alternator 200A</td>
+<td class="px-6 py-4 text-[#8c725f] dark:text-gray-400">8</td>
+<td class="px-6 py-4 font-bold text-red-600 dark:text-red-400">-5</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1 text-orange-600 dark:text-orange-400 text-xs font-bold bg-white dark:bg-black/20 px-2 py-1 rounded-full border border-orange-200 dark:border-orange-800">
+<span class="material-symbols-outlined text-[16px]">warning</span> Negative Qty
+                                                </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-[#8c725f] dark:text-gray-500 font-mono text-xs">4</td>
+<td class="px-6 py-4 font-medium text-[#181411] dark:text-white">SPK-PLG-IR</td>
+<td class="px-6 py-4 text-[#181411] dark:text-gray-300">Iridium Spark Plug</td>
+<td class="px-6 py-4 text-[#8c725f] dark:text-gray-400">200</td>
+<td class="px-6 py-4 font-bold text-primary">200</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1 text-green-600 dark:text-green-400 text-xs font-bold bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[16px]">check</span> Valid
+                                                </span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-[#8c725f] dark:text-gray-500 font-mono text-xs">5</td>
+<td class="px-6 py-4 font-medium text-[#181411] dark:text-white">WIP-BLD-24</td>
+<td class="px-6 py-4 text-[#181411] dark:text-gray-300">Wiper Blade 24"</td>
+<td class="px-6 py-4 text-[#8c725f] dark:text-gray-400">30</td>
+<td class="px-6 py-4 font-bold text-primary">55</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center gap-1 text-green-600 dark:text-green-400 text-xs font-bold bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[16px]">check</span> Valid
+                                                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-3 bg-[#f8f7f5] dark:bg-[#2a201a] border-t border-[#e6dfdb] dark:border-[#44362d] flex justify-center">
+<span class="text-xs text-[#8c725f] dark:text-gray-400 font-medium">Showing 5 of 1240 rows</span>
+</div>
+</div>
+</section>
+<!-- Action Bar Sticky Mobile / Normal Desktop -->
+<div class="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-4 border-t border-[#e6dfdb] dark:border-[#44362d]">
+<button class="px-6 py-2.5 rounded-lg border border-[#e6dfdb] dark:border-[#44362d] text-[#181411] dark:text-white font-bold text-sm bg-white dark:bg-transparent hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                            Cancel
+                        </button>
+<button class="px-6 py-2.5 rounded-lg bg-primary text-white font-bold text-sm shadow-md shadow-orange-500/20 hover:bg-orange-600 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">publish</span>
+                            Confirm Import
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

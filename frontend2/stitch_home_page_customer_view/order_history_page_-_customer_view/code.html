@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Order History</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display text-[#181411]">
+<!-- Top Navigation -->
+<header class="bg-white dark:bg-[#1a1614] border-b border-[#e6dfdb] dark:border-[#3a2e26] sticky top-0 z-50">
+<div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16 gap-4">
+<!-- Logo -->
+<div class="flex items-center gap-2">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_319)">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</g>
+<defs>
+<clippath id="clip0_6_319"><rect fill="white" height="48" width="48"></rect></clippath>
+</defs>
+</svg>
+</div>
+<h2 class="text-[#181411] dark:text-white text-lg font-bold tracking-tight hidden sm:block">SN Auto Parts</h2>
+</div>
+<!-- Search -->
+<div class="flex-1 max-w-xl mx-4">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[#8c725f]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border-none rounded-lg leading-5 bg-[#f5f2f0] dark:bg-[#2c2420] text-[#181411] dark:text-white placeholder-[#8c725f] focus:outline-none focus:ring-2 focus:ring-primary sm:text-sm" placeholder="Search parts, brands, or vehicles" type="text"/>
+</div>
+</div>
+<!-- Right Actions -->
+<div class="flex items-center gap-4">
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium text-[#181411] dark:text-white hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium text-[#181411] dark:text-white hover:text-primary transition-colors" href="#">Shop Parts</a>
+<a class="text-sm font-medium text-[#181411] dark:text-white hover:text-primary transition-colors" href="#">My Garage</a>
+</nav>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg text-[#181411] dark:text-white hover:bg-[#f5f2f0] dark:hover:bg-[#2c2420] transition-colors relative">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1.5 right-1.5 size-2 bg-primary rounded-full"></span>
+</button>
+<button class="p-2 rounded-lg text-[#181411] dark:text-white hover:bg-[#f5f2f0] dark:hover:bg-[#2c2420] transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="flex mb-6">
+<ol class="flex items-center space-x-2">
+<li>
+<a class="text-[#8c725f] hover:text-primary transition-colors text-sm font-medium" href="#">Home</a>
+</li>
+<li>
+<span class="text-[#8c725f] text-sm font-medium">/</span>
+</li>
+<li>
+<a class="text-[#8c725f] hover:text-primary transition-colors text-sm font-medium" href="#">My Account</a>
+</li>
+<li>
+<span class="text-[#8c725f] text-sm font-medium">/</span>
+</li>
+<li>
+<span aria-current="page" class="text-[#181411] dark:text-white text-sm font-medium">Order History</span>
+</li>
+</ol>
+</nav>
+<!-- Page Heading -->
+<div class="mb-8">
+<h1 class="text-3xl md:text-4xl font-black tracking-tight text-[#181411] dark:text-white mb-2">Order History</h1>
+<p class="text-[#8c725f] dark:text-[#a6958a] text-base max-w-2xl">Track, view, or return your recent auto part purchases. Orders placed within the last 30 minutes can be cancelled directly.</p>
+</div>
+<!-- Filters & Controls -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+<!-- Filter Chips -->
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-1.5 rounded-lg bg-[#181411] text-white text-sm font-medium border border-transparent hover:bg-[#181411]/90 transition-colors shadow-sm">
+                    All Orders
+                </button>
+<button class="px-4 py-1.5 rounded-lg bg-white dark:bg-[#2c2420] text-[#181411] dark:text-white text-sm font-medium border border-[#e6dfdb] dark:border-[#3a2e26] hover:border-primary hover:text-primary transition-colors">
+                    Last 30 Days
+                </button>
+<button class="px-4 py-1.5 rounded-lg bg-white dark:bg-[#2c2420] text-[#181411] dark:text-white text-sm font-medium border border-[#e6dfdb] dark:border-[#3a2e26] hover:border-primary hover:text-primary transition-colors">
+                    2023
+                </button>
+<button class="px-4 py-1.5 rounded-lg bg-white dark:bg-[#2c2420] text-[#181411] dark:text-white text-sm font-medium border border-[#e6dfdb] dark:border-[#3a2e26] hover:border-primary hover:text-primary transition-colors">
+                    Open Orders
+                </button>
+<button class="px-4 py-1.5 rounded-lg bg-white dark:bg-[#2c2420] text-[#181411] dark:text-white text-sm font-medium border border-[#e6dfdb] dark:border-[#3a2e26] hover:border-primary hover:text-primary transition-colors">
+                    Cancelled
+                </button>
+</div>
+<!-- Sort/Filter secondary -->
+<div class="flex items-center gap-2">
+<span class="text-sm text-[#8c725f] hidden sm:block">Sort by:</span>
+<select class="form-select pl-3 pr-10 py-1.5 text-sm border-none rounded-lg bg-white dark:bg-[#2c2420] text-[#181411] dark:text-white focus:ring-0 cursor-pointer shadow-sm">
+<option>Date: Newest First</option>
+<option>Date: Oldest First</option>
+<option>Total: High to Low</option>
+</select>
+</div>
+</div>
+<!-- Order Table -->
+<div class="bg-white dark:bg-[#1a1614] rounded-xl border border-[#e6dfdb] dark:border-[#3a2e26] overflow-hidden shadow-sm mb-12 @container">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-[#fcfbfb] dark:bg-[#241e1a] border-b border-[#e6dfdb] dark:border-[#3a2e26]">
+<tr>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-[#8c725f] w-32">Order #</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-[#8c725f] w-40">Date Placed</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-[#8c725f] min-w-[300px]">Items Summary</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-[#8c725f] w-32">Total</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-[#8c725f] w-40">Status</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-[#8c725f] w-32 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e6dfdb] dark:divide-[#3a2e26]">
+<!-- Row 1 -->
+<tr class="group hover:bg-[#fcfbfb] dark:hover:bg-[#241e1a] transition-colors">
+<td class="py-4 px-6">
+<a class="text-sm font-bold text-primary hover:underline decoration-2 underline-offset-2" href="#">#10234</a>
+</td>
+<td class="py-4 px-6">
+<span class="text-sm text-[#181411] dark:text-white">Oct 24, 2023</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<!-- Thumbnails -->
+<div class="flex -space-x-2 shrink-0">
+<div class="size-10 rounded-md border border-[#e6dfdb] bg-white p-0.5 overflow-hidden z-20">
+<img alt="Car brake disc" class="w-full h-full object-cover rounded-sm" data-alt="Close up of a metallic car brake disc" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDY9OI9EvsyrAdxxqHhOBvXABWu1vNNcImBW3WzkMUsKgPoxp1iuggnYqGPzzRlwMrqlxPR9NuSPFO6_TWjuh4JyQsvutgloJu62eYN17pD-8z4863G3E_2qw3dh-Ciy0LVMh-BpzpgDP0GYy-QiyWyLD_kgjKPV97MmjN3qM_4D4eHjPkruRTQc6eUAg4kKZ4yiJSdFSyUo1bCwuFff6X2pljj54gqbub_XV-wjfsQhwF-UV0dtoj7547kkutkfYiKr75DU9HAuztA"/>
+</div>
+<div class="size-10 rounded-md border border-[#e6dfdb] bg-white p-0.5 overflow-hidden z-10">
+<img alt="Car oil filter" class="w-full h-full object-cover rounded-sm" data-alt="Close up of a car oil filter" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFUMheAZGbFgCcOcnwjGOCQCgAhLTNcq4IKykPBGRDEjKwcItZIaAtbmrrX3KEnCuTswWA2HGXTFkdEBWNlgMHbsUxeq1ibiJ9_8Yobo6pA7X2ybE8TomBkj6aYvbtvVjJUKFZjBMG_z75QWI_nvQfithcU_I-bL6C20aXS4iI42n7YIb2uD7H78DY1ajgsghmDuTWyNUwT5naUjreexD94OXUC-DEMjs3_ZPjlluUWHlcdMgq9atnhe4PpnHIHoy34yEIGJXlIlre"/>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-[#181411] dark:text-white">Brake Pads, Oil Filter</span>
+<span class="text-xs text-[#8c725f]">+ 1 other item</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="text-sm font-semibold text-[#181411] dark:text-white">$145.00</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+<span class="size-1.5 rounded-full bg-blue-500"></span>
+                                    Shipped
+                                </span>
+</td>
+<td class="py-4 px-6 text-right">
+<a class="inline-flex items-center gap-1 text-sm font-bold text-primary hover:text-primary/80 transition-colors" href="#">
+                                    Details
+                                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-[#fcfbfb] dark:hover:bg-[#241e1a] transition-colors">
+<td class="py-4 px-6">
+<a class="text-sm font-bold text-primary hover:underline decoration-2 underline-offset-2" href="#">#10230</a>
+</td>
+<td class="py-4 px-6">
+<span class="text-sm text-[#181411] dark:text-white">Sept 12, 2023</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2 shrink-0">
+<div class="size-10 rounded-md border border-[#e6dfdb] bg-white p-0.5 overflow-hidden z-20">
+<img alt="Car alternator" class="w-full h-full object-cover rounded-sm" data-alt="Car alternator isolated on background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtswRMKKjKCBZTUBISqku6Luiv-N2l99r4v809mSpbVYBYEI_i9gAYXxTnBgRMhU8UdHPvym4TLodj4v78nupiAtGP3di2cVYUKk4R2-BPv0XCrS0hzRv0D4w8MVRol8D1oe0Cc0LD4XV9uko5yA3sBkLrzl77Kw0lybndiwKGKn0whs6Q8DefYcYEzNhO_w6jjbfxV53gbRz_6ifSkbZM3asAHZTqB3AOl5IqA_Avj3TC2K8c8I2lgApzhSLBbKk727FsMVG4ZVxu"/>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-[#181411] dark:text-white">Bosch Alternator</span>
+<span class="text-xs text-[#8c725f]">1 Item</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="text-sm font-semibold text-[#181411] dark:text-white">$210.50</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300">
+<span class="material-symbols-outlined text-[14px]">check</span>
+                                    Delivered
+                                </span>
+</td>
+<td class="py-4 px-6 text-right">
+<a class="inline-flex items-center gap-1 text-sm font-bold text-primary hover:text-primary/80 transition-colors" href="#">
+                                    Details
+                                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-[#fcfbfb] dark:hover:bg-[#241e1a] transition-colors">
+<td class="py-4 px-6">
+<a class="text-sm font-bold text-primary hover:underline decoration-2 underline-offset-2" href="#">#10215</a>
+</td>
+<td class="py-4 px-6">
+<span class="text-sm text-[#181411] dark:text-white">Aug 05, 2023</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2 shrink-0">
+<div class="size-10 rounded-md border border-[#e6dfdb] bg-white p-0.5 overflow-hidden z-20">
+<img alt="Spark plugs" class="w-full h-full object-cover rounded-sm" data-alt="Set of spark plugs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqwyDwT_6O3oQQoKnjST2xEdr5HW-haXrusGk3enYPU_HUbIbPuJWokiapRBLvvZictrsazlbS1WSj97Q5ky_6BAcDVVYyHywwaBovkPW8OUFJcG4uZVdPwbpwhJO6i5QVai7hxgTTJ993rAFbM9nujyo4GY4--fCp_RpAGHwE4qELpO-d3INiv7eZOE33tf5jmR_20MfqndhOjZpcZFaaqWqUSoTMm5eFVqgcbK3tYjSSwYdfsxw4dGnsvjiaWnMPWLMdm8dTNRKz"/>
+</div>
+<div class="size-10 rounded-md border border-[#e6dfdb] bg-white p-0.5 overflow-hidden z-10">
+<img alt="Wiper blades" class="w-full h-full object-cover rounded-sm" data-alt="Car wiper blade close up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZang0hr-xKfKeh4ZCitnkn7uWs035_bE2kHcBd6-PWqyG4tuZbHH7ZTqp2m3YA9USb4Ibu4VVYB1plzBSZM8_j_fedj3JkYre7FD5Ruob8nSSshOuTs_QH9QH8eG51aNtUjPuGzlmtFlxZQgsXFWERCzbeAIQ_WEN3q1hDiJTOSLktJm6Fm1QttHubaQ2PZKM8mjGJNPd5RaoRbhkCSh_ifdvqgj6EtqHidH6T7LUr9cfkvkc7d-x7vQwI7pxU0O2QKjCBm44wIuw"/>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-[#181411] dark:text-white">Spark Plugs, Wipers</span>
+<span class="text-xs text-[#8c725f]">+ 2 other items</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="text-sm font-semibold text-[#181411] dark:text-white">$89.99</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300">
+<span class="material-symbols-outlined text-[14px]">check</span>
+                                    Delivered
+                                </span>
+</td>
+<td class="py-4 px-6 text-right">
+<a class="inline-flex items-center gap-1 text-sm font-bold text-primary hover:text-primary/80 transition-colors" href="#">
+                                    Details
+                                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</td>
+</tr>
+<!-- Row 4 (Cancelled) -->
+<tr class="group hover:bg-[#fcfbfb] dark:hover:bg-[#241e1a] transition-colors">
+<td class="py-4 px-6">
+<a class="text-sm font-bold text-primary hover:underline decoration-2 underline-offset-2" href="#">#10210</a>
+</td>
+<td class="py-4 px-6">
+<span class="text-sm text-[#181411] dark:text-white">Jul 28, 2023</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2 shrink-0">
+<div class="size-10 rounded-md border border-[#e6dfdb] bg-white p-0.5 overflow-hidden z-20 grayscale opacity-70">
+<img alt="Car battery" class="w-full h-full object-cover rounded-sm" data-alt="Car battery" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAalFXDBB357OLq8L79UrRiBANCkGRAfd_NW2wtHNPvRuBwttjeK-MXfpRvun1L74bIswHUUHEbSmlY2fxO0goRu9A4m6ZMZjIzWURZ9miTHwj1axDfldS5L6Q3o4lA2YZ3J-K4Q2ODEUjbXn2ck04su01mfF2CDTmUFkt0q8NV3ZDBxRmYe7UvDxD_ECQHq3--my-R5KOLl08EBTeiH5U_OPhLVpPvJNydKTsqXLNOtEKdxp1rOE5VHr1g5RZD5PIHLrteg9kgVizP"/>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-[#181411] dark:text-white line-through opacity-60">Car Battery</span>
+<span class="text-xs text-[#8c725f]">1 Item</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="text-sm font-semibold text-[#181411] dark:text-white line-through opacity-60">$120.00</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300">
+<span class="material-symbols-outlined text-[14px]">close</span>
+                                    Cancelled
+                                </span>
+</td>
+<td class="py-4 px-6 text-right">
+<a class="inline-flex items-center gap-1 text-sm font-bold text-primary hover:text-primary/80 transition-colors" href="#">
+                                    Details
+                                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between px-6 py-4 border-t border-[#e6dfdb] dark:border-[#3a2e26] bg-[#fcfbfb] dark:bg-[#241e1a]">
+<div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+<div>
+<p class="text-sm text-[#8c725f]">
+                            Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">28</span> results
+                        </p>
+</div>
+<div>
+<nav aria-label="Pagination" class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+<a class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-[#e6dfdb] dark:border-[#3a2e26] bg-white dark:bg-[#2c2420] text-sm font-medium text-[#8c725f] hover:bg-[#f5f2f0] dark:hover:bg-[#1a1614]" href="#">
+<span class="sr-only">Previous</span>
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</a>
+<a aria-current="page" class="z-10 bg-primary/10 border-primary text-primary relative inline-flex items-center px-4 py-2 border text-sm font-bold" href="#">1</a>
+<a class="bg-white dark:bg-[#2c2420] border-[#e6dfdb] dark:border-[#3a2e26] text-[#8c725f] hover:bg-[#f5f2f0] dark:hover:bg-[#1a1614] relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">2</a>
+<a class="bg-white dark:bg-[#2c2420] border-[#e6dfdb] dark:border-[#3a2e26] text-[#8c725f] hover:bg-[#f5f2f0] dark:hover:bg-[#1a1614] relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">3</a>
+<span class="relative inline-flex items-center px-4 py-2 border border-[#e6dfdb] dark:border-[#3a2e26] bg-white dark:bg-[#2c2420] text-sm font-medium text-[#8c725f]">...</span>
+<a class="bg-white dark:bg-[#2c2420] border-[#e6dfdb] dark:border-[#3a2e26] text-[#8c725f] hover:bg-[#f5f2f0] dark:hover:bg-[#1a1614] relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">8</a>
+<a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-[#e6dfdb] dark:border-[#3a2e26] bg-white dark:bg-[#2c2420] text-sm font-medium text-[#8c725f] hover:bg-[#f5f2f0] dark:hover:bg-[#1a1614]" href="#">
+<span class="sr-only">Next</span>
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</a>
+</nav>
+</div>
+</div>
+<!-- Mobile Pagination simple view -->
+<div class="flex items-center justify-between w-full sm:hidden">
+<a class="relative inline-flex items-center px-4 py-2 border border-[#e6dfdb] text-sm font-medium rounded-md text-[#8c725f] bg-white hover:bg-[#f5f2f0]" href="#">Previous</a>
+<a class="relative inline-flex items-center px-4 py-2 border border-[#e6dfdb] text-sm font-medium rounded-md text-[#8c725f] bg-white hover:bg-[#f5f2f0]" href="#">Next</a>
+</div>
+</div>
+</div>
+<!-- Variation: Empty State (Shown for demonstration purposes) -->
+<div class="mt-16 border-t border-dashed border-[#e6dfdb] pt-12">
+<h3 class="text-xs uppercase font-bold text-[#8c725f] mb-6 tracking-widest text-center">Design Variation: Empty State</h3>
+<div class="bg-white dark:bg-[#1a1614] rounded-xl border border-[#e6dfdb] dark:border-[#3a2e26] p-12 text-center flex flex-col items-center justify-center min-h-[400px]">
+<div class="size-20 bg-[#f5f2f0] dark:bg-[#2c2420] rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-[40px] text-[#8c725f]">inventory_2</span>
+</div>
+<h3 class="text-xl font-bold text-[#181411] dark:text-white mb-2">No orders found</h3>
+<p class="text-[#8c725f] max-w-sm mx-auto mb-8">You haven't placed any orders yet. Check out our best sellers or search for parts for your vehicle to get started.</p>
+<a class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm font-bold rounded-lg shadow-sm text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all" href="#">
+                    Start Shopping
+                </a>
+</div>
+</div>
+</main>
+<!-- Footer Simple -->
+<footer class="bg-white dark:bg-[#1a1614] border-t border-[#e6dfdb] dark:border-[#3a2e26] py-8 mt-auto">
+<div class="max-w-[1280px] mx-auto px-4 text-center">
+<p class="text-sm text-[#8c725f]">© 2023 SN Auto Parts. All rights reserved.</p>
+</div>
+</footer>
+</body></html>

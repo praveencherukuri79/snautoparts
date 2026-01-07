@@ -1,0 +1,3361 @@
+openapi: 3.0.3
+info:
+  title: SN Auto Parts API
+  description: |
+    Feature-config driven e-commerce API for auto parts.
+    
+    ## Authentication
+    All authenticated endpoints require a session token passed via:
+    - Cookie: `auth-token=<token>`
+    - Header: `Authorization: Bearer <token>`
+    
+    ## Authorization
+    APIs are generic - authorization is determined by the authenticated user's role 
+    and feature configuration. The same endpoint may return different data or 
+    permissions based on the user's role.
+    
+    ## Feature-Based Access
+    Each endpoint requires specific features to be enabled in the user's role configuration.
+    If a user lacks the required feature, they receive a 403 Forbidden response.
+  version: 1.0.0
+  contact:
+    name: SN Auto Parts
+    email: support@snautoparts.com
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Development server
+  - url: https://api.snautoparts.com/api/v1
+    description: Production server
+
+tags:
+  - name: Auth
+    description: Authentication and session management
+  - name: Catalog
+    description: Public product catalog
+  - name: Cart
+    description: Shopping cart operations
+  - name: Checkout
+    description: Checkout and payment
+  - name: Orders
+    description: Order management
+  - name: Products
+    description: Product management
+  - name: Inventory
+    description: Inventory management
+  - name: Dropship
+    description: Drop-shipping and affiliates
+  - name: Users
+    description: User management
+  - name: Profile
+    description: User profile and addresses
+  - name: Settings
+    description: System settings
+  - name: Audit
+    description: Audit logging
+  - name: Reports
+    description: Analytics and reports
+
+paths:
+  # ============================================
+  # AUTH ENDPOINTS
+  # ============================================
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Register new user
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: User login
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: User logout
+      operationId: logout
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /auth/me:
+    get:
+      tags: [Auth]
+      summary: Get current user
+      operationId: getCurrentUser
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Current user data
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/User'
+
+  /auth/forgot-password:
+    post:
+      tags: [Auth]
+      summary: Request password reset
+      operationId: forgotPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: Password reset email sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /auth/reset-password:
+    post:
+      tags: [Auth]
+      summary: Reset password with token
+      operationId: resetPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token, password]
+              properties:
+                token:
+                  type: string
+                password:
+                  type: string
+                  minLength: 8
+      responses:
+        '200':
+          description: Password reset successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /auth/feature-config:
+    get:
+      tags: [Auth]
+      summary: Get feature configuration for user's role
+      operationId: getFeatureConfig
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Feature configuration
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/FeatureConfig'
+
+  # ============================================
+  # CATALOG ENDPOINTS
+  # ============================================
+  /catalog/categories:
+    get:
+      tags: [Catalog]
+      summary: List all categories
+      operationId: listCategories
+      responses:
+        '200':
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Category'
+
+  /catalog/categories/{slug}:
+    get:
+      tags: [Catalog]
+      summary: Get category by slug
+      operationId: getCategoryBySlug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Category details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Category'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /catalog/brands:
+    get:
+      tags: [Catalog]
+      summary: List all brands
+      operationId: listBrands
+      responses:
+        '200':
+          description: List of brands
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Brand'
+
+  /catalog/products:
+    get:
+      tags: [Catalog]
+      summary: List products with filters
+      operationId: listProducts
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+        - name: categoryId
+          in: query
+          schema:
+            type: string
+        - name: brandId
+          in: query
+          schema:
+            type: string
+        - name: minPrice
+          in: query
+          schema:
+            type: number
+        - name: maxPrice
+          in: query
+          schema:
+            type: number
+        - name: inStock
+          in: query
+          schema:
+            type: boolean
+        - name: featured
+          in: query
+          schema:
+            type: boolean
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum: [price_asc, price_desc, name_asc, name_desc, newest, bestselling]
+      responses:
+        '200':
+          description: Paginated list of products
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ProductSummary'
+
+  /catalog/products/featured:
+    get:
+      tags: [Catalog]
+      summary: List featured products
+      operationId: listFeaturedProducts
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Featured products
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ProductSummary'
+
+  /catalog/products/{slug}:
+    get:
+      tags: [Catalog]
+      summary: Get product by slug
+      operationId: getProductBySlug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/ProductDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /catalog/search:
+    get:
+      tags: [Catalog]
+      summary: Search products
+      operationId: searchProducts
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 2
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ProductSummary'
+
+  /catalog/fitment/makes:
+    get:
+      tags: [Catalog]
+      summary: Get all vehicle makes
+      operationId: getFitmentMakes
+      responses:
+        '200':
+          description: List of makes
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          type: string
+
+  /catalog/fitment/models:
+    get:
+      tags: [Catalog]
+      summary: Get models for a make
+      operationId: getFitmentModels
+      parameters:
+        - name: make
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of models
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          type: string
+
+  /catalog/fitment/years:
+    get:
+      tags: [Catalog]
+      summary: Get years for make/model
+      operationId: getFitmentYears
+      parameters:
+        - name: make
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: model
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of years
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          type: integer
+
+  /catalog/fitment/search:
+    get:
+      tags: [Catalog]
+      summary: Search products by fitment
+      operationId: searchByFitment
+      parameters:
+        - name: year
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: make
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: model
+          in: query
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Products matching fitment
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ProductSummary'
+
+  # ============================================
+  # CART ENDPOINTS
+  # ============================================
+  /cart:
+    get:
+      tags: [Cart]
+      summary: Get cart
+      operationId: getCart
+      security:
+        - sessionAuth: []
+      x-feature-required: cart.view
+      responses:
+        '200':
+          description: Cart contents
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Cart'
+    delete:
+      tags: [Cart]
+      summary: Clear cart
+      operationId: clearCart
+      security:
+        - sessionAuth: []
+      x-feature-required: cart.modify
+      responses:
+        '200':
+          description: Cart cleared
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Cart'
+
+  /cart/items:
+    post:
+      tags: [Cart]
+      summary: Add item to cart
+      operationId: addCartItem
+      security:
+        - sessionAuth: []
+      x-feature-required: cart.modify
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCartItemRequest'
+      responses:
+        '200':
+          description: Item added
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Cart'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /cart/items/{id}:
+    patch:
+      tags: [Cart]
+      summary: Update cart item quantity
+      operationId: updateCartItem
+      security:
+        - sessionAuth: []
+      x-feature-required: cart.modify
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCartItemRequest'
+      responses:
+        '200':
+          description: Item updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Cart'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Cart]
+      summary: Remove item from cart
+      operationId: removeCartItem
+      security:
+        - sessionAuth: []
+      x-feature-required: cart.modify
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Item removed
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Cart'
+
+  /cart/count:
+    get:
+      tags: [Cart]
+      summary: Get cart item count
+      operationId: getCartCount
+      security:
+        - sessionAuth: []
+      x-feature-required: cart.view
+      responses:
+        '200':
+          description: Cart count
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          count:
+                            type: integer
+
+  # ============================================
+  # CHECKOUT ENDPOINTS
+  # ============================================
+  /checkout/shipping-methods:
+    get:
+      tags: [Checkout]
+      summary: Get available shipping methods
+      operationId: getShippingMethods
+      security:
+        - sessionAuth: []
+      x-feature-required: cart.checkout
+      responses:
+        '200':
+          description: Shipping methods
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ShippingMethod'
+
+  /checkout/payment-intent:
+    post:
+      tags: [Checkout]
+      summary: Create Stripe payment intent
+      operationId: createPaymentIntent
+      security:
+        - sessionAuth: []
+      x-feature-required: cart.checkout
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idempotencyKey:
+                  type: string
+      responses:
+        '200':
+          description: Payment intent created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/PaymentIntent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /checkout/orders:
+    post:
+      tags: [Checkout]
+      summary: Create order
+      operationId: createOrder
+      security:
+        - sessionAuth: []
+      x-feature-required: cart.checkout
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        '201':
+          description: Order created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  # ============================================
+  # ORDERS ENDPOINTS
+  # ============================================
+  /orders:
+    get:
+      tags: [Orders]
+      summary: List orders
+      description: |
+        Returns orders based on user's role:
+        - CUSTOMER: Only own orders (requires orders.viewOwn)
+        - MANAGER/ADMIN: All orders (requires orders.viewAll)
+      operationId: listOrders
+      security:
+        - sessionAuth: []
+      x-feature-required: orders.viewOwn|orders.viewAll
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/OrderStatus'
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: List of orders
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/OrderSummary'
+
+  /orders/{id}:
+    get:
+      tags: [Orders]
+      summary: Get order details
+      operationId: getOrderById
+      security:
+        - sessionAuth: []
+      x-feature-required: orders.viewOwn|orders.viewAll
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Order'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /orders/{id}/status:
+    patch:
+      tags: [Orders]
+      summary: Update order status
+      operationId: updateOrderStatus
+      security:
+        - sessionAuth: []
+      x-feature-required: orders.updateStatus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrderStatusRequest'
+      responses:
+        '200':
+          description: Status updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Order'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /orders/{id}/cancel:
+    post:
+      tags: [Orders]
+      summary: Cancel order
+      operationId: cancelOrder
+      security:
+        - sessionAuth: []
+      x-feature-required: orders.cancel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order cancelled
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /orders/statistics:
+    get:
+      tags: [Orders]
+      summary: Get order statistics
+      operationId: getOrderStatistics
+      security:
+        - sessionAuth: []
+      x-feature-required: orders.viewStatistics
+      responses:
+        '200':
+          description: Order statistics
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/OrderStatistics'
+
+  /orders/pending-count:
+    get:
+      tags: [Orders]
+      summary: Get pending orders count
+      operationId: getPendingOrdersCount
+      security:
+        - sessionAuth: []
+      x-feature-required: orders.viewAll
+      responses:
+        '200':
+          description: Pending count
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          count:
+                            type: integer
+
+  /orders/track/{orderNumber}:
+    get:
+      tags: [Orders]
+      summary: Track order by number (public)
+      operationId: trackOrder
+      parameters:
+        - name: orderNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order tracking info
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/OrderTracking'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ============================================
+  # PRODUCTS ENDPOINTS
+  # ============================================
+  /products:
+    get:
+      tags: [Products]
+      summary: List products (management view)
+      operationId: listProductsManagement
+      security:
+        - sessionAuth: []
+      x-feature-required: products.update
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: isActive
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Products list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ProductDetail'
+    post:
+      tags: [Products]
+      summary: Create product
+      operationId: createProduct
+      security:
+        - sessionAuth: []
+      x-feature-required: products.create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductRequest'
+      responses:
+        '201':
+          description: Product created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/ProductDetail'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /products/{id}:
+    get:
+      tags: [Products]
+      summary: Get product (management view)
+      operationId: getProductManagement
+      security:
+        - sessionAuth: []
+      x-feature-required: products.update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/ProductDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Products]
+      summary: Update product
+      operationId: updateProduct
+      security:
+        - sessionAuth: []
+      x-feature-required: products.update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductRequest'
+      responses:
+        '200':
+          description: Product updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/ProductDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Products]
+      summary: Delete product
+      operationId: deleteProduct
+      security:
+        - sessionAuth: []
+      x-feature-required: products.delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /products/{id}/fitments:
+    post:
+      tags: [Products]
+      summary: Add product fitment
+      operationId: addProductFitment
+      security:
+        - sessionAuth: []
+      x-feature-required: products.manageFitment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFitmentRequest'
+      responses:
+        '201':
+          description: Fitment added
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/ProductFitment'
+
+  /products/{id}/fitments/{fitmentId}:
+    delete:
+      tags: [Products]
+      summary: Delete product fitment
+      operationId: deleteProductFitment
+      security:
+        - sessionAuth: []
+      x-feature-required: products.manageFitment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fitmentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+
+  # ============================================
+  # INVENTORY ENDPOINTS
+  # ============================================
+  /inventory:
+    get:
+      tags: [Inventory]
+      summary: List inventory
+      operationId: listInventory
+      security:
+        - sessionAuth: []
+      x-feature-required: inventory.view
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+        - name: lowStock
+          in: query
+          schema:
+            type: boolean
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Inventory list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/InventoryItem'
+
+  /inventory/alerts:
+    get:
+      tags: [Inventory]
+      summary: Get low stock alerts
+      operationId: getInventoryAlerts
+      security:
+        - sessionAuth: []
+      x-feature-required: inventory.viewAlerts
+      responses:
+        '200':
+          description: Low stock products
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/InventoryItem'
+
+  /inventory/has-alerts:
+    get:
+      tags: [Inventory]
+      summary: Check if there are low stock alerts
+      operationId: hasInventoryAlerts
+      security:
+        - sessionAuth: []
+      x-feature-required: inventory.viewAlerts
+      responses:
+        '200':
+          description: Has alerts
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          hasAlerts:
+                            type: boolean
+                          count:
+                            type: integer
+
+  /inventory/adjustments:
+    post:
+      tags: [Inventory]
+      summary: Create inventory adjustment
+      operationId: createInventoryAdjustment
+      security:
+        - sessionAuth: []
+      x-feature-required: inventory.adjust
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInventoryAdjustmentRequest'
+      responses:
+        '200':
+          description: Adjustment created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/InventoryAdjustmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /inventory/{productId}/history:
+    get:
+      tags: [Inventory]
+      summary: Get inventory history for product
+      operationId: getInventoryHistory
+      security:
+        - sessionAuth: []
+      x-feature-required: inventory.viewHistory
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Inventory history
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/InventoryLog'
+
+  /inventory/import:
+    post:
+      tags: [Inventory]
+      summary: Import inventory from XLSX
+      operationId: importInventory
+      security:
+        - sessionAuth: []
+      x-feature-required: inventory.import
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Import result
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/ImportResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  # ============================================
+  # DROPSHIP ENDPOINTS
+  # ============================================
+  /dropship/orders:
+    get:
+      tags: [Dropship]
+      summary: List affiliate orders
+      operationId: listAffiliateOrders
+      security:
+        - sessionAuth: []
+      x-feature-required: dropship.viewOrders
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/AffiliateOrderStatus'
+        - name: affiliateId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Affiliate orders
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AffiliateOrder'
+
+  /dropship/orders/{id}:
+    get:
+      tags: [Dropship]
+      summary: Get affiliate order details
+      operationId: getAffiliateOrder
+      security:
+        - sessionAuth: []
+      x-feature-required: dropship.viewOrders
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Affiliate order details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/AffiliateOrder'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /dropship/orders/{id}/retry:
+    post:
+      tags: [Dropship]
+      summary: Retry failed affiliate order push
+      operationId: retryAffiliateOrder
+      security:
+        - sessionAuth: []
+      x-feature-required: dropship.retryPush
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retry initiated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/AffiliateOrder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /affiliates:
+    get:
+      tags: [Dropship]
+      summary: List affiliates
+      operationId: listAffiliates
+      security:
+        - sessionAuth: []
+      x-feature-required: dropship.manageAffiliates
+      responses:
+        '200':
+          description: Affiliates list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Affiliate'
+    post:
+      tags: [Dropship]
+      summary: Create affiliate
+      operationId: createAffiliate
+      security:
+        - sessionAuth: []
+      x-feature-required: dropship.manageAffiliates
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAffiliateRequest'
+      responses:
+        '201':
+          description: Affiliate created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Affiliate'
+
+  /affiliates/{id}:
+    get:
+      tags: [Dropship]
+      summary: Get affiliate
+      operationId: getAffiliate
+      security:
+        - sessionAuth: []
+      x-feature-required: dropship.manageAffiliates
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Affiliate details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Affiliate'
+    patch:
+      tags: [Dropship]
+      summary: Update affiliate
+      operationId: updateAffiliate
+      security:
+        - sessionAuth: []
+      x-feature-required: dropship.manageAffiliates
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAffiliateRequest'
+      responses:
+        '200':
+          description: Affiliate updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Affiliate'
+    delete:
+      tags: [Dropship]
+      summary: Delete affiliate
+      operationId: deleteAffiliate
+      security:
+        - sessionAuth: []
+      x-feature-required: dropship.manageAffiliates
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+
+  # ============================================
+  # USERS ENDPOINTS
+  # ============================================
+  /users:
+    get:
+      tags: [Users]
+      summary: List users
+      operationId: listUsers
+      security:
+        - sessionAuth: []
+      x-feature-required: users.viewAll
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+        - name: role
+          in: query
+          schema:
+            type: string
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Users list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/User'
+    post:
+      tags: [Users]
+      summary: Create user
+      operationId: createUser
+      security:
+        - sessionAuth: []
+      x-feature-required: users.create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/User'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /users/{id}:
+    get:
+      tags: [Users]
+      summary: Get user
+      operationId: getUser
+      security:
+        - sessionAuth: []
+      x-feature-required: users.viewAll
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/User'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Users]
+      summary: Update user role
+      operationId: updateUserRole
+      security:
+        - sessionAuth: []
+      x-feature-required: users.updateRole
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [role]
+              properties:
+                role:
+                  type: string
+                  enum: [CUSTOMER, MANAGER, ADMIN]
+      responses:
+        '200':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    delete:
+      tags: [Users]
+      summary: Delete user
+      operationId: deleteUser
+      security:
+        - sessionAuth: []
+      x-feature-required: users.delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  # ============================================
+  # PROFILE ENDPOINTS
+  # ============================================
+  /profile:
+    get:
+      tags: [Profile]
+      summary: Get own profile
+      operationId: getProfile
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Profile data
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/User'
+    patch:
+      tags: [Profile]
+      summary: Update own profile
+      operationId: updateProfile
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileRequest'
+      responses:
+        '200':
+          description: Profile updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/User'
+
+  /profile/addresses:
+    get:
+      tags: [Profile]
+      summary: List own addresses
+      operationId: listAddresses
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Addresses list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Address'
+    post:
+      tags: [Profile]
+      summary: Create address
+      operationId: createAddress
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAddressRequest'
+      responses:
+        '201':
+          description: Address created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Address'
+
+  /profile/addresses/{id}:
+    patch:
+      tags: [Profile]
+      summary: Update address
+      operationId: updateAddress
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAddressRequest'
+      responses:
+        '200':
+          description: Address updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Address'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Profile]
+      summary: Delete address
+      operationId: deleteAddress
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ============================================
+  # SETTINGS ENDPOINTS
+  # ============================================
+  /settings:
+    get:
+      tags: [Settings]
+      summary: Get all settings
+      operationId: getSettings
+      security:
+        - sessionAuth: []
+      x-feature-required: settings.view
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Settings
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: object
+                        additionalProperties: true
+
+  /settings/{key}:
+    get:
+      tags: [Settings]
+      summary: Get setting by key
+      operationId: getSetting
+      security:
+        - sessionAuth: []
+      x-feature-required: settings.view
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Setting value
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Setting'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Settings]
+      summary: Update setting
+      operationId: updateSetting
+      security:
+        - sessionAuth: []
+      x-feature-required: settings.update
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [value]
+              properties:
+                value: {}
+                category:
+                  type: string
+      responses:
+        '200':
+          description: Setting updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Setting'
+
+  /settings/bulk:
+    post:
+      tags: [Settings]
+      summary: Bulk update settings
+      operationId: bulkUpdateSettings
+      security:
+        - sessionAuth: []
+      x-feature-required: settings.update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: Settings updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Setting'
+
+  # ============================================
+  # AUDIT ENDPOINTS
+  # ============================================
+  /audit:
+    get:
+      tags: [Audit]
+      summary: Get audit logs
+      operationId: getAuditLogs
+      security:
+        - sessionAuth: []
+      x-feature-required: audit.view
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+        - name: userId
+          in: query
+          schema:
+            type: string
+        - name: action
+          in: query
+          schema:
+            type: string
+        - name: resource
+          in: query
+          schema:
+            type: string
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Audit logs
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResponse'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AuditLog'
+
+  /audit/statistics:
+    get:
+      tags: [Audit]
+      summary: Get audit statistics
+      operationId: getAuditStatistics
+      security:
+        - sessionAuth: []
+      x-feature-required: audit.view
+      responses:
+        '200':
+          description: Audit statistics
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/AuditStatistics'
+
+  /audit/export:
+    post:
+      tags: [Audit]
+      summary: Export audit logs
+      operationId: exportAuditLogs
+      security:
+        - sessionAuth: []
+      x-feature-required: audit.export
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dateFrom:
+                  type: string
+                  format: date-time
+                dateTo:
+                  type: string
+                  format: date-time
+                format:
+                  type: string
+                  enum: [csv, xlsx]
+      responses:
+        '200':
+          description: Export file
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+
+  # ============================================
+  # REPORTS ENDPOINTS
+  # ============================================
+  /reports/sales:
+    get:
+      tags: [Reports]
+      summary: Get sales report
+      operationId: getSalesReport
+      security:
+        - sessionAuth: []
+      x-feature-required: reports.salesByDay
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [day, week, month]
+            default: day
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Sales data
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/SalesReport'
+
+  /reports/categories:
+    get:
+      tags: [Reports]
+      summary: Get sales by category
+      operationId: getCategoryReport
+      security:
+        - sessionAuth: []
+      x-feature-required: reports.salesByCategory
+      parameters:
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Category sales data
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/CategoryReport'
+
+  /reports/inventory-value:
+    get:
+      tags: [Reports]
+      summary: Get inventory value report
+      operationId: getInventoryValueReport
+      security:
+        - sessionAuth: []
+      x-feature-required: reports.inventoryValue
+      responses:
+        '200':
+          description: Inventory value data
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/InventoryValueReport'
+
+  /reports/gmv:
+    get:
+      tags: [Reports]
+      summary: Get GMV report
+      operationId: getGmvReport
+      security:
+        - sessionAuth: []
+      x-feature-required: reports.gmv
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [day, week, month, year]
+            default: month
+      responses:
+        '200':
+          description: GMV data
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DataWrapper'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/GmvReport'
+
+# ============================================
+# COMPONENTS
+# ============================================
+components:
+  securitySchemes:
+    sessionAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Session token (also accepted as auth-token cookie)
+
+  parameters:
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+  responses:
+    Success:
+      description: Operation successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SuccessResponse'
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Resource conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    # Common Response Wrappers
+    DataWrapper:
+      type: object
+      properties:
+        data: {}
+
+    PaginatedResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items: {}
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+        totalPages:
+          type: integer
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+
+    # Auth Schemas
+    RegisterRequest:
+      type: object
+      required: [email, password, firstName, lastName]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        firstName:
+          type: string
+          minLength: 1
+        lastName:
+          type: string
+          minLength: 1
+        phone:
+          type: string
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+
+    AuthResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            user:
+              $ref: '#/components/schemas/User'
+            token:
+              type: string
+
+    # User Schemas
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phone:
+          type: string
+        role:
+          type: string
+          enum: [CUSTOMER, MANAGER, ADMIN]
+        image:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateUserRequest:
+      type: object
+      required: [email, password, firstName, lastName]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+          enum: [CUSTOMER, MANAGER, ADMIN]
+
+    UpdateProfileRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phone:
+          type: string
+
+    # Feature Config
+    FeatureConfig:
+      type: object
+      properties:
+        role:
+          type: string
+        version:
+          type: integer
+        features:
+          type: object
+        navigation:
+          type: object
+          properties:
+            primary:
+              type: array
+              items:
+                $ref: '#/components/schemas/NavigationItem'
+            secondary:
+              type: array
+              items:
+                $ref: '#/components/schemas/NavigationItem'
+            account:
+              type: array
+              items:
+                $ref: '#/components/schemas/NavigationItem'
+        ui:
+          type: object
+
+    NavigationItem:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        icon:
+          type: string
+        route:
+          type: string
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/NavigationItem'
+        badge:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [count, dot]
+            source:
+              type: string
+
+    # Catalog Schemas
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+        imageUrl:
+          type: string
+        parentId:
+          type: string
+        sortOrder:
+          type: integer
+        isActive:
+          type: boolean
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        _count:
+          type: object
+          properties:
+            products:
+              type: integer
+
+    Brand:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        logoUrl:
+          type: string
+        description:
+          type: string
+        isActive:
+          type: boolean
+
+    ProductSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        sku:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        shortDescription:
+          type: string
+        price:
+          type: string
+        compareAtPrice:
+          type: string
+        imageUrl:
+          type: string
+        stockQuantity:
+          type: integer
+        isActive:
+          type: boolean
+        isFeatured:
+          type: boolean
+        category:
+          $ref: '#/components/schemas/Category'
+        brand:
+          $ref: '#/components/schemas/Brand'
+
+    ProductDetail:
+      allOf:
+        - $ref: '#/components/schemas/ProductSummary'
+        - type: object
+          properties:
+            description:
+              type: string
+            costPrice:
+              type: string
+            images:
+              type: array
+              items:
+                type: string
+            weight:
+              type: number
+            weightUnit:
+              type: string
+            length:
+              type: number
+            width:
+              type: number
+            height:
+              type: number
+            dimensionUnit:
+              type: string
+            upc:
+              type: string
+            lowStockThreshold:
+              type: integer
+            fulfillmentType:
+              type: string
+              enum: [INVENTORY, DROPSHIP, MIXED]
+            fitments:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProductFitment'
+
+    ProductFitment:
+      type: object
+      properties:
+        id:
+          type: string
+        yearStart:
+          type: integer
+        yearEnd:
+          type: integer
+        make:
+          type: string
+        model:
+          type: string
+        submodel:
+          type: string
+        engine:
+          type: string
+        notes:
+          type: string
+
+    CreateProductRequest:
+      type: object
+      required: [sku, name, price, categoryId]
+      properties:
+        sku:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        shortDescription:
+          type: string
+        price:
+          type: number
+        compareAtPrice:
+          type: number
+        costPrice:
+          type: number
+        categoryId:
+          type: string
+        brandId:
+          type: string
+        imageUrl:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        weight:
+          type: number
+        stockQuantity:
+          type: integer
+        lowStockThreshold:
+          type: integer
+        fulfillmentType:
+          type: string
+          enum: [INVENTORY, DROPSHIP, MIXED]
+        isActive:
+          type: boolean
+        isFeatured:
+          type: boolean
+
+    UpdateProductRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        shortDescription:
+          type: string
+        price:
+          type: number
+        compareAtPrice:
+          type: number
+        costPrice:
+          type: number
+        categoryId:
+          type: string
+        brandId:
+          type: string
+        imageUrl:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        weight:
+          type: number
+        lowStockThreshold:
+          type: integer
+        fulfillmentType:
+          type: string
+          enum: [INVENTORY, DROPSHIP, MIXED]
+        isActive:
+          type: boolean
+        isFeatured:
+          type: boolean
+
+    CreateFitmentRequest:
+      type: object
+      required: [yearStart, yearEnd, make, model]
+      properties:
+        yearStart:
+          type: integer
+        yearEnd:
+          type: integer
+        make:
+          type: string
+        model:
+          type: string
+        submodel:
+          type: string
+        engine:
+          type: string
+        notes:
+          type: string
+
+    # Cart Schemas
+    Cart:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+        subtotal:
+          type: number
+        itemCount:
+          type: integer
+
+    CartItem:
+      type: object
+      properties:
+        id:
+          type: string
+        productId:
+          type: string
+        quantity:
+          type: integer
+        product:
+          $ref: '#/components/schemas/ProductSummary'
+
+    AddCartItemRequest:
+      type: object
+      required: [productId, quantity]
+      properties:
+        productId:
+          type: string
+        quantity:
+          type: integer
+          minimum: 1
+
+    UpdateCartItemRequest:
+      type: object
+      required: [quantity]
+      properties:
+        quantity:
+          type: integer
+          minimum: 0
+
+    # Checkout Schemas
+    ShippingMethod:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        freeThreshold:
+          type: number
+
+    PaymentIntent:
+      type: object
+      properties:
+        clientSecret:
+          type: string
+        paymentIntentId:
+          type: string
+        amount:
+          type: number
+        subtotal:
+          type: number
+        shippingAmount:
+          type: number
+        taxAmount:
+          type: number
+
+    CreateOrderRequest:
+      type: object
+      required: [shippingMethod]
+      properties:
+        addressId:
+          type: string
+        shippingAddress:
+          $ref: '#/components/schemas/CreateAddressRequest'
+        shippingMethod:
+          type: string
+        paymentIntentId:
+          type: string
+        idempotencyKey:
+          type: string
+        notes:
+          type: string
+
+    # Order Schemas
+    OrderStatus:
+      type: string
+      enum: [PENDING, CONFIRMED, PROCESSING, SHIPPED, DELIVERED, CANCELLED, REFUNDED]
+
+    OrderSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        orderNumber:
+          type: string
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        paymentStatus:
+          type: string
+        totalAmount:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            email:
+              type: string
+        _count:
+          type: object
+          properties:
+            items:
+              type: integer
+
+    Order:
+      allOf:
+        - $ref: '#/components/schemas/OrderSummary'
+        - type: object
+          properties:
+            subtotal:
+              type: string
+            shippingAmount:
+              type: string
+            taxAmount:
+              type: string
+            shippingMethod:
+              type: string
+            shippingCarrier:
+              type: string
+            trackingNumber:
+              type: string
+            notes:
+              type: string
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrderItem'
+            timeline:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrderTimelineEntry'
+
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: string
+        sku:
+          type: string
+        name:
+          type: string
+        price:
+          type: string
+        quantity:
+          type: integer
+        totalPrice:
+          type: string
+        product:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            imageUrl:
+              type: string
+            slug:
+              type: string
+
+    OrderTimelineEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+
+    OrderTracking:
+      type: object
+      properties:
+        orderNumber:
+          type: string
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        shippingCarrier:
+          type: string
+        trackingNumber:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        timeline:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderTimelineEntry'
+
+    UpdateOrderStatusRequest:
+      type: object
+      required: [status]
+      properties:
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        trackingNumber:
+          type: string
+        shippingCarrier:
+          type: string
+        notes:
+          type: string
+
+    OrderStatistics:
+      type: object
+      properties:
+        newOrders:
+          type: integer
+        pendingShipment:
+          type: integer
+        todaysVolume:
+          type: number
+        statusCounts:
+          type: object
+          additionalProperties:
+            type: integer
+
+    # Inventory Schemas
+    InventoryItem:
+      type: object
+      properties:
+        id:
+          type: string
+        sku:
+          type: string
+        name:
+          type: string
+        imageUrl:
+          type: string
+        stockQuantity:
+          type: integer
+        lowStockThreshold:
+          type: integer
+        price:
+          type: string
+        category:
+          type: object
+          properties:
+            name:
+              type: string
+        brand:
+          type: object
+          properties:
+            name:
+              type: string
+
+    InventoryLog:
+      type: object
+      properties:
+        id:
+          type: string
+        productId:
+          type: string
+        adjustmentType:
+          type: string
+          enum: [RECEIVED, SOLD, RETURNED, DAMAGED, ADJUSTMENT, TRANSFER]
+        quantity:
+          type: integer
+        previousQty:
+          type: integer
+        newQty:
+          type: integer
+        reason:
+          type: string
+        referenceId:
+          type: string
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateInventoryAdjustmentRequest:
+      type: object
+      required: [productId, adjustmentType, quantity]
+      properties:
+        productId:
+          type: string
+        adjustmentType:
+          type: string
+          enum: [RECEIVED, SOLD, RETURNED, DAMAGED, ADJUSTMENT, TRANSFER]
+        quantity:
+          type: integer
+        reason:
+          type: string
+        referenceId:
+          type: string
+
+    InventoryAdjustmentResponse:
+      type: object
+      properties:
+        product:
+          type: object
+          properties:
+            id:
+              type: string
+            stockQuantity:
+              type: integer
+        log:
+          $ref: '#/components/schemas/InventoryLog'
+
+    ImportResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        created:
+          type: integer
+        updated:
+          type: integer
+        skipped:
+          type: integer
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              row:
+                type: integer
+              message:
+                type: string
+
+    # Dropship Schemas
+    AffiliateOrderStatus:
+      type: string
+      enum: [PENDING, SENT, CONFIRMED, FAILED, CANCELLED]
+
+    AffiliateOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        orderId:
+          type: string
+        affiliateId:
+          type: string
+        status:
+          $ref: '#/components/schemas/AffiliateOrderStatus'
+        externalOrderId:
+          type: string
+        lastError:
+          type: string
+        retryCount:
+          type: integer
+        nextRetryAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+        order:
+          $ref: '#/components/schemas/OrderSummary'
+        affiliate:
+          $ref: '#/components/schemas/Affiliate'
+
+    Affiliate:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        code:
+          type: string
+        baseUrl:
+          type: string
+        isActive:
+          type: boolean
+        retryPolicy:
+          type: object
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateAffiliateRequest:
+      type: object
+      required: [name, code, baseUrl, apiKey]
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        baseUrl:
+          type: string
+        apiKey:
+          type: string
+        apiSecret:
+          type: string
+        isActive:
+          type: boolean
+        retryPolicy:
+          type: object
+
+    UpdateAffiliateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        baseUrl:
+          type: string
+        apiKey:
+          type: string
+        apiSecret:
+          type: string
+        isActive:
+          type: boolean
+        retryPolicy:
+          type: object
+
+    # Address Schemas
+    Address:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        label:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        street:
+          type: string
+        apartment:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        country:
+          type: string
+        phone:
+          type: string
+        isDefault:
+          type: boolean
+
+    CreateAddressRequest:
+      type: object
+      required: [firstName, lastName, street, city, state, zipCode]
+      properties:
+        label:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        street:
+          type: string
+        apartment:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        country:
+          type: string
+          default: US
+        phone:
+          type: string
+        isDefault:
+          type: boolean
+
+    UpdateAddressRequest:
+      type: object
+      properties:
+        label:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        street:
+          type: string
+        apartment:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        country:
+          type: string
+        phone:
+          type: string
+        isDefault:
+          type: boolean
+
+    # Settings Schemas
+    Setting:
+      type: object
+      properties:
+        id:
+          type: string
+        key:
+          type: string
+        value: {}
+        category:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    # Audit Schemas
+    AuditLog:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        action:
+          type: string
+        resource:
+          type: string
+        resourceId:
+          type: string
+        oldData:
+          type: object
+        newData:
+          type: object
+        ipAddress:
+          type: string
+        userAgent:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+            email:
+              type: string
+            name:
+              type: string
+
+    AuditStatistics:
+      type: object
+      properties:
+        todayCount:
+          type: integer
+        weekCount:
+          type: integer
+        byAction:
+          type: array
+          items:
+            type: object
+            properties:
+              action:
+                type: string
+              count:
+                type: integer
+        byResource:
+          type: array
+          items:
+            type: object
+            properties:
+              resource:
+                type: string
+              count:
+                type: integer
+
+    # Report Schemas
+    SalesReport:
+      type: object
+      properties:
+        period:
+          type: string
+        totalSales:
+          type: number
+        orderCount:
+          type: integer
+        averageOrderValue:
+          type: number
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+              sales:
+                type: number
+              orders:
+                type: integer
+
+    CategoryReport:
+      type: object
+      properties:
+        totalSales:
+          type: number
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              categoryId:
+                type: string
+              categoryName:
+                type: string
+              sales:
+                type: number
+              percentage:
+                type: number
+
+    InventoryValueReport:
+      type: object
+      properties:
+        totalValue:
+          type: number
+        totalCost:
+          type: number
+        potentialProfit:
+          type: number
+        itemCount:
+          type: integer
+        lowStockCount:
+          type: integer
+        outOfStockCount:
+          type: integer
+        byCategory:
+          type: array
+          items:
+            type: object
+            properties:
+              categoryName:
+                type: string
+              value:
+                type: number
+              itemCount:
+                type: integer
+
+    GmvReport:
+      type: object
+      properties:
+        totalGmv:
+          type: number
+        inventoryGmv:
+          type: number
+        dropshipGmv:
+          type: number
+        orderCount:
+          type: integer
+        period:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+              gmv:
+                type: number
+              inventoryGmv:
+                type: number
+              dropshipGmv:
+                type: number
+

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Saved Vehicles - SN Auto Parts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for better look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181411] dark:text-white font-display">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e5e7eb] dark:border-b-[#3a2e26] bg-white dark:bg-[#1a110a] px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-[#181411] dark:text-white">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined !text-4xl">
+                        local_shipping
+                    </span>
+</div>
+<h2 class="text-[#181411] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">SN Auto Parts</h2>
+</div>
+<label class="flex flex-col min-w-40 !h-10 max-w-64 hidden md:flex">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#8c725f] flex border-none bg-[#f5f2f0] dark:bg-[#2f251f] items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-[24px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181411] dark:text-white focus:outline-0 focus:ring-0 border-none bg-[#f5f2f0] dark:bg-[#2f251f] focus:border-none h-full placeholder:text-[#8c725f] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Search part # or keyword" value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="hidden md:flex items-center gap-9">
+<a class="text-[#181411] dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Shop Parts</a>
+<a class="text-[#181411] dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Deals</a>
+<a class="text-[#181411] dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Support</a>
+</div>
+<div class="flex gap-4 items-center">
+<button class="relative text-[#181411] dark:text-white hover:text-primary">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-white">2</span>
+</button>
+<div class="h-8 w-8 overflow-hidden rounded-full bg-gray-200">
+<img alt="User profile avatar" class="h-full w-full object-cover" data-alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxtn91-wxecPgDBaCpayZvEQeU__6VY4IiZ4wjc-4TANJqUfUSe6qgug1GOzftdAvNJHWXaSHsl81dYWqojqgelbTr9M8WFaGdsQe-NZyQ3VVzqYhA6pu3i_h3kolowb4oDNdZ7l7MFX9v2xbe3EiGQ_T4OnJEt6MMP8UwvwMrXA0I5uLSjjTG5N0NxNor_d35MMlns1Z3A-0ZLavKj4KlEnyA-IeCR7bICGL7dpNR-AGBnHbJWwdNi7UrhTwSuBjzCOTfQct6gWs_"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Layout -->
+<div class="layout-container flex grow flex-col">
+<div class="px-4 md:px-10 lg:px-20 xl:px-40 flex flex-1 justify-center py-8">
+<div class="layout-content-container flex flex-col md:flex-row w-full max-w-[1200px] gap-8">
+<!-- Sidebar -->
+<aside class="w-full md:w-64 flex-shrink-0">
+<div class="flex flex-col gap-6 bg-white dark:bg-[#1a110a] p-6 rounded-xl shadow-sm border border-[#e5e7eb] dark:border-[#3a2e26]">
+<div class="flex flex-col border-b border-[#f5f2f0] dark:border-[#3a2e26] pb-4">
+<h1 class="text-[#181411] dark:text-white text-lg font-bold leading-normal">James Anderson</h1>
+<p class="text-[#8c725f] text-sm font-normal leading-normal">Member since 2021</p>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#181411] dark:text-white hover:bg-[#f5f2f0] dark:hover:bg-[#2f251f] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#8c725f] group-hover:text-primary">inventory_2</span>
+<span class="text-sm font-medium">My Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined fill-current">directions_car</span>
+<span class="text-sm font-bold">Saved Vehicles</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#181411] dark:text-white hover:bg-[#f5f2f0] dark:hover:bg-[#2f251f] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#8c725f] group-hover:text-primary">person</span>
+<span class="text-sm font-medium">Profile Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#181411] dark:text-white hover:bg-[#f5f2f0] dark:hover:bg-[#2f251f] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#8c725f] group-hover:text-primary">location_on</span>
+<span class="text-sm font-medium">Addresses</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#181411] dark:text-white hover:bg-[#f5f2f0] dark:hover:bg-[#2f251f] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[#8c725f] group-hover:text-primary">credit_card</span>
+<span class="text-sm font-medium">Payment Methods</span>
+</a>
+<div class="my-2 border-t border-[#f5f2f0] dark:border-[#3a2e26]"></div>
+<button class="flex items-center gap-3 px-3 py-2 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors w-full text-left">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-medium">Sign Out</span>
+</button>
+</nav>
+</div>
+</aside>
+<!-- Content Area -->
+<main class="flex-1 flex flex-col gap-6">
+<!-- Page Heading & Actions -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h2 class="text-[#181411] dark:text-white text-3xl font-black leading-tight tracking-[-0.02em]">Your Saved Vehicles</h2>
+<p class="text-[#8c725f] text-base mt-1">Add vehicles to ensure parts fit perfectly.</p>
+</div>
+<button class="flex items-center justify-center gap-2 bg-primary hover:bg-orange-600 text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all shadow-sm active:scale-95" onclick="document.getElementById('addVehicleModal').showModal()">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Add New Vehicle</span>
+</button>
+</div>
+<!-- Empty State (Hidden for demo, show if needed) -->
+<!-- 
+                    <div class="flex flex-col items-center justify-center p-12 bg-white dark:bg-[#1a110a] rounded-xl border border-dashed border-gray-300 dark:border-[#3a2e26] text-center">
+                        <div class="bg-[#f5f2f0] dark:bg-[#2f251f] p-4 rounded-full mb-4">
+                            <span class="material-symbols-outlined text-4xl text-[#8c725f]">no_crash</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-[#181411] dark:text-white mb-1">No vehicles saved yet</h3>
+                        <p class="text-[#8c725f] text-sm mb-6">Add your car to find compatible parts instantly.</p>
+                        <button class="text-primary font-bold text-sm hover:underline">Add Your First Vehicle</button>
+                    </div> 
+                    -->
+<!-- Vehicle Grid -->
+<div class="grid grid-cols-1 gap-4">
+<!-- Card 1: Default Vehicle -->
+<div class="group relative flex flex-col md:flex-row bg-white dark:bg-[#1a110a] rounded-xl shadow-sm border border-primary/30 dark:border-primary/20 overflow-hidden transition-all hover:shadow-md">
+<div class="absolute top-4 left-4 z-10">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary text-white shadow-sm">
+<span class="material-symbols-outlined text-[14px] mr-1">check_circle</span>
+                                    Default
+                                </span>
+</div>
+<!-- Image Section -->
+<div class="w-full md:w-64 h-48 md:h-auto relative bg-gray-100 dark:bg-gray-800">
+<img alt="Blue sports car in a studio" class="w-full h-full object-cover" data-alt="Blue sports car studio shot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAg5sK6AL9d-T1ukfuAcgKEjJ3RqPSJSF84Nk4-cOs8zdTzPQ4TUmz0apY-pPSdmkSUA3cuD6_MyyniodapLn_lnUOIYU1T6SYon92ExsIZCaH55WuVYX-bjm_UUStaO51wo4kmlmhKm7dY0SIrY_aF9AVllArYTyzAQH9Vk-Ouj-soZUzrlEyL42J-2Bi7j_VVdtOKSMWIjilBVynoYX4YONSO_-GsiPOSmtDQ8KHmo-PdspzFlj4XfyqiTAV3RPZ7gP1fwa4Mx6il"/>
+</div>
+<!-- Content Section -->
+<div class="flex flex-col flex-1 p-5 md:p-6 justify-between">
+<div>
+<div class="flex justify-between items-start">
+<div>
+<p class="text-[#8c725f] text-sm font-medium uppercase tracking-wider mb-1">2018 Ford</p>
+<h3 class="text-[#181411] dark:text-white text-xl md:text-2xl font-bold leading-tight">F-150 Raptor</h3>
+<p class="text-[#5c5c5c] dark:text-gray-400 text-sm mt-1">SuperCrew 3.5L V6 EcoBoost High Output</p>
+</div>
+<!-- Actions Dropdown for Mobile / Buttons for Desktop -->
+<div class="flex items-center gap-2">
+<button class="p-2 text-gray-400 hover:text-primary rounded-full hover:bg-gray-50 dark:hover:bg-[#2f251f] transition-colors" title="Edit">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 text-gray-400 hover:text-red-500 rounded-full hover:bg-gray-50 dark:hover:bg-[#2f251f] transition-colors" title="Remove">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<div class="mt-4 flex flex-wrap gap-2">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#f5f2f0] dark:bg-[#2f251f] rounded text-xs font-medium text-[#181411] dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">settings</span>
+                                            Automatic
+                                        </div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#f5f2f0] dark:bg-[#2f251f] rounded text-xs font-medium text-[#181411] dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">water_drop</span>
+                                            Gas
+                                        </div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#f5f2f0] dark:bg-[#2f251f] rounded text-xs font-medium text-[#181411] dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">directions_car</span>
+                                            4WD
+                                        </div>
+</div>
+</div>
+<div class="mt-6 flex items-center justify-between border-t border-gray-100 dark:border-[#2f251f] pt-4">
+<a class="text-primary text-sm font-bold hover:underline flex items-center gap-1" href="#">
+                                        Shop Parts for this Vehicle
+                                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative flex flex-col md:flex-row bg-white dark:bg-[#1a110a] rounded-xl shadow-sm border border-[#e5e7eb] dark:border-[#3a2e26] overflow-hidden transition-all hover:shadow-md">
+<!-- Image Section -->
+<div class="w-full md:w-64 h-48 md:h-auto relative bg-gray-100 dark:bg-gray-800">
+<img alt="White sedan front view" class="w-full h-full object-cover" data-alt="White modern sedan front view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq-pDQJ45rxc2xamKR8iJtaE47q4fAtO9VAX_C4_f1Urv1faaxYsAs9CTDaSrmnbGQWrxTm8-I6ahSCvJzvYuvqoCEBSxNQQKnz9rj8xs5KdR2Q56NVrrDp4LvNLAuxO7okmpM22umZK42Lt4_VVHLggDJE51ylxosfUBTFq1iK7N93QU8M8MNLDOGnla5lY6uWZCHSGm6dL1WooXWkSzFDDGD7tci5ODm2AqRiw_Zg8N1J0_MkrPouYbKjsAOWI3VW15wdaNPxF1c"/>
+</div>
+<!-- Content Section -->
+<div class="flex flex-col flex-1 p-5 md:p-6 justify-between">
+<div>
+<div class="flex justify-between items-start">
+<div>
+<p class="text-[#8c725f] text-sm font-medium uppercase tracking-wider mb-1">2021 Honda</p>
+<h3 class="text-[#181411] dark:text-white text-xl md:text-2xl font-bold leading-tight">Civic</h3>
+<p class="text-[#5c5c5c] dark:text-gray-400 text-sm mt-1">Sport Touring 1.5L Turbo</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-gray-400 hover:text-primary rounded-full hover:bg-gray-50 dark:hover:bg-[#2f251f] transition-colors" title="Edit">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 text-gray-400 hover:text-red-500 rounded-full hover:bg-gray-50 dark:hover:bg-[#2f251f] transition-colors" title="Remove">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<div class="mt-4 flex flex-wrap gap-2">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#f5f2f0] dark:bg-[#2f251f] rounded text-xs font-medium text-[#181411] dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">settings</span>
+                                            CVT
+                                        </div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#f5f2f0] dark:bg-[#2f251f] rounded text-xs font-medium text-[#181411] dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">water_drop</span>
+                                            Gas
+                                        </div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#f5f2f0] dark:bg-[#2f251f] rounded text-xs font-medium text-[#181411] dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">directions_car</span>
+                                            FWD
+                                        </div>
+</div>
+</div>
+<div class="mt-6 flex flex-col sm:flex-row sm:items-center justify-between border-t border-gray-100 dark:border-[#2f251f] pt-4 gap-4">
+<button class="text-[#8c725f] text-sm font-medium hover:text-primary flex items-center gap-1 group">
+<span class="material-symbols-outlined text-[18px] group-hover:scale-110 transition-transform">star</span>
+                                        Set as Default
+                                    </button>
+<a class="text-primary text-sm font-bold hover:underline flex items-center gap-1" href="#">
+                                        Shop Parts for this Vehicle
+                                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative flex flex-col md:flex-row bg-white dark:bg-[#1a110a] rounded-xl shadow-sm border border-[#e5e7eb] dark:border-[#3a2e26] overflow-hidden transition-all hover:shadow-md opacity-75 hover:opacity-100">
+<!-- Image Section -->
+<div class="w-full md:w-64 h-48 md:h-auto relative bg-gray-100 dark:bg-gray-800">
+<img alt="Classic red car front grill" class="w-full h-full object-cover" data-alt="Classic red car grill detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzoO4YAjLyQaHQw0-2GThnnf8SudpvwvENIhbSs2r6xUdeaQh0U4cAQKWLpE74VIvlmnzYP5xkoIoOBTxWbCc_KiMLM4u-XM5xYTY5gT2JkP64Gewxm1TaOfJ9cHCnR8j2sDFn0ZvLOGF9EzveEXKWBvW7FKcEVHUZ67sGkQrw0L0q1j9iqoy91VJejs-JsA4PcqkKQOA1QSO-kQl3UnG5yPeEUYDLBRStlVDJHFLVqLAUuTH0qICHUV9hbU-kAwBLbl8PSeHbqhFC"/>
+</div>
+<!-- Content Section -->
+<div class="flex flex-col flex-1 p-5 md:p-6 justify-between">
+<div>
+<div class="flex justify-between items-start">
+<div>
+<p class="text-[#8c725f] text-sm font-medium uppercase tracking-wider mb-1">1967 Chevrolet</p>
+<h3 class="text-[#181411] dark:text-white text-xl md:text-2xl font-bold leading-tight">Camaro</h3>
+<p class="text-[#5c5c5c] dark:text-gray-400 text-sm mt-1">SS 350 V8</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-gray-400 hover:text-primary rounded-full hover:bg-gray-50 dark:hover:bg-[#2f251f] transition-colors" title="Edit">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 text-gray-400 hover:text-red-500 rounded-full hover:bg-gray-50 dark:hover:bg-[#2f251f] transition-colors" title="Remove">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<div class="mt-4 flex flex-wrap gap-2">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#f5f2f0] dark:bg-[#2f251f] rounded text-xs font-medium text-[#181411] dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">settings</span>
+                                            Manual
+                                        </div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#f5f2f0] dark:bg-[#2f251f] rounded text-xs font-medium text-[#181411] dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">water_drop</span>
+                                            Gas
+                                        </div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#f5f2f0] dark:bg-[#2f251f] rounded text-xs font-medium text-[#181411] dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">directions_car</span>
+                                            RWD
+                                        </div>
+</div>
+</div>
+<div class="mt-6 flex flex-col sm:flex-row sm:items-center justify-between border-t border-gray-100 dark:border-[#2f251f] pt-4 gap-4">
+<button class="text-[#8c725f] text-sm font-medium hover:text-primary flex items-center gap-1 group">
+<span class="material-symbols-outlined text-[18px] group-hover:scale-110 transition-transform">star</span>
+                                        Set as Default
+                                    </button>
+<a class="text-primary text-sm font-bold hover:underline flex items-center gap-1" href="#">
+                                        Shop Parts for this Vehicle
+                                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</div>
+</div>
+<!-- Add/Edit Vehicle Modal -->
+<dialog class="backdrop:bg-gray-900/50 open:animate-fade-in p-0 rounded-xl shadow-2xl w-full max-w-lg bg-white dark:bg-[#1a110a] text-[#181411] dark:text-white" id="addVehicleModal">
+<div class="flex flex-col h-full">
+<!-- Modal Header -->
+<div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-[#2f251f]">
+<h3 class="text-xl font-bold">Add New Vehicle</h3>
+<form method="dialog">
+<button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#2f251f]">
+<span class="material-symbols-outlined">close</span>
+</button>
+</form>
+</div>
+<!-- Modal Body -->
+<div class="p-6 flex flex-col gap-5">
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5 col-span-2 sm:col-span-1">
+<label class="text-sm font-medium text-[#181411] dark:text-gray-300">Year</label>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-[#e5e7eb] dark:border-[#3a2e26] bg-[#f8f7f5] dark:bg-[#2f251f] px-4 py-2.5 text-[#181411] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none">
+<option disabled="" selected="" value="">Select Year</option>
+<option value="2024">2024</option>
+<option value="2023">2023</option>
+<option value="2022">2022</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-gray-400 text-lg">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 col-span-2 sm:col-span-1">
+<label class="text-sm font-medium text-[#181411] dark:text-gray-300">Make</label>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-[#e5e7eb] dark:border-[#3a2e26] bg-[#f8f7f5] dark:bg-[#2f251f] px-4 py-2.5 text-[#181411] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none">
+<option disabled="" selected="" value="">Select Make</option>
+<option value="Ford">Ford</option>
+<option value="Honda">Honda</option>
+<option value="Toyota">Toyota</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-gray-400 text-lg">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 col-span-2">
+<label class="text-sm font-medium text-[#181411] dark:text-gray-300">Model</label>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-[#e5e7eb] dark:border-[#3a2e26] bg-[#f8f7f5] dark:bg-[#2f251f] px-4 py-2.5 text-[#181411] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none">
+<option disabled="" selected="" value="">Select Model</option>
+<option value="F-150">F-150</option>
+<option value="Mustang">Mustang</option>
+<option value="Explorer">Explorer</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-gray-400 text-lg">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 col-span-2">
+<label class="text-sm font-medium text-[#181411] dark:text-gray-300">Engine (Optional)</label>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-[#e5e7eb] dark:border-[#3a2e26] bg-[#f8f7f5] dark:bg-[#2f251f] px-4 py-2.5 text-[#181411] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none">
+<option disabled="" selected="" value="">Select Engine</option>
+<option value="3.5L V6">3.5L V6</option>
+<option value="5.0L V8">5.0L V8</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-gray-400 text-lg">expand_more</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-[#2f251f]/50 border border-gray-100 dark:border-[#2f251f] cursor-pointer" onclick="document.getElementById('defaultCheck').click()">
+<div class="flex items-center h-5">
+<input aria-describedby="default-description" class="w-5 h-5 border border-gray-300 rounded bg-white focus:ring-3 focus:ring-primary/20 text-primary accent-primary" id="defaultCheck" type="checkbox"/>
+</div>
+<div class="ml-2 text-sm">
+<label class="font-medium text-[#181411] dark:text-white cursor-pointer" for="defaultCheck">Set as default vehicle</label>
+<p class="text-xs font-normal text-gray-500 dark:text-gray-400" id="default-description">We'll show parts for this vehicle by default.</p>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="px-6 py-4 bg-gray-50 dark:bg-[#23170f] flex justify-end gap-3 rounded-b-xl border-t border-gray-100 dark:border-[#2f251f]">
+<form method="dialog">
+<button class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#2f251f] transition-colors">Cancel</button>
+</form>
+<button class="px-6 py-2 rounded-lg text-sm font-bold text-white bg-primary hover:bg-orange-600 shadow-sm transition-colors">Save Vehicle</button>
+</div>
+</div>
+</dialog>
+</body></html>

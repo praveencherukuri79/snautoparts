@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Category Sales Report - SN Auto Parts</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#181411",
+                        "surface-dark": "#27201b", // Derived from input bg
+                        "surface-border": "#3a2f27", // Derived from sidebar active
+                        "text-secondary": "#bba89b",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom Scrollbar for dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #181411; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3a2f27; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #55453a; 
+        }
+
+        /* Donut Chart CSS */
+        .donut-chart {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #f97415 0% 45%,   /* Engine Parts */
+                #fb923c 45% 65%,  /* Brakes */
+                #fdba74 65% 80%,  /* Suspension */
+                #fed7aa 80% 90%,  /* Electrical */
+                #3a2f27 90% 100%  /* Others */
+            );
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .donut-chart::after {
+            content: "";
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            background-color: #27201b; /* Matches card bg */
+            border-radius: 50%;
+        }
+        .donut-text {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-display overflow-hidden h-screen flex">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 border-r border-surface-border bg-[#181411] flex flex-col justify-between hidden lg:flex">
+<div class="p-6 flex flex-col gap-8">
+<div class="flex flex-col">
+<h1 class="text-white text-xl font-bold leading-normal tracking-tight">SN Auto Parts</h1>
+<p class="text-text-secondary text-sm font-normal">Admin Panel</p>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-surface-border hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-white transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-surface-border hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-white transition-colors">shopping_bag</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-surface-border hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-white transition-colors">sell</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+<!-- Active Item -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-border text-white" href="#">
+<span class="material-symbols-outlined text-primary fill-1">bar_chart</span>
+<span class="text-sm font-medium">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-surface-border hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-white transition-colors">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="w-8 h-8 rounded-full bg-surface-border flex items-center justify-center text-primary font-bold">JD</div>
+<div class="flex flex-col">
+<p class="text-white text-sm font-medium">John Doe</p>
+<p class="text-text-secondary text-xs">Manager</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-y-auto overflow-x-hidden bg-background-dark">
+<!-- Header Section -->
+<header class="w-full px-6 py-8 lg:px-10 border-b border-surface-border bg-[#181411] sticky top-0 z-20">
+<div class="flex flex-col xl:flex-row xl:items-end justify-between gap-6">
+<!-- Title & Context -->
+<div class="flex flex-col gap-2 max-w-2xl">
+<h2 class="text-white text-3xl font-black leading-tight tracking-[-0.033em]">Category Sales Report</h2>
+<p class="text-text-secondary text-base font-normal">Analyze revenue and performance metrics across product categories to optimize inventory and marketing.</p>
+</div>
+<!-- Controls -->
+<div class="flex flex-wrap items-end gap-3 w-full xl:w-auto">
+<!-- Date Picker -->
+<label class="flex flex-col flex-1 min-w-[200px]">
+<span class="text-text-secondary text-xs font-medium uppercase tracking-wider mb-1.5">Date Range</span>
+<div class="flex w-full items-stretch rounded-lg shadow-sm">
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#55453a] bg-[#27201b] placeholder:text-text-secondary px-4 py-2.5 text-sm font-normal leading-normal h-11" placeholder="Select dates" type="text" value="Oct 1, 2023 - Oct 31, 2023"/>
+<div class="text-text-secondary flex border border-[#55453a] bg-[#27201b] items-center justify-center px-3 rounded-r-lg border-l-0 h-11">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+</div>
+</div>
+</label>
+<!-- Apply Button -->
+<button class="h-11 px-6 bg-primary hover:bg-orange-600 transition-colors text-white text-sm font-bold rounded-lg tracking-wide shadow-md flex items-center justify-center gap-2">
+                        Apply
+                    </button>
+<!-- Export Button -->
+<button class="h-11 px-6 bg-surface-border hover:bg-[#4a3e35] transition-colors text-white text-sm font-bold rounded-lg tracking-wide border border-[#55453a] flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                        Export CSV
+                    </button>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-6 lg:p-10 flex flex-col gap-8 max-w-[1600px] mx-auto w-full">
+<!-- Summary KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1 -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-5 flex flex-col gap-4 shadow-lg">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-[#3a2f27] rounded-lg text-white">
+<span class="material-symbols-outlined">category</span>
+</div>
+<p class="text-text-secondary text-sm font-medium">Total Categories</p>
+</div>
+<div>
+<p class="text-3xl font-bold text-white">12</p>
+<p class="text-green-500 text-xs font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+                            2 New added
+                        </p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-5 flex flex-col gap-4 shadow-lg">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-[#3a2f27] rounded-lg text-primary">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<p class="text-text-secondary text-sm font-medium">Top Performer</p>
+</div>
+<div>
+<p class="text-xl font-bold text-primary truncate" title="Engine Parts">Engine Parts</p>
+<p class="text-text-secondary text-xs font-medium mt-1">
+                            $45.2k Revenue
+                        </p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-5 flex flex-col gap-4 shadow-lg">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-[#3a2f27] rounded-lg text-red-400">
+<span class="material-symbols-outlined">trending_down</span>
+</div>
+<p class="text-text-secondary text-sm font-medium">Lowest Performer</p>
+</div>
+<div>
+<p class="text-xl font-bold text-white truncate" title="Interior Accessories">Interior Accessories</p>
+<p class="text-text-secondary text-xs font-medium mt-1">
+                            $1.2k Revenue
+                        </p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-dark border border-surface-border rounded-xl p-5 flex flex-col gap-4 shadow-lg">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-[#3a2f27] rounded-lg text-white">
+<span class="material-symbols-outlined">attach_money</span>
+</div>
+<p class="text-text-secondary text-sm font-medium">Avg Sales / Cat</p>
+</div>
+<div>
+<p class="text-3xl font-bold text-white">$4,250</p>
+<p class="text-green-500 text-xs font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+                            12% vs last month
+                        </p>
+</div>
+</div>
+</div>
+<!-- Chart & Insights Section -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+<!-- Chart -->
+<div class="xl:col-span-1 bg-surface-dark border border-surface-border rounded-xl p-6 shadow-lg flex flex-col">
+<h3 class="text-lg font-bold text-white mb-6">Sales Distribution</h3>
+<div class="flex flex-col items-center justify-center flex-1 gap-8">
+<div class="donut-chart" data-alt="Donut chart showing sales distribution with Engine Parts as the largest segment">
+<div class="donut-text flex flex-col">
+<span class="text-3xl font-black text-white">45%</span>
+<span class="text-xs text-text-secondary font-medium uppercase tracking-wide">Engine Parts</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="grid grid-cols-2 gap-x-8 gap-y-3 w-full px-4">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#f97415]"></span>
+<span class="text-sm text-text-secondary">Engine Parts</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#fb923c]"></span>
+<span class="text-sm text-text-secondary">Brakes</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#fdba74]"></span>
+<span class="text-sm text-text-secondary">Suspension</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#fed7aa]"></span>
+<span class="text-sm text-text-secondary">Electrical</span>
+</div>
+<div class="flex items-center gap-2 col-span-2">
+<span class="w-3 h-3 rounded-full bg-[#3a2f27]"></span>
+<span class="text-sm text-text-secondary">Others (Accessories, Fluids...)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Table Section -->
+<div class="xl:col-span-2 bg-surface-dark border border-surface-border rounded-xl flex flex-col shadow-lg overflow-hidden">
+<div class="p-6 border-b border-surface-border flex justify-between items-center">
+<h3 class="text-lg font-bold text-white">Category Performance Details</h3>
+<button class="text-primary text-sm font-medium hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#211b17] border-b border-surface-border">
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-text-secondary cursor-pointer hover:text-white group">
+<div class="flex items-center gap-1">Category Name <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100">unfold_more</span></div>
+</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-text-secondary cursor-pointer hover:text-white group text-right">
+<div class="flex items-center justify-end gap-1">Total Revenue <span class="material-symbols-outlined text-[16px] opacity-100 text-primary">arrow_downward</span></div>
+</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-text-secondary text-right">
+                                        % of Sales
+                                    </th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-text-secondary text-right cursor-pointer hover:text-white group">
+<div class="flex items-center justify-end gap-1">Orders <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100">unfold_more</span></div>
+</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-text-secondary text-right cursor-pointer hover:text-white group">
+<div class="flex items-center justify-end gap-1">Avg Order Val <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100">unfold_more</span></div>
+</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-border text-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-[#2e2621] transition-colors">
+<td class="py-4 px-6 font-medium text-white">Engine Parts</td>
+<td class="py-4 px-6 text-right font-bold text-white">$45,230.00</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-3">
+<span class="text-white">45%</span>
+<div class="w-16 h-1.5 bg-[#3a2f27] rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[45%]"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-right text-text-secondary">1,240</td>
+<td class="py-4 px-6 text-right text-text-secondary">$36.47</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-[#2e2621] transition-colors">
+<td class="py-4 px-6 font-medium text-white">Brakes &amp; Rotors</td>
+<td class="py-4 px-6 text-right font-bold text-white">$21,450.00</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-3">
+<span class="text-white">20%</span>
+<div class="w-16 h-1.5 bg-[#3a2f27] rounded-full overflow-hidden">
+<div class="h-full bg-[#fb923c] w-[20%]"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-right text-text-secondary">850</td>
+<td class="py-4 px-6 text-right text-text-secondary">$25.23</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-[#2e2621] transition-colors">
+<td class="py-4 px-6 font-medium text-white">Suspension</td>
+<td class="py-4 px-6 text-right font-bold text-white">$15,890.00</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-3">
+<span class="text-white">15%</span>
+<div class="w-16 h-1.5 bg-[#3a2f27] rounded-full overflow-hidden">
+<div class="h-full bg-[#fdba74] w-[15%]"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-right text-text-secondary">420</td>
+<td class="py-4 px-6 text-right text-text-secondary">$37.83</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-[#2e2621] transition-colors">
+<td class="py-4 px-6 font-medium text-white">Electrical</td>
+<td class="py-4 px-6 text-right font-bold text-white">$10,200.00</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-3">
+<span class="text-white">10%</span>
+<div class="w-16 h-1.5 bg-[#3a2f27] rounded-full overflow-hidden">
+<div class="h-full bg-[#fed7aa] w-[10%]"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-right text-text-secondary">310</td>
+<td class="py-4 px-6 text-right text-text-secondary">$32.90</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-[#2e2621] transition-colors">
+<td class="py-4 px-6 font-medium text-white">Exhaust Systems</td>
+<td class="py-4 px-6 text-right font-bold text-white">$5,600.00</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-3">
+<span class="text-white">5%</span>
+<div class="w-16 h-1.5 bg-[#3a2f27] rounded-full overflow-hidden">
+<div class="h-full bg-[#3a2f27] w-[5%]"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-right text-text-secondary">110</td>
+<td class="py-4 px-6 text-right text-text-secondary">$50.90</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-[#2e2621] transition-colors">
+<td class="py-4 px-6 font-medium text-white">Interior Accessories</td>
+<td class="py-4 px-6 text-right font-bold text-white">$1,200.00</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-3">
+<span class="text-white">1%</span>
+<div class="w-16 h-1.5 bg-[#3a2f27] rounded-full overflow-hidden">
+<div class="h-full bg-[#3a2f27] w-[1%]"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-right text-text-secondary">85</td>
+<td class="py-4 px-6 text-right text-text-secondary">$14.11</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-4 border-t border-surface-border flex items-center justify-between">
+<p class="text-sm text-text-secondary">Showing <span class="font-medium text-white">1-6</span> of <span class="font-medium text-white">12</span> categories</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded bg-[#3a2f27] text-text-secondary hover:text-white disabled:opacity-50 text-sm">Previous</button>
+<button class="px-3 py-1 rounded bg-[#3a2f27] text-white text-sm hover:bg-[#55453a]">Next</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

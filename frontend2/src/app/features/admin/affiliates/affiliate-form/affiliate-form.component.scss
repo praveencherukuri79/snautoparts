@@ -1,0 +1,196 @@
+@use 'tokens' as *;
+
+.affiliate-form-page {
+  padding: var(--space-6) var(--space-8);
+  background: var(--color-gray-900);
+  min-height: 100vh;
+  color: white;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+// Page Header
+.page-header {
+  margin-bottom: var(--space-6);
+
+  .breadcrumb {
+    margin-bottom: var(--space-4);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    color: var(--color-gray-400);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    transition: color var(--transition-fast);
+
+    &:hover {
+      color: var(--color-primary);
+    }
+
+    .material-symbols-outlined {
+      font-size: 18px;
+    }
+  }
+
+  h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    margin: 0 0 var(--space-2);
+  }
+
+  .subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-gray-400);
+    margin: 0;
+  }
+}
+
+// Form Layout
+.form-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 800px;
+}
+
+// Form Sections
+.form-section {
+  padding: var(--space-6);
+}
+
+.section-header {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-gray-700);
+}
+
+.section-icon {
+  font-size: 24px;
+  color: var(--color-primary);
+}
+
+.section-title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin: 0 0 var(--space-1);
+}
+
+.section-desc {
+  font-size: var(--text-sm);
+  color: var(--color-gray-400);
+  margin: 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+// Input with Button
+.input-with-button {
+  display: flex;
+  gap: var(--space-2);
+
+  input {
+    flex: 1;
+  }
+
+  .generate-btn {
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-gray-700);
+    border: 1px solid var(--color-gray-600);
+    border-radius: var(--radius-md);
+    color: var(--color-gray-300);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--color-gray-600);
+      color: white;
+    }
+  }
+}
+
+// Checkbox Field
+.checkbox-field {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-gray-800);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-3);
+
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    cursor: pointer;
+
+    strong {
+      color: white;
+      font-weight: 600;
+    }
+
+    span {
+      font-size: var(--text-sm);
+      color: var(--color-gray-400);
+    }
+  }
+}
+
+// Form Actions
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-gray-800);
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .affiliate-form-page {
+    padding: var(--space-4);
+  }
+
+  .form-section {
+    padding: var(--space-4);
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+
+    app-button {
+      width: 100%;
+    }
+  }
+}
+

@@ -1,0 +1,70 @@
+<header class="header">
+  <div class="header__container">
+    <!-- Logo -->
+    <a routerLink="/" class="header__brand">
+      <span class="header__brand-icon material-symbols-outlined">directions_car</span>
+      <span class="header__brand-name">SN Auto Parts</span>
+    </a>
+
+    <!-- Search Bar -->
+    <div class="header__search">
+      <span class="header__search-icon material-symbols-outlined">search</span>
+      <input
+        type="text"
+        class="header__search-input"
+        placeholder="Search parts by name, SKU, or vehicle..."
+      />
+    </div>
+
+    <!-- Navigation -->
+    <nav class="header__nav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="header__nav-link">
+        Home
+      </a>
+      <a routerLink="/products" routerLinkActive="active" class="header__nav-link">
+        Products
+      </a>
+      <a routerLink="/categories" routerLinkActive="active" class="header__nav-link">
+        Categories
+      </a>
+    </nav>
+
+    <!-- Actions -->
+    <div class="header__actions">
+      <!-- Cart -->
+      <a routerLink="/cart" class="header__action-btn" [matBadge]="cartItemCount()" [matBadgeHidden]="!cartItemCount()">
+        <span class="material-symbols-outlined">shopping_cart</span>
+      </a>
+
+      <!-- User Menu -->
+      @if (isAuthenticated()) {
+        <button class="header__action-btn" [matMenuTriggerFor]="userMenu">
+          <span class="material-symbols-outlined">account_circle</span>
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <div class="header__user-info">
+            <span class="header__user-name">{{ user()?.firstName }} {{ user()?.lastName }}</span>
+            <span class="header__user-email">{{ user()?.email }}</span>
+          </div>
+          <mat-divider></mat-divider>
+          @for (item of accountNavItems(); track item.id) {
+            <a mat-menu-item [routerLink]="item.route">
+              <span class="material-symbols-outlined">{{ item.icon }}</span>
+              <span>{{ item.label }}</span>
+            </a>
+          }
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()">
+            <span class="material-symbols-outlined">logout</span>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      } @else {
+        <a routerLink="/login" class="header__action-btn">
+          <span class="material-symbols-outlined">account_circle</span>
+        </a>
+      }
+    </div>
+  </div>
+</header>
+

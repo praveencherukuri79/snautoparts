@@ -1,0 +1,40 @@
+<div class="inventory-page">
+  <div class="page-header">
+    <h1>Inventory Management</h1>
+    <div class="header-actions">
+      <app-button variant="outline" icon="download" (clicked)="exportInventory()">
+        Export
+      </app-button>
+      <app-button icon="upload" (clicked)="importInventory()">
+        Import XLSX
+      </app-button>
+    </div>
+  </div>
+
+  @if (lowStockProducts().length > 0) {
+    <app-card title="Low Stock Alerts" variant="outlined" class="alert-card">
+      <div class="low-stock-list">
+        @for (product of lowStockProducts(); track product.id) {
+          <div class="low-stock-item">
+            <span class="product-name">{{ product.name }}</span>
+            <span class="product-sku">{{ product.sku }}</span>
+            <app-badge variant="warning">{{ product.stockQuantity }} left</app-badge>
+          </div>
+        }
+      </div>
+    </app-card>
+  }
+
+  <app-data-table
+    [columns]="columns"
+    [data]="products()"
+    [loading]="isLoading()"
+    [paginated]="true"
+    [total]="total()"
+    [pageSize]="pageSize"
+    [currentPage]="currentPage()"
+    (pageChange)="onPageChange($event)"
+    emptyTitle="No inventory data"
+  />
+</div>
+

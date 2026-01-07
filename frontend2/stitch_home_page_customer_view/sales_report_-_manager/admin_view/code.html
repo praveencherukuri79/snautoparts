@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sales Report - SN Auto Parts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                        "surface-dark": "#2a211b", // Custom surface color for cards
+                        "surface-darker": "#181411", // Sidebar color
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- SideNavBar -->
+<div class="hidden md:flex w-72 flex-col bg-surface-darker border-r border-[#3a2f27] shrink-0">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-4">
+<div class="flex gap-3 items-center mb-6">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Abstract orange and black logo gradient" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBcOllFNAcrOzbfQbpCaSiEklI401--QWt-CH8CSRT1agybhuzXrTCv5rj6NvmN4Hg1PTTH9ppJHZz0mSTfB-NgwEmqLvib5zWND3KRYmw1ZpP1mXz9zuhCGvhLgTStJxDj4AQL7f5MiwO4euEZp2rOWPY_CocsUEcsl0PU_lESmEmMVe6bXq2CEucnl7dw0L9xUxj52hhtuMoM1ddRRBBvNUpi69m9qHncRS0Q_BqKK_jTURHU5bJ2chZ35eIQqaln8XpyeBf-g8D3");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-bold leading-normal">SN Auto Parts</h1>
+<p class="text-[#bba89b] text-xs font-normal leading-normal">Admin Console</p>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#3a2f27] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#bba89b] group-hover:text-white">dashboard</span>
+<p class="text-[#bba89b] group-hover:text-white text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#3a2f27] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#bba89b] group-hover:text-white">shopping_bag</span>
+<p class="text-[#bba89b] group-hover:text-white text-sm font-medium leading-normal">Orders</p>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#3a2f27] border-l-4 border-primary" href="#">
+<span class="material-symbols-outlined text-white">bar_chart</span>
+<p class="text-white text-sm font-bold leading-normal">Reports</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#3a2f27] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#bba89b] group-hover:text-white">inventory_2</span>
+<p class="text-[#bba89b] group-hover:text-white text-sm font-medium leading-normal">Inventory</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#3a2f27] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#bba89b] group-hover:text-white">settings</span>
+<p class="text-[#bba89b] group-hover:text-white text-sm font-medium leading-normal">Settings</p>
+</a>
+</div>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 border-t border-[#3a2f27] mt-4 pt-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" data-alt="User profile picture placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDqvk1ZYYpytSZ7EB8IZjPUAGD0pth3WUsJnuNaG8Krnx_7TV076QnhrYxUpzjqWlB163prNpinHl0pyMd9YHe9jUNj9XeGV1uc7E8Ai_8UUsSmoHLeDMgnJppHTp5ogMIb7dN1I8xrpMn6bWlkumG8-WU4KwBxAhvlkWMs7CS9cZwPuTRCvGPcnK54zhZyKGvuQyUQyJsa_HoAGm_AmBIWhrApliHY_5McN6I8RqOgBRXbOzTZsqh6vPSjrDPMFJ2LP3i_5t7bD3QQ");'></div>
+<div>
+<p class="text-white text-sm font-medium">Jane Doe</p>
+<p class="text-[#bba89b] text-xs">Manager</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-y-auto bg-background-dark relative">
+<!-- Page Header & Controls -->
+<div class="sticky top-0 z-10 bg-background-dark/95 backdrop-blur-sm border-b border-[#3a2f27]">
+<div class="px-6 py-5 md:px-10">
+<div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+<div class="flex flex-col gap-1">
+<h2 class="text-white text-3xl font-black leading-tight tracking-[-0.033em]">Sales Report</h2>
+<p class="text-[#bba89b] text-sm font-normal">Track revenue, orders, and performance metrics.</p>
+</div>
+<button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-[#3a2f27] hover:bg-[#4a3d33] text-white text-sm font-bold transition-colors border border-[#55453a]">
+<span class="material-symbols-outlined text-sm">download</span>
+<span>Export CSV</span>
+</button>
+</div>
+<!-- Filter Controls -->
+<div class="flex flex-col xl:flex-row gap-4 items-start xl:items-center justify-between">
+<!-- Chips -->
+<div class="flex gap-2 overflow-x-auto pb-2 xl:pb-0 scrollbar-hide">
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#3a2f27] hover:bg-[#4a3d33] pl-4 pr-4 transition-colors">
+<span class="text-white text-xs font-medium">Today</span>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#3a2f27] hover:bg-[#4a3d33] pl-4 pr-4 transition-colors">
+<span class="text-white text-xs font-medium">7 Days</span>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary pl-4 pr-4 shadow-lg shadow-primary/20">
+<span class="text-white text-xs font-bold">30 Days</span>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#3a2f27] hover:bg-[#4a3d33] pl-4 pr-4 transition-colors">
+<span class="text-white text-xs font-medium">This Month</span>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#3a2f27] hover:bg-[#4a3d33] pl-4 pr-4 transition-colors">
+<span class="text-white text-xs font-medium">Custom</span>
+</button>
+</div>
+<!-- Date Inputs & Apply -->
+<div class="flex flex-wrap items-center gap-3">
+<div class="flex items-center gap-2 bg-[#2a211b] rounded-lg p-1 border border-[#3a2f27]">
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#bba89b] text-base">calendar_today</span>
+<input class="bg-transparent border-none text-white text-sm font-medium focus:ring-0 pl-9 pr-2 w-32 placeholder-[#55453a]" placeholder="Start Date" type="text" value="Oct 24, 2023"/>
+</div>
+<span class="text-[#55453a]">-</span>
+<div class="relative">
+<input class="bg-transparent border-none text-white text-sm font-medium focus:ring-0 pl-3 pr-2 w-28 text-right placeholder-[#55453a]" placeholder="End Date" type="text" value="Nov 23, 2023"/>
+</div>
+</div>
+<button class="flex h-10 items-center justify-center rounded-lg bg-primary px-6 text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors">
+                                Apply
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 md:p-10 flex flex-col gap-6">
+<!-- Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1 -->
+<div class="bg-surface-dark p-5 rounded-xl border border-[#3a2f27] flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">attach_money</span>
+</div>
+<p class="text-[#bba89b] text-sm font-medium">Total Revenue</p>
+<div class="flex items-end gap-2">
+<h3 class="text-white text-2xl font-bold">$24,521.00</h3>
+</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="bg-green-500/20 text-green-400 text-xs px-1.5 py-0.5 rounded flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[10px]">trending_up</span> 12.5%
+                            </span>
+<span class="text-[#55453a] text-xs">vs last period</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-dark p-5 rounded-xl border border-[#3a2f27] flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-blue-500">shopping_cart</span>
+</div>
+<p class="text-[#bba89b] text-sm font-medium">Total Orders</p>
+<div class="flex items-end gap-2">
+<h3 class="text-white text-2xl font-bold">142</h3>
+</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="bg-green-500/20 text-green-400 text-xs px-1.5 py-0.5 rounded flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[10px]">trending_up</span> 4.2%
+                            </span>
+<span class="text-[#55453a] text-xs">vs last period</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-dark p-5 rounded-xl border border-[#3a2f27] flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-purple-500">payments</span>
+</div>
+<p class="text-[#bba89b] text-sm font-medium">Avg Order Value</p>
+<div class="flex items-end gap-2">
+<h3 class="text-white text-2xl font-bold">$172.68</h3>
+</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="bg-red-500/20 text-red-400 text-xs px-1.5 py-0.5 rounded flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[10px]">trending_down</span> 1.8%
+                            </span>
+<span class="text-[#55453a] text-xs">vs last period</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-dark p-5 rounded-xl border border-[#3a2f27] flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-yellow-500">inventory</span>
+</div>
+<p class="text-[#bba89b] text-sm font-medium">Items Sold</p>
+<div class="flex items-end gap-2">
+<h3 class="text-white text-2xl font-bold">385</h3>
+</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="bg-green-500/20 text-green-400 text-xs px-1.5 py-0.5 rounded flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[10px]">trending_up</span> 8.4%
+                            </span>
+<span class="text-[#55453a] text-xs">vs last period</span>
+</div>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Main Chart: Revenue Trend -->
+<div class="lg:col-span-2 bg-surface-dark rounded-xl border border-[#3a2f27] p-6 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-white text-lg font-bold">Revenue Trend</h3>
+<button class="text-[#bba89b] hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<!-- Simulated Chart Container -->
+<div class="flex-1 w-full min-h-[300px] relative mt-2">
+<!-- Y-axis Labels -->
+<div class="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-[#55453a] font-medium pr-2">
+<span>$3k</span>
+<span>$2k</span>
+<span>$1k</span>
+<span>$0</span>
+</div>
+<!-- Grid Lines -->
+<div class="absolute left-8 right-0 top-0 h-full flex flex-col justify-between">
+<div class="w-full h-px bg-[#3a2f27] border-dashed border-b border-[#3a2f27]"></div>
+<div class="w-full h-px bg-[#3a2f27] border-dashed border-b border-[#3a2f27]"></div>
+<div class="w-full h-px bg-[#3a2f27] border-dashed border-b border-[#3a2f27]"></div>
+<div class="w-full h-px bg-[#3a2f27]"></div>
+</div>
+<!-- SVG Line Chart -->
+<svg class="absolute left-8 right-0 top-3 bottom-0 w-[calc(100%-2rem)] h-[calc(100%-1rem)] overflow-visible" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- Gradient Definition -->
+<defs>
+<lineargradient id="gradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#f97415" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#f97415" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Area Fill -->
+<path d="M0,100 L0,70 L10,65 L20,80 L30,50 L40,40 L50,60 L60,30 L70,45 L80,20 L90,35 L100,10 L100,100 Z" fill="url(#gradient)" stroke="none"></path>
+<!-- Line Path -->
+<path d="M0,70 L10,65 L20,80 L30,50 L40,40 L50,60 L60,30 L70,45 L80,20 L90,35 L100,10" fill="none" stroke="#f97415" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<!-- Tooltip Simulation (Dot) -->
+<circle cx="80" cy="20" fill="#f97415" r="3" stroke="white" stroke-width="2"></circle>
+</svg>
+<!-- Tooltip Box -->
+<div class="absolute left-[75%] top-[10%] bg-[#181411] border border-[#3a2f27] px-3 py-2 rounded shadow-xl pointer-events-none">
+<p class="text-[#bba89b] text-[10px]">Nov 20</p>
+<p class="text-white text-sm font-bold">$2,840.50</p>
+</div>
+<!-- X-axis Labels -->
+<div class="absolute bottom-[-24px] left-8 right-0 flex justify-between text-xs text-[#55453a] font-medium">
+<span>Nov 01</span>
+<span>Nov 05</span>
+<span>Nov 10</span>
+<span>Nov 15</span>
+<span>Nov 20</span>
+<span>Nov 25</span>
+</div>
+</div>
+</div>
+<!-- Secondary Chart: Daily Orders -->
+<div class="bg-surface-dark rounded-xl border border-[#3a2f27] p-6 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-white text-lg font-bold">Daily Orders</h3>
+</div>
+<div class="flex-1 w-full min-h-[300px] flex items-end justify-between gap-2 pb-6 relative">
+<!-- Bars -->
+<div class="w-full bg-[#3a2f27] rounded-t-sm h-[40%] hover:bg-primary/50 transition-colors cursor-pointer group relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-[#181411] text-white text-xs px-2 py-1 rounded">12</div>
+</div>
+<div class="w-full bg-[#3a2f27] rounded-t-sm h-[60%] hover:bg-primary/50 transition-colors cursor-pointer group relative"></div>
+<div class="w-full bg-[#3a2f27] rounded-t-sm h-[45%] hover:bg-primary/50 transition-colors cursor-pointer group relative"></div>
+<div class="w-full bg-primary rounded-t-sm h-[85%] shadow-[0_0_10px_rgba(249,116,21,0.3)] cursor-pointer group relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#181411] border border-[#3a2f27] text-white text-xs px-2 py-1 rounded">28</div>
+</div>
+<div class="w-full bg-[#3a2f27] rounded-t-sm h-[55%] hover:bg-primary/50 transition-colors cursor-pointer group relative"></div>
+<div class="w-full bg-[#3a2f27] rounded-t-sm h-[70%] hover:bg-primary/50 transition-colors cursor-pointer group relative"></div>
+<div class="w-full bg-[#3a2f27] rounded-t-sm h-[30%] hover:bg-primary/50 transition-colors cursor-pointer group relative"></div>
+</div>
+<div class="flex justify-between text-xs text-[#55453a] px-1">
+<span>M</span>
+<span>T</span>
+<span>W</span>
+<span class="text-primary font-bold">T</span>
+<span>F</span>
+<span>S</span>
+<span>S</span>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-dark rounded-xl border border-[#3a2f27] flex flex-col overflow-hidden">
+<div class="p-6 border-b border-[#3a2f27] flex justify-between items-center">
+<h3 class="text-white text-lg font-bold">Detailed Breakdown</h3>
+<div class="flex gap-2">
+<button class="p-1 text-[#bba89b] hover:text-white rounded hover:bg-[#3a2f27]">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+</button>
+<button class="p-1 text-[#bba89b] hover:text-white rounded hover:bg-[#3a2f27]">
+<span class="material-symbols-outlined text-lg">search</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#231d18]">
+<th class="p-4 text-[#bba89b] text-xs font-medium uppercase tracking-wider border-b border-[#3a2f27]">Date</th>
+<th class="p-4 text-[#bba89b] text-xs font-medium uppercase tracking-wider border-b border-[#3a2f27]">Orders</th>
+<th class="p-4 text-[#bba89b] text-xs font-medium uppercase tracking-wider border-b border-[#3a2f27]">Revenue</th>
+<th class="p-4 text-[#bba89b] text-xs font-medium uppercase tracking-wider border-b border-[#3a2f27]">Avg Order Value</th>
+<th class="p-4 text-[#bba89b] text-xs font-medium uppercase tracking-wider border-b border-[#3a2f27]">Top Category</th>
+<th class="p-4 text-[#bba89b] text-xs font-medium uppercase tracking-wider border-b border-[#3a2f27]">Status</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="group hover:bg-[#3a2f27] transition-colors">
+<td class="p-4 text-white font-medium border-b border-[#3a2f27]">Nov 23, 2023</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">28</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">$4,821.50</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">$172.19</td>
+<td class="p-4 text-[#bba89b] border-b border-[#3a2f27]">Brake Systems</td>
+<td class="p-4 border-b border-[#3a2f27]">
+<span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-500/10 text-green-500">
+                                            Completed
+                                        </span>
+</td>
+</tr>
+<tr class="group hover:bg-[#3a2f27] transition-colors">
+<td class="p-4 text-white font-medium border-b border-[#3a2f27]">Nov 22, 2023</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">24</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">$3,940.00</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">$164.16</td>
+<td class="p-4 text-[#bba89b] border-b border-[#3a2f27]">Engine Parts</td>
+<td class="p-4 border-b border-[#3a2f27]">
+<span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-500/10 text-green-500">
+                                            Completed
+                                        </span>
+</td>
+</tr>
+<tr class="group hover:bg-[#3a2f27] transition-colors">
+<td class="p-4 text-white font-medium border-b border-[#3a2f27]">Nov 21, 2023</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">19</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">$2,100.25</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">$110.53</td>
+<td class="p-4 text-[#bba89b] border-b border-[#3a2f27]">Accessories</td>
+<td class="p-4 border-b border-[#3a2f27]">
+<span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-yellow-500/10 text-yellow-500">
+                                            Pending Review
+                                        </span>
+</td>
+</tr>
+<tr class="group hover:bg-[#3a2f27] transition-colors">
+<td class="p-4 text-white font-medium border-b border-[#3a2f27]">Nov 20, 2023</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">32</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">$5,640.80</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">$176.27</td>
+<td class="p-4 text-[#bba89b] border-b border-[#3a2f27]">Suspension</td>
+<td class="p-4 border-b border-[#3a2f27]">
+<span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-500/10 text-green-500">
+                                            Completed
+                                        </span>
+</td>
+</tr>
+<tr class="group hover:bg-[#3a2f27] transition-colors">
+<td class="p-4 text-white font-medium border-b border-[#3a2f27]">Nov 19, 2023</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">15</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">$1,850.00</td>
+<td class="p-4 text-white border-b border-[#3a2f27]">$123.33</td>
+<td class="p-4 text-[#bba89b] border-b border-[#3a2f27]">Filters</td>
+<td class="p-4 border-b border-[#3a2f27]">
+<span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-500/10 text-green-500">
+                                            Completed
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-4 border-t border-[#3a2f27] flex justify-between items-center text-xs text-[#bba89b]">
+<p>Showing 5 of 142 days</p>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded bg-[#3a2f27] text-white hover:bg-[#4a3d33] disabled:opacity-50" disabled="">Previous</button>
+<button class="px-3 py-1.5 rounded bg-[#3a2f27] text-white hover:bg-[#4a3d33]">Next</button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-8 text-center pb-8">
+<p class="text-[#55453a] text-xs">© 2023 SN Auto Parts Admin Console. All rights reserved.</p>
+</div>
+</div>
+</main>
+</div>
+</body></html>

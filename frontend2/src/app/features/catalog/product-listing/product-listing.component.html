@@ -1,0 +1,68 @@
+<div class="product-listing">
+  <!-- Fitment Selector -->
+  <section class="product-listing__fitment">
+    <app-fitment-selector (fitmentSelected)="onFitmentSelected($event)" />
+    
+    @if (hasFitmentFilter) {
+      <div class="fitment-badge">
+        <span>Showing parts for: <strong>{{ fitmentLabel }}</strong></span>
+        <button class="fitment-clear" (click)="clearFitment()">Clear</button>
+      </div>
+    }
+  </section>
+
+  <!-- Toolbar -->
+  <div class="product-listing__toolbar">
+    <div class="toolbar__results">
+      @if (!isLoading()) {
+        <span>{{ total() }} products found</span>
+      }
+    </div>
+    
+    <div class="toolbar__sort">
+      <app-select
+        label="Sort by"
+        [options]="sortOptions"
+        [control]="sortControl"
+        (selectionChange)="onSortChange()"
+      />
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="product-listing__content">
+    @if (isLoading()) {
+      <div class="loading-container">
+        <app-spinner size="lg" />
+      </div>
+    } @else if (products().length === 0) {
+      <app-empty-state
+        icon="search_off"
+        title="No products found"
+        message="Try adjusting your filters or search terms"
+        actionLabel="Clear Filters"
+        (actionClick)="clearFitment()"
+      />
+    } @else {
+      <div class="products-grid">
+        @for (product of products(); track trackByProduct($index, product)) {
+          <app-product-card
+            [product]="product"
+            (addToCart)="addToCart($event)"
+          />
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Pagination -->
+  @if (products().length > 0 && total() > pageSize()) {
+    <app-pagination
+      [total]="total()"
+      [pageSize]="pageSize()"
+      [currentPage]="currentPage()"
+      (pageChange)="onPageChange($event)"
+    />
+  }
+</div>
+

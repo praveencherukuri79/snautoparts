@@ -1,0 +1,34 @@
+<div class="category-listing">
+  <header class="category-listing__header">
+    <h1>Shop by Category</h1>
+    <p>Browse our wide selection of quality auto parts</p>
+  </header>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    <div class="categories-grid">
+      @for (category of categories(); track trackByCategory($index, category)) {
+        <a [routerLink]="['/categories', category.slug]" class="category-card">
+          <app-card variant="outlined" [clickable]="true" padding="lg">
+            <div class="category-content">
+              <span class="material-symbols-outlined category-icon">
+                {{ getCategoryIcon(category.name) }}
+              </span>
+              <h3 class="category-name">{{ category.name }}</h3>
+              @if (category.description) {
+                <p class="category-description">{{ category.description }}</p>
+              }
+              @if (category.productCount !== undefined) {
+                <span class="category-count">{{ category.productCount }} products</span>
+              }
+            </div>
+          </app-card>
+        </a>
+      }
+    </div>
+  }
+</div>
+

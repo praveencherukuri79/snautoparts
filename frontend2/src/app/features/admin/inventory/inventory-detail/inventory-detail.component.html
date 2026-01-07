@@ -1,0 +1,283 @@
+<div class="inventory-detail">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    @if (product(); as p) {
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a routerLink="/inventory">Inventory</a>
+      <span class="separator">/</span>
+      <span>{{ p.name }} ({{ p.sku }})</span>
+    </nav>
+
+    <!-- Product Header -->
+    <header class="page-header">
+      <div class="product-info">
+        <div class="product-image">
+          @if (p.images && p.images.length > 0) {
+            <img [src]="p.images![0]" [alt]="p.name" />
+          } @else {
+            <span class="material-symbols-outlined">inventory_2</span>
+          }
+        </div>
+        <div class="product-details">
+          <h1>{{ p.name }}</h1>
+          <p class="product-meta">
+            SKU: {{ p.sku }}
+            <span class="dot">•</span>
+            Category: {{ p.category?.name || 'Uncategorized' }}
+          </p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <app-button variant="outline" icon="open_in_new" [routerLink]="['/products', p.slug]">
+          View Product Page
+        </app-button>
+        <app-button variant="primary" icon="edit" (clicked)="openAdjustModal()">
+          Adjust Stock
+        </app-button>
+      </div>
+    </header>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <!-- Stock Overview -->
+      <div class="stat-card">
+        <div class="stat-header">
+          <h3>Stock Overview</h3>
+          <app-badge 
+            [variant]="stockStatus() === 'in-stock' ? 'success' : stockStatus() === 'low-stock' ? 'warning' : 'error'"
+            size="sm"
+          >
+            @switch (stockStatus()) {
+              @case ('in-stock') { ✓ IN STOCK }
+              @case ('low-stock') { ⚠ LOW STOCK }
+              @case ('out-of-stock') { ✗ OUT OF STOCK }
+            }
+          </app-badge>
+        </div>
+        <div class="stock-display">
+          <span class="stock-value">{{ p.stockQuantity }}</span>
+          <span class="stock-label">units available</span>
+        </div>
+        <div class="stat-footer">
+          <div class="stat-item">
+            <span class="stat-item-label">LOW STOCK THRESHOLD</span>
+            <span class="stat-item-value">{{ p.lowStockThreshold || 10 }} units</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-item-label">LAST UPDATED</span>
+            <span class="stat-item-value">{{ p.updatedAt | date:'MMM d, y' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Supplier Information -->
+      <div class="stat-card supplier-card">
+        <div class="stat-header">
+          <h3>Supplier Information</h3>
+          <span class="material-symbols-outlined">local_shipping</span>
+        </div>
+        <div class="supplier-info">
+          <span class="supplier-label">PRIMARY VENDOR</span>
+          <span class="supplier-name">{{ p.supplier?.name || 'Not assigned' }}</span>
+          @if (p.supplier && p.supplier.id) {
+            <span class="supplier-id">ID: {{ p.supplier!.id }}</span>
+          }
+        </div>
+        <div class="stat-footer">
+          <div class="stat-item">
+            <span class="stat-item-label">COST PRICE</span>
+            <span class="stat-item-value">{{ p.costPrice || 0 | currency }}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-item-label">LEAD TIME</span>
+            <span class="stat-item-value">{{ p.leadTimeDays || 5 }} Days</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sales Velocity -->
+      <div class="stat-card velocity-card">
+        <h3>Sales Velocity</h3>
+        <div class="velocity-display">
+          <span class="velocity-value">{{ p.salesVelocity || 0 }}</span>
+          <span class="velocity-change positive">↗ {{ p.velocityChange || 0 }}%</span>
+        </div>
+        <span class="velocity-label">Units sold last 30 days</span>
+        <app-button variant="outline" size="sm" class="velocity-btn">
+          View Sales Report
+        </app-button>
+      </div>
+    </div>
+
+    <!-- Stock Adjustments History -->
+    <div class="adjustments-section">
+      <div class="section-header">
+        <h2>Stock Adjustments History</h2>
+        <div class="section-actions">
+          <app-button variant="outline" size="sm" icon="filter_list">
+            Filter
+          </app-button>
+          <app-button variant="outline" size="sm" icon="download">
+            Export
+          </app-button>
+        </div>
+      </div>
+
+      <div class="adjustments-table-wrapper">
+        <table class="adjustments-table">
+          <thead>
+            <tr>
+              <th>DATE</th>
+              <th>TYPE</th>
+              <th>QTY CHANGE</th>
+              <th>NEW STOCK</th>
+              <th>REASON / REFERENCE</th>
+              <th>ADJUSTED BY</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (log of adjustmentLogs(); track trackByLog($index, log)) {
+              <tr>
+                <td>{{ log.createdAt | date:'MMM d, y' }}</td>
+                <td>
+                  <app-badge [variant]="getAdjustmentTypeVariant(log.type)" size="sm">
+                    {{ getAdjustmentTypeLabel(log.type) }}
+                  </app-badge>
+                </td>
+                <td class="qty-change" [class.positive]="log.quantityChange > 0" [class.negative]="log.quantityChange < 0">
+                  {{ log.quantityChange > 0 ? '+' : '' }}{{ log.quantityChange }}
+                </td>
+                <td>{{ log.newQuantity }}</td>
+                <td class="reason-cell">{{ log.reason || log.reference || '-' }}</td>
+                <td class="adjusted-by">
+                  <div class="user-info">
+                    <div class="user-avatar">
+                      @if (log.adjustedBy && log.adjustedBy.avatar) {
+                        <img [src]="log.adjustedBy!.avatar" [alt]="log.adjustedBy!.name" />
+                      } @else {
+                        <span>{{ log.adjustedBy?.name?.charAt(0) || 'S' }}</span>
+                      }
+                    </div>
+                    <span class="user-name">{{ log.adjustedBy?.name || 'System' }}</span>
+                  </div>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="6" class="empty-row">No adjustment history found</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if (totalLogs() > pageSize) {
+        <div class="pagination-footer">
+          <span class="showing-text">Showing {{ showingStart }} to {{ showingEnd }} of {{ totalLogs() }} results</span>
+          <app-pagination
+            [currentPage]="currentPage()"
+            [total]="totalLogs()"
+            [pageSize]="pageSize"
+            (pageChange)="onPageChange($event)"
+          />
+        </div>
+      }
+    </div>
+    }
+  }
+
+  <!-- Adjust Stock Modal -->
+  @if (showAdjustModal()) {
+    <div class="modal-overlay" (click)="closeAdjustModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <div>
+            <h2>Adjust Stock</h2>
+            <p class="modal-subtitle">{{ product()?.name }} (SKU: {{ product()?.sku }})</p>
+          </div>
+          <button class="close-btn" (click)="closeAdjustModal()">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Current Stock -->
+          <div class="current-stock-display">
+            <span class="current-label">Current On-Hand</span>
+            <div class="current-value-row">
+              <span class="current-value">{{ product()?.stockQuantity }} units</span>
+              <span class="material-symbols-outlined stock-icon">inventory_2</span>
+            </div>
+          </div>
+
+          <!-- Adjustment Type -->
+          <div class="form-field">
+            <label>Adjustment Type</label>
+            <select [ngModel]="adjustmentType()" (ngModelChange)="adjustmentType.set($event)" class="form-select">
+              <option value="">Select reason category</option>
+              @for (option of adjustmentTypeOptions; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- Quantity Change & Date -->
+          <div class="form-row">
+            <div class="form-field">
+              <label>Quantity Change</label>
+              <div class="quantity-input">
+                <button class="qty-btn" type="button" (click)="decrementQuantity()">
+                  <span class="material-symbols-outlined">remove</span>
+                </button>
+                <input type="number" [ngModel]="quantityChange()" (ngModelChange)="quantityChange.set($event)" class="qty-value" />
+                <button class="qty-btn" type="button" (click)="incrementQuantity()">
+                  <span class="material-symbols-outlined">add</span>
+                </button>
+              </div>
+              <span class="new-total">New total will be: <strong>{{ newStockLevel() }} units</strong></span>
+            </div>
+            <div class="form-field">
+              <label>Date of Adjustment</label>
+              <input type="date" [ngModel]="adjustmentDate()" (ngModelChange)="adjustmentDate.set($event)" class="form-input" />
+            </div>
+          </div>
+
+          <!-- Reason -->
+          <div class="form-field">
+            <div class="label-row">
+              <label>Reason for Adjustment</label>
+              <span class="required-tag">Required</span>
+            </div>
+            <textarea 
+              [ngModel]="adjustmentReason()"
+              (ngModelChange)="adjustmentReason.set($event)"
+              class="form-textarea"
+              placeholder="Briefly explain the inventory discrepancy (e.g. 'Found damaged box in aisle 4')..."
+              rows="4"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <app-button variant="outline" (clicked)="closeAdjustModal()">
+            Cancel
+          </app-button>
+          <app-button 
+            variant="primary" 
+            icon="check"
+            [loading]="isSaving()"
+            [disabled]="!adjustmentType() || !adjustmentReason().trim()"
+            (clicked)="saveAdjustment()"
+          >
+            Save Adjustment
+          </app-button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+

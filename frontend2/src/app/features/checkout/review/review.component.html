@@ -1,0 +1,92 @@
+<div class="review">
+  <h2>Review Your Order</h2>
+  <p class="subtitle">Please review your order before placing it</p>
+
+  <div class="review-sections">
+    <!-- Shipping Address -->
+    <app-card title="Shipping Address" variant="outlined">
+      @if (shippingAddress) {
+        <div class="address-block">
+          <p>{{ shippingAddress.firstName }} {{ shippingAddress.lastName }}</p>
+          <p>{{ shippingAddress.address1 }}</p>
+          @if (shippingAddress.address2) {
+            <p>{{ shippingAddress.address2 }}</p>
+          }
+          <p>{{ shippingAddress.city }}, {{ shippingAddress.state }} {{ shippingAddress.zipCode }}</p>
+          <p>{{ shippingAddress.phone }}</p>
+        </div>
+      }
+      <a routerLink="/checkout/shipping" class="edit-link">Edit</a>
+    </app-card>
+
+    <!-- Shipping Method -->
+    <app-card title="Shipping Method" variant="outlined">
+      @if (shippingMethod) {
+        <div class="method-block">
+          <p class="method-name">{{ shippingMethod.name }}</p>
+          <p class="method-estimate">{{ shippingMethod.estimatedDays }}</p>
+        </div>
+      }
+      <a routerLink="/checkout/method" class="edit-link">Edit</a>
+    </app-card>
+
+    <!-- Order Items -->
+    <app-card title="Order Items" variant="outlined">
+      @if (cart(); as c) {
+        <div class="items-list">
+          @for (item of c.items; track item.id) {
+            <div class="order-item">
+              <div class="item-image">
+                @if (item.product.imageUrl) {
+                  <img [src]="item.product.imageUrl" [alt]="item.product.name" />
+                }
+              </div>
+              <div class="item-details">
+                <span class="item-name">{{ item.product.name }}</span>
+                <span class="item-qty">Qty: {{ item.quantity }}</span>
+              </div>
+              <span class="item-price">{{ item.unitPrice * item.quantity | currency }}</span>
+            </div>
+          }
+        </div>
+      }
+    </app-card>
+  </div>
+
+  <!-- Order Summary -->
+  <div class="order-summary">
+    <div class="summary-line">
+      <span>Subtotal</span>
+      <span>{{ subtotal | currency }}</span>
+    </div>
+    <div class="summary-line">
+      <span>Shipping</span>
+      <span>
+        @if (shippingCost === 0) {
+          FREE
+        } @else {
+          {{ shippingCost | currency }}
+        }
+      </span>
+    </div>
+    <div class="summary-line summary-total">
+      <span>Total</span>
+      <span>{{ total | currency }}</span>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <app-button variant="outline" routerLink="/checkout/payment">
+      Back
+    </app-button>
+    <app-button
+      size="lg"
+      [loading]="isSubmitting()"
+      icon="check"
+      (clicked)="placeOrder()"
+    >
+      Place Order
+    </app-button>
+  </div>
+</div>
+

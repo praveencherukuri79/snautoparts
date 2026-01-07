@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inventory Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f97415",
+              "background-light": "#f8f7f5",
+              "background-dark": "#23170f",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom scrollbar for cleaner look */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d1d5db; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181411] dark:text-white h-screen flex overflow-hidden w-full font-display">
+<!-- Sidebar -->
+<aside class="w-64 bg-white dark:bg-[#1a110a] border-r border-[#e6dfdb] dark:border-[#3a2f26] flex flex-col shrink-0 z-20">
+<div class="p-6 flex items-center gap-3">
+<div class="h-10 w-10 bg-primary/20 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">manufacturing</span>
+</div>
+<div>
+<h1 class="font-bold text-lg leading-tight">SN Auto Parts</h1>
+<p class="text-xs text-[#8c725f] font-medium">Manager View</p>
+</div>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-1 overflow-y-auto py-4">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c4f45] dark:text-[#a09085] hover:bg-[#f5f2f0] dark:hover:bg-[#2c1e16] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] fill-1">inventory_2</span>
+<span class="text-sm font-medium">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c4f45] dark:text-[#a09085] hover:bg-[#f5f2f0] dark:hover:bg-[#2c1e16] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c4f45] dark:text-[#a09085] hover:bg-[#f5f2f0] dark:hover:bg-[#2c1e16] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span class="text-sm font-medium">Customers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c4f45] dark:text-[#a09085] hover:bg-[#f5f2f0] dark:hover:bg-[#2c1e16] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-[#e6dfdb] dark:border-[#3a2f26]">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-full bg-cover bg-center" data-alt="User profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCakEm3Lo81W014BjD8-cpu2QSBCMOOH4_uSbIB_MQbvMPuGy9XCz7QrSJB5ijAwA9ghiPPV63ZzvzKoZ3dZ_xxqXCfM23Ui2qHAFbe0reuKJa9JUAFDXnSMfpxEJblsjp9Sa8fxORT_XKu6YBolxKuJPpK8NM3-5_a-uX9wvzyp9NhumLGSkvPil-AZNxlHqbn2lCHjzHrzz88l_rQ9q-693PORAixr5vKCYyXmXQ5sZpbXcs6VpzT6t3cYfq8vjmxLATh2eJGKOFd');"></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-[#181411] dark:text-white">Jane Manager</p>
+<p class="text-xs text-[#8c725f]">jane@snautoparts.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden relative">
+<!-- Header -->
+<header class="bg-white dark:bg-[#1a110a] border-b border-[#e6dfdb] dark:border-[#3a2f26] px-8 py-5 shrink-0">
+<div class="flex flex-col gap-6">
+<!-- Top Row: Title & Actions -->
+<div class="flex justify-between items-start">
+<div>
+<h2 class="text-2xl font-bold text-[#181411] dark:text-white tracking-tight">Inventory Management</h2>
+<p class="text-[#8c725f] text-sm mt-1">Manage stock levels, thresholds, and product details.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-[#e6dfdb] dark:border-[#3a2f26] rounded-lg text-sm font-medium text-[#181411] dark:text-white hover:bg-[#f8f7f5] dark:hover:bg-[#2c1e16] transition-colors">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+                            Import XLSX
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 border border-[#e6dfdb] dark:border-[#3a2f26] rounded-lg text-sm font-medium text-[#181411] dark:text-white hover:bg-[#f8f7f5] dark:hover:bg-[#2c1e16] transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                            Export
+                        </button>
+</div>
+</div>
+<!-- Tabs & Filters Row -->
+<div class="flex flex-col gap-4">
+<!-- Tabs -->
+<div class="flex gap-6 border-b border-[#e6dfdb] dark:border-[#3a2f26]">
+<button class="pb-3 text-sm font-medium border-b-2 border-primary text-primary">
+                            All Products (234)
+                        </button>
+<button class="pb-3 text-sm font-medium border-b-2 border-transparent text-[#8c725f] hover:text-[#181411] dark:hover:text-white transition-colors">
+                            Low Stock (12)
+                        </button>
+<button class="pb-3 text-sm font-medium border-b-2 border-transparent text-[#8c725f] hover:text-[#181411] dark:hover:text-white transition-colors">
+                            Out of Stock (4)
+                        </button>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap gap-3 items-center py-2">
+<div class="relative flex-1 max-w-md">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-[#8c725f] material-symbols-outlined text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 rounded-lg border border-[#e6dfdb] dark:border-[#3a2f26] bg-white dark:bg-[#1a110a] text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none text-[#181411] dark:text-white placeholder-[#8c725f]" placeholder="Search by SKU or name..." type="text"/>
+</div>
+<div class="w-px h-8 bg-[#e6dfdb] dark:bg-[#3a2f26] mx-1"></div>
+<select class="px-3 py-2 rounded-lg border border-[#e6dfdb] dark:border-[#3a2f26] bg-white dark:bg-[#1a110a] text-sm text-[#181411] dark:text-white focus:ring-1 focus:ring-primary outline-none cursor-pointer min-w-[140px]">
+<option value="">All Categories</option>
+<option value="brakes">Brakes</option>
+<option value="engine">Engine</option>
+<option value="electrical">Electrical</option>
+<option value="body">Body</option>
+</select>
+<select class="px-3 py-2 rounded-lg border border-[#e6dfdb] dark:border-[#3a2f26] bg-white dark:bg-[#1a110a] text-sm text-[#181411] dark:text-white focus:ring-1 focus:ring-primary outline-none cursor-pointer min-w-[140px]">
+<option value="">All Brands</option>
+<option value="brembo">Brembo</option>
+<option value="castrol">Castrol</option>
+<option value="ngk">NGK</option>
+</select>
+</div>
+</div>
+</div>
+</header>
+<!-- Table Container -->
+<div class="flex-1 overflow-auto bg-background-light dark:bg-background-dark p-8">
+<div class="bg-white dark:bg-[#1a110a] rounded-xl border border-[#e6dfdb] dark:border-[#3a2f26] shadow-sm flex flex-col min-h-[500px]">
+<!-- Table -->
+<div class="overflow-x-auto flex-1">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-[#e6dfdb] dark:border-[#3a2f26] bg-[#f8f7f5] dark:bg-[#23170f]">
+<th class="py-3 px-4 w-12 text-center">
+<input class="rounded border-[#c8c0b9] text-primary focus:ring-primary bg-white cursor-pointer" type="checkbox"/>
+</th>
+<th class="py-3 px-4 text-xs font-semibold text-[#8c725f] uppercase tracking-wider w-16">Image</th>
+<th class="py-3 px-4 text-xs font-semibold text-[#8c725f] uppercase tracking-wider group cursor-pointer hover:text-primary transition-colors">
+<div class="flex items-center gap-1">Product Name <span class="material-symbols-outlined text-[16px]">unfold_more</span></div>
+</th>
+<th class="py-3 px-4 text-xs font-semibold text-[#8c725f] uppercase tracking-wider">SKU</th>
+<th class="py-3 px-4 text-xs font-semibold text-[#8c725f] uppercase tracking-wider">Category</th>
+<th class="py-3 px-4 text-xs font-semibold text-[#8c725f] uppercase tracking-wider text-right">Stock</th>
+<th class="py-3 px-4 text-xs font-semibold text-[#8c725f] uppercase tracking-wider text-right">Threshold</th>
+<th class="py-3 px-4 text-xs font-semibold text-[#8c725f] uppercase tracking-wider">Status</th>
+<th class="py-3 px-4 text-xs font-semibold text-[#8c725f] uppercase tracking-wider">Last Updated</th>
+<th class="py-3 px-4 text-xs font-semibold text-[#8c725f] uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e6dfdb] dark:divide-[#3a2f26]">
+<!-- Row 1 -->
+<tr class="group hover:bg-[#f8f7f5] dark:hover:bg-[#2c1e16] transition-colors">
+<td class="py-3 px-4 text-center">
+<input class="rounded border-[#c8c0b9] text-primary focus:ring-primary bg-white cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3 px-4">
+<div class="h-8 w-8 rounded bg-cover bg-center bg-gray-100 border border-gray-200" data-alt="Brake Pads Thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD8B5Z6I1SSaYr4z3PTc1a0GEcpG4JkdlPKLuYc1aLfhVaxioDCNj0BDX3xxAzgn4Po3osjVM0Ky_XJpGMXD63GycyVG9iuFhk3JhFXDPlRMrCfcv3cspYs_u3ACZkTOnW7z7titi6n0CYH-Azh8UG_6ZtvKm7aXg8hwsC3Z9Y-tJqFlTFMnm0rI6mrljQToBG3mrNbtGrTWC0QApqJl-t3t19CX5UOx_oAYHC5iuP4Atn6GA8BdMI6NpiOPwePHfOthJ3nNjtevgcX');"></div>
+</td>
+<td class="py-3 px-4">
+<p class="text-sm font-medium text-[#181411] dark:text-white">Brembo Brake Pads</p>
+</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">BP-F-001</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">Brakes</td>
+<td class="py-3 px-4 text-sm font-semibold text-[#181411] dark:text-white text-right">45</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085] text-right">20</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                        In Stock
+                                    </span>
+</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">Oct 25, 2023</td>
+<td class="py-3 px-4 text-right">
+<div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded hover:bg-[#e6dfdb] dark:hover:bg-[#3a2f26] text-[#5c4f45] dark:text-[#a09085] hover:text-primary transition-colors" title="Adjust Stock">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded hover:bg-[#e6dfdb] dark:hover:bg-[#3a2f26] text-[#5c4f45] dark:text-[#a09085] hover:text-primary transition-colors" title="History">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Selected/Active for Modal context -->
+<tr class="group hover:bg-[#f8f7f5] dark:hover:bg-[#2c1e16] transition-colors bg-primary/5 dark:bg-primary/5">
+<td class="py-3 px-4 text-center">
+<input checked="" class="rounded border-[#c8c0b9] text-primary focus:ring-primary bg-white cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3 px-4">
+<div class="h-8 w-8 rounded bg-cover bg-center bg-gray-100 border border-gray-200" data-alt="Oil Filter Thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDhzj854c75jerWRjCne4weyzRvXnj5VyJ--IvU62fsYfiG1pOZZfM-fazDnK5kKSThd8xAdJnizrCjw_Z1GsgDQSZEYSnr4_qTuH18kJyBrrTW8be6XT3bMGzV9D3RG4v1QR-e7xLd1aVfQU7oQ46GZQJt6yVE8tWG1SbBViTpDM-gYWSL5uGhiJVdbaMUBDN2SDGAhbLxFuTN0kFVvyFD0mrm3SB7_YXXuLuEXwA5-WV_AXrR1MA9Px6EN12DReonSSczWTklGvBR');"></div>
+</td>
+<td class="py-3 px-4">
+<p class="text-sm font-medium text-[#181411] dark:text-white">Castrol Oil Filter</p>
+</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">OF-C-005</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">Engine</td>
+<td class="py-3 px-4 text-sm font-semibold text-primary text-right">5</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085] text-right">10</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300">
+                                        Low Stock
+                                    </span>
+</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">Oct 24, 2023</td>
+<td class="py-3 px-4 text-right">
+<div class="flex items-center justify-end gap-1 opacity-100 transition-opacity">
+<button class="p-1.5 rounded bg-primary/10 text-primary hover:bg-primary/20 transition-colors" title="Adjust Stock">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded hover:bg-[#e6dfdb] dark:hover:bg-[#3a2f26] text-[#5c4f45] dark:text-[#a09085] hover:text-primary transition-colors" title="History">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-[#f8f7f5] dark:hover:bg-[#2c1e16] transition-colors">
+<td class="py-3 px-4 text-center">
+<input class="rounded border-[#c8c0b9] text-primary focus:ring-primary bg-white cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3 px-4">
+<div class="h-8 w-8 rounded bg-cover bg-center bg-gray-100 border border-gray-200" data-alt="Spark Plug Thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAil6BBgvzV0Y4wNXMi_G1w1kVc1EwUMZt3Oz7kObdHdzA-Uw-PkXOLSXnF9ye6FjasyRceI-lgJvumJya1MUNKZHR25Y__kqu1v2agCPgxqa8vglf0UsheOw-RrAyF-3QZMvy7NsepGCGINTHDaJGOqKKvxhcN5UaXDvhI3walkkGnSuaqrZhNlXE9m3EwyFwnQQ6qDF4atrlqBDBf3Wo5fEz10qJ7PUY7VAup1FL2Ay0abvdU6T2Ch_5TCY-WrMsSzxXjdAJlx8ld');"></div>
+</td>
+<td class="py-3 px-4">
+<p class="text-sm font-medium text-[#181411] dark:text-white">NGK Spark Plug</p>
+</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">SP-N-003</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">Ignition</td>
+<td class="py-3 px-4 text-sm font-semibold text-red-600 dark:text-red-400 text-right">0</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085] text-right">15</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+                                        Out of Stock
+                                    </span>
+</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">Oct 20, 2023</td>
+<td class="py-3 px-4 text-right">
+<div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded hover:bg-[#e6dfdb] dark:hover:bg-[#3a2f26] text-[#5c4f45] dark:text-[#a09085] hover:text-primary transition-colors" title="Adjust Stock">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded hover:bg-[#e6dfdb] dark:hover:bg-[#3a2f26] text-[#5c4f45] dark:text-[#a09085] hover:text-primary transition-colors" title="History">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-[#f8f7f5] dark:hover:bg-[#2c1e16] transition-colors">
+<td class="py-3 px-4 text-center">
+<input checked="" class="rounded border-[#c8c0b9] text-primary focus:ring-primary bg-white cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3 px-4">
+<div class="h-8 w-8 rounded bg-cover bg-center bg-gray-100 border border-gray-200" data-alt="Battery Thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBEHpqLZST7Pj2EKnDsQcXMZxF1g-R_8_YO0Ao4T9wKWbZT6JI8iZFnHDi1sozYT9gJTGda7xNiNEeE_OPvWn3Fl7ldrLHRs8Q8ZHKJqQQoqQoaUvXA8ul78FtpWQvBjeflLV8O02Dj4mFez2SH5Gdo15sKjom4FLdFFDUNxtE58Fodhbd131seH3hhVkdge8OB8iyEWplEpI0jBIsq0KhROy9V2afkC4fMlOXGu-pI7fWavRDTXbUOq4Tz7XsTUoKr20YL9b6Aq4a7');"></div>
+</td>
+<td class="py-3 px-4">
+<p class="text-sm font-medium text-[#181411] dark:text-white">DieHard Battery</p>
+</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">BT-D-012</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">Electrical</td>
+<td class="py-3 px-4 text-sm font-semibold text-[#181411] dark:text-white text-right">12</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085] text-right">5</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                        In Stock
+                                    </span>
+</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">Oct 22, 2023</td>
+<td class="py-3 px-4 text-right">
+<div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded hover:bg-[#e6dfdb] dark:hover:bg-[#3a2f26] text-[#5c4f45] dark:text-[#a09085] hover:text-primary transition-colors" title="Adjust Stock">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded hover:bg-[#e6dfdb] dark:hover:bg-[#3a2f26] text-[#5c4f45] dark:text-[#a09085] hover:text-primary transition-colors" title="History">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="group hover:bg-[#f8f7f5] dark:hover:bg-[#2c1e16] transition-colors">
+<td class="py-3 px-4 text-center">
+<input class="rounded border-[#c8c0b9] text-primary focus:ring-primary bg-white cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3 px-4">
+<div class="h-8 w-8 rounded bg-cover bg-center bg-gray-100 border border-gray-200" data-alt="Wiper Blade Thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDMWCq2Krs9z1FB8SSgyi8yDj2sjXog14SwHP996JaMkJhG2yfEyp6ps0SlfHna30id4UceVJMtGjLZxipRHdPLYMU_cZgeQzanwP_kwE6R6xtvy1p1_Q2UijfvqCgiDyFr25VQmWe6siW8qO8_fjq-33Jg7XrwWTXrrFUHJZRRan1UI1QAtx_N__y1v4yBKMHetD0yrH7TCmuTtTvTdc1yhVFIi-qy4SLc_wFkvWS1nq40ju-O9L2-OmCpSX0FEvPWX7aoTuCEYSNN');"></div>
+</td>
+<td class="py-3 px-4">
+<p class="text-sm font-medium text-[#181411] dark:text-white">Rain-X Wiper</p>
+</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">WB-R-022</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">Exterior</td>
+<td class="py-3 px-4 text-sm font-semibold text-primary text-right">8</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085] text-right">10</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300">
+                                        Low Stock
+                                    </span>
+</td>
+<td class="py-3 px-4 text-sm text-[#5c4f45] dark:text-[#a09085]">Oct 21, 2023</td>
+<td class="py-3 px-4 text-right">
+<div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded hover:bg-[#e6dfdb] dark:hover:bg-[#3a2f26] text-[#5c4f45] dark:text-[#a09085] hover:text-primary transition-colors" title="Adjust Stock">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded hover:bg-[#e6dfdb] dark:hover:bg-[#3a2f26] text-[#5c4f45] dark:text-[#a09085] hover:text-primary transition-colors" title="History">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-[#e6dfdb] dark:border-[#3a2f26] flex items-center justify-between">
+<p class="text-sm text-[#8c725f]">Showing <span class="font-medium text-[#181411] dark:text-white">1-20</span> of <span class="font-medium text-[#181411] dark:text-white">234</span> items</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded border border-[#e6dfdb] dark:border-[#3a2f26] text-sm text-[#8c725f] hover:bg-[#f8f7f5] dark:hover:bg-[#2c1e16] disabled:opacity-50" disabled="">Previous</button>
+<button class="px-3 py-1 rounded bg-primary text-white text-sm font-medium">1</button>
+<button class="px-3 py-1 rounded border border-[#e6dfdb] dark:border-[#3a2f26] text-sm text-[#181411] dark:text-white hover:bg-[#f8f7f5] dark:hover:bg-[#2c1e16]">2</button>
+<button class="px-3 py-1 rounded border border-[#e6dfdb] dark:border-[#3a2f26] text-sm text-[#181411] dark:text-white hover:bg-[#f8f7f5] dark:hover:bg-[#2c1e16]">3</button>
+<span class="px-2 py-1 text-[#8c725f]">...</span>
+<button class="px-3 py-1 rounded border border-[#e6dfdb] dark:border-[#3a2f26] text-sm text-[#181411] dark:text-white hover:bg-[#f8f7f5] dark:hover:bg-[#2c1e16]">Next</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bulk Actions Bar (Floating) -->
+<div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-transform duration-300 transform">
+<div class="bg-[#181411] dark:bg-[#3a2f26] text-white rounded-xl shadow-2xl px-6 py-3 flex items-center gap-6 border border-[#2c1e16] dark:border-[#4a3f36]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span class="text-sm font-medium">2 items selected</span>
+</div>
+<div class="h-6 w-px bg-white/20"></div>
+<div class="flex items-center gap-3">
+<button class="text-sm font-medium hover:text-primary transition-colors">Adjust Stock</button>
+<button class="text-sm font-medium hover:text-primary transition-colors">Export Selected</button>
+</div>
+<div class="h-6 w-px bg-white/20"></div>
+<button class="text-white/60 hover:text-white">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Quick Adjust Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+<!-- Backdrop -->
+<div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"></div>
+<!-- Modal Content -->
+<div class="relative w-full max-w-md bg-white dark:bg-[#1a110a] rounded-xl shadow-2xl ring-1 ring-black/5 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+<!-- Header -->
+<div class="px-6 py-4 border-b border-[#e6dfdb] dark:border-[#3a2f26] flex items-center justify-between bg-[#f8f7f5] dark:bg-[#23170f]">
+<h3 class="text-lg font-bold text-[#181411] dark:text-white">Quick Stock Adjust</h3>
+<button class="text-[#8c725f] hover:text-[#181411] dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Body -->
+<div class="p-6 flex flex-col gap-6">
+<!-- Product Info -->
+<div class="flex items-start gap-4">
+<div class="h-12 w-12 rounded-lg bg-cover bg-center bg-gray-100 border border-gray-200 shrink-0" data-alt="Product Image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC60PYJj7YnxU6tUvwdtnj-je4pB1NnXejxL6PUc8o36O7wZvN7_J2TavZcMsPt54E9P0ybT5RGYV3UM9ZKVgZs2MRgGz4qIgBbWbsWuzWDNeD1piHOSVd2xPm2jq6pj1R2Dzr89N49-jW4HfTPMg2AH7KAB96Cxw3OV2tqFcAKiCE0cUqO5Mhua8pa639-BRT7r10K18Oht32nFDBpeKcZsqomnr6QS00zGEd1MIyZmqiyhptDgMJhaJAHytkb6LRo6cGbZ8IUDZQJ');"></div>
+<div>
+<p class="font-bold text-[#181411] dark:text-white text-base">Castrol Oil Filter</p>
+<p class="text-sm text-[#8c725f]">SKU: OF-C-005</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-xs font-medium text-[#5c4f45] dark:text-[#a09085]">Current Stock:</span>
+<span class="text-xs font-bold text-primary">5 units</span>
+</div>
+</div>
+</div>
+<!-- Form -->
+<div class="space-y-4">
+<!-- Type -->
+<div>
+<label class="block text-sm font-medium text-[#181411] dark:text-white mb-2">Adjustment Type</label>
+<div class="grid grid-cols-3 gap-2">
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="adj_type" type="radio"/>
+<div class="rounded-lg border border-[#e6dfdb] dark:border-[#3a2f26] py-2 px-3 text-center text-sm font-medium text-[#5c4f45] dark:text-[#a09085] peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Received</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="adj_type" type="radio"/>
+<div class="rounded-lg border border-[#e6dfdb] dark:border-[#3a2f26] py-2 px-3 text-center text-sm font-medium text-[#5c4f45] dark:text-[#a09085] peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Damaged</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="adj_type" type="radio"/>
+<div class="rounded-lg border border-[#e6dfdb] dark:border-[#3a2f26] py-2 px-3 text-center text-sm font-medium text-[#5c4f45] dark:text-[#a09085] peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Audit</div>
+</label>
+</div>
+</div>
+<!-- Quantity -->
+<div>
+<label class="block text-sm font-medium text-[#181411] dark:text-white mb-2">Quantity Adjustment</label>
+<div class="flex items-center gap-3">
+<button class="h-10 w-10 flex items-center justify-center rounded-lg border border-[#e6dfdb] dark:border-[#3a2f26] hover:bg-[#f5f2f0] dark:hover:bg-[#2c1e16] text-[#181411] dark:text-white">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<input class="flex-1 h-10 text-center rounded-lg border border-[#e6dfdb] dark:border-[#3a2f26] bg-white dark:bg-[#1a110a] text-[#181411] dark:text-white font-bold focus:ring-1 focus:ring-primary outline-none" type="number" value="20"/>
+<button class="h-10 w-10 flex items-center justify-center rounded-lg border border-[#e6dfdb] dark:border-[#3a2f26] hover:bg-[#f5f2f0] dark:hover:bg-[#2c1e16] text-[#181411] dark:text-white">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<p class="text-xs text-[#8c725f] mt-1.5 text-right">New Stock Level: <span class="font-bold text-primary">25</span></p>
+</div>
+<!-- Reason -->
+<div>
+<label class="block text-sm font-medium text-[#181411] dark:text-white mb-2">Reason (Optional)</label>
+<textarea class="w-full rounded-lg border border-[#e6dfdb] dark:border-[#3a2f26] bg-white dark:bg-[#1a110a] p-3 text-sm focus:ring-1 focus:ring-primary outline-none resize-none placeholder-[#8c725f] dark:text-white" placeholder="e.g., Weekly restock shipment..." rows="2"></textarea>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="px-6 py-4 border-t border-[#e6dfdb] dark:border-[#3a2f26] flex justify-end gap-3 bg-[#f8f7f5] dark:bg-[#23170f]">
+<button class="px-4 py-2 rounded-lg border border-[#e6dfdb] dark:border-[#3a2f26] text-sm font-medium text-[#5c4f45] dark:text-[#a09085] hover:bg-white dark:hover:bg-[#2c1e16] transition-colors">Cancel</button>
+<button class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium shadow-sm hover:bg-primary/90 transition-colors">Save Adjustment</button>
+</div>
+</div>
+</div>
+</body></html>

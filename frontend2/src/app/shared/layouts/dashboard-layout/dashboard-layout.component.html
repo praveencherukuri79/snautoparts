@@ -1,0 +1,92 @@
+<div class="dashboard-layout">
+  <!-- Top Toolbar -->
+  <mat-toolbar class="dashboard-layout__toolbar" color="primary">
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    
+    <span class="dashboard-layout__brand">
+      <mat-icon class="dashboard-layout__logo">directions_car</mat-icon>
+      SN Auto Parts
+    </span>
+    
+    <span class="dashboard-layout__spacer"></span>
+    
+    <!-- User Menu -->
+    <button mat-icon-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <div class="dashboard-layout__user-info">
+        <span class="dashboard-layout__user-name">{{ user()?.firstName }} {{ user()?.lastName }}</span>
+        <span class="dashboard-layout__user-email">{{ user()?.email }}</span>
+      </div>
+      <mat-divider></mat-divider>
+      <button mat-menu-item routerLink="/account/profile">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <!-- Sidenav Container -->
+  <mat-sidenav-container class="dashboard-layout__container">
+    <!-- Sidenav -->
+    <mat-sidenav
+      #sidenav
+      [mode]="'side'"
+      [opened]="sidenavOpen()"
+      class="dashboard-layout__sidenav"
+    >
+      <!-- Primary Navigation -->
+      <mat-nav-list>
+        @for (item of primaryNav(); track trackByNavItem($index, item)) {
+          <a
+            mat-list-item
+            [routerLink]="item.route"
+            routerLinkActive="active"
+            class="dashboard-layout__nav-item"
+          >
+            <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+            <span matListItemTitle>{{ item.label }}</span>
+            @if (item.badge) {
+              <span class="dashboard-layout__badge">
+                @if (item.badge.type === 'dot') {
+                  <span class="dashboard-layout__badge-dot"></span>
+                }
+              </span>
+            }
+          </a>
+        }
+      </mat-nav-list>
+
+      <!-- Secondary Navigation -->
+      @if (secondaryNav().length) {
+        <mat-divider></mat-divider>
+        <mat-nav-list>
+          @for (item of secondaryNav(); track trackByNavItem($index, item)) {
+            <a
+              mat-list-item
+              [routerLink]="item.route"
+              routerLinkActive="active"
+              class="dashboard-layout__nav-item"
+            >
+              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+              <span matListItemTitle>{{ item.label }}</span>
+            </a>
+          }
+        </mat-nav-list>
+      }
+    </mat-sidenav>
+
+    <!-- Main Content -->
+    <mat-sidenav-content class="dashboard-layout__content">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+

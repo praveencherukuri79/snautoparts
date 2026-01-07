@@ -1,0 +1,186 @@
+<div class="inventory-report-page">
+  <!-- Header -->
+  <header class="page-header">
+    <div class="header-content">
+      <h1>Inventory Value Report</h1>
+      <div class="generated-date">
+        <span class="material-symbols-outlined">calendar_today</span>
+        <span>Generated on {{ generatedDate | date:'mediumDate' }}</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <app-button variant="outline" icon="print" (clicked)="printReport()">
+        Print
+      </app-button>
+      <app-button variant="primary" icon="download" (clicked)="exportCSV()">
+        Export CSV
+      </app-button>
+    </div>
+  </header>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    @if (stats(); as s) {
+    <!-- Summary Stats -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span class="stat-label">Total Inventory Value (Cost)</span>
+        </div>
+        <div class="stat-value">{{ s.totalCostValue | currency:'USD':'symbol':'1.0-0' }}</div>
+        <div class="stat-change positive">
+          <span class="material-symbols-outlined">trending_up</span>
+          +{{ s.costChange }}% from last month
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="material-symbols-outlined">sell</span>
+          <span class="stat-label">Total Inventory Value (Retail)</span>
+        </div>
+        <div class="stat-value">{{ s.totalRetailValue | currency:'USD':'symbol':'1.0-0' }}</div>
+        <div class="stat-change positive">
+          <span class="material-symbols-outlined">trending_up</span>
+          +{{ s.retailChange }}% from last month
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="material-symbols-outlined">inventory</span>
+          <span class="stat-label">Total Products in Stock</span>
+        </div>
+        <div class="stat-value">{{ s.totalProducts }}</div>
+        <div class="stat-change neutral">
+          {{ s.lowStockAlerts }} Low Stock Alerts
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="material-symbols-outlined">analytics</span>
+          <span class="stat-label">Avg Value per Item</span>
+        </div>
+        <div class="stat-value">{{ s.avgValuePerItem | currency }}</div>
+        <div class="stat-change neutral">
+          Calculated on cost basis
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Chart -->
+    <section class="chart-section">
+      <div class="chart-header">
+        <h3>Value by Top 5 Categories</h3>
+        <p>Distribution of total inventory cost across top categories</p>
+      </div>
+      <div class="bar-chart">
+        @for (cat of categoryValues(); track trackByCategory($index, cat)) {
+          <div class="bar-column">
+            <span class="bar-value">{{ formatCurrency(cat.value) }}</span>
+            <div class="bar" [style.height.%]="cat.percentage"></div>
+            <span class="bar-label">{{ cat.category }}</span>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Detailed Table -->
+    <section class="table-section">
+      <h3 class="section-title">Detailed Inventory Breakdown</h3>
+      
+      <!-- Filters -->
+      <div class="filters">
+        <div class="search-box">
+          <span class="material-symbols-outlined">search</span>
+          <input 
+            type="text" 
+            placeholder="Search Product Name or SKU..."
+            [ngModel]="searchQuery()"
+            (ngModelChange)="searchQuery.set($event)"
+          />
+        </div>
+        <select [(ngModel)]="selectedCategory" (ngModelChange)="selectedCategory.set($event)">
+          <option value="all">All Categories</option>
+          <option value="engine">Engine</option>
+          <option value="suspension">Suspension</option>
+          <option value="brakes">Brakes</option>
+          <option value="transmission">Transmission</option>
+          <option value="electrical">Electrical</option>
+        </select>
+        <select [(ngModel)]="selectedBrand" (ngModelChange)="selectedBrand.set($event)">
+          <option value="all">All Brands</option>
+          <option value="bosch">Bosch</option>
+          <option value="brembo">Brembo</option>
+          <option value="denso">Denso</option>
+          <option value="bilstein">Bilstein</option>
+          <option value="ngk">NGK</option>
+        </select>
+        <select [(ngModel)]="selectedStatus" (ngModelChange)="selectedStatus.set($event)">
+          <option value="all">Stock Status</option>
+          <option value="in">In Stock</option>
+          <option value="low">Low Stock</option>
+          <option value="out">Out of Stock</option>
+        </select>
+      </div>
+
+      <!-- Table -->
+      <div class="table-card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>SKU</th>
+              <th>Category</th>
+              <th class="right">Stock</th>
+              <th class="right">Cost Price</th>
+              <th class="right">Retail Price</th>
+              <th class="right">Total Cost</th>
+              <th class="right">Total Retail</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of filteredItems; track trackByItem($index, item)) {
+              <tr>
+                <td>
+                  <div class="product-cell">
+                    <span class="product-name">{{ item.name }}</span>
+                    <span class="product-brand">{{ item.brand }}</span>
+                  </div>
+                </td>
+                <td class="sku">{{ item.sku }}</td>
+                <td>
+                  <span class="category-badge" [class]="getCategoryColorClass(item.categoryColor)">
+                    {{ item.category }}
+                  </span>
+                </td>
+                <td class="right" [class.low-stock]="item.isLowStock">{{ item.stock }}</td>
+                <td class="right muted">{{ item.costPrice | currency }}</td>
+                <td class="right muted">{{ item.retailPrice | currency }}</td>
+                <td class="right strong">{{ item.totalCost | currency }}</td>
+                <td class="right strong">{{ item.totalRetail | currency }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        <div class="table-footer">
+          <span>
+            Showing <strong>1</strong> to <strong>{{ filteredItems.length }}</strong> of <strong>{{ stats()?.totalProducts }}</strong> results
+          </span>
+          <div class="pagination">
+            <button class="page-btn" disabled>Previous</button>
+            <button class="page-btn" disabled>Next</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    }
+  }
+</div>
+

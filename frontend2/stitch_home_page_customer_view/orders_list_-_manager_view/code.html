@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orders List - Manager View</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom checkbox style to match theme */
+        .form-checkbox {
+            color: #f97415;
+            border-color: #d1d5db;
+            border-radius: 0.25rem;
+        }
+        .form-checkbox:focus {
+            box-shadow: 0 0 0 2px rgba(249, 116, 21, 0.2);
+            border-color: #f97415;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181411] dark:text-white overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<div class="hidden md:flex flex-col w-64 bg-white dark:bg-[#1a110a] border-r border-[#e6dfdb] dark:border-[#3a2f26] h-full shrink-0">
+<div class="flex flex-col gap-4 p-4 h-full">
+<!-- User Profile Summary -->
+<div class="flex gap-3 items-center mb-6">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 shadow-sm relative" data-alt="Profile picture of the manager" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA9Ge9kVyU8vGcpvTpJ2fHm3wb9jObkV5NhJ8WujggNEQqQxMBv2CoU7oxdvUnUNTtBzv7-3GA8QSrM1FSIYcS135ztNrFESPAaWnp5WbMKVA6e-bJ8_-CFhxseTanVQgO5qMPwfRsry9KUz3eMrs16t1O8whRQVeOspj1mbRv16bHDKOe8W4jM9nFqrZKwzVyKdA7YcYRo3nwqI0tb2T1LqrREKYpn84jmJ7mh84EczKw3op90DBBFdYptokOKr0-9EdSIh4FE7wPY");'>
+<div class="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full border-2 border-white dark:border-[#1a110a]"></div>
+</div>
+<div class="flex flex-col">
+<h1 class="text-[#181411] dark:text-white text-base font-semibold leading-tight">SN Auto Parts</h1>
+<p class="text-[#8c725f] text-xs font-normal leading-normal">Manager View</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-2 flex-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c4d44] dark:text-[#a89b93] hover:bg-[#f5f2f0] dark:hover:bg-[#2d241d] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary">dashboard</span>
+<p class="text-sm font-medium">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined text-[22px] fill-current">shopping_bag</span>
+<p class="text-sm font-semibold">Orders</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c4d44] dark:text-[#a89b93] hover:bg-[#f5f2f0] dark:hover:bg-[#2d241d] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary">inventory_2</span>
+<p class="text-sm font-medium">Inventory</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c4d44] dark:text-[#a89b93] hover:bg-[#f5f2f0] dark:hover:bg-[#2d241d] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary">sell</span>
+<p class="text-sm font-medium">Products</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c4d44] dark:text-[#a89b93] hover:bg-[#f5f2f0] dark:hover:bg-[#2d241d] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary">group</span>
+<p class="text-sm font-medium">Customers</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c4d44] dark:text-[#a89b93] hover:bg-[#f5f2f0] dark:hover:bg-[#2d241d] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary">bar_chart</span>
+<p class="text-sm font-medium">Reports</p>
+</a>
+</nav>
+<!-- Settings -->
+<div class="mt-auto border-t border-[#e6dfdb] dark:border-[#3a2f26] pt-4">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#5c4d44] dark:text-[#a89b93] hover:bg-[#f5f2f0] dark:hover:bg-[#2d241d] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary">settings</span>
+<p class="text-sm font-medium">Settings</p>
+</a>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Page Header -->
+<header class="bg-white dark:bg-[#1a110a] border-b border-[#e6dfdb] dark:border-[#3a2f26] shrink-0 z-10">
+<div class="px-8 pt-6 pb-2">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h1 class="text-[#181411] dark:text-white text-3xl font-bold tracking-tight">All Orders</h1>
+<p class="text-[#8c725f] dark:text-[#a89b93] mt-1 text-sm">Manage and track all customer orders across the platform.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#e6dfdb] dark:border-[#3a2f26] bg-white dark:bg-[#2d241d] text-[#181411] dark:text-white text-sm font-medium hover:bg-gray-50 dark:hover:bg-[#3a2f26] transition-colors">
+<span class="material-symbols-outlined text-[20px]">cloud_download</span>
+                                Export
+                            </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-orange-600 text-white text-sm font-medium shadow-sm transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                                Create Order
+                            </button>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex gap-8 overflow-x-auto no-scrollbar">
+<a class="pb-3 border-b-[3px] border-primary text-primary font-semibold text-sm whitespace-nowrap" href="#">All Orders</a>
+<a class="pb-3 border-b-[3px] border-transparent text-[#8c725f] hover:text-[#5c4d44] dark:text-[#a89b93] font-medium text-sm whitespace-nowrap transition-colors" href="#">Pending <span class="ml-1 bg-[#f5f2f0] dark:bg-[#3a2f26] px-1.5 py-0.5 rounded text-xs text-[#5c4d44] dark:text-[#a89b93]">12</span></a>
+<a class="pb-3 border-b-[3px] border-transparent text-[#8c725f] hover:text-[#5c4d44] dark:text-[#a89b93] font-medium text-sm whitespace-nowrap transition-colors" href="#">Processing <span class="ml-1 bg-[#f5f2f0] dark:bg-[#3a2f26] px-1.5 py-0.5 rounded text-xs text-[#5c4d44] dark:text-[#a89b93]">5</span></a>
+<a class="pb-3 border-b-[3px] border-transparent text-[#8c725f] hover:text-[#5c4d44] dark:text-[#a89b93] font-medium text-sm whitespace-nowrap transition-colors" href="#">Shipped</a>
+<a class="pb-3 border-b-[3px] border-transparent text-[#8c725f] hover:text-[#5c4d44] dark:text-[#a89b93] font-medium text-sm whitespace-nowrap transition-colors" href="#">Delivered</a>
+<a class="pb-3 border-b-[3px] border-transparent text-[#8c725f] hover:text-[#5c4d44] dark:text-[#a89b93] font-medium text-sm whitespace-nowrap transition-colors" href="#">Cancelled</a>
+</div>
+</div>
+</header>
+<!-- Filters & Actions Area -->
+<div class="px-8 py-5 shrink-0 bg-background-light dark:bg-background-dark">
+<div class="flex flex-col sm:flex-row gap-4 justify-between items-center">
+<!-- Search -->
+<div class="relative w-full sm:max-w-md">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[#8c725f] text-[20px]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 border-none rounded-lg leading-5 bg-white dark:bg-[#1a110a] dark:text-white placeholder-[#8c725f] focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm shadow-sm" placeholder="Search by Order #, Customer, or SKU..." type="text"/>
+</div>
+<!-- Filters -->
+<div class="flex gap-3 w-full sm:w-auto overflow-x-auto no-scrollbar">
+<div class="relative group">
+<button class="flex items-center gap-2 px-3 py-2.5 bg-white dark:bg-[#1a110a] border border-transparent hover:border-[#e6dfdb] dark:hover:border-[#3a2f26] rounded-lg shadow-sm text-sm font-medium text-[#181411] dark:text-white transition-all">
+<span class="material-symbols-outlined text-[18px] text-[#8c725f]">person</span>
+                                Customer
+                                <span class="material-symbols-outlined text-[18px] text-[#8c725f]">expand_more</span>
+</button>
+</div>
+<div class="relative group">
+<button class="flex items-center gap-2 px-3 py-2.5 bg-white dark:bg-[#1a110a] border border-transparent hover:border-[#e6dfdb] dark:hover:border-[#3a2f26] rounded-lg shadow-sm text-sm font-medium text-[#181411] dark:text-white transition-all">
+<span class="material-symbols-outlined text-[18px] text-[#8c725f]">label</span>
+                                Status
+                                <span class="material-symbols-outlined text-[18px] text-[#8c725f]">expand_more</span>
+</button>
+</div>
+<div class="relative group">
+<button class="flex items-center gap-2 px-3 py-2.5 bg-white dark:bg-[#1a110a] border border-transparent hover:border-[#e6dfdb] dark:hover:border-[#3a2f26] rounded-lg shadow-sm text-sm font-medium text-[#181411] dark:text-white transition-all">
+<span class="material-symbols-outlined text-[18px] text-[#8c725f]">calendar_today</span>
+                                Last 30 Days
+                                <span class="material-symbols-outlined text-[18px] text-[#8c725f]">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bulk Actions Toolbar (Hidden by default, shown for demo purpose as 'active' state) -->
+<!-- Ideally this would toggle based on checkbox selection -->
+<div class="hidden flex items-center justify-between bg-primary/10 border border-primary/20 rounded-lg px-4 py-3 mt-4 animate-fade-in">
+<div class="flex items-center gap-3">
+<span class="bg-primary text-white text-xs font-bold px-2 py-0.5 rounded">2</span>
+<p class="text-sm font-medium text-[#181411] dark:text-white">orders selected</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-sm text-[#181411] dark:text-white hover:text-primary font-medium">Update Status</button>
+<div class="h-4 w-px bg-[#e6dfdb] dark:bg-[#3a2f26]"></div>
+<button class="text-sm text-[#181411] dark:text-white hover:text-primary font-medium">Export Selected</button>
+</div>
+</div>
+</div>
+<!-- Table Container -->
+<div class="flex-1 overflow-auto px-8 pb-8">
+<div class="bg-white dark:bg-[#1a110a] rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#3a2f26] min-w-[900px]">
+<table class="min-w-full divide-y divide-[#e6dfdb] dark:divide-[#3a2f26]">
+<thead class="bg-[#fcfbfb] dark:bg-[#23170f]">
+<tr>
+<th class="relative px-6 py-4 w-12" scope="col">
+<input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary/20 bg-white dark:bg-[#2d241d] dark:border-[#3a2f26]" type="checkbox"/>
+</th>
+<th class="px-6 py-3 text-left text-xs font-semibold text-[#8c725f] uppercase tracking-wider cursor-pointer group hover:text-primary transition-colors" scope="col">
+<div class="flex items-center gap-1">
+                                        Order ID
+                                        <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100">arrow_downward</span>
+</div>
+</th>
+<th class="px-6 py-3 text-left text-xs font-semibold text-[#8c725f] uppercase tracking-wider cursor-pointer group hover:text-primary transition-colors" scope="col">
+<div class="flex items-center gap-1">
+                                        Customer
+                                    </div>
+</th>
+<th class="px-6 py-3 text-left text-xs font-semibold text-[#8c725f] uppercase tracking-wider" scope="col">
+                                    Items
+                                </th>
+<th class="px-6 py-3 text-left text-xs font-semibold text-[#8c725f] uppercase tracking-wider cursor-pointer group hover:text-primary transition-colors" scope="col">
+<div class="flex items-center gap-1">
+                                        Total
+                                        <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100">arrow_upward</span>
+</div>
+</th>
+<th class="px-6 py-3 text-left text-xs font-semibold text-[#8c725f] uppercase tracking-wider" scope="col">
+                                    Status
+                                </th>
+<th class="px-6 py-3 text-left text-xs font-semibold text-[#8c725f] uppercase tracking-wider cursor-pointer group hover:text-primary transition-colors" scope="col">
+<div class="flex items-center gap-1">
+                                        Date
+                                    </div>
+</th>
+<th class="relative px-6 py-3" scope="col">
+<span class="sr-only">Actions</span>
+</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e6dfdb] dark:divide-[#3a2f26]">
+<!-- Row 1 -->
+<tr class="hover:bg-[#fcfbfb] dark:hover:bg-[#23170f] transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary/20 bg-white dark:bg-[#2d241d] dark:border-[#3a2f26]" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<a class="text-sm font-semibold text-primary hover:underline" href="#">#ORD-7729</a>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-gray-200 dark:bg-[#3a2f26] flex items-center justify-center text-xs font-medium text-[#5c4d44] dark:text-[#a89b93] mr-3">JD</div>
+<div>
+<div class="text-sm font-medium text-[#181411] dark:text-white">John Doe</div>
+<div class="text-xs text-[#8c725f]">john.d@example.com</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-[#5c4d44] dark:text-[#a89b93]">3 items</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm font-medium text-[#181411] dark:text-white">$420.50</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                        Shipped
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#5c4d44] dark:text-[#a89b93]">
+                                    Oct 24, 2023
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#3a2f26]" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#3a2f26]" title="Edit Status">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-[#fcfbfb] dark:hover:bg-[#23170f] transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary/20 bg-white dark:bg-[#2d241d] dark:border-[#3a2f26]" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<a class="text-sm font-semibold text-primary hover:underline" href="#">#ORD-7730</a>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-xs font-medium text-indigo-700 dark:text-indigo-300 mr-3">AS</div>
+<div>
+<div class="text-sm font-medium text-[#181411] dark:text-white">Alice Smith</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-[#5c4d44] dark:text-[#a89b93]">1 item</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm font-medium text-[#181411] dark:text-white">$85.00</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
+                                        Processing
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#5c4d44] dark:text-[#a89b93]">
+                                    Oct 24, 2023
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#3a2f26]" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#3a2f26]" title="Edit Status">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-[#fcfbfb] dark:hover:bg-[#23170f] transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary/20 bg-white dark:bg-[#2d241d] dark:border-[#3a2f26]" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<a class="text-sm font-semibold text-primary hover:underline" href="#">#ORD-7731</a>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-center bg-cover mr-3" data-alt="User avatar for Robert Fox" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB36ojgPuqNxuMjhZUiz6O0N_ZLv9JP6Cwv5BJgxzx8XxV8IJmag_gmQW8wKOtRhU4xs5zBZ614UXWLgTd4FMcmMfG0yMG74abN0sAMSJpAVM-fQ4lMJjV6sUcEFA39UTjjpYKUlzH7Im1zWZXpz-sg4LDmYCZbNmpBYTtp4IqALmKoB8b4fc-f3mTjw_eM91AE9Yu5rravShC-3z2Odlix_wBdnmOAADud9CBLqweMpQxv64GA65TLdWZR-mnGon9unu3_pxgMdcOk");'></div>
+<div>
+<div class="text-sm font-medium text-[#181411] dark:text-white">Robert Fox</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-[#5c4d44] dark:text-[#a89b93]">12 items</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm font-medium text-[#181411] dark:text-white">$1,250.00</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700/50 dark:text-gray-300">
+                                        Pending
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#5c4d44] dark:text-[#a89b93]">
+                                    Oct 23, 2023
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#3a2f26]" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#3a2f26]" title="Edit Status">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-[#fcfbfb] dark:hover:bg-[#23170f] transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary/20 bg-white dark:bg-[#2d241d] dark:border-[#3a2f26]" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<a class="text-sm font-semibold text-primary hover:underline" href="#">#ORD-7732</a>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-xs font-medium text-purple-700 dark:text-purple-300 mr-3">KW</div>
+<div>
+<div class="text-sm font-medium text-[#181411] dark:text-white">Kristin Watson</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-[#5c4d44] dark:text-[#a89b93]">2 items</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm font-medium text-[#181411] dark:text-white">$120.00</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+                                        Cancelled
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#5c4d44] dark:text-[#a89b93]">
+                                    Oct 22, 2023
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#3a2f26]" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#3a2f26]" title="Edit Status">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-[#fcfbfb] dark:hover:bg-[#23170f] transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary/20 bg-white dark:bg-[#2d241d] dark:border-[#3a2f26]" type="checkbox"/>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<a class="text-sm font-semibold text-primary hover:underline" href="#">#ORD-7733</a>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-center bg-cover mr-3" data-alt="User avatar for Cameron Williamson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCacKmFAXOt5J0iNNngDz3iLJhi9h3hTukmEKr0mh8r7hXx0LC2UKfo3MFditBLwmgb9NuF6rrZ728e2KSiTvA4ul3EcMbV366fGgLz9OwQ6bp1-ooeFnBvWYxNNo6AB_5gIuJ6iLpZ84HVsvl57GO6VchzC-Z7lPq18k8neZT2XOJnuwRc1-Aemp6SVl1DxNOJYm2lv4Xy9ZH4LS4ZkzJ37heHlMRLugKGQMt6eFMuYRV8IcdE5S2VBgtxsj3ArJxYIQvap1r5UZcI");'></div>
+<div>
+<div class="text-sm font-medium text-[#181411] dark:text-white">Cameron Williamson</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-[#5c4d44] dark:text-[#a89b93]">5 items</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm font-medium text-[#181411] dark:text-white">$342.90</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                        Delivered
+                                    </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#5c4d44] dark:text-[#a89b93]">
+                                    Oct 22, 2023
+                                </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#3a2f26]" title="View Details">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-[#8c725f] hover:text-primary transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#3a2f26]" title="Edit Status">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between mt-4">
+<p class="text-sm text-[#8c725f] dark:text-[#a89b93]">
+                        Showing <span class="font-medium text-[#181411] dark:text-white">1</span> to <span class="font-medium text-[#181411] dark:text-white">20</span> of <span class="font-medium text-[#181411] dark:text-white">142</span> orders
+                    </p>
+<div class="flex items-center gap-2">
+<div class="relative inline-block text-left mr-2">
+<select class="block w-full pl-3 pr-8 py-1.5 text-xs border border-gray-300 dark:border-[#3a2f26] rounded-md bg-white dark:bg-[#1a110a] text-[#181411] dark:text-white focus:outline-none focus:ring-primary focus:border-primary">
+<option>20 / page</option>
+<option>50 / page</option>
+<option>100 / page</option>
+</select>
+</div>
+<nav aria-label="Pagination" class="isolate inline-flex -space-x-px rounded-md shadow-sm">
+<a class="relative inline-flex items-center rounded-l-md px-2 py-2 text-[#8c725f] ring-1 ring-inset ring-gray-300 dark:ring-[#3a2f26] hover:bg-gray-50 dark:hover:bg-[#2d241d] focus:z-20 focus:outline-offset-0" href="#">
+<span class="sr-only">Previous</span>
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</a>
+<a aria-current="page" class="relative z-10 inline-flex items-center bg-primary px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" href="#">1</a>
+<a class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-[#181411] dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-[#3a2f26] hover:bg-gray-50 dark:hover:bg-[#2d241d] focus:z-20 focus:outline-offset-0" href="#">2</a>
+<a class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-[#181411] dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-[#3a2f26] hover:bg-gray-50 dark:hover:bg-[#2d241d] focus:z-20 focus:outline-offset-0" href="#">3</a>
+<span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-[#8c725f] ring-1 ring-inset ring-gray-300 dark:ring-[#3a2f26] focus:outline-offset-0">...</span>
+<a class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-[#181411] dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-[#3a2f26] hover:bg-gray-50 dark:hover:bg-[#2d241d] focus:z-20 focus:outline-offset-0" href="#">8</a>
+<a class="relative inline-flex items-center rounded-r-md px-2 py-2 text-[#8c725f] ring-1 ring-inset ring-gray-300 dark:ring-[#3a2f26] hover:bg-gray-50 dark:hover:bg-[#2d241d] focus:z-20 focus:outline-offset-0" href="#">
+<span class="sr-only">Next</span>
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,167 @@
+<div class="product-detail">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    @if (product(); as p) {
+    <div class="product-detail__main">
+      <!-- Image Gallery -->
+      <div class="product-images">
+        <div class="product-images__main">
+          @if (selectedImage()) {
+            <img [src]="selectedImage()" [alt]="p.name" class="main-image" />
+          } @else {
+            <div class="main-image main-image--placeholder">
+              <span class="material-symbols-outlined">image</span>
+            </div>
+          }
+          @if (discount) {
+            <span class="discount-badge">-{{ discount }}%</span>
+          }
+        </div>
+        
+        @if (allImages.length > 1) {
+          <div class="product-images__thumbnails">
+            @for (img of allImages; track img) {
+              <button
+                class="thumbnail"
+                [class.thumbnail--active]="img === selectedImage()"
+                (click)="selectImage(img)"
+              >
+                <img [src]="img" [alt]="p.name" />
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-info">
+        <p class="product-sku">SKU: {{ p.sku }}</p>
+        <h1 class="product-name">{{ p.name }}</h1>
+        
+        <div class="product-price">
+          @if (p.compareAtPrice && p.compareAtPrice > p.price) {
+            <span class="price-original">{{ p.compareAtPrice | currency }}</span>
+          }
+          <span class="price-current">{{ p.price | currency }}</span>
+        </div>
+
+        <div class="product-stock">
+          <app-badge [variant]="stockBadgeVariant">{{ stockLabel }}</app-badge>
+        </div>
+
+        @if (p.shortDescription) {
+          <p class="product-description">{{ p.shortDescription }}</p>
+        }
+
+        <!-- Add to Cart -->
+        <div class="product-actions">
+          <app-quantity-selector
+            [quantity]="quantity()"
+            [max]="p.stockQuantity"
+            [disabled]="p.stockQuantity === 0"
+            (quantityChange)="onQuantityChange($event)"
+          />
+          
+          <app-button
+            icon="shopping_cart"
+            size="lg"
+            [fullWidth]="true"
+            [loading]="isAddingToCart()"
+            [disabled]="p.stockQuantity === 0"
+            (clicked)="addToCart()"
+          >
+            Add to Cart
+          </app-button>
+        </div>
+
+        <!-- Features -->
+        <div class="product-features">
+          <div class="feature">
+            <span class="material-symbols-outlined">local_shipping</span>
+            <span>Free Shipping on Orders Over $50</span>
+          </div>
+          <div class="feature">
+            <span class="material-symbols-outlined">verified</span>
+            <span>Guaranteed Fitment</span>
+          </div>
+          <div class="feature">
+            <span class="material-symbols-outlined">autorenew</span>
+            <span>Easy 30-Day Returns</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="product-tabs">
+      <div class="tabs-content">
+        <!-- Description -->
+        <section class="tab-section">
+          <h2>Description</h2>
+          @if (p.description) {
+            <div class="description-content">{{ p.description }}</div>
+          } @else {
+            <p class="no-content">No description available.</p>
+          }
+        </section>
+
+        <!-- Fitment -->
+        <section class="tab-section">
+          <h2>Vehicle Fitment</h2>
+          @if (fitments().length > 0) {
+            <table class="fitment-table">
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Make</th>
+                  <th>Model</th>
+                  <th>Submodel</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (fit of fitments(); track fit.id) {
+                  <tr>
+                    <td>{{ fit.yearStart }}{{ fit.yearEnd && fit.yearEnd !== fit.yearStart ? ' - ' + fit.yearEnd : '' }}</td>
+                    <td>{{ fit.make }}</td>
+                    <td>{{ fit.model }}</td>
+                    <td>{{ fit.submodel || '-' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          } @else {
+            <p class="no-content">Fitment information not available.</p>
+          }
+        </section>
+      </div>
+    </div>
+
+    <!-- Related Products -->
+    @if (relatedProducts().length > 0) {
+      <section class="related-products">
+        <h2>Related Products</h2>
+        <div class="related-grid">
+          @for (related of relatedProducts().slice(0, 4); track related.id) {
+            <app-product-card
+              [product]="{
+                id: related.id,
+                slug: related.slug,
+                name: related.name,
+                price: related.price,
+                compareAtPrice: related.compareAtPrice,
+                imageUrl: related.imageUrl,
+                stockStatus: related.stockQuantity > 0 ? 'in_stock' : 'out_of_stock',
+                isFeatured: related.isFeatured
+              }"
+            />
+          }
+        </div>
+      </section>
+    }
+    }
+  }
+</div>
+

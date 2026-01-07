@@ -1,0 +1,73 @@
+<div class="login">
+  <!-- Heading -->
+  <div class="login__header">
+    <h1 class="login__title">Welcome Back, Gearhead</h1>
+    <p class="login__subtitle">Access your order history and saved garage.</p>
+  </div>
+
+  <!-- Form -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login__form">
+    <app-input
+      label="Email Address"
+      type="email"
+      placeholder="name@example.com"
+      formControlName="email"
+      [error]="emailError"
+      autocomplete="email"
+    ></app-input>
+
+    <app-input
+      label="Password"
+      type="password"
+      placeholder="Enter your password"
+      formControlName="password"
+      [error]="passwordError"
+      autocomplete="current-password"
+    ></app-input>
+
+    <div class="login__forgot">
+      <a routerLink="/forgot-password" class="login__forgot-link">Forgot Password?</a>
+    </div>
+
+    <app-button
+      variant="primary"
+      type="submit"
+      [fullWidth]="true"
+      [loading]="isLoading()"
+      icon="lock"
+    >
+      Secure Login
+    </app-button>
+
+    <!-- Divider -->
+    <div class="login__divider">
+      <span>Or continue with</span>
+    </div>
+
+    <!-- Social Login -->
+    <div class="login__social">
+      <button type="button" class="login__social-btn">
+        <svg viewBox="0 0 24 24" class="login__social-icon">
+          <path fill="#4285F4" d="M23.766 12.2764C23.766 11.4607 23.6999 10.6406 23.5588 9.83807H12.24V14.4591H18.7217C18.4528 15.9494 17.5885 17.2678 16.323 18.1056V21.1039H20.19C22.4608 19.0139 23.766 15.9274 23.766 12.2764Z"/>
+          <path fill="#34A853" d="M12.24 24.0008C15.4765 24.0008 18.2059 22.9382 20.19 21.1039L16.323 18.1056C15.2517 18.8375 13.8627 19.252 12.24 19.252C9.11388 19.252 6.45946 17.1399 5.50705 14.2796H1.5166V17.3744C3.55371 21.4434 7.7029 24.0008 12.24 24.0008Z"/>
+          <path fill="#FBBC05" d="M5.50705 14.2796C5.00016 12.7805 5.00016 11.2195 5.50705 9.72036V6.62549H1.5166C-0.185548 10.0356 -0.185548 13.9644 1.5166 17.3744L5.50705 14.2796Z"/>
+          <path fill="#EA4335" d="M12.24 4.74966C13.9509 4.7232 15.6044 5.36697 16.8434 6.54867L20.2695 3.12262C18.1001 1.0855 15.2208 -0.034466 12.24 0.000808666C7.7029 0.000808666 3.55371 2.55822 1.5166 6.62549L5.50705 9.72036C6.45332 6.86603 9.10452 4.74966 12.24 4.74966Z"/>
+        </svg>
+        Google
+      </button>
+      <button type="button" class="login__social-btn">
+        <svg viewBox="0 0 24 24" class="login__social-icon" fill="#1877F2">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+        Facebook
+      </button>
+    </div>
+  </form>
+
+  <!-- Sign Up Link -->
+  <p class="login__signup">
+    Don't have an account?
+    <a routerLink="/register" class="login__signup-link">Sign up for free</a>
+  </p>
+</div>
+

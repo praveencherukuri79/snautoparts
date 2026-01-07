@@ -1,0 +1,164 @@
+@if (isLoading()) {
+  <div class="loading-container">
+    <app-spinner size="lg" />
+  </div>
+} @else {
+  <div class="tax-settings">
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <app-button variant="primary" icon="add" (clicked)="addTaxRate()">
+        Add New Tax Rate
+      </app-button>
+    </div>
+
+    <!-- Global Configuration -->
+    <app-card class="config-section">
+      <div class="config-header">
+        <h2>Global Configuration</h2>
+        <app-badge [variant]="config().taxEnabled ? 'success' : 'neutral'" size="sm">
+          {{ config().taxEnabled ? 'System Active' : 'Taxes Disabled' }}
+        </app-badge>
+      </div>
+
+      <div class="config-grid">
+        <div class="config-col">
+          <!-- Enable Taxes Toggle -->
+          <div class="config-row">
+            <div class="config-label">
+              <span class="label-text">Enable Taxes</span>
+              <span class="label-hint">Calculate taxes at checkout</span>
+            </div>
+            <label class="toggle">
+              <input 
+                type="checkbox" 
+                [checked]="config().taxEnabled" 
+                (change)="toggleTaxEnabled()"
+              />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- Calculation Basis -->
+          <div class="config-field">
+            <label class="field-label">Tax Calculation Based On</label>
+            <select [(ngModel)]="config().calculationBasis" class="field-select">
+              <option value="shipping">Customer Shipping Address</option>
+              <option value="billing">Customer Billing Address</option>
+              <option value="store">Store Base Address</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="config-col">
+          <!-- Display Prices -->
+          <div class="config-field">
+            <label class="field-label">Display Prices</label>
+            <select [(ngModel)]="config().displayPrices" class="field-select">
+              <option value="excluding">Excluding Tax</option>
+              <option value="including">Including Tax</option>
+            </select>
+            <span class="field-hint">Determines how prices are shown in the storefront catalog.</span>
+          </div>
+        </div>
+      </div>
+    </app-card>
+
+    <!-- Exemptions -->
+    <app-card class="config-section">
+      <h2>Exemptions</h2>
+      <div class="exemptions-grid">
+        <div class="exemption-field">
+          <label class="field-label">Exempt Customer Groups</label>
+          <div class="tags-input">
+            @for (group of config().exemptGroups; track group) {
+              <span class="tag">
+                {{ group }}
+                <button class="tag-remove" (click)="removeExemptGroup(group)">
+                  <span class="material-symbols-outlined">close</span>
+                </button>
+              </span>
+            }
+            <input type="text" placeholder="Add group..." class="tag-input" />
+          </div>
+        </div>
+
+        <div class="exemption-field">
+          <label class="field-label">Exempt Product Categories</label>
+          <div class="tags-input">
+            @for (category of config().exemptCategories; track category) {
+              <span class="tag">
+                {{ category }}
+                <button class="tag-remove" (click)="removeExemptCategory(category)">
+                  <span class="material-symbols-outlined">close</span>
+                </button>
+              </span>
+            }
+            <input type="text" placeholder="Add category..." class="tag-input" />
+          </div>
+        </div>
+      </div>
+    </app-card>
+
+    <!-- Tax Rates Table -->
+    <app-card class="rates-section">
+      <div class="rates-header">
+        <h2>Tax Rates</h2>
+        <button class="filter-btn">
+          <span class="material-symbols-outlined">filter_list</span>
+          Filter
+        </button>
+      </div>
+
+      <table class="rates-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Region</th>
+            <th>Rate (%)</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th class="right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (rate of rates(); track trackByRate($index, rate)) {
+            <tr>
+              <td class="name-cell">{{ rate.name }}</td>
+              <td>
+                <div class="region-cell">
+                  <span class="material-symbols-outlined">
+                    {{ rate.regionType === 'state' ? 'location_on' : 'public' }}
+                  </span>
+                  {{ rate.region }}
+                </div>
+              </td>
+              <td class="rate-cell">{{ rate.rate.toFixed(2) }}%</td>
+              <td>{{ rate.priority }}</td>
+              <td>
+                <app-badge [variant]="rate.isActive ? 'success' : 'neutral'" size="sm">
+                  {{ rate.isActive ? 'Active' : 'Inactive' }}
+                </app-badge>
+              </td>
+              <td class="right">
+                <button class="action-btn" (click)="editRate(rate)">
+                  <span class="material-symbols-outlined">edit</span>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <div class="table-footer">
+        <span class="showing">
+          Showing <strong>1-{{ rates().length }}</strong> of <strong>{{ rates().length }}</strong> tax rates
+        </span>
+        <div class="pagination">
+          <button class="page-btn" disabled>Previous</button>
+          <button class="page-btn" disabled>Next</button>
+        </div>
+      </div>
+    </app-card>
+  </div>
+}
+

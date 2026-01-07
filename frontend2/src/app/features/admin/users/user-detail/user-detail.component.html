@@ -1,0 +1,204 @@
+<div class="user-detail-page">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    @if (user(); as u) {
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a routerLink="/users">Users</a>
+      <span class="separator">/</span>
+      <span>{{ u.firstName }} {{ u.lastName }}</span>
+    </nav>
+
+    <!-- User Header -->
+    <div class="user-header">
+      <div class="user-info">
+        <div class="user-avatar">
+          @if (u.avatar) {
+            <img [src]="u.avatar" [alt]="u.firstName" />
+          } @else {
+            <span>{{ u.firstName.charAt(0) }}{{ u.lastName.charAt(0) }}</span>
+          }
+          <span class="status-dot" [class.active]="u.isActive"></span>
+        </div>
+        <div class="user-details">
+          <h1>{{ u.firstName }} {{ u.lastName }}</h1>
+          <p class="user-email">{{ u.email }}</p>
+          <div class="user-badges">
+            <span class="role-badge" [style.background-color]="getRoleColor(u.role.name)">
+              {{ u.role.displayName || 'Customer' }}
+            </span>
+            <app-badge [variant]="u.isActive ? 'success' : 'neutral'" size="sm">
+              {{ u.isActive ? 'Active' : 'Inactive' }}
+            </app-badge>
+          </div>
+        </div>
+      </div>
+      <app-button variant="primary" icon="edit" [routerLink]="['/users', id(), 'edit']">
+        Edit User
+      </app-button>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="content-grid">
+      <!-- Left Column -->
+      <div class="left-column">
+        <!-- Account Information -->
+        <div class="section-card">
+          <div class="section-header">
+            <span class="material-symbols-outlined">badge</span>
+            <h2>Account Information</h2>
+          </div>
+          <div class="info-list">
+            <div class="info-item">
+              <span class="info-label">ROLE</span>
+              <div class="info-value-row">
+                <span>{{ u.role.displayName || 'Retail Customer' }}</span>
+                <a [routerLink]="['/users', id(), 'edit']" class="change-link">Change</a>
+              </div>
+            </div>
+            <div class="info-item">
+              <span class="info-label">PHONE NUMBER</span>
+              <span class="info-value">{{ u.phone || 'Not provided' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">MEMBER SINCE</span>
+              <span class="info-value">{{ u.createdAt | date:'MMMM d, y' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">LAST LOGIN</span>
+              <span class="info-value">{{ u.lastLoginAt | date:'MMMM d, y \'at\' h:mm a' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">LAST IP ADDRESS</span>
+              <code class="ip-address">192.168.1.42</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security & Actions -->
+        <div class="section-card">
+          <div class="section-header">
+            <span class="material-symbols-outlined">lock</span>
+            <h2>Security & Actions</h2>
+          </div>
+          <div class="actions-list">
+            <app-button variant="outline" icon="key" [fullWidth]="true" (clicked)="resetPassword()">
+              Reset Password
+            </app-button>
+            @if (u.isActive) {
+              <app-button variant="outline" class="danger-btn" icon="block" [fullWidth]="true" (clicked)="deactivateUser()">
+                Deactivate User
+              </app-button>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="right-column">
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="material-symbols-outlined stat-icon stat-icon--orders">shopping_bag</span>
+            <div class="stat-content">
+              <span class="stat-label">Total Orders</span>
+              <span class="stat-value">{{ stats().totalOrders }}</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <span class="material-symbols-outlined stat-icon stat-icon--value">payments</span>
+            <div class="stat-content">
+              <span class="stat-label">Lifetime Value</span>
+              <span class="stat-value">{{ stats().lifetimeValue | currency }}</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <span class="material-symbols-outlined stat-icon stat-icon--review">star</span>
+            <div class="stat-content">
+              <span class="stat-label">Avg. Review</span>
+              <span class="stat-value">{{ stats().avgReview }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="section-card">
+          <div class="section-header">
+            <span class="material-symbols-outlined">receipt_long</span>
+            <h2>Recent Orders</h2>
+            <a routerLink="/orders" [queryParams]="{userId: id()}" class="view-all-link">View All History</a>
+          </div>
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>ORDER #</th>
+                <th>DATE</th>
+                <th>TOTAL</th>
+                <th>STATUS</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (order of recentOrders(); track trackByOrder($index, order)) {
+                <tr>
+                  <td class="order-number">#{{ order.orderNumber }}</td>
+                  <td>{{ order.createdAt | date:'MMM d, y' }}</td>
+                  <td>{{ order.total | currency }}</td>
+                  <td>
+                    <app-badge [variant]="getStatusVariant(order.status)" size="sm">
+                      {{ order.status }}
+                    </app-badge>
+                  </td>
+                  <td>
+                    <a [routerLink]="['/orders', order.id]" class="view-order-btn">
+                      <span class="material-symbols-outlined">visibility</span>
+                    </a>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="5" class="empty-orders">No orders yet</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Logged In Devices -->
+        <div class="section-card">
+          <div class="section-header">
+            <span class="material-symbols-outlined">devices</span>
+            <h2>Logged In Devices</h2>
+          </div>
+          <div class="sessions-list">
+            @for (session of sessions(); track trackBySession($index, session)) {
+              <div class="session-item">
+                <div class="device-icon">
+                  <span class="material-symbols-outlined">
+                    {{ session.device.includes('iPhone') || session.device.includes('Android') ? 'smartphone' : 'laptop' }}
+                  </span>
+                </div>
+                <div class="session-info">
+                  <span class="device-name">{{ session.device }}</span>
+                  <span class="device-details">{{ session.location }} • {{ session.browser }}</span>
+                </div>
+                <div class="session-status">
+                  @if (session.isCurrent) {
+                    <app-badge variant="info" size="sm">CURRENT SESSION</app-badge>
+                  } @else {
+                    <span class="last-active">{{ session.lastActive }}</span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  }
+</div>
+

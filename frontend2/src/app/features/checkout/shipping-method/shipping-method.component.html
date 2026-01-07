@@ -1,0 +1,51 @@
+<div class="shipping-method">
+  <h2>Shipping Method</h2>
+  <p class="subtitle">Choose how you want your order delivered</p>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner />
+    </div>
+  } @else {
+    <div class="methods-list">
+      @for (method of methods(); track method.id) {
+        <label class="method-option" [class.method-option--selected]="selectedMethod.value === method.id">
+          <input
+            type="radio"
+            [formControl]="selectedMethod"
+            [value]="method.id"
+          />
+          <div class="method-content">
+            <div class="method-header">
+              <span class="method-name">{{ method.name }}</span>
+              <span class="method-price">
+                @if (method.price === 0) {
+                  <span class="free">FREE</span>
+                } @else {
+                  {{ method.price | currency }}
+                }
+              </span>
+            </div>
+            <p class="method-description">{{ method.description }}</p>
+            <span class="method-estimate">{{ method.estimatedDays }}</span>
+          </div>
+        </label>
+      }
+    </div>
+
+    <div class="form-actions">
+      <app-button variant="outline" routerLink="/checkout/shipping">
+        Back
+      </app-button>
+      <app-button
+        [disabled]="!selectedMethod.value"
+        icon="arrow_forward"
+        iconPosition="right"
+        (clicked)="onContinue()"
+      >
+        Continue to Payment
+      </app-button>
+    </div>
+  }
+</div>
+

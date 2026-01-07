@@ -1,0 +1,80 @@
+<div class="shipping-address">
+  <h2>Shipping Address</h2>
+  <p class="subtitle">Where should we send your order?</p>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <app-form-field
+        label="First Name"
+        [control]="form.controls.firstName"
+      />
+      <app-form-field
+        label="Last Name"
+        [control]="form.controls.lastName"
+      />
+    </div>
+
+    <app-form-field
+      label="Company (Optional)"
+      [control]="form.controls.company"
+    />
+
+    <app-form-field
+      label="Address"
+      [control]="form.controls.address1"
+      placeholder="Street address"
+    />
+
+    <app-form-field
+      label="Apartment, Suite, etc. (Optional)"
+      [control]="form.controls.address2"
+    />
+
+    <div class="form-row form-row--3">
+      <app-form-field
+        label="City"
+        [control]="form.controls.city"
+      />
+      <app-select
+        label="State"
+        [control]="form.controls.state"
+        [options]="stateOptions"
+      />
+      <app-form-field
+        label="ZIP Code"
+        [control]="form.controls.zipCode"
+      />
+    </div>
+
+    <app-select
+      label="Country"
+      [control]="form.controls.country"
+      [options]="countryOptions"
+    />
+
+    <app-form-field
+      label="Phone"
+      type="tel"
+      [control]="form.controls.phone"
+      hint="For delivery updates"
+    />
+
+    <div class="form-actions">
+      <app-button
+        variant="outline"
+        routerLink="/cart"
+      >
+        Back to Cart
+      </app-button>
+      <app-button
+        type="submit"
+        [loading]="isSubmitting()"
+        icon="arrow_forward"
+        iconPosition="right"
+      >
+        Continue to Shipping Method
+      </app-button>
+    </div>
+  </form>
+</div>
+

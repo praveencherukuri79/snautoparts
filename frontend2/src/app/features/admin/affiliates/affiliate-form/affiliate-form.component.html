@@ -1,0 +1,158 @@
+<div class="affiliate-form-page">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="breadcrumb">
+        <a routerLink="/dropship/affiliates" class="back-link">
+          <span class="material-symbols-outlined">arrow_back</span>
+          Back to Affiliates
+        </a>
+      </div>
+      <h1>{{ isEditMode() ? 'Configure' : 'Add New' }} Affiliate</h1>
+      <p class="subtitle">
+        {{ isEditMode() ? 'Update affiliate integration settings and configuration.' : 'Connect a new drop-ship supplier to your inventory.' }}
+      </p>
+    </header>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-layout">
+      <!-- Basic Information -->
+      <app-card class="form-section">
+        <div class="section-header">
+          <span class="material-symbols-outlined section-icon">business</span>
+          <div>
+            <h2 class="section-title">Basic Information</h2>
+            <p class="section-desc">Supplier identification and display name</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <app-form-field label="Supplier Name" [required]="true" hint="Display name for this affiliate">
+            <input formControlName="name" type="text" placeholder="e.g., Auto Parts Warehouse" />
+          </app-form-field>
+
+          <app-form-field label="Supplier Code" [required]="true" hint="Unique identifier (uppercase, no spaces)">
+            <div class="input-with-button">
+              <input formControlName="code" type="text" placeholder="e.g., APW_SUPPLIER" />
+              <button type="button" class="generate-btn" (click)="generateCode()">
+                Generate
+              </button>
+            </div>
+          </app-form-field>
+        </div>
+
+        <app-form-field label="Notes" hint="Internal notes about this supplier">
+          <textarea formControlName="notes" rows="3" placeholder="Additional notes..."></textarea>
+        </app-form-field>
+      </app-card>
+
+      <!-- Integration Settings -->
+      <app-card class="form-section">
+        <div class="section-header">
+          <span class="material-symbols-outlined section-icon">settings_ethernet</span>
+          <div>
+            <h2 class="section-title">Integration Settings</h2>
+            <p class="section-desc">Configure how orders are sent to this supplier</p>
+          </div>
+        </div>
+
+        <app-form-field label="Integration Type" [required]="true">
+          <select formControlName="integrationType">
+            @for (type of integrationTypes; track type) {
+              <option [value]="type">{{ type }}</option>
+            }
+          </select>
+        </app-form-field>
+
+        <!-- API Fields -->
+        @if (showApiFields) {
+          <div class="form-grid">
+            <app-form-field label="API URL" hint="Endpoint URL for order submissions">
+              <input formControlName="apiUrl" type="url" placeholder="https://api.supplier.com/orders" />
+            </app-form-field>
+            <app-form-field label="API Key" hint="Authentication key for API access">
+              <input formControlName="apiKey" type="password" placeholder="Enter API key" />
+            </app-form-field>
+          </div>
+        }
+
+        <!-- Email Fields -->
+        @if (showEmailFields) {
+          <app-form-field label="Order Email" hint="Email address for sending orders">
+            <input formControlName="email" type="email" placeholder="orders@supplier.com" />
+          </app-form-field>
+        }
+
+        <!-- FTP Fields -->
+        @if (showFtpFields) {
+          <div class="form-grid">
+            <app-form-field label="FTP Host" hint="FTP server hostname">
+              <input formControlName="ftpHost" type="text" placeholder="ftp.supplier.com" />
+            </app-form-field>
+            <app-form-field label="FTP Username">
+              <input formControlName="ftpUsername" type="text" placeholder="Username" />
+            </app-form-field>
+            <app-form-field label="FTP Password">
+              <input formControlName="ftpPassword" type="password" placeholder="Password" />
+            </app-form-field>
+          </div>
+        }
+      </app-card>
+
+      <!-- Inventory Settings -->
+      <app-card class="form-section">
+        <div class="section-header">
+          <span class="material-symbols-outlined section-icon">inventory_2</span>
+          <div>
+            <h2 class="section-title">Inventory Settings</h2>
+            <p class="section-desc">Stock management and auto-reorder configuration</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <app-form-field label="Low Stock Threshold" [required]="true" hint="Alert when stock falls below this level">
+            <input formControlName="lowStockThreshold" type="number" min="0" />
+          </app-form-field>
+          <app-form-field label="Priority" [required]="true" hint="Lower number = higher priority">
+            <input formControlName="priority" type="number" min="1" />
+          </app-form-field>
+        </div>
+
+        <div class="checkbox-field">
+          <input type="checkbox" formControlName="autoReorder" id="autoReorder" />
+          <label for="autoReorder">
+            <strong>Auto-reorder</strong>
+            <span>Automatically create purchase orders when stock is low</span>
+          </label>
+        </div>
+
+        <div class="checkbox-field">
+          <input type="checkbox" formControlName="isEnabled" id="isEnabled" />
+          <label for="isEnabled">
+            <strong>Active</strong>
+            <span>Enable this affiliate for order processing</span>
+          </label>
+        </div>
+      </app-card>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <app-button variant="outline" routerLink="/dropship/affiliates">
+          Cancel
+        </app-button>
+        <app-button 
+          type="submit" 
+          variant="primary" 
+          [disabled]="form.invalid || isSaving()"
+          [loading]="isSaving()"
+        >
+          {{ isEditMode() ? 'Save Changes' : 'Create Affiliate' }}
+        </app-button>
+      </div>
+    </form>
+  }
+</div>
+

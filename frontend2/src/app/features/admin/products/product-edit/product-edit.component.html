@@ -1,0 +1,88 @@
+<div class="product-edit">
+  <div class="page-header">
+    <app-button variant="ghost" icon="arrow_back" routerLink="/admin/products">
+      Back to Products
+    </app-button>
+    <h1>{{ isEditMode ? 'Edit Product' : 'New Product' }}</h1>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <app-card title="Basic Information" class="span-2">
+          <app-form-field
+            label="Product Name"
+            [control]="nameControl"
+          />
+          
+          <div class="form-row">
+            <app-form-field
+              label="SKU"
+              [control]="skuControl"
+            />
+            <app-form-field
+              label="URL Slug"
+              [control]="slugControl"
+            />
+          </div>
+
+          <app-form-field
+            label="Short Description"
+            [control]="shortDescriptionControl"
+          />
+        </app-card>
+
+        <app-card title="Pricing">
+          <app-form-field
+            label="Price"
+            type="number"
+            [control]="priceControl"
+            prefixIcon="attach_money"
+          />
+          <app-form-field
+            label="Compare at Price"
+            type="number"
+            [control]="compareAtPriceControl"
+            prefixIcon="attach_money"
+            hint="Original price for showing discounts"
+          />
+        </app-card>
+
+        <app-card title="Inventory">
+          <app-form-field
+            label="Stock Quantity"
+            type="number"
+            [control]="stockQuantityControl"
+          />
+        </app-card>
+
+        <app-card title="Status" class="span-2">
+          <div class="status-toggles">
+            <label class="toggle-label">
+              <input type="checkbox" formControlName="isActive" />
+              <span>Active (visible on storefront)</span>
+            </label>
+            <label class="toggle-label">
+              <input type="checkbox" formControlName="isFeatured" />
+              <span>Featured (show on home page)</span>
+            </label>
+          </div>
+        </app-card>
+      </div>
+
+      <div class="form-actions">
+        <app-button variant="outline" routerLink="/admin/products">
+          Cancel
+        </app-button>
+        <app-button type="submit" [loading]="isSaving()">
+          {{ isEditMode ? 'Save Changes' : 'Create Product' }}
+        </app-button>
+      </div>
+    </form>
+  }
+</div>
+

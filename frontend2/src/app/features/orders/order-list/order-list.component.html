@@ -1,0 +1,65 @@
+<div class="orders-page">
+  <h1>My Orders</h1>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else if (orders().length === 0) {
+    <app-empty-state
+      icon="receipt_long"
+      title="No orders yet"
+      message="When you place an order, it will appear here"
+      actionLabel="Start Shopping"
+      routerLink="/products"
+    />
+  } @else {
+    <div class="orders-list">
+      @for (order of orders(); track trackByOrder($index, order)) {
+        <a [routerLink]="['/orders', order.id]" class="order-card">
+          <app-card variant="outlined" [clickable]="true">
+            <div class="order-header">
+              <div class="order-info">
+                <span class="order-number">{{ order.orderNumber }}</span>
+                <span class="order-date">{{ order.createdAt | date:'mediumDate' }}</span>
+              </div>
+              <app-badge [variant]="getStatusVariant(order.status)">
+                {{ order.status }}
+              </app-badge>
+            </div>
+
+            <div class="order-items">
+              @for (item of order.items.slice(0, 3); track item.id) {
+                <div class="order-item">
+                  @if (item.imageUrl) {
+                    <img [src]="item.imageUrl" [alt]="item.productName" class="item-image" />
+                  }
+                  <span class="item-name">{{ item.productName }}</span>
+                  <span class="item-qty">x{{ item.quantity }}</span>
+                </div>
+              }
+              @if (order.items && order.items.length > 3) {
+                <span class="more-items">+{{ order.items.length - 3 }} more items</span>
+              }
+            </div>
+
+            <div class="order-footer">
+              <span class="order-total">{{ order.total | currency }}</span>
+              <span class="view-details">View Details →</span>
+            </div>
+          </app-card>
+        </a>
+      }
+    </div>
+
+    @if (total() > pageSize) {
+      <app-pagination
+        [total]="total()"
+        [pageSize]="pageSize"
+        [currentPage]="currentPage()"
+        (pageChange)="onPageChange($event)"
+      />
+    }
+  }
+</div>
+

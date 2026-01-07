@@ -1,0 +1,176 @@
+@if (isLoading()) {
+  <div class="loading-container">
+    <app-spinner size="lg" />
+  </div>
+} @else {
+  <div class="integrations-settings">
+    <!-- Core Services -->
+    <section class="section">
+      <h2 class="section-title">Core Services</h2>
+      <div class="integrations-grid">
+        @for (integration of coreIntegrations; track trackByIntegration($index, integration)) {
+          <app-card class="integration-card">
+            <div class="integration-header">
+              <div class="integration-icon" [style.background-color]="integration.iconColor + '15'" [style.color]="integration.iconColor">
+                <span class="material-symbols-outlined">{{ integration.icon }}</span>
+              </div>
+              <div class="integration-info">
+                <h3>{{ integration.name }}</h3>
+                <div class="status-row">
+                  <app-badge [variant]="getStatusVariant(integration.status)" size="sm">
+                    {{ getStatusLabel(integration.status) }}
+                  </app-badge>
+                  @if (integration.lastVerified) {
+                    <span class="last-verified">Last verified: {{ integration.lastVerified | date:'mediumDate' }}</span>
+                  }
+                </div>
+              </div>
+              @if (integration.status === 'connected') {
+                <button class="config-btn" (click)="configure(integration)">Configure</button>
+              } @else {
+                <app-button variant="outline" size="sm" (clicked)="connect(integration)">Connect</app-button>
+              }
+            </div>
+
+            @if (integration.features) {
+              <div class="integration-features">
+                @for (feature of integration.features; track feature) {
+                  <span class="feature-tag">{{ feature }}</span>
+                }
+              </div>
+            }
+
+            @if (integration.description) {
+              <p class="integration-desc">{{ integration.description }}</p>
+            }
+
+            @if (integration.status === 'connected') {
+              <div class="integration-actions">
+                <button class="action-link" (click)="testConnection(integration)">
+                  <span class="material-symbols-outlined">speed</span>
+                  Test Connection
+                </button>
+                <button class="action-link" (click)="viewLogs(integration)">
+                  <span class="material-symbols-outlined">description</span>
+                  View Logs
+                </button>
+              </div>
+            }
+          </app-card>
+        }
+      </div>
+    </section>
+
+    <!-- Supplier APIs -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Supplier APIs</h2>
+        <app-button variant="outline" size="sm" icon="add" (clicked)="addSupplier()">Add Supplier</app-button>
+      </div>
+      <div class="integrations-grid">
+        @for (integration of supplierIntegrations; track trackByIntegration($index, integration)) {
+          <app-card class="integration-card" [class.error]="integration.status === 'error'">
+            <div class="integration-header">
+              <div class="integration-icon" [style.background-color]="integration.iconColor + '15'" [style.color]="integration.iconColor">
+                <span class="material-symbols-outlined">{{ integration.icon }}</span>
+              </div>
+              <div class="integration-info">
+                <h3>{{ integration.name }}</h3>
+                <div class="status-row">
+                  <app-badge [variant]="getStatusVariant(integration.status)" size="sm">
+                    {{ getStatusLabel(integration.status) }}
+                  </app-badge>
+                </div>
+              </div>
+              <button class="config-btn" (click)="configure(integration)">Configure</button>
+            </div>
+
+            @if (integration.description) {
+              <p class="integration-desc" [class.error-text]="integration.status === 'error'">
+                {{ integration.description }}
+              </p>
+            }
+
+            @if (integration.status === 'error') {
+              <div class="integration-actions">
+                <app-button variant="outline" size="sm" icon="refresh" (clicked)="retrySync(integration)">Retry Sync</app-button>
+                <button class="action-link" (click)="viewErrorLog(integration)">View Error Log</button>
+              </div>
+            }
+          </app-card>
+        }
+      </div>
+    </section>
+
+    <!-- Webhooks -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Webhooks</h2>
+        <app-button variant="primary" size="sm" icon="add" (clicked)="addWebhook()">Add Webhook</app-button>
+      </div>
+
+      <app-card class="webhooks-card">
+        @if (webhooks().length === 0) {
+          <div class="empty-state">
+            <span class="material-symbols-outlined">webhook</span>
+            <p>No webhooks configured</p>
+            <app-button variant="outline" size="sm" (clicked)="addWebhook()">Add Your First Webhook</app-button>
+          </div>
+        } @else {
+          <table class="webhooks-table">
+            <thead>
+              <tr>
+                <th>Endpoint URL</th>
+                <th>Events</th>
+                <th>Status</th>
+                <th>Last Triggered</th>
+                <th class="right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (webhook of webhooks(); track trackByWebhook($index, webhook)) {
+                <tr [class.inactive]="!webhook.isActive">
+                  <td class="url-cell">
+                    <code>{{ webhook.url }}</code>
+                  </td>
+                  <td>
+                    <div class="events-cell">
+                      @for (event of webhook.events; track event) {
+                        <span class="event-tag">{{ event }}</span>
+                      }
+                    </div>
+                  </td>
+                  <td>
+                    <label class="toggle">
+                      <input 
+                        type="checkbox" 
+                        [checked]="webhook.isActive" 
+                        (change)="toggleWebhook(webhook)"
+                      />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </td>
+                  <td class="timestamp">
+                    {{ webhook.lastTriggered ? (webhook.lastTriggered | date:'short') : 'Never' }}
+                  </td>
+                  <td class="right actions-cell">
+                    <button class="action-btn" title="Test" (click)="testWebhook(webhook)">
+                      <span class="material-symbols-outlined">play_arrow</span>
+                    </button>
+                    <button class="action-btn" title="Edit" (click)="editWebhook(webhook)">
+                      <span class="material-symbols-outlined">edit</span>
+                    </button>
+                    <button class="action-btn danger" title="Delete" (click)="deleteWebhook(webhook)">
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+      </app-card>
+    </section>
+  </div>
+}
+

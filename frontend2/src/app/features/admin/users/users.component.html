@@ -1,0 +1,19 @@
+<div class="users-page">
+  <div class="page-header">
+    <h1>User Management</h1>
+    <app-button icon="person_add">Add User</app-button>
+  </div>
+
+  <app-data-table
+    [columns]="columns"
+    [data]="users()"
+    [loading]="isLoading()"
+    [paginated]="true"
+    [total]="total()"
+    [pageSize]="pageSize"
+    [currentPage]="currentPage()"
+    (pageChange)="onPageChange($event)"
+    emptyTitle="No users found"
+  />
+</div>
+

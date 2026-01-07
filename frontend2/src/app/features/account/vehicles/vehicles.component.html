@@ -1,0 +1,53 @@
+<div class="vehicles-page">
+  <div class="page-header">
+    <h1>My Vehicles</h1>
+    <app-button icon="add">Add Vehicle</app-button>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner size="lg" />
+    </div>
+  } @else if (vehicles().length === 0) {
+    <app-empty-state
+      icon="directions_car"
+      title="No vehicles saved"
+      message="Save your vehicles to quickly find compatible parts"
+      actionLabel="Add Vehicle"
+      actionIcon="add"
+    />
+  } @else {
+    <div class="vehicles-grid">
+      @for (vehicle of vehicles(); track trackByVehicle($index, vehicle)) {
+        <app-card variant="outlined" [class.default-card]="vehicle.isDefault">
+          @if (vehicle.isDefault) {
+            <span class="default-badge">Default</span>
+          }
+          <div class="vehicle-content">
+            @if (vehicle.nickname) {
+              <p class="nickname">{{ vehicle.nickname }}</p>
+            }
+            <p class="vehicle-info">{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}</p>
+            @if (vehicle.submodel) {
+              <p class="submodel">{{ vehicle.submodel }}</p>
+            }
+            @if (vehicle.engine) {
+              <p class="engine">{{ vehicle.engine }}</p>
+            }
+          </div>
+          <div class="vehicle-actions">
+            @if (!vehicle.isDefault) {
+              <app-button variant="ghost" size="sm" (clicked)="setDefault(vehicle)">
+                Set as Default
+              </app-button>
+            }
+            <app-button variant="ghost" size="sm" icon="delete" (clicked)="deleteVehicle(vehicle)">
+              Remove
+            </app-button>
+          </div>
+        </app-card>
+      }
+    </div>
+  }
+</div>
+

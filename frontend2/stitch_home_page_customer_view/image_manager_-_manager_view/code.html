@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Image Manager - SN Auto Parts</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2c241b", // Slightly lighter than bg-dark for cards
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better look in the manager view */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #4b5563; 
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280; 
+        }
+
+        /* Material Symbols Utility */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181411] dark:text-gray-100 font-display h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 bg-surface-light dark:bg-surface-dark border-r border-[#e6dfdb] dark:border-[#3e3229] flex flex-col h-full transition-all duration-300 z-20">
+<div class="p-6 pb-2">
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shrink-0" data-alt="Abstract orange logo" style="background-image: linear-gradient(135deg, #f97415 0%, #ff9f57 100%);"></div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="text-[#181411] dark:text-white text-base font-bold leading-normal truncate">SN Auto Parts</h1>
+<p class="text-[#8c725f] dark:text-gray-400 text-xs font-normal leading-normal truncate">Manager Portal</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light dark:hover:bg-background-dark/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#8c725f] dark:text-gray-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-[#181411] dark:text-gray-200 text-sm font-medium leading-normal">Dashboard</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 dark:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary fill">inventory_2</span>
+<span class="text-primary text-sm font-bold leading-normal">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light dark:hover:bg-background-dark/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#8c725f] dark:text-gray-400 group-hover:text-primary transition-colors">shopping_cart</span>
+<span class="text-[#181411] dark:text-gray-200 text-sm font-medium leading-normal">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light dark:hover:bg-background-dark/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#8c725f] dark:text-gray-400 group-hover:text-primary transition-colors">group</span>
+<span class="text-[#181411] dark:text-gray-200 text-sm font-medium leading-normal">Users</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light dark:hover:bg-background-dark/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#8c725f] dark:text-gray-400 group-hover:text-primary transition-colors">settings</span>
+<span class="text-[#181411] dark:text-gray-200 text-sm font-medium leading-normal">Settings</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-6 border-t border-[#e6dfdb] dark:border-[#3e3229]">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-gray-200 bg-center bg-cover" data-alt="User profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKrx81kUB8kyNg_QaFNQLpT1bep_2ivC_xn-Ta2BhGyaYilcirLFi_z-J8dU8f5UCXqgVz-uAa-lwUBfq0cXDtXhPq__zDq-0tl-gdzjeN2mXHu8Lggy_pULyMas9MPx6IiHy52RTx_s2a27C9TifGeSnkcYGG16wJy1cB4zgTK7TWL7dnhMSjMfN7rs02htkDCmVYo1T8gmltVfyEndZfQmabb25klvkT_N2rjIsxoDXgxfc9Om93zrKnPh95rLKeJ365VnUUkU-n');"></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-[#181411] dark:text-white">Tom Cook</p>
+<p class="text-xs text-[#8c725f] dark:text-gray-400">View Profile</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Scrollable Area -->
+<div class="flex-1 overflow-y-auto p-6 lg:p-10 scroll-smooth">
+<div class="max-w-[1200px] mx-auto flex flex-col gap-8 pb-24">
+<!-- Breadcrumbs -->
+<nav class="flex flex-wrap items-center gap-2 text-sm">
+<a class="text-[#8c725f] dark:text-gray-400 font-medium hover:text-primary transition-colors" href="#">Inventory</a>
+<span class="material-symbols-outlined text-[#8c725f] dark:text-gray-500 text-[16px]">chevron_right</span>
+<a class="text-[#8c725f] dark:text-gray-400 font-medium hover:text-primary transition-colors" href="#">Products</a>
+<span class="material-symbols-outlined text-[#8c725f] dark:text-gray-500 text-[16px]">chevron_right</span>
+<span class="text-[#181411] dark:text-white font-medium">Image Manager</span>
+</nav>
+<!-- Page Header -->
+<header class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+<div class="flex flex-col gap-2">
+<h1 class="text-[#181411] dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-tight">
+                            Image Manager: <span class="text-primary block md:inline">Alternator Assembly Type-X</span>
+</h1>
+<div class="flex items-center gap-2">
+<span class="bg-[#e6dfdb] dark:bg-[#3e3229] px-2 py-0.5 rounded text-xs font-mono font-bold text-[#5e4b3e] dark:text-gray-300">SKU: ALT-99201</span>
+<span class="text-[#8c725f] dark:text-gray-400 text-sm">| Category: Engine Parts</span>
+</div>
+</div>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-light dark:bg-surface-dark border border-[#e6dfdb] dark:border-[#3e3229] text-[#181411] dark:text-gray-200 text-sm font-bold hover:bg-[#f5f2f0] dark:hover:bg-[#3e3229] transition-all shadow-sm shrink-0 w-fit">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+                        Back to Product
+                    </button>
+</header>
+<!-- Upload Zone -->
+<section class="flex flex-col gap-4">
+<h2 class="text-lg font-bold text-[#181411] dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">cloud_upload</span>
+                        Upload New Images
+                    </h2>
+<div class="relative flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed border-[#e6dfdb] dark:border-[#3e3229] bg-white dark:bg-surface-dark/50 p-10 transition-colors hover:border-primary/50 hover:bg-primary/5 dark:hover:bg-primary/5 group cursor-pointer">
+<div class="rounded-full bg-[#f5f2f0] dark:bg-[#3e3229] p-4 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-4xl text-[#8c725f] dark:text-gray-400 group-hover:text-primary transition-colors">add_photo_alternate</span>
+</div>
+<div class="text-center space-y-1">
+<p class="text-[#181411] dark:text-white text-lg font-bold">Drag and drop images here</p>
+<p class="text-[#8c725f] dark:text-gray-400 text-sm">Supported: JPG, PNG, WEBP. Max 5MB per file.</p>
+</div>
+<div class="flex items-center gap-3 mt-2">
+<span class="h-px w-12 bg-[#e6dfdb] dark:bg-[#3e3229]"></span>
+<span class="text-xs uppercase font-semibold text-[#8c725f] dark:text-gray-500">OR</span>
+<span class="h-px w-12 bg-[#e6dfdb] dark:bg-[#3e3229]"></span>
+</div>
+<button class="mt-2 bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-lg transition-colors shadow-lg shadow-primary/20 flex items-center gap-2">
+                            Browse Files
+                        </button>
+</div>
+</section>
+<!-- Image Gallery Grid -->
+<section class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-lg font-bold text-[#181411] dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">grid_view</span>
+                            Product Gallery <span class="text-sm font-normal text-[#8c725f] dark:text-gray-400 ml-1">(4 images)</span>
+</h2>
+<span class="text-xs text-[#8c725f] dark:text-gray-400 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">drag_indicator</span>
+                            Drag images to reorder
+                        </span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Card 1: Main Image -->
+<div class="group relative flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border-2 border-primary overflow-hidden transition-all hover:shadow-md">
+<div class="absolute top-3 left-3 z-10">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-primary text-white text-xs font-bold shadow-sm">
+<span class="material-symbols-outlined text-[14px] fill">star</span>
+                                    Main Image
+                                </span>
+</div>
+<div class="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity cursor-move">
+<span class="bg-black/50 hover:bg-black/70 text-white p-1.5 rounded-md backdrop-blur-sm">
+<span class="material-symbols-outlined text-[20px]">drag_pan</span>
+</span>
+</div>
+<div class="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<div class="absolute inset-0 bg-center bg-contain bg-no-repeat m-4" data-alt="Front view of alternator auto part" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUdpdnnu78y-t2S7decUStc6eopknBelqwva2uzfBWUyd4-ftbscL-Tj0x-qDX-2AsVdnb7qhZC_WZd-59kRR1c3pKrRB4kOZ3BJbgXucSqp_TncuFdx1Mm8JufwZ4Ze9Yf6gBMCREAqvFyr7eQBAcU2ZOfgoPyW5cWnBvqnf3AWrHWnl-VSZXYSWDnujPPvaSj5I7CNe7l09JOmygr-ygLOheeV5R-npMrh3XFBpm5Ldw-F2LdIefbfxWv4EPwD_voEpOUkJAWniX");'></div>
+</div>
+<div class="p-4 flex flex-col gap-3 border-t border-[#e6dfdb] dark:border-[#3e3229]">
+<div>
+<p class="text-[#181411] dark:text-white text-sm font-bold truncate" title="front_view_hires_final.jpg">front_view_hires_final.jpg</p>
+<p class="text-[#8c725f] dark:text-gray-400 text-xs mt-0.5">2.4 MB • JPG</p>
+</div>
+<div class="flex items-center justify-end gap-2 pt-2 border-t border-dashed border-[#e6dfdb] dark:border-[#3e3229]">
+<button class="p-2 rounded text-primary hover:bg-primary/10 transition-colors" disabled="" title="Already Main Image">
+<span class="material-symbols-outlined text-[20px] fill opacity-50">star</span>
+</button>
+<button class="p-2 rounded text-[#8c725f] hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#3e3229] overflow-hidden transition-all hover:shadow-md hover:border-primary/50">
+<div class="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity cursor-move">
+<span class="bg-black/50 hover:bg-black/70 text-white p-1.5 rounded-md backdrop-blur-sm">
+<span class="material-symbols-outlined text-[20px]">drag_pan</span>
+</span>
+</div>
+<div class="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<div class="absolute inset-0 bg-center bg-contain bg-no-repeat m-4" data-alt="Side profile of alternator part" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA6X_ABWLJDWywcYMeNqZypt7gt7MhnQ1zRn18Xs0dw-5e_T-ZxuCwC7T6XztpOjAhEeJxERA4BVMqwkzohEfFBNj_8tktSsLM-33T5wI6H05cvYiChCmavK7usdgMrpDop8xHrtsNmoDJMFNzXtLnvlWjZ_1bVzFNnHNRwOiBBlVGrq8qRfpOCKYJjPR_m40WFJ-Pa36VGvIvLPpXrMWg4_F4mXsCUcFU7uiqUmN4vQQzNU9Bo3d0mV9oUH9FGY23CiRX2Di5hmjN8");'></div>
+</div>
+<div class="p-4 flex flex-col gap-3 border-t border-[#e6dfdb] dark:border-[#3e3229]">
+<div>
+<p class="text-[#181411] dark:text-white text-sm font-bold truncate" title="side_profile_v2.png">side_profile_v2.png</p>
+<p class="text-[#8c725f] dark:text-gray-400 text-xs mt-0.5">1.1 MB • PNG</p>
+</div>
+<div class="flex items-center justify-end gap-2 pt-2 border-t border-dashed border-[#e6dfdb] dark:border-[#3e3229]">
+<button class="p-2 rounded text-[#8c725f] hover:text-primary hover:bg-primary/10 transition-colors" title="Set as Main Image">
+<span class="material-symbols-outlined text-[20px]">star</span>
+</button>
+<button class="p-2 rounded text-[#8c725f] hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#3e3229] overflow-hidden transition-all hover:shadow-md hover:border-primary/50">
+<div class="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity cursor-move">
+<span class="bg-black/50 hover:bg-black/70 text-white p-1.5 rounded-md backdrop-blur-sm">
+<span class="material-symbols-outlined text-[20px]">drag_pan</span>
+</span>
+</div>
+<div class="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<div class="absolute inset-0 bg-center bg-contain bg-no-repeat m-4" data-alt="Technical diagram of alternator installation" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCYpwtp9XQDIBvq5OJHHGEf77-j5yFeC5j7pPGeuJqpPwzfGtMNkpSYYpJDbe71DX6XsKRtC0lCujaljm_yLlMkh9GyrHA07fNxZbOLNhPec4g-Jm0Ad8PANHQAN18ymim_BlybJzhbsdcVJySc05Ky-Jp8gRm4BagB0PeoKGO-codFv0hzue1Lnkn0pnQW7aZS_ISipvQAW_nZYyDaY3VQz9iuZDLq3QBNE_xlKm-yZUz5oSTUG00LLXUcOv42IcsB9YCdu26GgII_");'></div>
+</div>
+<div class="p-4 flex flex-col gap-3 border-t border-[#e6dfdb] dark:border-[#3e3229]">
+<div>
+<p class="text-[#181411] dark:text-white text-sm font-bold truncate" title="install_diagram.webp">install_diagram.webp</p>
+<p class="text-[#8c725f] dark:text-gray-400 text-xs mt-0.5">800 KB • WEBP</p>
+</div>
+<div class="flex items-center justify-end gap-2 pt-2 border-t border-dashed border-[#e6dfdb] dark:border-[#3e3229]">
+<button class="p-2 rounded text-[#8c725f] hover:text-primary hover:bg-primary/10 transition-colors" title="Set as Main Image">
+<span class="material-symbols-outlined text-[20px]">star</span>
+</button>
+<button class="p-2 rounded text-[#8c725f] hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group relative flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-[#e6dfdb] dark:border-[#3e3229] overflow-hidden transition-all hover:shadow-md hover:border-primary/50">
+<div class="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity cursor-move">
+<span class="bg-black/50 hover:bg-black/70 text-white p-1.5 rounded-md backdrop-blur-sm">
+<span class="material-symbols-outlined text-[20px]">drag_pan</span>
+</span>
+</div>
+<div class="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<div class="absolute inset-0 bg-center bg-contain bg-no-repeat m-4" data-alt="Detail shot of electrical connector" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCuRxV1wU7hWhrcHeTJRvU_tkm4-AMgah-p6Un2TM-w4sLIIyvfOiMy3F8DELvlFxglwDd7rfe6TDow2YCqHLoF1dKAyTd_vc-VPlKMnk9RzA8mSWsgKHd-TeEIU1s_rA75fzxHJR8DAkHWWlxr3YtmMgb2uTRinndGNa2-biLs-Lb7WK5pwuL5NzUIxKHILqrcJPU9oJ8BPKWljoNn8xcQKoilTjhXOVBou14jlzq9e1rY_tPqPQKwPbL567FQNzAjWnKWHeRL4NGN");'></div>
+</div>
+<div class="p-4 flex flex-col gap-3 border-t border-[#e6dfdb] dark:border-[#3e3229]">
+<div>
+<p class="text-[#181411] dark:text-white text-sm font-bold truncate" title="connector_detail_macro.jpg">connector_detail_macro.jpg</p>
+<p class="text-[#8c725f] dark:text-gray-400 text-xs mt-0.5">1.5 MB • JPG</p>
+</div>
+<div class="flex items-center justify-end gap-2 pt-2 border-t border-dashed border-[#e6dfdb] dark:border-[#3e3229]">
+<button class="p-2 rounded text-[#8c725f] hover:text-primary hover:bg-primary/10 transition-colors" title="Set as Main Image">
+<span class="material-symbols-outlined text-[20px]">star</span>
+</button>
+<button class="p-2 rounded text-[#8c725f] hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Sticky Footer Action Bar -->
+<div class="border-t border-[#e6dfdb] dark:border-[#3e3229] bg-surface-light dark:bg-surface-dark p-6 z-20 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+<div class="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-2 text-sm text-[#8c725f] dark:text-gray-400 hidden sm:flex">
+<span class="material-symbols-outlined text-[20px] text-primary">info</span>
+                    Changes are not live until you click save.
+                </div>
+<div class="flex items-center w-full sm:w-auto gap-3">
+<button class="flex-1 sm:flex-none items-center justify-center px-4 py-2.5 rounded-lg border border-red-200 text-red-600 dark:text-red-400 dark:border-red-900/50 hover:bg-red-50 dark:hover:bg-red-900/20 text-sm font-bold transition-colors">
+                        Delete All Images
+                    </button>
+<button class="flex-1 sm:flex-none items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                        Save Image Order
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

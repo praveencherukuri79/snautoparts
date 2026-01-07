@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                        "sidebar-dark": "#1e1e1e", // Custom dark for sidebar to ensure contrast
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: rgba(249, 116, 21, 0.15);
+            color: #f97415;
+        }
+        .sidebar-link.active .icon-box {
+            color: #f97415;
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-background-light font-display text-slate-900 antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="flex w-64 flex-col bg-[#1a1614] border-r border-[#2e2621] text-white shrink-0 z-20">
+<!-- Header -->
+<div class="flex items-center gap-3 px-6 py-6 border-b border-[#2e2621]">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white">
+<span class="material-symbols-outlined">settings_suggest</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-base font-bold leading-tight tracking-wide">SN Auto Parts</h1>
+<span class="text-xs font-medium text-primary uppercase tracking-wider">Admin</span>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1">
+<a class="sidebar-link active flex items-center gap-3 px-3 py-3 rounded-lg text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined icon-box text-white/70" style="font-size: 20px;">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg text-white/70 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined icon-box" style="font-size: 20px;">shopping_cart</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg text-white/70 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined icon-box" style="font-size: 20px;">warehouse</span>
+<span class="text-sm font-medium">Inventory</span>
+</a>
+<a class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg text-white/70 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined icon-box" style="font-size: 20px;">inventory_2</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+<a class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg text-white/70 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined icon-box" style="font-size: 20px;">local_shipping</span>
+<span class="text-sm font-medium">Drop Ship</span>
+</a>
+<a class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg text-white/70 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined icon-box" style="font-size: 20px;">analytics</span>
+<span class="text-sm font-medium">Reports</span>
+</a>
+<a class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg text-white/70 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined icon-box" style="font-size: 20px;">group</span>
+<span class="text-sm font-medium">Users</span>
+</a>
+<a class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg text-white/70 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined icon-box" style="font-size: 20px;">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<a class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-lg text-white/70 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined icon-box" style="font-size: 20px;">history</span>
+<span class="text-sm font-medium">Audit Log</span>
+</a>
+</nav>
+<!-- User Footer -->
+<div class="border-t border-[#2e2621] p-4">
+<div class="flex items-center justify-between rounded-lg bg-[#2e2621] p-3 hover:bg-[#3d322c] transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-full bg-cover bg-center border-2 border-primary/30" data-alt="Admin user avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBSLUWLMXz8Bp-ZZnZfchic6pmILd6L8uy5n7aC1rmObeD-Ux4t39k-MtxEkO-dqXl5cVosCAFLYdHC6CKJ-j2P5hltNXmba2N0x4bUPMOKgpm3XXkFkhE1pT8zYxW86Blv4lYksDLHPMkYrJ1pEDz0dQI3lUb_5oTf7k2qZwn8TkHE1wJPJveZ7z_KCNOzC7cAsp1tIyimHk9ln7589BvofksuXxc9sJbov2IOmzXyeFYLjt9jiSlwI3OfT2FhhhORM8yp1jF4fI7S');"></div>
+<div class="flex flex-col">
+<p class="text-xs font-semibold text-white group-hover:text-primary transition-colors">Admin User</p>
+<p class="text-[10px] text-white/50">admin@snautoparts.com</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-white/50 group-hover:text-white" style="font-size: 20px;">logout</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto bg-background-light">
+<div class="flex flex-col w-full max-w-[1400px] mx-auto p-8 gap-8">
+<!-- Page Heading -->
+<header class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+<div>
+<h1 class="text-3xl font-black text-[#181411] tracking-tight">Dashboard Overview</h1>
+<p class="text-[#8c725f] text-sm mt-1">Welcome back, Administrator. System status is normal.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 rounded-lg border border-stone-200 bg-white px-3 py-2 text-sm font-medium text-[#181411] shadow-sm">
+<span class="material-symbols-outlined text-stone-500" style="font-size: 18px;">calendar_today</span>
+<span>Oct 24, 2023</span>
+</div>
+<button class="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white hover:bg-orange-600 transition-all shadow-md shadow-orange-200">
+<span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+<span>Export Report</span>
+</button>
+</div>
+</header>
+<!-- Hero Metrics -->
+<section class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+<!-- Total GMV -->
+<div class="flex flex-col rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<p class="text-sm font-medium text-[#8c725f]">Total GMV</p>
+<span class="material-symbols-outlined text-stone-400 p-1 bg-stone-50 rounded-md">payments</span>
+</div>
+<p class="text-2xl font-bold text-[#181411] tracking-tight mb-1">$1,245,678.00</p>
+<div class="flex items-center gap-1 text-sm font-medium text-green-600">
+<span class="material-symbols-outlined" style="font-size: 16px;">trending_up</span>
+<span>+12%</span>
+<span class="text-stone-400 font-normal ml-1">vs last month</span>
+</div>
+</div>
+<!-- Total Orders -->
+<div class="flex flex-col rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<p class="text-sm font-medium text-[#8c725f]">Total Orders</p>
+<span class="material-symbols-outlined text-stone-400 p-1 bg-stone-50 rounded-md">shopping_bag</span>
+</div>
+<p class="text-2xl font-bold text-[#181411] tracking-tight mb-1">1,452</p>
+<div class="flex items-center gap-1 text-sm font-medium text-green-600">
+<span class="material-symbols-outlined" style="font-size: 16px;">trending_up</span>
+<span>+5%</span>
+<span class="text-stone-400 font-normal ml-1">vs last month</span>
+</div>
+</div>
+<!-- Active Users -->
+<div class="flex flex-col rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<p class="text-sm font-medium text-[#8c725f]">Active Users</p>
+<span class="material-symbols-outlined text-stone-400 p-1 bg-stone-50 rounded-md">group</span>
+</div>
+<p class="text-2xl font-bold text-[#181411] tracking-tight mb-1">1,200</p>
+<div class="flex items-center gap-1 text-sm font-medium text-green-600">
+<span class="material-symbols-outlined" style="font-size: 16px;">trending_up</span>
+<span>+8%</span>
+<span class="text-stone-400 font-normal ml-1">vs last month</span>
+</div>
+</div>
+<!-- System Health -->
+<div class="flex flex-col rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<p class="text-sm font-medium text-[#8c725f]">System Health</p>
+<span class="material-symbols-outlined text-stone-400 p-1 bg-stone-50 rounded-md">dns</span>
+</div>
+<p class="text-2xl font-bold text-[#181411] tracking-tight mb-1">Operational</p>
+<div class="flex items-center gap-1">
+<span class="relative flex h-2.5 w-2.5 mr-1">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+</span>
+<span class="text-sm text-green-600 font-medium">All systems normal</span>
+</div>
+</div>
+</section>
+<!-- Charts Section -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Orders Chart -->
+<div class="rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-lg font-bold text-[#181411]">Orders Over Time</h3>
+<p class="text-sm text-[#8c725f]">Last 30 Days</p>
+</div>
+<span class="material-symbols-outlined text-stone-300">show_chart</span>
+</div>
+<div class="h-64 w-full">
+<!-- Simulated Line Chart SVG -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 500 200">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#f97415" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#f97415" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Grid Lines -->
+<line stroke="#e5e7eb" stroke-width="1" x1="0" x2="500" y1="199" y2="199"></line>
+<line stroke="#e5e7eb" stroke-dasharray="4" stroke-width="1" x1="0" x2="500" y1="150" y2="150"></line>
+<line stroke="#e5e7eb" stroke-dasharray="4" stroke-width="1" x1="0" x2="500" y1="100" y2="100"></line>
+<line stroke="#e5e7eb" stroke-dasharray="4" stroke-width="1" x1="0" x2="500" y1="50" y2="50"></line>
+<!-- Chart Area -->
+<path d="M0,150 Q50,120 100,140 T200,100 T300,120 T400,60 T500,40 V200 H0 Z" fill="url(#chartGradient)"></path>
+<!-- Chart Line -->
+<path d="M0,150 Q50,120 100,140 T200,100 T300,120 T400,60 T500,40" fill="none" stroke="#f97415" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+</div>
+</div>
+<!-- Revenue Chart -->
+<div class="rounded-xl border border-stone-200 bg-white p-6 shadow-sm">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-lg font-bold text-[#181411]">Revenue by Month</h3>
+<p class="text-sm text-[#8c725f]">Last 12 Months</p>
+</div>
+<span class="material-symbols-outlined text-stone-300">bar_chart</span>
+</div>
+<div class="h-64 w-full flex items-end justify-between gap-2 px-2">
+<!-- Simulated Bar Chart CSS -->
+<div class="w-full bg-stone-100 rounded-t-sm hover:bg-orange-200 transition-colors h-[40%] relative group"><div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-stone-600 hidden group-hover:block">$45k</div></div>
+<div class="w-full bg-stone-100 rounded-t-sm hover:bg-orange-200 transition-colors h-[55%] relative group"><div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-stone-600 hidden group-hover:block">$62k</div></div>
+<div class="w-full bg-stone-100 rounded-t-sm hover:bg-orange-200 transition-colors h-[45%] relative group"><div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-stone-600 hidden group-hover:block">$51k</div></div>
+<div class="w-full bg-stone-100 rounded-t-sm hover:bg-orange-200 transition-colors h-[30%] relative group"><div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-stone-600 hidden group-hover:block">$32k</div></div>
+<div class="w-full bg-stone-100 rounded-t-sm hover:bg-orange-200 transition-colors h-[65%] relative group"><div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-stone-600 hidden group-hover:block">$75k</div></div>
+<div class="w-full bg-stone-100 rounded-t-sm hover:bg-orange-200 transition-colors h-[50%] relative group"><div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-stone-600 hidden group-hover:block">$58k</div></div>
+<div class="w-full bg-stone-100 rounded-t-sm hover:bg-orange-200 transition-colors h-[70%] relative group"><div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-stone-600 hidden group-hover:block">$81k</div></div>
+<div class="w-full bg-stone-100 rounded-t-sm hover:bg-orange-200 transition-colors h-[60%] relative group"><div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-stone-600 hidden group-hover:block">$68k</div></div>
+<div class="w-full bg-stone-100 rounded-t-sm hover:bg-orange-200 transition-colors h-[85%] relative group"><div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-stone-600 hidden group-hover:block">$98k</div></div>
+<div class="w-full bg-stone-100 rounded-t-sm hover:bg-orange-200 transition-colors h-[90%] relative group"><div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-stone-600 hidden group-hover:block">$105k</div></div>
+<div class="w-full bg-primary/80 rounded-t-sm hover:bg-primary transition-colors h-[75%] relative group"><div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-stone-600 hidden group-hover:block">$86k</div></div>
+<div class="w-full bg-primary rounded-t-sm hover:bg-orange-600 transition-colors h-[95%] relative group"><div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-stone-600 hidden group-hover:block">$110k</div></div>
+</div>
+</div>
+</section>
+<!-- Bottom Grid: Activity, Alerts, Actions -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Recent Logins -->
+<div class="flex flex-col rounded-xl border border-stone-200 bg-white shadow-sm overflow-hidden">
+<div class="flex items-center justify-between p-6 border-b border-stone-100">
+<h3 class="text-lg font-bold text-[#181411]">User Activity</h3>
+<div class="flex items-center gap-2">
+<span class="text-xs font-medium text-stone-500">Today</span>
+<span class="material-symbols-outlined text-stone-400 text-sm">expand_more</span>
+</div>
+</div>
+<div class="flex-1 overflow-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-stone-50 text-stone-500 font-medium">
+<tr>
+<th class="px-6 py-3">User</th>
+<th class="px-6 py-3">Role</th>
+<th class="px-6 py-3 text-right">Time</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-stone-100">
+<tr class="hover:bg-stone-50/50">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-cover bg-center" data-alt="User avatar 1" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBZOd-hapveLiUnYUsucZf7GxMgpxAHZZtw5SnvOz0vzHTCJX3ciLS-63HDEEWY6JJX3O47gACpqcLUcI_9d2sQytms4uPsyB4JwP8l5QR3XT7y1bZHZiEVMGfCFvhD6b9JHEZWUIEEuyP7TImpcG3917sdGSiFwkAvJ9ppiLu6U3WdYrRSub8oWOaGVE3fRgnmAMqo4xwgrp1QvSRogWmvq-aL9jPuLvQA628OXpZo10Jmk3efXh2WGZoJFKgKqhlM2wMDMplVJ_pV')"></div>
+<span class="font-medium text-[#181411]">Sarah J.</span>
+</div>
+</td>
+<td class="px-6 py-3 text-stone-600">Admin</td>
+<td class="px-6 py-3 text-right text-stone-500">2m ago</td>
+</tr>
+<tr class="hover:bg-stone-50/50">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-cover bg-center" data-alt="User avatar 2" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC18jW2GZz2HDUS9Qm61GwfWBpmryj3PiepUmTReveQR63l7zf7D6Zx8HQpOHl3pEUfHvc0iuFCHJAtSNES2s64kSNOgq4Dxu0kQ9mTPBnx-d38XsgX-3EGiCgqL9wVmDHTjDKt6WWFwD1nePWxfWCDS926j2g86Rx5QJ7hunN84Z0UBXM3-lny3zvXPujmvmmmbb13xH4ZRQJusWFz4c6jrGtExtTzpD5D2SBwpkyaqbvwmEJhM18ovW-OLqaxLCNNBORIWJfzBsGy')"></div>
+<span class="font-medium text-[#181411]">Mike T.</span>
+</div>
+</td>
+<td class="px-6 py-3 text-stone-600">Editor</td>
+<td class="px-6 py-3 text-right text-stone-500">15m ago</td>
+</tr>
+<tr class="hover:bg-stone-50/50">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-cover bg-center" data-alt="User avatar 3" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtCv4RU5kSsjkYuSQgQ03R1cmb2mrW9qbGQO9EVrx-DMQeSCyhwCM6POROhgud95roFuUF72dbHmQvuB4Uh6WvJxVoR0dCsmleEJHtMvDIAZItJV3bceZxEV0j27lXMiJAqUDNN_AaKt3XoFj5uaD6nieeNW40jG6wiiyK3qJAwPvD8E_IHowKEDwEoIaPmNTHk8PWOPMJ2tB1hsxgKmfArMBS0RpRJdkxbHm9segJKRNwZR-t5vwRXFU9d9O1fwSEowfmetlAnxIH')"></div>
+<span class="font-medium text-[#181411]">David L.</span>
+</div>
+</td>
+<td class="px-6 py-3 text-stone-600">Support</td>
+<td class="px-6 py-3 text-right text-stone-500">1h ago</td>
+</tr>
+<tr class="hover:bg-stone-50/50">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-cover bg-center" data-alt="User avatar 4" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDV71pXtPQCUqA-_MCSyqVgz52eOOO8LUzo1ggXkGM1_JY4Z4aJMhXFtKiMuDfmeOK7HVZRLJyLCftgYgcEMx80sZGTWzke85FCab_nTqKj3dA33NU_eiHteQiPAYnLzJD0FSyv55QtVrt3DxakW0j034oMtZ5CiHkhd_SFD8hZUYovSrAugMBC7LxV0Glkw5vlq-w1lYoSV7iKZ0eYkd6LQtbC5761zy53lF0W4kW9QbobJ7bBQtlBdtXpVTuNU5pxEamixh9nmZNF')"></div>
+<span class="font-medium text-[#181411]">Emily R.</span>
+</div>
+</td>
+<td class="px-6 py-3 text-stone-600">Analyst</td>
+<td class="px-6 py-3 text-right text-stone-500">3h ago</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-stone-100 bg-stone-50">
+<div class="flex justify-between text-sm">
+<span class="text-stone-500">New Registrations</span>
+<span class="font-bold text-[#181411]">+12 Today</span>
+</div>
+</div>
+</div>
+<!-- Alerts -->
+<div class="flex flex-col rounded-xl border border-stone-200 bg-white shadow-sm overflow-hidden">
+<div class="flex items-center justify-between p-6 border-b border-stone-100">
+<h3 class="text-lg font-bold text-[#181411]">Pending Alerts</h3>
+<span class="rounded-full bg-red-100 px-2 py-1 text-xs font-bold text-red-700">3 Critical</span>
+</div>
+<div class="flex-1 p-4 flex flex-col gap-3">
+<!-- Alert Item -->
+<div class="flex items-start gap-3 rounded-lg border border-red-100 bg-red-50 p-3">
+<span class="material-symbols-outlined text-red-600 mt-0.5" style="font-size: 20px;">error</span>
+<div>
+<p class="text-sm font-bold text-[#181411]">ERP Integration Failed</p>
+<p class="text-xs text-stone-600 mt-1">Connection timed out for SAP Sync module. Last attempt 10 mins ago.</p>
+</div>
+</div>
+<!-- Alert Item -->
+<div class="flex items-start gap-3 rounded-lg border border-orange-100 bg-orange-50 p-3">
+<span class="material-symbols-outlined text-orange-600 mt-0.5" style="font-size: 20px;">warning</span>
+<div>
+<p class="text-sm font-bold text-[#181411]">Unmapped Products</p>
+<p class="text-xs text-stone-600 mt-1">24 new items detected in inventory without category mapping.</p>
+</div>
+</div>
+<!-- Alert Item -->
+<div class="flex items-start gap-3 rounded-lg border border-stone-200 bg-white p-3 hover:bg-stone-50 transition-colors">
+<span class="material-symbols-outlined text-stone-500 mt-0.5" style="font-size: 20px;">info</span>
+<div>
+<p class="text-sm font-bold text-[#181411]">System Update Available</p>
+<p class="text-xs text-stone-600 mt-1">Version 2.4.1 is ready to install. Schedule maintenance.</p>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-stone-100 text-center">
+<a class="text-sm font-medium text-primary hover:text-orange-700" href="#">View All Alerts</a>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="flex flex-col rounded-xl border border-stone-200 bg-white shadow-sm overflow-hidden">
+<div class="flex items-center justify-between p-6 border-b border-stone-100">
+<h3 class="text-lg font-bold text-[#181411]">Quick Actions</h3>
+</div>
+<div class="flex-1 p-6 flex flex-col gap-4 justify-center">
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary w-full py-3 text-sm font-bold text-white hover:bg-orange-600 transition-all shadow-md shadow-orange-100">
+<span class="material-symbols-outlined">person_add</span>
+                                Add New User
+                            </button>
+<button class="flex items-center justify-center gap-2 rounded-lg border border-stone-200 bg-white w-full py-3 text-sm font-bold text-[#181411] hover:bg-stone-50 transition-all">
+<span class="material-symbols-outlined text-stone-500">settings</span>
+                                Manage Settings
+                            </button>
+<button class="flex items-center justify-center gap-2 rounded-lg border border-stone-200 bg-white w-full py-3 text-sm font-bold text-[#181411] hover:bg-stone-50 transition-all">
+<span class="material-symbols-outlined text-stone-500">list_alt</span>
+                                View Audit Log
+                            </button>
+<button class="flex items-center justify-center gap-2 rounded-lg border border-stone-200 bg-white w-full py-3 text-sm font-bold text-[#181411] hover:bg-stone-50 transition-all">
+<span class="material-symbols-outlined text-stone-500">database</span>
+                                Backup Database
+                            </button>
+</div>
+</div>
+</section>
+<footer class="mt-4 text-center text-xs text-stone-400 pb-8">
+                    © 2023 SN Auto Parts. Admin Dashboard v2.0. All rights reserved.
+                </footer>
+</div>
+</main>
+</div>
+</body></html>

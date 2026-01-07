@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Fitment Editor - SN Auto Manager</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f97415",
+              "primary-dark": "#d66312",
+              "background-light": "#f8f7f5",
+              "background-dark": "#23170f",
+              "surface-light": "#ffffff",
+              "surface-dark": "#2c241b",
+              "border-light": "#e6dfdb",
+              "border-dark": "#443830",
+              "text-main": "#181411",
+              "text-muted": "#8c725f",
+              "text-light": "#f5f2f0",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for table if needed */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main dark:text-text-light antialiased overflow-hidden h-screen flex">
+<!-- Sidebar -->
+<aside class="w-[280px] bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark flex-col h-full hidden lg:flex flex-shrink-0">
+<div class="p-6 pb-2">
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shadow-sm" data-alt="Abstract geometric orange logo for SN Auto" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBen1YxFG3k9rO6VBpmG2qXjRfXjR_sbKZdHMnI6BijzIbXTEuNakAA9D9gaMAXh8RGFQ9jxjgkirAEFhd-gcB7k-zkLT7iV5YQ6lWYhFd-NJO_w590BD2QjwZPr8CGhyfZaCE1QX8HAL5Q4kTv5SF2QENl53kYd1GYtS1XPeQRdMwymLPLl_fnh1GTvy89F1EoowVBQ528S8ETVnJY_d2QsLY-1Z8mjxHSDkb6TjWrXj45U6-fiFsf2iIGixiMu4G2PyySOD-Dakik");'></div>
+<div class="flex flex-col">
+<h1 class="text-text-main dark:text-text-light text-base font-bold leading-tight">SN Auto Manager</h1>
+<p class="text-text-muted text-xs font-normal">Admin Console</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main dark:text-text-light hover:bg-background-light dark:hover:bg-border-dark group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main dark:text-text-light hover:bg-background-light dark:hover:bg-border-dark group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary">inventory_2</span>
+<span class="text-sm font-medium">Inventory</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary" href="#">
+<span class="material-symbols-outlined fill-current">category</span>
+<span class="text-sm font-bold">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main dark:text-text-light hover:bg-background-light dark:hover:bg-border-dark group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary">shopping_cart</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main dark:text-text-light hover:bg-background-light dark:hover:bg-border-dark group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-6 border-t border-border-light dark:border-border-dark">
+<div class="flex items-center gap-3">
+<div class="bg-primary/20 flex items-center justify-center size-10 rounded-full text-primary font-bold">JD</div>
+<div class="flex flex-col">
+<p class="text-text-main dark:text-text-light text-sm font-medium">John Doe</p>
+<p class="text-text-muted text-xs">Manager</p>
+</div>
+<button class="ml-auto text-text-muted hover:text-text-main">
+<span class="material-symbols-outlined">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-y-auto bg-background-light dark:bg-background-dark">
+<!-- Breadcrumbs & Top Navigation -->
+<header class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark sticky top-0 z-10 px-8 py-4">
+<div class="max-w-7xl mx-auto w-full">
+<!-- Breadcrumb -->
+<div class="flex items-center gap-2 mb-4 text-sm">
+<a class="text-text-muted hover:text-primary transition-colors" href="#">Products</a>
+<span class="text-text-muted">/</span>
+<a class="text-text-muted hover:text-primary transition-colors" href="#">Brake Systems</a>
+<span class="text-text-muted">/</span>
+<span class="text-text-main dark:text-text-light font-medium">Fitment Editor</span>
+</div>
+<!-- Page Heading -->
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<h1 class="text-text-main dark:text-text-light text-2xl md:text-3xl font-black tracking-tight">Fitment Editor: Bosch Disc Brake Rotors</h1>
+<span class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/30 px-2.5 py-0.5 text-xs font-medium text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800">Active</span>
+</div>
+<p class="text-text-muted text-sm md:text-base font-normal">SKU: <span class="font-mono text-text-main dark:text-text-light font-medium">BR-9928-X</span> • Manage vehicle compatibility for this product.</p>
+</div>
+<a class="flex flex-shrink-0 items-center justify-center gap-2 rounded-lg bg-surface-light dark:bg-border-dark border border-border-light dark:border-border-dark px-4 py-2.5 text-sm font-bold text-text-main dark:text-text-light hover:bg-background-light dark:hover:bg-opacity-80 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                        Back to Details
+                    </a>
+</div>
+</div>
+</header>
+<div class="flex-1 px-8 py-8">
+<div class="max-w-7xl mx-auto w-full flex flex-col gap-6">
+<!-- Add Fitment Section -->
+<section class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-border-light dark:border-border-dark overflow-hidden">
+<div class="px-6 py-4 border-b border-border-light dark:border-border-dark flex justify-between items-center bg-gray-50/50 dark:bg-white/5">
+<h3 class="text-text-main dark:text-text-light text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">add_circle</span>
+                            Add New Fitment
+                        </h3>
+</div>
+<div class="p-6">
+<div class="flex flex-col lg:flex-row gap-4 items-end">
+<label class="flex flex-col w-full lg:w-1/4 gap-1.5">
+<span class="text-sm font-semibold text-text-main dark:text-text-light">Year</span>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-[#1f1812] px-4 py-3 text-text-main dark:text-text-light focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary">
+<option disabled="" selected="" value="">Select Year</option>
+<option value="2024">2024</option>
+<option value="2023">2023</option>
+<option value="2022">2022</option>
+</select>
+<span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-text-muted material-symbols-outlined">expand_more</span>
+</div>
+</label>
+<label class="flex flex-col w-full lg:w-1/4 gap-1.5">
+<span class="text-sm font-semibold text-text-main dark:text-text-light">Make</span>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-[#1f1812] px-4 py-3 text-text-main dark:text-text-light focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary disabled:opacity-50" disabled="">
+<option disabled="" selected="" value="">Select Make</option>
+</select>
+<span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-text-muted material-symbols-outlined">expand_more</span>
+</div>
+</label>
+<label class="flex flex-col w-full lg:w-1/4 gap-1.5">
+<span class="text-sm font-semibold text-text-main dark:text-text-light">Model</span>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-[#1f1812] px-4 py-3 text-text-main dark:text-text-light focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary disabled:opacity-50" disabled="">
+<option disabled="" selected="" value="">Select Model</option>
+</select>
+<span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-text-muted material-symbols-outlined">expand_more</span>
+</div>
+</label>
+<div class="w-full lg:w-auto flex-shrink-0">
+<button class="w-full lg:w-auto h-[50px] flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-primary-dark px-6 text-white font-bold transition-colors shadow-sm">
+<span class="material-symbols-outlined">add</span>
+                                    Add Fitment
+                                </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Bulk Actions Toolbar -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="text-text-muted text-sm">
+<span class="font-medium text-text-main dark:text-text-light">1,248</span> compatible vehicles found.
+                    </div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 rounded-lg bg-white dark:bg-surface-dark border border-border-light dark:border-border-dark px-4 py-2 text-sm font-semibold text-text-main dark:text-text-light hover:bg-background-light dark:hover:bg-border-dark transition-colors">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+                            Import CSV
+                        </button>
+<button class="flex items-center gap-2 rounded-lg bg-white dark:bg-surface-dark border border-border-light dark:border-border-dark px-4 py-2 text-sm font-semibold text-text-main dark:text-text-light hover:bg-background-light dark:hover:bg-border-dark transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                            Export CSV
+                        </button>
+</div>
+</div>
+<!-- Existing Fitments Table -->
+<div class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-border-light dark:border-border-dark overflow-hidden flex-1 min-h-[400px]">
+<!-- Table Filters -->
+<div class="p-4 border-b border-border-light dark:border-border-dark bg-gray-50/50 dark:bg-white/5 grid grid-cols-1 md:grid-cols-12 gap-4">
+<div class="md:col-span-3">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-text-muted">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-[#1f1812] py-2 pl-10 pr-4 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary placeholder:text-text-muted dark:text-text-light" placeholder="Filter Year..." type="text"/>
+</div>
+</div>
+<div class="md:col-span-4">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-text-muted">
+<span class="material-symbols-outlined text-[20px]">directions_car</span>
+</span>
+<input class="w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-[#1f1812] py-2 pl-10 pr-4 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary placeholder:text-text-muted dark:text-text-light" placeholder="Filter Make..." type="text"/>
+</div>
+</div>
+<div class="md:col-span-4">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-text-muted">
+<span class="material-symbols-outlined text-[20px]">sell</span>
+</span>
+<input class="w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-[#1f1812] py-2 pl-10 pr-4 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary placeholder:text-text-muted dark:text-text-light" placeholder="Filter Model..." type="text"/>
+</div>
+</div>
+<div class="md:col-span-1 flex items-center justify-end">
+<button class="text-text-muted hover:text-primary" title="Clear Filters">
+<span class="material-symbols-outlined">filter_alt_off</span>
+</button>
+</div>
+</div>
+<!-- Table Header & Body -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-background-light dark:bg-[#1f1812] border-b border-border-light dark:border-border-dark">
+<th class="p-4 text-xs font-bold uppercase tracking-wider text-text-muted w-32 cursor-pointer hover:text-text-main group">
+<div class="flex items-center gap-1">
+                                            Year
+                                            <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100">unfold_more</span>
+</div>
+</th>
+<th class="p-4 text-xs font-bold uppercase tracking-wider text-text-muted w-1/4 cursor-pointer hover:text-text-main group">
+<div class="flex items-center gap-1">
+                                            Make
+                                            <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100">unfold_more</span>
+</div>
+</th>
+<th class="p-4 text-xs font-bold uppercase tracking-wider text-text-muted cursor-pointer hover:text-text-main group">
+<div class="flex items-center gap-1">
+                                            Model
+                                            <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100">unfold_more</span>
+</div>
+</th>
+<th class="p-4 text-xs font-bold uppercase tracking-wider text-text-muted text-right w-24">
+                                        Actions
+                                    </th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-light dark:divide-border-dark">
+<!-- Row 1 -->
+<tr class="group hover:bg-background-light dark:hover:bg-white/5 transition-colors">
+<td class="p-4 text-sm font-medium text-text-main dark:text-text-light">2023</td>
+<td class="p-4 text-sm text-text-main dark:text-text-light">Toyota</td>
+<td class="p-4 text-sm text-text-main dark:text-text-light">Camry</td>
+<td class="p-4 text-right">
+<button class="inline-flex items-center justify-center size-8 rounded-full text-text-muted hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Remove Fitment">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-background-light dark:hover:bg-white/5 transition-colors">
+<td class="p-4 text-sm font-medium text-text-main dark:text-text-light">2023</td>
+<td class="p-4 text-sm text-text-main dark:text-text-light">Toyota</td>
+<td class="p-4 text-sm text-text-main dark:text-text-light">Corolla</td>
+<td class="p-4 text-right">
+<button class="inline-flex items-center justify-center size-8 rounded-full text-text-muted hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Remove Fitment">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-background-light dark:hover:bg-white/5 transition-colors">
+<td class="p-4 text-sm font-medium text-text-main dark:text-text-light">2023</td>
+<td class="p-4 text-sm text-text-main dark:text-text-light">Honda</td>
+<td class="p-4 text-sm text-text-main dark:text-text-light">Civic</td>
+<td class="p-4 text-right">
+<button class="inline-flex items-center justify-center size-8 rounded-full text-text-muted hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Remove Fitment">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-background-light dark:hover:bg-white/5 transition-colors">
+<td class="p-4 text-sm font-medium text-text-main dark:text-text-light">2022</td>
+<td class="p-4 text-sm text-text-main dark:text-text-light">Honda</td>
+<td class="p-4 text-sm text-text-main dark:text-text-light">Accord</td>
+<td class="p-4 text-right">
+<button class="inline-flex items-center justify-center size-8 rounded-full text-text-muted hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Remove Fitment">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="group hover:bg-background-light dark:hover:bg-white/5 transition-colors">
+<td class="p-4 text-sm font-medium text-text-main dark:text-text-light">2022</td>
+<td class="p-4 text-sm text-text-main dark:text-text-light">Ford</td>
+<td class="p-4 text-sm text-text-main dark:text-text-light">Mustang</td>
+<td class="p-4 text-right">
+<button class="inline-flex items-center justify-center size-8 rounded-full text-text-muted hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Remove Fitment">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="group hover:bg-background-light dark:hover:bg-white/5 transition-colors">
+<td class="p-4 text-sm font-medium text-text-main dark:text-text-light">2022</td>
+<td class="p-4 text-sm text-text-main dark:text-text-light">Chevrolet</td>
+<td class="p-4 text-sm text-text-main dark:text-text-light">Malibu</td>
+<td class="p-4 text-right">
+<button class="inline-flex items-center justify-center size-8 rounded-full text-text-muted hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Remove Fitment">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-4 border-t border-border-light dark:border-border-dark flex items-center justify-between mt-auto bg-surface-light dark:bg-surface-dark">
+<p class="text-sm text-text-muted">Showing 1 to 6 of 1,248 entries</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-sm rounded-md border border-border-light dark:border-border-dark text-text-muted opacity-50 cursor-not-allowed">Previous</button>
+<button class="px-3 py-1 text-sm rounded-md border border-border-light dark:border-border-dark text-text-main dark:text-text-light hover:bg-background-light dark:hover:bg-border-dark">Next</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

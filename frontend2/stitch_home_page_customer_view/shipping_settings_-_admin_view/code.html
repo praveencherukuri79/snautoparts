@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shipping Settings - SN Auto Parts Admin</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "primary-hover": "#e0640d",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2d241e",
+                        "text-main": "#181411",
+                        "text-secondary": "#8c725f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better look in sidebars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e5e7eb;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d1d5db;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 border-r border-[#e6dfdb] bg-surface-light dark:bg-surface-dark dark:border-gray-700 flex flex-col justify-between h-full">
+<div class="flex flex-col gap-4 p-4 h-full overflow-y-auto">
+<!-- Logo -->
+<div class="flex gap-3 px-2 py-2 mb-4">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 shrink-0 shadow-sm" data-alt="SN Auto Parts logo with gear icon" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA-mZAykaz0bTs5H9GhriKs-Yw4KQX5WMOvctuufq3hB030vwtS_AS5c22EUe37PKoFSceZHyrOm_cAWi63rsMXkJrG_e0MhZVrcyu5LQSX8udbEGKVOlqfHj01PensF0qaGedFlB1xoM7y61VKGyCLEtTBD4WpK3j6U-19xpjahYkanAvmPIizmliXbfw_cbtL4-p1MVM8fRSCLDuHjNjIT4fT6D9CxmoIeHxFD8vaTXurcoeiJSgouqEzvbxVrPCOwj_INW-_Jof4");'></div>
+<div class="flex flex-col justify-center">
+<h1 class="text-text-main dark:text-white text-base font-bold leading-tight">SN Auto Parts</h1>
+<p class="text-text-secondary dark:text-gray-400 text-xs font-normal">Admin Panel</p>
+</div>
+</div>
+<!-- Nav Items -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-primary dark:text-gray-400">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-primary dark:text-gray-400">shopping_bag</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-primary dark:text-gray-400">inventory_2</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-primary dark:text-gray-400">group</span>
+<span class="text-sm font-medium">Users</span>
+</a>
+<div class="my-2 border-t border-gray-100 dark:border-gray-800"></div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary font-semibold" href="#">
+<span class="material-symbols-outlined fill-1">settings</span>
+<span class="text-sm">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-primary dark:text-gray-400">support</span>
+<span class="text-sm font-medium">Support</span>
+</a>
+</nav>
+</div>
+<!-- User Profile -->
+<div class="p-4 border-t border-[#e6dfdb] dark:border-gray-700">
+<div class="flex items-center gap-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 p-2 rounded-lg transition-colors">
+<div class="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden" data-alt="Admin user avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAiGBT5CTJIcD3Z8qc7o5YcXqAQiAn416DLwatAxHhuk5MUk1dll3Ee_ORDU0LQxWoCYx6oVAB07IP8hPZQPIo_ZvvSrM--EgPoinUzy2oJ3DSilFB-0PYqERCUvhV0-fIq-Wr6Hth9KotKBCLqm64kV9fLJFkH4m9iXZzRzHAv84bI0khZSYUzvYUDfe8q1BIMGL6YBhKh-aTWwP-sa4PQuF4pE2C6_tOicRlsGtLophajwCEkIpQnydj2v0DBUQnLJ_sReetbdCEC"); background-size: cover;'></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-text-main dark:text-white">Admin User</p>
+<p class="text-xs text-text-secondary dark:text-gray-400">admin@snauto.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Bar / Breadcrumbs & Header -->
+<div class="w-full bg-surface-light dark:bg-surface-dark border-b border-[#e6dfdb] dark:border-gray-700 px-8 pt-6 pb-0 flex flex-col shrink-0 z-10">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 mb-4 text-sm">
+<a class="text-text-secondary dark:text-gray-400 hover:text-primary transition-colors" href="#">Settings</a>
+<span class="text-gray-300 dark:text-gray-600">/</span>
+<span class="text-text-main dark:text-white font-medium">Shipping</span>
+</div>
+<!-- Page Header -->
+<div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+<div>
+<h1 class="text-3xl font-black tracking-tight text-text-main dark:text-white">Shipping Settings</h1>
+<p class="text-text-secondary dark:text-gray-400 mt-1">Manage shipping zones, methods, and delivery rates.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-semibold text-text-main hover:bg-gray-50 transition-colors shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-[20px]">add_location_alt</span>
+<span>Add Zone</span>
+</button>
+<button class="flex items-center justify-center gap-2 px-4 py-2 bg-primary rounded-lg text-sm font-semibold text-white hover:bg-primary-hover transition-colors shadow-sm shadow-orange-200 dark:shadow-none">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Add New Method</span>
+</button>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex gap-8 border-b border-[#e6dfdb] dark:border-gray-700 overflow-x-auto">
+<a class="pb-3 pt-2 text-sm font-bold text-text-secondary dark:text-gray-400 border-b-2 border-transparent hover:text-text-main dark:hover:text-white transition-colors" href="#">General</a>
+<a class="pb-3 pt-2 text-sm font-bold text-text-secondary dark:text-gray-400 border-b-2 border-transparent hover:text-text-main dark:hover:text-white transition-colors" href="#">Payments</a>
+<a class="pb-3 pt-2 text-sm font-bold text-primary border-b-2 border-primary" href="#">Shipping</a>
+<a class="pb-3 pt-2 text-sm font-bold text-text-secondary dark:text-gray-400 border-b-2 border-transparent hover:text-text-main dark:hover:text-white transition-colors" href="#">Taxes</a>
+<a class="pb-3 pt-2 text-sm font-bold text-text-secondary dark:text-gray-400 border-b-2 border-transparent hover:text-text-main dark:hover:text-white transition-colors" href="#">Notifications</a>
+</div>
+</div>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-[1200px] mx-auto flex flex-col gap-8 pb-10">
+<!-- Shipping Zones Section -->
+<section class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold text-text-main dark:text-white">Shipping Zones</h2>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Zone Card: Continental US -->
+<div class="bg-surface-light dark:bg-surface-dark border border-primary/40 dark:border-primary/40 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">public</span>
+</div>
+<div>
+<h3 class="font-bold text-text-main dark:text-white text-lg">Continental US</h3>
+<p class="text-xs text-text-secondary dark:text-gray-400">Domestic</p>
+</div>
+</div>
+<button class="text-text-secondary hover:text-primary transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-600 dark:text-gray-300 rounded border border-gray-200 dark:border-gray-700">48 States</span>
+<span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-600 dark:text-gray-300 rounded border border-gray-200 dark:border-gray-700">Washington DC</span>
+</div>
+</div>
+<!-- Zone Card: Canada & Mexico -->
+<div class="bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="bg-gray-100 dark:bg-gray-800 p-2 rounded-lg text-gray-500">
+<span class="material-symbols-outlined">flag</span>
+</div>
+<div>
+<h3 class="font-bold text-text-main dark:text-white text-lg">North America</h3>
+<p class="text-xs text-text-secondary dark:text-gray-400">International</p>
+</div>
+</div>
+<button class="text-text-secondary hover:text-primary transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-600 dark:text-gray-300 rounded border border-gray-200 dark:border-gray-700">Canada</span>
+<span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-600 dark:text-gray-300 rounded border border-gray-200 dark:border-gray-700">Mexico</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Shipping Methods Table -->
+<section class="flex flex-col gap-4">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-2">
+<h2 class="text-xl font-bold text-text-main dark:text-white">Shipping Methods</h2>
+<span class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-bold px-2 py-1 rounded-full">3 Active</span>
+</div>
+<!-- Filter/Sort Controls -->
+<div class="flex gap-2">
+<div class="relative">
+<select class="appearance-none bg-surface-light dark:bg-surface-dark border border-gray-300 dark:border-gray-700 text-text-main dark:text-white text-sm rounded-lg pl-3 pr-8 py-2 focus:ring-primary focus:border-primary">
+<option>Continental US</option>
+<option>North America</option>
+<option>All Zones</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-text-secondary">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+</div>
+<div class="relative">
+<input class="bg-surface-light dark:bg-surface-dark border border-gray-300 dark:border-gray-700 text-text-main dark:text-white text-sm rounded-lg pl-9 pr-3 py-2 focus:ring-primary focus:border-primary w-48" placeholder="Search methods..." type="text"/>
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-text-secondary">
+<span class="material-symbols-outlined text-sm">search</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Table -->
+<div class="bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-gray-50 dark:bg-surface-dark border-b border-gray-200 dark:border-gray-700">
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-text-secondary dark:text-gray-400 cursor-pointer group hover:text-primary transition-colors">
+<div class="flex items-center gap-1">Method Name <span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100">sort</span></div>
+</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-text-secondary dark:text-gray-400">Cost Type</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-text-secondary dark:text-gray-400">Price / Rule</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-text-secondary dark:text-gray-400">Zone</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-text-secondary dark:text-gray-400 text-center">Status</th>
+<th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-text-secondary dark:text-gray-400 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+<!-- Row 1 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<div>
+<p class="font-medium text-text-main dark:text-white text-sm">Standard Ground</p>
+<p class="text-xs text-text-secondary dark:text-gray-500">5-7 Business Days</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-sm text-text-main dark:text-gray-300">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                                    Flat Rate
+                                                </span>
+</td>
+<td class="py-4 px-6 text-sm font-semibold text-text-main dark:text-white">$15.00</td>
+<td class="py-4 px-6 text-sm text-text-secondary dark:text-gray-400">Continental US</td>
+<td class="py-4 px-6 text-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-500"></div>
+</label>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-gray-400 hover:text-primary transition-colors p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined">rocket_launch</span>
+</div>
+<div>
+<p class="font-medium text-text-main dark:text-white text-sm">Express 2-Day</p>
+<p class="text-xs text-text-secondary dark:text-gray-500">Guaranteed Delivery</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-sm text-text-main dark:text-gray-300">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300">
+                                                    By Weight
+                                                </span>
+</td>
+<td class="py-4 px-6 text-sm font-semibold text-text-main dark:text-white">$5.00 + $2.00/lb</td>
+<td class="py-4 px-6 text-sm text-text-secondary dark:text-gray-400">Continental US</td>
+<td class="py-4 px-6 text-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-500"></div>
+</label>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-gray-400 hover:text-primary transition-colors p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined">storefront</span>
+</div>
+<div>
+<p class="font-medium text-text-main dark:text-white text-sm">Store Pickup</p>
+<p class="text-xs text-text-secondary dark:text-gray-500">Local Only</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-sm text-text-main dark:text-gray-300">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300">
+                                                    Free
+                                                </span>
+</td>
+<td class="py-4 px-6 text-sm font-semibold text-text-main dark:text-white">$0.00</td>
+<td class="py-4 px-6 text-sm text-text-secondary dark:text-gray-400">All Zones</td>
+<td class="py-4 px-6 text-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-500"></div>
+</label>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-gray-400 hover:text-primary transition-colors p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 Inactive -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors opacity-75">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded bg-gray-100 dark:bg-gray-800 text-gray-500">
+<span class="material-symbols-outlined">flight</span>
+</div>
+<div>
+<p class="font-medium text-text-main dark:text-white text-sm">International Standard</p>
+<p class="text-xs text-text-secondary dark:text-gray-500">14-21 Business Days</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-6 text-sm text-text-main dark:text-gray-300">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                                    Flat Rate
+                                                </span>
+</td>
+<td class="py-4 px-6 text-sm font-semibold text-text-main dark:text-white">$35.00</td>
+<td class="py-4 px-6 text-sm text-text-secondary dark:text-gray-400">North America</td>
+<td class="py-4 px-6 text-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-500"></div>
+</label>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="text-gray-400 hover:text-primary transition-colors p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-surface-dark/50 flex justify-between items-center">
+<span class="text-xs text-text-secondary dark:text-gray-400">Showing 1-4 of 4 methods</span>
+<div class="flex gap-2">
+<button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+<!-- Modal Overlay (Simulated as if active for demonstration, but hidden by default unless requested, but here I will show it as part of the composition as "visible" or just floating) -->
+<!-- Let's position it as an overlay to show the "Edit Flat Rate" UI requested -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" style="display: flex;">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-2xl w-full max-w-lg border border-gray-200 dark:border-gray-700 flex flex-col max-h-[90vh]">
+<!-- Modal Header -->
+<div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center bg-gray-50/50 dark:bg-surface-dark/50 rounded-t-xl">
+<h3 class="text-lg font-bold text-text-main dark:text-white">Configure Shipping Method</h3>
+<button class="text-text-secondary hover:text-text-main dark:text-gray-400 dark:hover:text-white">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<div class="p-6 overflow-y-auto custom-scrollbar">
+<form class="flex flex-col gap-5">
+<!-- Method Name -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-text-main dark:text-gray-200">Method Name</label>
+<input class="rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-text-main dark:text-white text-sm focus:ring-primary focus:border-primary shadow-sm" placeholder="e.g. Express Shipping" type="text" value="Standard Ground"/>
+</div>
+<!-- Description -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-text-main dark:text-gray-200">Description <span class="text-gray-400 font-normal">(Optional)</span></label>
+<textarea class="rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-text-main dark:text-white text-sm focus:ring-primary focus:border-primary shadow-sm h-20 resize-none" placeholder="Shown to customer at checkout">5-7 Business Days</textarea>
+</div>
+<!-- Cost Type Logic -->
+<div class="flex flex-col gap-3">
+<label class="text-sm font-semibold text-text-main dark:text-gray-200">Cost Calculation</label>
+<div class="grid grid-cols-3 gap-3">
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="cost_type" type="radio"/>
+<div class="flex flex-col items-center justify-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 peer-checked:border-primary peer-checked:bg-primary/5 dark:peer-checked:bg-primary/10 transition-all hover:bg-gray-50 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-gray-500 peer-checked:text-primary mb-1">attach_money</span>
+<span class="text-xs font-medium text-gray-600 dark:text-gray-300 peer-checked:text-primary">Flat Rate</span>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="cost_type" type="radio"/>
+<div class="flex flex-col items-center justify-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 peer-checked:border-primary peer-checked:bg-primary/5 dark:peer-checked:bg-primary/10 transition-all hover:bg-gray-50 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-gray-500 peer-checked:text-primary mb-1">scale</span>
+<span class="text-xs font-medium text-gray-600 dark:text-gray-300 peer-checked:text-primary">By Weight</span>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="cost_type" type="radio"/>
+<div class="flex flex-col items-center justify-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 peer-checked:border-primary peer-checked:bg-primary/5 dark:peer-checked:bg-primary/10 transition-all hover:bg-gray-50 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-gray-500 peer-checked:text-primary mb-1">redeem</span>
+<span class="text-xs font-medium text-gray-600 dark:text-gray-300 peer-checked:text-primary">Free</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Price Input -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-text-main dark:text-gray-200">Rate Price</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="text-gray-500 sm:text-sm">$</span>
+</div>
+<input class="pl-7 rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-text-main dark:text-white text-sm focus:ring-primary focus:border-primary shadow-sm w-full" placeholder="0.00" type="number" value="15.00"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="text-gray-500 sm:text-xs">USD</span>
+</div>
+</div>
+</div>
+<!-- Eligibility -->
+<div class="flex flex-col gap-2 pt-2 border-t border-gray-100 dark:border-gray-700">
+<label class="text-sm font-semibold text-text-main dark:text-gray-200">Zone Eligibility</label>
+<div class="space-y-2">
+<label class="flex items-center gap-3 p-2 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50">
+<input checked="" class="rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm text-text-main dark:text-gray-300">Continental US</span>
+</label>
+<label class="flex items-center gap-3 p-2 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50">
+<input class="rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm text-text-main dark:text-gray-300">North America</span>
+</label>
+</div>
+</div>
+<!-- Status -->
+<div class="flex items-center justify-between pt-2">
+<span class="text-sm font-semibold text-text-main dark:text-gray-200">Status</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Active</span>
+</label>
+</div>
+</form>
+</div>
+<!-- Modal Footer -->
+<div class="px-6 py-4 border-t border-gray-100 dark:border-gray-700 flex justify-end gap-3 bg-gray-50/50 dark:bg-surface-dark/50 rounded-b-xl">
+<button class="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">Cancel</button>
+<button class="px-4 py-2 text-sm font-semibold text-white bg-primary hover:bg-primary-hover rounded-lg shadow-sm shadow-orange-200 dark:shadow-none transition-colors">Save Method</button>
+</div>
+</div>
+</div>
+</body></html>

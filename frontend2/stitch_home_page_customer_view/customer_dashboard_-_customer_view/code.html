@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Dashboard - SN Auto Parts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                        "text-main": "#181411",
+                        "text-muted": "#8c725f",
+                        "border-color": "#e6dfdb",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="bg-white border-b border-border-color sticky top-0 z-50">
+<div class="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto w-full gap-8">
+<!-- Logo -->
+<div class="flex items-center gap-3 shrink-0">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tight">SN Auto Parts</h2>
+</div>
+<!-- Search Bar -->
+<div class="flex-1 max-w-xl hidden md:block">
+<label class="flex w-full items-center h-12 rounded-lg bg-background-light border border-transparent focus-within:border-primary/50 overflow-hidden transition-all">
+<div class="pl-4 pr-2 text-text-muted">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="flex-1 h-full bg-transparent border-none focus:ring-0 text-base placeholder:text-text-muted/70" placeholder="Search for parts, brands, or vehicles..."/>
+</label>
+</div>
+<!-- Nav Links & Actions -->
+<div class="flex items-center gap-6">
+<nav class="hidden lg:flex gap-6 text-sm font-medium">
+<a class="hover:text-primary transition-colors" href="#">Shop</a>
+<a class="hover:text-primary transition-colors" href="#">Deals</a>
+<a class="hover:text-primary transition-colors" href="#">Support</a>
+</nav>
+<div class="flex gap-3">
+<button class="relative flex items-center justify-center size-10 rounded-full hover:bg-background-light transition-colors group">
+<span class="material-symbols-outlined group-hover:text-primary">shopping_cart</span>
+<span class="absolute top-1 right-1 size-2.5 bg-primary rounded-full border-2 border-white"></span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Layout -->
+<main class="flex-grow">
+<div class="max-w-7xl mx-auto w-full px-6 py-8">
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Sidebar Navigation -->
+<aside class="w-full lg:w-64 flex-shrink-0">
+<div class="bg-white rounded-xl shadow-sm border border-border-color p-4 sticky top-24">
+<div class="mb-6 px-3">
+<h1 class="text-base font-bold text-text-main">My Account</h1>
+<p class="text-sm text-text-muted">Manage your preferences</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+                                    Dashboard
+                                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main hover:bg-background-light font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">person</span>
+                                    Profile
+                                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main hover:bg-background-light font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+                                    Addresses
+                                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main hover:bg-background-light font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">directions_car</span>
+                                    Saved Vehicles
+                                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main hover:bg-background-light font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">history</span>
+                                    Order History
+                                </a>
+</nav>
+<div class="mt-6 pt-4 border-t border-border-color">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-muted hover:text-red-600 hover:bg-red-50 font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+                                    Sign Out
+                                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col gap-8">
+<!-- Welcome Section -->
+<section class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-xl border border-border-color shadow-sm">
+<div>
+<h2 class="text-3xl font-bold text-text-main tracking-tight mb-2">Welcome, John!</h2>
+<p class="text-text-muted">Here is what is happening with your account today.</p>
+</div>
+<div class="flex gap-3">
+<a class="px-4 py-2 bg-background-light hover:bg-gray-200 text-text-main text-sm font-semibold rounded-lg transition-colors border border-border-color" href="#">
+                                    Manage Vehicles
+                                </a>
+<a class="px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-bold rounded-lg transition-colors shadow-sm" href="#">
+                                    View Orders
+                                </a>
+</div>
+</section>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+<!-- Recent Orders Card -->
+<div class="bg-white rounded-xl border border-border-color shadow-sm flex flex-col">
+<div class="p-6 border-b border-border-color flex justify-between items-center">
+<h3 class="text-lg font-bold text-text-main flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+                                        Recent Orders
+                                    </h3>
+<a class="text-sm font-semibold text-primary hover:text-primary/80" href="#">View All</a>
+</div>
+<div class="p-0 overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="bg-background-light text-text-muted font-medium">
+<tr>
+<th class="px-6 py-3">Order #</th>
+<th class="px-6 py-3">Date</th>
+<th class="px-6 py-3">Total</th>
+<th class="px-6 py-3">Status</th>
+<th class="px-6 py-3"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-color">
+<tr class="hover:bg-background-light/50 transition-colors">
+<td class="px-6 py-4 font-medium text-text-main">#10234</td>
+<td class="px-6 py-4 text-text-muted">Oct 24, 2023</td>
+<td class="px-6 py-4 font-medium">$145.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700">
+                                                        Shipped
+                                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<a class="text-text-muted hover:text-primary" href="#"><span class="material-symbols-outlined text-[18px]">visibility</span></a>
+</td>
+</tr>
+<tr class="hover:bg-background-light/50 transition-colors">
+<td class="px-6 py-4 font-medium text-text-main">#10233</td>
+<td class="px-6 py-4 text-text-muted">Oct 12, 2023</td>
+<td class="px-6 py-4 font-medium">$45.50</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700">
+                                                        Delivered
+                                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<a class="text-text-muted hover:text-primary" href="#"><span class="material-symbols-outlined text-[18px]">visibility</span></a>
+</td>
+</tr>
+<tr class="hover:bg-background-light/50 transition-colors">
+<td class="px-6 py-4 font-medium text-text-main">#10232</td>
+<td class="px-6 py-4 text-text-muted">Sep 28, 2023</td>
+<td class="px-6 py-4 font-medium">$230.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700">
+                                                        Delivered
+                                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<a class="text-text-muted hover:text-primary" href="#"><span class="material-symbols-outlined text-[18px]">visibility</span></a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Saved Vehicles Card -->
+<div class="bg-white rounded-xl border border-border-color shadow-sm flex flex-col">
+<div class="p-6 border-b border-border-color flex justify-between items-center">
+<h3 class="text-lg font-bold text-text-main flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">directions_car</span>
+                                        Saved Vehicles
+                                    </h3>
+<a class="text-sm font-semibold text-primary hover:text-primary/80" href="#">Manage All</a>
+</div>
+<div class="p-6 flex flex-col gap-4 flex-1">
+<!-- Vehicle Item -->
+<div class="flex items-center gap-4 p-4 rounded-lg border border-border-color bg-background-light/30">
+<div class="size-12 rounded-lg bg-white border border-border-color flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-text-muted">directions_car</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<h4 class="font-bold text-text-main">2019 Ford F-150</h4>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-primary/10 text-primary uppercase tracking-wide">Default</span>
+</div>
+<p class="text-sm text-text-muted">Lariat • 3.5L V6 EcoBoost</p>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-text-muted hover:text-text-main transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</div>
+<!-- Vehicle Item -->
+<div class="flex items-center gap-4 p-4 rounded-lg border border-border-color bg-background-light/30">
+<div class="size-12 rounded-lg bg-white border border-border-color flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-text-muted">directions_car</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-text-main">2015 Honda Civic</h4>
+<p class="text-sm text-text-muted">EX • 1.8L 4-Cyl</p>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-text-muted hover:text-text-main transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</div>
+<!-- Add New Button -->
+<button class="mt-auto w-full py-3 rounded-lg border border-dashed border-primary/40 text-primary font-semibold hover:bg-primary/5 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add_circle</span>
+                                        Add New Vehicle
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Quick Account Links -->
+<div>
+<h3 class="text-lg font-bold text-text-main mb-4">Quick Actions</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<a class="group flex items-center justify-between p-5 bg-white rounded-xl border border-border-color shadow-sm hover:border-primary/50 transition-all" href="#">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-background-light group-hover:bg-primary/10 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary">person_edit</span>
+</div>
+<div>
+<h4 class="font-bold text-text-main">Edit Profile</h4>
+<p class="text-sm text-text-muted">Update your personal information</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary transition-colors">arrow_forward</span>
+</a>
+<a class="group flex items-center justify-between p-5 bg-white rounded-xl border border-border-color shadow-sm hover:border-primary/50 transition-all" href="#">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-background-light group-hover:bg-primary/10 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary">home_pin</span>
+</div>
+<div>
+<h4 class="font-bold text-text-main">Manage Addresses</h4>
+<p class="text-sm text-text-muted">Add or remove shipping addresses</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-muted group-hover:text-primary transition-colors">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

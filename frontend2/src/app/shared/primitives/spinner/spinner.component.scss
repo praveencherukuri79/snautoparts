@@ -1,0 +1,32 @@
+@use 'tokens' as *;
+
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &.app-spinner--overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: var(--z-overlay);
+  }
+}
+
+.app-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-3);
+
+  &__text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+
+    :host.app-spinner--overlay & {
+      color: var(--color-white);
+    }
+  }
+}
+

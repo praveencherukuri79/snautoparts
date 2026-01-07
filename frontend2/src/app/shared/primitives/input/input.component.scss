@@ -1,0 +1,26 @@
+@use 'tokens' as *;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.app-input {
+  width: 100%;
+
+  ::ng-deep {
+    .mat-mdc-form-field-subscript-wrapper {
+      margin-bottom: var(--spacing-1);
+    }
+
+    .mdc-text-field--outlined {
+      --mdc-outlined-text-field-container-shape: var(--radius-md);
+    }
+
+    .mat-mdc-form-field-icon-prefix,
+    .mat-mdc-form-field-icon-suffix {
+      color: var(--color-text-muted);
+    }
+  }
+}
+

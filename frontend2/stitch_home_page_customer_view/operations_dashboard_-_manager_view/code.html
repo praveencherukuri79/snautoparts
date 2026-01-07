@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SN Auto Parts - Manager Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f97415",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-display bg-background-light text-[#181411] h-screen overflow-hidden flex">
+<!-- Sidebar -->
+<aside class="w-[250px] bg-background-dark flex flex-col h-full shrink-0 shadow-xl z-20">
+<!-- Logo Area -->
+<div class="p-6 flex items-center gap-3 border-b border-[#3a2e26]">
+<div class="size-10 rounded-lg bg-primary flex items-center justify-center text-white shrink-0 shadow-lg">
+<span class="material-symbols-outlined text-2xl">settings_suggest</span>
+</div>
+<div>
+<h1 class="text-white text-base font-bold leading-tight">SN Auto Parts</h1>
+<span class="text-xs bg-[#3a2e26] text-[#c2b0a3] px-2 py-0.5 rounded-full uppercase tracking-wider font-medium">Manager</span>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 overflow-y-auto py-6 px-3 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/20 text-primary border-l-4 border-primary transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center justify-between gap-3 px-3 py-3 rounded-lg text-[#c2b0a3] hover:bg-[#3a2e26] hover:text-white transition-colors group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined group-hover:text-white transition-colors">shopping_cart</span>
+<span class="text-sm font-medium">Orders</span>
+</div>
+<span class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full">8</span>
+</a>
+<a class="flex items-center justify-between gap-3 px-3 py-3 rounded-lg text-[#c2b0a3] hover:bg-[#3a2e26] hover:text-white transition-colors group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined group-hover:text-white transition-colors">inventory_2</span>
+<span class="text-sm font-medium">Inventory</span>
+</div>
+<div class="size-2 rounded-full bg-red-500"></div>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#c2b0a3] hover:bg-[#3a2e26] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-white transition-colors">sell</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#c2b0a3] hover:bg-[#3a2e26] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-white transition-colors">local_shipping</span>
+<span class="text-sm font-medium">Drop Ship</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#c2b0a3] hover:bg-[#3a2e26] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-white transition-colors">bar_chart</span>
+<span class="text-sm font-medium">Reports</span>
+</a>
+</nav>
+<!-- Footer Profile -->
+<div class="p-4 border-t border-[#3a2e26]">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="Manager profile photo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBe9mM7Vx0zBTbFmTXtlC4A7gUwsg8etnv1a3Nr8HHdtqzwbU2NBLlZc2dqLc1OGiT0JJSGO2y4zVwkPL7jjHwG6nQx_W5LmV-QVd2CNaKZ0ey_BsRZymxPWpyCN65255Iih91zJY8uSettF6nzFv6vWIzu7zD2SETUZ4W5Lt-jjS7gzauF2IV7D0pZJaWDtB0LD4SDkDx3wcQcQDuaSOqyIwJinaNDtngqnvemHcKzbMtOACvD7Bz93ydARkQ3MIGiPJ553f7HsbZY');"></div>
+<div class="flex flex-col flex-1 overflow-hidden">
+<p class="text-white text-sm font-medium truncate">Tom Cook</p>
+<p class="text-[#8c725f] text-xs truncate">Operations Lead</p>
+</div>
+<button class="text-[#c2b0a3] hover:text-white transition-colors">
+<span class="material-symbols-outlined">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 h-full overflow-y-auto bg-background-light">
+<div class="max-w-[1400px] mx-auto p-6 lg:p-10 flex flex-col gap-8">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="text-[#181411] text-3xl font-bold leading-tight tracking-tight">Operations Dashboard</h2>
+<p class="text-[#8c725f] text-sm mt-1">Overview for today, Oct 24</p>
+</div>
+<div class="flex gap-3">
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#8c725f] !text-lg">calendar_today</span>
+<button class="pl-10 pr-4 py-2 bg-white border border-[#e6dfdb] rounded-lg text-sm font-medium text-[#181411] shadow-sm hover:bg-gray-50">Oct 24, 2023</button>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-[#181411] text-white rounded-lg text-sm font-medium shadow-md hover:bg-[#2d2420] transition-colors">
+<span class="material-symbols-outlined !text-lg">download</span>
+                        Export Report
+                    </button>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Stat Card 1 -->
+<div class="bg-white p-6 rounded-xl border border-[#e6dfdb] shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<p class="text-[#8c725f] text-sm font-medium">Today's Orders</p>
+<span class="bg-green-100 text-green-700 p-1.5 rounded-md material-symbols-outlined !text-lg">shopping_bag</span>
+</div>
+<div>
+<p class="text-[#181411] text-3xl font-bold">24</p>
+<p class="text-green-600 text-sm font-medium flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined !text-sm">trending_up</span>
+                            +12% vs yesterday
+                        </p>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-white p-6 rounded-xl border border-primary/30 shadow-sm flex flex-col gap-4 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-5">
+<span class="material-symbols-outlined text-[100px] text-primary">pending_actions</span>
+</div>
+<div class="flex items-center justify-between relative z-10">
+<p class="text-[#8c725f] text-sm font-medium">Pending Orders</p>
+<span class="bg-primary/10 text-primary p-1.5 rounded-md material-symbols-outlined !text-lg">hourglass_top</span>
+</div>
+<div class="relative z-10">
+<p class="text-primary text-3xl font-bold">8</p>
+<p class="text-[#8c725f] text-sm font-medium mt-1">Needs immediate action</p>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-white p-6 rounded-xl border border-[#e6dfdb] shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<p class="text-[#8c725f] text-sm font-medium">Revenue Today</p>
+<span class="bg-blue-100 text-blue-700 p-1.5 rounded-md material-symbols-outlined !text-lg">payments</span>
+</div>
+<div>
+<p class="text-[#181411] text-3xl font-bold">$4,521.00</p>
+<p class="text-green-600 text-sm font-medium flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined !text-sm">trending_up</span>
+                            +5% vs yesterday
+                        </p>
+</div>
+</div>
+<!-- Stat Card 4 -->
+<div class="bg-white p-6 rounded-xl border border-red-200 shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<p class="text-[#8c725f] text-sm font-medium">Low Stock Items</p>
+<span class="bg-red-100 text-red-600 p-1.5 rounded-md material-symbols-outlined !text-lg">warning</span>
+</div>
+<div>
+<p class="text-[#181411] text-3xl font-bold">12</p>
+<p class="text-red-600 text-sm font-medium mt-1">Critical Inventory Alerts</p>
+</div>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Orders Chart -->
+<div class="bg-white rounded-xl border border-[#e6dfdb] shadow-sm p-6 flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-[#181411] text-lg font-bold">Order Volume</h3>
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-primary"></span>
+<span class="text-xs text-[#8c725f] font-medium">Last 7 Days</span>
+</div>
+</div>
+<div class="flex-1 min-h-[250px] w-full relative">
+<!-- Simulated Chart using SVG from components -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 478 150">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#f97415" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#f97415" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H326.769H0V109Z" fill="url(#chartGradient)"></path>
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" fill="none" stroke="#f97415" stroke-width="3"></path>
+</svg>
+</div>
+<div class="flex justify-between mt-4 px-2">
+<span class="text-xs text-[#8c725f] font-medium">Mon</span>
+<span class="text-xs text-[#8c725f] font-medium">Tue</span>
+<span class="text-xs text-[#8c725f] font-medium">Wed</span>
+<span class="text-xs text-[#8c725f] font-medium">Thu</span>
+<span class="text-xs text-[#8c725f] font-medium">Fri</span>
+<span class="text-xs text-[#8c725f] font-medium">Sat</span>
+<span class="text-xs text-[#8c725f] font-medium">Sun</span>
+</div>
+</div>
+<!-- Revenue Chart -->
+<div class="bg-white rounded-xl border border-[#e6dfdb] shadow-sm p-6 flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-[#181411] text-lg font-bold">Revenue Trend</h3>
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-[#181411]"></span>
+<span class="text-xs text-[#8c725f] font-medium">Last 7 Days</span>
+</div>
+</div>
+<div class="flex-1 grid grid-cols-7 gap-4 items-end min-h-[250px] px-2">
+<!-- Bar 1 -->
+<div class="w-full bg-[#f5f2f0] rounded-t-lg relative group h-[60%] hover:bg-primary/20 transition-colors">
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#181411] text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$3,240</div>
+</div>
+<!-- Bar 2 -->
+<div class="w-full bg-[#f5f2f0] rounded-t-lg relative group h-[45%] hover:bg-primary/20 transition-colors">
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#181411] text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$2,100</div>
+</div>
+<!-- Bar 3 -->
+<div class="w-full bg-[#181411] rounded-t-lg relative group h-[85%]">
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#181411] text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$5,120</div>
+</div>
+<!-- Bar 4 -->
+<div class="w-full bg-[#f5f2f0] rounded-t-lg relative group h-[55%] hover:bg-primary/20 transition-colors">
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#181411] text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$3,050</div>
+</div>
+<!-- Bar 5 -->
+<div class="w-full bg-[#f5f2f0] rounded-t-lg relative group h-[70%] hover:bg-primary/20 transition-colors">
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#181411] text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$4,200</div>
+</div>
+<!-- Bar 6 -->
+<div class="w-full bg-[#f5f2f0] rounded-t-lg relative group h-[40%] hover:bg-primary/20 transition-colors">
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#181411] text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$2,500</div>
+</div>
+<!-- Bar 7 -->
+<div class="w-full bg-primary rounded-t-lg relative group h-[75%] shadow-[0_4px_12px_rgba(249,116,21,0.3)]">
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#181411] text-white text-xs px-2 py-1 rounded opacity-100 transition-opacity whitespace-nowrap">$4,521</div>
+</div>
+</div>
+<div class="flex justify-between mt-4 px-2">
+<span class="text-xs text-[#8c725f] font-medium">Mon</span>
+<span class="text-xs text-[#8c725f] font-medium">Tue</span>
+<span class="text-xs text-[#8c725f] font-medium">Wed</span>
+<span class="text-xs text-[#8c725f] font-medium">Thu</span>
+<span class="text-xs text-[#8c725f] font-medium">Fri</span>
+<span class="text-xs text-[#8c725f] font-medium">Sat</span>
+<span class="text-xs text-[#8c725f] font-medium">Sun</span>
+</div>
+</div>
+</div>
+<!-- Bottom Section Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+<!-- Recent Orders Table -->
+<div class="xl:col-span-2 bg-white rounded-xl border border-[#e6dfdb] shadow-sm flex flex-col overflow-hidden">
+<div class="p-6 border-b border-[#e6dfdb] flex items-center justify-between">
+<h3 class="text-[#181411] text-lg font-bold">Recent Orders</h3>
+<a class="text-sm font-medium text-primary hover:text-[#e06510] flex items-center gap-1" href="#">
+                            View All Orders
+                            <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#fcfbfb] text-[#8c725f] text-xs uppercase tracking-wider font-semibold border-b border-[#e6dfdb]">
+<th class="px-6 py-4">Order #</th>
+<th class="px-6 py-4">Customer</th>
+<th class="px-6 py-4">Items</th>
+<th class="px-6 py-4">Total</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Date</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e6dfdb] text-sm text-[#181411]">
+<tr class="hover:bg-[#f9f8f7] transition-colors">
+<td class="px-6 py-4 font-medium">#ORD-7392</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-gray-200 bg-cover" data-alt="Customer avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYMpFhyqKMUTkyiUpK215t2gp_lrXEmIV5jfRm119kkgAAaVKW-j1SskND6MK2ixgJ_SaLiznaU-6pmzoxrRgJnEJzJ49wO3W0PWviJnCzvdXfg6Be43cwlCngUmGMNze9UW25O2_TPeJtfuU5Jr0BS_wk4fFqQWuYvRp5QtZ5ShZqN5gZ-H3BL4bFAEkKx2ImRPNQyj-Z06HCwrWBpN9EJSkO1DF2ryG14SnlT9wPE6VJ7-A7Qu9eNcqAFzmrWwi71sHFFYvc_51s');"></div>
+<span>Michael Foster</span>
+</div>
+</td>
+<td class="px-6 py-4 text-[#8c725f]">4 items</td>
+<td class="px-6 py-4 font-medium">$420.50</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            Pending
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right text-[#8c725f]">Just now</td>
+</tr>
+<tr class="hover:bg-[#f9f8f7] transition-colors">
+<td class="px-6 py-4 font-medium">#ORD-7391</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-gray-200 bg-cover" data-alt="Customer avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuASbYyk56YPryHN4chsONySeLw5oSrcJ5VJ0B3E3VfKyyl9W3j8hfPGlFP3RcuHmk3jlXh8F-St-fJc5RDOmq6bRrgC4C-h4tmAdUlvybBL9UG-FC8dCdRqFlPQSEpkuKhKU_5snhHwIKcw2TRE2bxO_ndPMj4h8cHgRxF1F-wUmLnAq_Kcqiy4OkrrPRDYatHtJyisxRbXiPYq0axp-WrPhwgcLy9ClvS8vOJvE6y-WWWfmbdwBbNannBb4hSi6udBrCftnYaQiCLC');"></div>
+<span>Lindsay Walton</span>
+</div>
+</td>
+<td class="px-6 py-4 text-[#8c725f]">1 item</td>
+<td class="px-6 py-4 font-medium">$85.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            Pending
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right text-[#8c725f]">15 min ago</td>
+</tr>
+<tr class="hover:bg-[#f9f8f7] transition-colors">
+<td class="px-6 py-4 font-medium">#ORD-7390</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-gray-200 bg-cover" data-alt="Customer avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDrQyA_6g9_BQD2cXxm6s6dSR1HmnihtJ6n2j5U5gOl0JZ7P-GeD5j-aYIluYbELo_F7XBF8K8a1bmj4uSyMchwGpBAA-FFzXwe1Lzuws7AJXJvni66PKPa9k_johk5Aa8xYDEcMnXtl_Wqh9-qXSbGdEhMvFSREVGtcO6x3LSewCLV3aZ6ihNlAhfr_dkcVvyWPtGzg_83CGpuYxI20ps19623lzFWb2sNiuWnZBZhXtWPKJCk1G5qDkKahMS7eyrn2bZsOggD_5x3');"></div>
+<span>Courtney Henry</span>
+</div>
+</td>
+<td class="px-6 py-4 text-[#8c725f]">2 items</td>
+<td class="px-6 py-4 font-medium">$125.99</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                            Processing
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right text-[#8c725f]">1 hr ago</td>
+</tr>
+<tr class="hover:bg-[#f9f8f7] transition-colors">
+<td class="px-6 py-4 font-medium">#ORD-7389</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-gray-200 bg-cover" data-alt="Customer avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCAGde1JJjF9SRnOSXc_bocziFbc367Zr6oDJzhpQdxstpdaiutoKFA7hflM8AjjuHPhryl1HP1Vpm5vCsg9nlpG__UrBaqdm5EXF2F2upVKulCF8arK1BzE7qnNGtsXemVYeDDdfwc48_qDQlkM0HEE1VqTBStpGI4uGRtKQzoTUegna0yti1Y7t6p6pgeJsFjkmMvEYAJucN6C0HVdSnzA1ZX_Ko6-XFSOkdH4lw7rzbRYCNA5sjLs8p23GxVeYRNf36cY_AhB99X');"></div>
+<span>Tom Cook</span>
+</div>
+</td>
+<td class="px-6 py-4 text-[#8c725f]">8 items</td>
+<td class="px-6 py-4 font-medium">$1,250.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Shipped
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right text-[#8c725f]">3 hrs ago</td>
+</tr>
+<tr class="hover:bg-[#f9f8f7] transition-colors">
+<td class="px-6 py-4 font-medium">#ORD-7388</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-gray-200 bg-cover" data-alt="Customer avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDaJJ0HrbQCXG9QM94H6Pr2NWN7YcKlIwkUXrNdbnvUEUQwGaYjA-7CtUTMPol9yQuyZnjWEidKAXlteS0sJUjc9xVWAgMYRryKAx-VBVzVkOrx4avVhUR8YAJ-r3iOrUzCGLDYuY9mzREShHE0NuKescd1i6IHRbS03mI0-5VWf2UArzPIRnoyEJOBbvFXjugXjyvO704w_ehpVPMF54zCdFb60K_BBYrov4Iw7vuWK9xvapJL1CZP8gonMI-7tTTP1s2N219gvquq');"></div>
+<span>Whitney Francis</span>
+</div>
+</td>
+<td class="px-6 py-4 text-[#8c725f]">1 item</td>
+<td class="px-6 py-4 font-medium">$55.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Shipped
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right text-[#8c725f]">5 hrs ago</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Low Stock Alerts -->
+<div class="bg-white rounded-xl border border-[#e6dfdb] shadow-sm flex flex-col h-full">
+<div class="p-6 border-b border-[#e6dfdb] flex items-center justify-between">
+<div class="flex items-center gap-2">
+<h3 class="text-[#181411] text-lg font-bold">Low Stock</h3>
+<span class="flex h-5 w-5 items-center justify-center rounded-full bg-red-100 text-xs font-bold text-red-600">5</span>
+</div>
+<a class="text-sm font-medium text-primary hover:text-[#e06510]" href="#">View Inventory</a>
+</div>
+<div class="flex flex-col p-4 gap-3 overflow-y-auto">
+<!-- Item 1 -->
+<div class="flex items-center gap-4 p-3 rounded-lg border border-red-100 bg-red-50/30">
+<div class="size-12 rounded bg-white border border-[#e6dfdb] flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#8c725f]">settings</span>
+</div>
+<div class="flex-1">
+<p class="text-[#181411] text-sm font-semibold">Brake Pads - Front (Ceramic)</p>
+<div class="flex items-center gap-2 mt-1">
+<p class="text-red-600 text-xs font-bold">2 Left</p>
+<span class="text-[#e6dfdb] text-xs">|</span>
+<p class="text-[#8c725f] text-xs">Threshold: 10</p>
+</div>
+</div>
+<button class="p-2 text-primary hover:bg-primary/10 rounded-full transition-colors">
+<span class="material-symbols-outlined !text-lg">add_shopping_cart</span>
+</button>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-4 p-3 rounded-lg border border-[#e6dfdb] hover:bg-gray-50 transition-colors">
+<div class="size-12 rounded bg-white border border-[#e6dfdb] flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#8c725f]">directions_car</span>
+</div>
+<div class="flex-1">
+<p class="text-[#181411] text-sm font-semibold">Oil Filter - Type X</p>
+<div class="flex items-center gap-2 mt-1">
+<p class="text-[#181411] text-xs font-bold">5 Left</p>
+<span class="text-[#e6dfdb] text-xs">|</span>
+<p class="text-[#8c725f] text-xs">Threshold: 20</p>
+</div>
+</div>
+<button class="p-2 text-[#8c725f] hover:bg-gray-100 rounded-full transition-colors">
+<span class="material-symbols-outlined !text-lg">more_vert</span>
+</button>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center gap-4 p-3 rounded-lg border border-[#e6dfdb] hover:bg-gray-50 transition-colors">
+<div class="size-12 rounded bg-white border border-[#e6dfdb] flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#8c725f]">bolt</span>
+</div>
+<div class="flex-1">
+<p class="text-[#181411] text-sm font-semibold">Spark Plug - Iridium</p>
+<div class="flex items-center gap-2 mt-1">
+<p class="text-[#181411] text-xs font-bold">12 Left</p>
+<span class="text-[#e6dfdb] text-xs">|</span>
+<p class="text-[#8c725f] text-xs">Threshold: 50</p>
+</div>
+</div>
+<button class="p-2 text-[#8c725f] hover:bg-gray-100 rounded-full transition-colors">
+<span class="material-symbols-outlined !text-lg">more_vert</span>
+</button>
+</div>
+<!-- Item 4 -->
+<div class="flex items-center gap-4 p-3 rounded-lg border border-[#e6dfdb] hover:bg-gray-50 transition-colors">
+<div class="size-12 rounded bg-white border border-[#e6dfdb] flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#8c725f]">water_drop</span>
+</div>
+<div class="flex-1">
+<p class="text-[#181411] text-sm font-semibold">Wiper Fluid - All Season</p>
+<div class="flex items-center gap-2 mt-1">
+<p class="text-[#181411] text-xs font-bold">8 Left</p>
+<span class="text-[#e6dfdb] text-xs">|</span>
+<p class="text-[#8c725f] text-xs">Threshold: 15</p>
+</div>
+</div>
+<button class="p-2 text-[#8c725f] hover:bg-gray-100 rounded-full transition-colors">
+<span class="material-symbols-outlined !text-lg">more_vert</span>
+</button>
+</div>
+<!-- Item 5 -->
+<div class="flex items-center gap-4 p-3 rounded-lg border border-[#e6dfdb] hover:bg-gray-50 transition-colors">
+<div class="size-12 rounded bg-white border border-[#e6dfdb] flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#8c725f]">build</span>
+</div>
+<div class="flex-1">
+<p class="text-[#181411] text-sm font-semibold">Wrench Set - Metric</p>
+<div class="flex items-center gap-2 mt-1">
+<p class="text-[#181411] text-xs font-bold">3 Left</p>
+<span class="text-[#e6dfdb] text-xs">|</span>
+<p class="text-[#8c725f] text-xs">Threshold: 5</p>
+</div>
+</div>
+<button class="p-2 text-[#8c725f] hover:bg-gray-100 rounded-full transition-colors">
+<span class="material-symbols-outlined !text-lg">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

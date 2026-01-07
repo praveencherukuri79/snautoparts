@@ -1,0 +1,44 @@
+// Breakpoint System
+// Mobile-first approach for customer pages
+
+$breakpoints: (
+  'sm': 640px,   // Mobile landscape
+  'md': 768px,   // Tablet portrait
+  'lg': 1024px,  // Tablet landscape / small desktop
+  'xl': 1280px,  // Desktop
+  '2xl': 1536px, // Large desktop
+);
+
+// Mixin for mobile-first media queries
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint '#{$breakpoint}' not found in $breakpoints map.";
+  }
+}
+
+// Mixin for max-width (desktop-first) - use sparingly
+@mixin respond-below($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (max-width: #{map-get($breakpoints, $breakpoint) - 1px}) {
+      @content;
+    }
+  }
+}
+
+// Example usage:
+// .element {
+//   padding: var(--space-4);       // Mobile default
+//
+//   @include respond-to('md') {
+//     padding: var(--space-6);     // Tablet+
+//   }
+//
+//   @include respond-to('lg') {
+//     padding: var(--space-8);     // Desktop+
+//   }
+// }
+

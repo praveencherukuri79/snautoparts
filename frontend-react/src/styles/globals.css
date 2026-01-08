@@ -505,3 +505,50 @@ h6 {
     display: none !important;
   }
 }
+
+/* ==========================================================================
+   Dark Theme Inputs (for dark backgrounds)
+   ========================================================================== */
+.dark-input .MuiOutlinedInput-root {
+  background-color: var(--color-bg-input-dark);
+  color: #ffffff;
+}
+
+.dark-input .MuiOutlinedInput-notchedOutline {
+  border-color: var(--color-border-dark);
+}
+
+.dark-input .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--color-primary);
+}
+
+.dark-input .MuiInputBase-input::placeholder {
+  color: rgba(187, 168, 155, 0.5);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Auth Page Button Styles
+   ========================================================================== */
+
+/* Primary ghost button (Return to Shop, Back to Login) */
+.btn-primary-ghost {
+  background-color: rgba(249, 115, 22, 0.1) !important;
+  color: var(--color-primary) !important;
+}
+
+.btn-primary-ghost:hover {
+  background-color: rgba(249, 115, 22, 0.2) !important;
+}
+
+/* Dark outlined button (Sign In, Social buttons) */
+.btn-dark-outlined {
+  border-color: var(--color-border-dark) !important;
+  color: #ffffff !important;
+  background-color: var(--color-bg-input-dark) !important;
+}
+
+.btn-dark-outlined:hover {
+  background-color: var(--color-border-dark) !important;
+  border-color: var(--color-border-dark) !important;
+}

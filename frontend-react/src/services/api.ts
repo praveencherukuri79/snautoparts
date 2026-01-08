@@ -35,6 +35,7 @@ const createApiInstance = (): AxiosInstance => {
     headers: {
       'Content-Type': 'application/json',
     },
+    withCredentials: true, // Required for session cookies
   });
 
   // Request interceptor - add auth token
@@ -113,8 +114,8 @@ export const api = createApiInstance();
 
 // Generic request methods
 export const apiGet = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
-  const response = await api.get<ApiResponse<T>>(url, config);
-  return response.data.data as T;
+  const response = await api.get<T>(url, config);
+  return response.data;
 };
 
 export const apiPost = async <T>(
@@ -122,8 +123,8 @@ export const apiPost = async <T>(
   data?: unknown,
   config?: AxiosRequestConfig
 ): Promise<T> => {
-  const response = await api.post<ApiResponse<T>>(url, data, config);
-  return response.data.data as T;
+  const response = await api.post<T>(url, data, config);
+  return response.data;
 };
 
 export const apiPut = async <T>(
@@ -131,8 +132,8 @@ export const apiPut = async <T>(
   data?: unknown,
   config?: AxiosRequestConfig
 ): Promise<T> => {
-  const response = await api.put<ApiResponse<T>>(url, data, config);
-  return response.data.data as T;
+  const response = await api.put<T>(url, data, config);
+  return response.data;
 };
 
 export const apiPatch = async <T>(
@@ -140,13 +141,13 @@ export const apiPatch = async <T>(
   data?: unknown,
   config?: AxiosRequestConfig
 ): Promise<T> => {
-  const response = await api.patch<ApiResponse<T>>(url, data, config);
-  return response.data.data as T;
+  const response = await api.patch<T>(url, data, config);
+  return response.data;
 };
 
 export const apiDelete = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
-  const response = await api.delete<ApiResponse<T>>(url, config);
-  return response.data.data as T;
+  const response = await api.delete<T>(url, config);
+  return response.data;
 };
 
 export default api;

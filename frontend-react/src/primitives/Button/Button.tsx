@@ -1,14 +1,16 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import {
   Button as MuiButton,
   ButtonProps as MuiButtonProps,
   CircularProgress,
 } from '@mui/material';
+import type { LinkProps } from 'react-router-dom';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outlined' | 'text' | 'danger';
 export type ButtonSize = 'small' | 'medium' | 'large';
 
-export interface ButtonProps extends Omit<MuiButtonProps, 'variant' | 'color'> {
+// Base props without component/to - used when rendering as button
+type BaseButtonProps = Omit<MuiButtonProps, 'variant' | 'color'> & {
   /** Button style variant */
   variant?: ButtonVariant;
   /** Button size */
@@ -17,7 +19,16 @@ export interface ButtonProps extends Omit<MuiButtonProps, 'variant' | 'color'> {
   loading?: boolean;
   /** Full width button */
   fullWidth?: boolean;
-}
+};
+
+// Props when used with react-router Link
+type LinkButtonProps = BaseButtonProps & {
+  component: typeof import('react-router-dom').Link;
+  to: LinkProps['to'];
+};
+
+// Union type supporting both regular button and link button
+export type ButtonProps = BaseButtonProps | LinkButtonProps;
 
 /**
  * Button Component

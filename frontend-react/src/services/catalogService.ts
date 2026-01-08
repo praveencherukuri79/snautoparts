@@ -1,180 +1,174 @@
-import { apiGet, apiPost, PaginatedResponse } from './api';
-import { API_ENDPOINTS } from '@/utils/constants';
-import {
-  Product,
-  ProductFilters,
-  Category,
+import { apiGet } from './api';
+import type {
+  GetCategoriesResponse,
+  GetCategoryResponse,
+  GetBrandsResponse,
+  GetProductsResponse,
+  GetFeaturedProductsResponse,
+  GetProductDetailResponse,
+  SearchProductsResponse,
+  GetFitmentMakesResponse,
+  GetFitmentModelsResponse,
+  GetFitmentYearsResponse,
+  FitmentSearchResponse,
+  GetProductsParams,
+  GetFitmentModelsParams,
+  GetFitmentYearsParams,
   FitmentSearchParams,
-  VehicleInfo,
-} from '@/types';
+  SearchProductsParams,
+  ProductSummary,
+  ProductDetail,
+  Category,
+  Brand,
+} from '@/models';
 
-export interface ProductListParams {
-  page?: number;
-  pageSize?: number;
-  sortBy?: string;
-  sortDirection?: 'asc' | 'desc';
-  search?: string;
-  categoryId?: string;
-  minPrice?: number;
-  maxPrice?: number;
-  inStock?: boolean;
-  vehicleId?: string;
-  make?: string;
-  model?: string;
-  year?: number;
-  engine?: string;
-}
-
-export interface CategoryListParams {
-  parentId?: string;
-  includeProducts?: boolean;
-  depth?: number;
-}
+// API Endpoints matching swagger paths
+const CATALOG_ENDPOINTS = {
+  CATEGORIES: '/catalog/categories',
+  CATEGORY_BY_SLUG: (slug: string) => `/catalog/categories/${slug}`,
+  BRANDS: '/catalog/brands',
+  PRODUCTS: '/catalog/products',
+  PRODUCTS_FEATURED: '/catalog/products/featured',
+  PRODUCT_BY_SLUG: (slug: string) => `/catalog/products/${slug}`,
+  SEARCH: '/catalog/search',
+  FITMENT_MAKES: '/catalog/fitment/makes',
+  FITMENT_MODELS: '/catalog/fitment/models',
+  FITMENT_YEARS: '/catalog/fitment/years',
+  FITMENT_SEARCH: '/catalog/fitment/search',
+};
 
 /**
  * Catalog Service
  * 
- * Handles product catalog, categories, and search API calls.
+ * Handles product catalog, categories, brands, and fitment API calls.
+ * Types match swagger.json exactly.
  */
 export const catalogService = {
-  // Products
-  /**
-   * Get paginated list of products with filters
-   */
-  getProducts: async (params?: ProductListParams): Promise<PaginatedResponse<Product>> => {
-    return apiGet<PaginatedResponse<Product>>(API_ENDPOINTS.PRODUCTS.LIST, { params });
-  },
-
-  /**
-   * Get single product by ID
-   */
-  getProduct: async (id: string): Promise<Product> => {
-    return apiGet<Product>(API_ENDPOINTS.PRODUCTS.DETAIL(id));
-  },
-
-  /**
-   * Get product by SKU
-   */
-  getProductBySku: async (sku: string): Promise<Product> => {
-    return apiGet<Product>(`${API_ENDPOINTS.PRODUCTS.LIST}/sku/${sku}`);
-  },
-
-  /**
-   * Get related products
-   */
-  getRelatedProducts: async (productId: string, limit?: number): Promise<Product[]> => {
-    return apiGet<Product[]>(`${API_ENDPOINTS.PRODUCTS.DETAIL(productId)}/related`, {
-      params: { limit },
-    });
-  },
-
-  /**
-   * Get products by category
-   */
-  getProductsByCategory: async (
-    categoryId: string,
-    params?: ProductListParams
-  ): Promise<PaginatedResponse<Product>> => {
-    return apiGet<PaginatedResponse<Product>>(API_ENDPOINTS.PRODUCTS.BY_CATEGORY(categoryId), {
-      params,
-    });
-  },
-
   // Categories
   /**
-   * Get all categories (tree structure)
+   * GET /catalog/categories
+   * Returns all active product categories
    */
-  getCategories: async (params?: CategoryListParams): Promise<Category[]> => {
-    return apiGet<Category[]>(API_ENDPOINTS.CATEGORIES.LIST, { params });
+  getCategories: async (): Promise<Category[]> => {
+    const response = await apiGet<GetCategoriesResponse>(CATALOG_ENDPOINTS.CATEGORIES);
+    return response.data;
   },
 
   /**
-   * Get single category by ID
-   */
-  getCategory: async (id: string): Promise<Category> => {
-    return apiGet<Category>(API_ENDPOINTS.CATEGORIES.DETAIL(id));
-  },
-
-  /**
-   * Get category by slug
+   * GET /catalog/categories/{slug}
+   * Returns a single category by its URL slug
    */
   getCategoryBySlug: async (slug: string): Promise<Category> => {
-    return apiGet<Category>(`${API_ENDPOINTS.CATEGORIES.LIST}/slug/${slug}`);
+    const response = await apiGet<GetCategoryResponse>(CATALOG_ENDPOINTS.CATEGORY_BY_SLUG(slug));
+    return response.data;
+  },
+
+  // Brands
+  /**
+   * GET /catalog/brands
+   * Returns all active product brands
+   */
+  getBrands: async (): Promise<Brand[]> => {
+    const response = await apiGet<GetBrandsResponse>(CATALOG_ENDPOINTS.BRANDS);
+    return response.data;
+  },
+
+  // Products
+  /**
+   * GET /catalog/products
+   * Returns paginated list of products with optional filters
+   */
+  getProducts: async (params?: GetProductsParams): Promise<GetProductsResponse> => {
+    return apiGet<GetProductsResponse>(CATALOG_ENDPOINTS.PRODUCTS, { params });
   },
 
   /**
-   * Get category tree (hierarchical)
+   * GET /catalog/products/featured
+   * Returns a list of featured products for homepage display
    */
-  getCategoryTree: async (): Promise<Category[]> => {
-    return apiGet<Category[]>(API_ENDPOINTS.CATEGORIES.TREE);
+  getFeaturedProducts: async (): Promise<ProductSummary[]> => {
+    const response = await apiGet<GetFeaturedProductsResponse>(CATALOG_ENDPOINTS.PRODUCTS_FEATURED);
+    return response.data;
+  },
+
+  /**
+   * GET /catalog/products/{slug}
+   * Returns detailed product information including fitment data
+   */
+  getProductBySlug: async (slug: string): Promise<ProductDetail> => {
+    const response = await apiGet<GetProductDetailResponse>(CATALOG_ENDPOINTS.PRODUCT_BY_SLUG(slug));
+    return response.data;
   },
 
   // Search
   /**
-   * Search products with filters
+   * GET /catalog/search
+   * Search products by name, SKU, or description
    */
-  searchProducts: async (
-    query: string,
-    filters?: ProductFilters
-  ): Promise<PaginatedResponse<Product>> => {
-    return apiGet<PaginatedResponse<Product>>(API_ENDPOINTS.SEARCH.PRODUCTS, {
-      params: { q: query, ...filters },
-    });
-  },
-
-  /**
-   * Get search suggestions/autocomplete
-   */
-  getSearchSuggestions: async (query: string): Promise<string[]> => {
-    return apiGet<string[]>(API_ENDPOINTS.SEARCH.SUGGESTIONS, {
-      params: { q: query },
-    });
+  searchProducts: async (params: SearchProductsParams): Promise<ProductSummary[]> => {
+    const response = await apiGet<SearchProductsResponse>(CATALOG_ENDPOINTS.SEARCH, { params });
+    return response.data;
   },
 
   // Fitment
   /**
-   * Search products by vehicle fitment
+   * GET /catalog/fitment/makes
+   * Returns all vehicle makes available in fitment data
    */
-  searchByFitment: async (params: FitmentSearchParams): Promise<PaginatedResponse<Product>> => {
-    return apiGet<PaginatedResponse<Product>>(API_ENDPOINTS.FITMENT.SEARCH, { params });
+  getFitmentMakes: async (): Promise<string[]> => {
+    const response = await apiGet<GetFitmentMakesResponse>(CATALOG_ENDPOINTS.FITMENT_MAKES);
+    return response.data;
   },
 
   /**
-   * Get available makes
+   * GET /catalog/fitment/models
+   * Returns vehicle models for a given make
    */
-  getMakes: async (): Promise<string[]> => {
-    return apiGet<string[]>(API_ENDPOINTS.FITMENT.MAKES);
+  getFitmentModels: async (params: GetFitmentModelsParams): Promise<string[]> => {
+    const response = await apiGet<GetFitmentModelsResponse>(CATALOG_ENDPOINTS.FITMENT_MODELS, { params });
+    return response.data;
   },
 
   /**
-   * Get models for a make
+   * GET /catalog/fitment/years
+   * Returns vehicle years for a given make and model
    */
-  getModels: async (make: string): Promise<string[]> => {
-    return apiGet<string[]>(API_ENDPOINTS.FITMENT.MODELS, { params: { make } });
+  getFitmentYears: async (params?: GetFitmentYearsParams): Promise<number[]> => {
+    const response = await apiGet<GetFitmentYearsResponse>(CATALOG_ENDPOINTS.FITMENT_YEARS, { params });
+    return response.data;
   },
 
   /**
-   * Get years for a make/model
+   * GET /catalog/fitment/search
+   * Find products that fit a specific vehicle (year, make, model)
    */
-  getYears: async (make: string, model: string): Promise<number[]> => {
-    return apiGet<number[]>(API_ENDPOINTS.FITMENT.YEARS, { params: { make, model } });
+  searchByFitment: async (params: FitmentSearchParams): Promise<FitmentSearchResponse> => {
+    return apiGet<FitmentSearchResponse>(CATALOG_ENDPOINTS.FITMENT_SEARCH, { params });
   },
+};
 
-  /**
-   * Get engines for a make/model/year
-   */
-  getEngines: async (make: string, model: string, year: number): Promise<string[]> => {
-    return apiGet<string[]>(API_ENDPOINTS.FITMENT.ENGINES, {
-      params: { make, model, year },
-    });
-  },
-
-  /**
-   * Verify if product fits vehicle
-   */
-  verifyFitment: async (productId: string, vehicleInfo: VehicleInfo): Promise<boolean> => {
-    return apiPost<boolean>(`${API_ENDPOINTS.PRODUCTS.DETAIL(productId)}/verify-fitment`, vehicleInfo);
-  },
+// Re-export types for convenience
+export type {
+  GetCategoriesResponse,
+  GetCategoryResponse,
+  GetBrandsResponse,
+  GetProductsResponse,
+  GetFeaturedProductsResponse,
+  GetProductDetailResponse,
+  SearchProductsResponse,
+  GetFitmentMakesResponse,
+  GetFitmentModelsResponse,
+  GetFitmentYearsResponse,
+  FitmentSearchResponse,
+  GetProductsParams,
+  GetFitmentModelsParams,
+  GetFitmentYearsParams,
+  FitmentSearchParams,
+  SearchProductsParams,
+  ProductSummary,
+  ProductDetail,
+  Category,
+  Brand,
 };
 
 export default catalogService;

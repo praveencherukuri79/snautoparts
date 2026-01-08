@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import {
   Select as MuiSelect,
   SelectProps as MuiSelectProps,

@@ -1,11 +1,20 @@
-import { atom } from 'recoil';
-import type { CartItem } from '@/types';
+import { atom, AtomEffect } from 'recoil';
+
+// Local cart item for client-side state (different from API CartItem)
+export interface LocalCartItem {
+  id: string;
+  productId: string;
+  sku: string;
+  name: string;
+  price: number;
+  salePrice?: number;
+  quantity: number;
+  imageUrl?: string;
+  maxQuantity: number;
+}
 
 // Local storage effect for cart persistence
-const cartLocalStorageEffect = ({ setSelf, onSet }: { 
-  setSelf: (value: CartItem[]) => void; 
-  onSet: (callback: (newValue: CartItem[], _: CartItem[], isReset: boolean) => void) => void 
-}) => {
+const cartLocalStorageEffect: AtomEffect<LocalCartItem[]> = ({ setSelf, onSet }) => {
   if (typeof window === 'undefined') return;
   
   const savedValue = localStorage.getItem('sn-cart');
@@ -30,7 +39,7 @@ const cartLocalStorageEffect = ({ setSelf, onSet }: {
  * Cart Atom
  * Manages shopping cart items with local storage persistence
  */
-export const cartAtom = atom<CartItem[]>({
+export const cartAtom = atom<LocalCartItem[]>({
   key: 'cartAtom',
   default: [],
   effects: [cartLocalStorageEffect],

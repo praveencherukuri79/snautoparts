@@ -1,16 +1,17 @@
 import { atom } from 'recoil';
-import type { User, FeatureConfig } from '@/types';
+import type { AuthUser } from '@/models';
+import type { FeatureConfig } from '@/types';
 
 export interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
-  user: User | null;
+  user: AuthUser | null;
   featureConfig: FeatureConfig | null;
 }
 
 const defaultAuthState: AuthState = {
   isAuthenticated: false,
-  isLoading: true,
+  isLoading: false, // Start as false - don't block UI before checking session
   user: null,
   featureConfig: null,
 };

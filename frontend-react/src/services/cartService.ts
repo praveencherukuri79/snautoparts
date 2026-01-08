@@ -1,113 +1,99 @@
-import { apiGet, apiPost, apiPut, apiDelete } from './api';
-import { API_ENDPOINTS } from '@/utils/constants';
-import { CartItem } from '@/types';
+import { apiGet, apiPost, apiPatch, apiDelete } from './api';
+import type {
+  Cart,
+  CartItem,
+  GetCartResponse,
+  GetCartCountResponse,
+  AddToCartRequest,
+  AddToCartResponse,
+  UpdateCartItemRequest,
+  UpdateCartItemResponse,
+  RemoveCartItemResponse,
+  ClearCartResponse,
+} from '@/models';
 
-export interface CartResponse {
-  items: CartItem[];
-  subtotal: number;
-  tax: number;
-  shipping: number;
-  discount: number;
-  total: number;
-  itemCount: number;
-}
-
-export interface AddToCartRequest {
-  productId: string;
-  quantity: number;
-  vehicleId?: string;
-}
-
-export interface UpdateCartItemRequest {
-  quantity: number;
-}
-
-export interface ApplyCouponRequest {
-  code: string;
-}
-
-export interface CouponResponse {
-  code: string;
-  discount: number;
-  discountType: 'percentage' | 'fixed';
-  description: string;
-}
+// API Endpoints matching swagger paths
+const CART_ENDPOINTS = {
+  BASE: '/cart/',
+  COUNT: '/cart/count',
+  ITEMS: '/cart/items',
+  ITEM: (id: string) => `/cart/items/${id}`,
+};
 
 /**
  * Cart Service
  * 
  * Handles shopping cart API calls.
+ * Types match swagger.json exactly.
  */
 export const cartService = {
   /**
-   * Get current cart
+   * GET /cart/
+   * Returns the current user's shopping cart with all items
    */
-  getCart: async (): Promise<CartResponse> => {
-    return apiGet<CartResponse>(API_ENDPOINTS.CART.GET);
+  getCart: async (): Promise<Cart> => {
+    const response = await apiGet<GetCartResponse>(CART_ENDPOINTS.BASE);
+    return response.data;
   },
 
   /**
-   * Add item to cart
+   * GET /cart/count
+   * Returns the total number of items in the cart (for nav badge)
    */
-  addItem: async (data: AddToCartRequest): Promise<CartResponse> => {
-    return apiPost<CartResponse>(API_ENDPOINTS.CART.ADD, data);
+  getCartCount: async (): Promise<number> => {
+    const response = await apiGet<GetCartCountResponse>(CART_ENDPOINTS.COUNT);
+    return response.data.count;
   },
 
   /**
-   * Update cart item quantity
+   * POST /cart/items
+   * Add a product to the shopping cart
    */
-  updateItem: async (itemId: string, data: UpdateCartItemRequest): Promise<CartResponse> => {
-    return apiPut<CartResponse>(API_ENDPOINTS.CART.UPDATE(itemId), data);
+  addItem: async (data: AddToCartRequest): Promise<Cart> => {
+    const response = await apiPost<AddToCartResponse>(CART_ENDPOINTS.ITEMS, data);
+    return response.data;
   },
 
   /**
-   * Remove item from cart
+   * PATCH /cart/items/{id}
+   * Update the quantity of an item in the cart
    */
-  removeItem: async (itemId: string): Promise<CartResponse> => {
-    return apiDelete<CartResponse>(API_ENDPOINTS.CART.REMOVE(itemId));
+  updateItem: async (itemId: string, data: UpdateCartItemRequest): Promise<Cart> => {
+    const response = await apiPatch<UpdateCartItemResponse>(CART_ENDPOINTS.ITEM(itemId), data);
+    return response.data;
   },
 
   /**
-   * Clear entire cart
+   * DELETE /cart/items/{id}
+   * Remove an item from the shopping cart
    */
-  clearCart: async (): Promise<void> => {
-    return apiDelete<void>(API_ENDPOINTS.CART.CLEAR);
+  removeItem: async (itemId: string): Promise<Cart> => {
+    const response = await apiDelete<RemoveCartItemResponse>(CART_ENDPOINTS.ITEM(itemId));
+    return response.data;
   },
 
   /**
-   * Apply coupon code
+   * DELETE /cart/
+   * Remove all items from the shopping cart
    */
-  applyCoupon: async (data: ApplyCouponRequest): Promise<CartResponse & { coupon: CouponResponse }> => {
-    return apiPost<CartResponse & { coupon: CouponResponse }>(API_ENDPOINTS.CART.APPLY_COUPON, data);
+  clearCart: async (): Promise<string> => {
+    const response = await apiDelete<ClearCartResponse>(CART_ENDPOINTS.BASE);
+    return response.data.message;
   },
+};
 
-  /**
-   * Remove applied coupon
-   */
-  removeCoupon: async (): Promise<CartResponse> => {
-    return apiDelete<CartResponse>(API_ENDPOINTS.CART.REMOVE_COUPON);
-  },
-
-  /**
-   * Get saved for later items
-   */
-  getSavedItems: async (): Promise<CartItem[]> => {
-    return apiGet<CartItem[]>(`${API_ENDPOINTS.CART.GET}/saved`);
-  },
-
-  /**
-   * Move item to saved for later
-   */
-  saveForLater: async (itemId: string): Promise<void> => {
-    return apiPost<void>(`${API_ENDPOINTS.CART.GET}/items/${itemId}/save`);
-  },
-
-  /**
-   * Move saved item back to cart
-   */
-  moveToCart: async (itemId: string): Promise<CartResponse> => {
-    return apiPost<CartResponse>(`${API_ENDPOINTS.CART.GET}/saved/${itemId}/move-to-cart`);
-  },
+// Re-export types for convenience
+export type {
+  Cart,
+  CartItem,
+  GetCartResponse,
+  GetCartCountResponse,
+  AddToCartRequest,
+  AddToCartResponse,
+  UpdateCartItemRequest,
+  UpdateCartItemResponse,
+  RemoveCartItemResponse,
+  ClearCartResponse,
 };
 
 export default cartService;

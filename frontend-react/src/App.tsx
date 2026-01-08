@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import { useRecoilValue } from 'recoil';
 import { isAuthenticatedSelector, userRoleSelector } from '@/state/selectors';
 import { Spinner } from '@/primitives';
-import { MainLayout, AuthLayout, DashboardLayout } from '@/layouts';
+import { MainLayout, DashboardLayout } from '@/layouts';
 import NotificationSnackbar from '@/components/NotificationSnackbar';
 
 // Lazy load pages for code splitting
@@ -170,14 +170,12 @@ const App: React.FC = () => {
             }
           />
 
-          {/* Auth routes with AuthLayout */}
+          {/* Auth routes - Login has its own layout */}
           <Route
             path="/login"
             element={
               <GuestRoute>
-                <AuthLayout title="Sign In" subtitle="Welcome back to SN Auto Parts">
-                  <LoginPage />
-                </AuthLayout>
+                <LoginPage />
               </GuestRoute>
             }
           />
@@ -185,26 +183,20 @@ const App: React.FC = () => {
             path="/register"
             element={
               <GuestRoute>
-                <AuthLayout title="Create Account" subtitle="Join SN Auto Parts today">
-                  <RegisterPage />
-                </AuthLayout>
+                <RegisterPage />
               </GuestRoute>
             }
           />
           <Route
             path="/forgot-password"
             element={
-              <AuthLayout title="Forgot Password" subtitle="We'll send you a reset link">
-                <ForgotPasswordPage />
-              </AuthLayout>
+              <ForgotPasswordPage />
             }
           />
           <Route
             path="/reset-password"
             element={
-              <AuthLayout title="Reset Password" subtitle="Enter your new password">
-                <ResetPasswordPage />
-              </AuthLayout>
+              <ResetPasswordPage />
             }
           />
 

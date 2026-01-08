@@ -4,6 +4,53 @@
 
 ---
 
+## ⚠️ CRITICAL RULES (READ FIRST)
+
+1. **NO INLINE SVGs** - All SVGs must be in `src/assets/icons/` and imported
+2. **NO HARDCODED COLORS** - Use theme colors only (`primary.main`, `text.muted`, `background.surfaceDark`, etc.)
+3. **USE MUI COMPONENTS** - Use Box, Stack, Typography, not raw HTML (div, span, p, h1)
+4. **USE react-hook-form** - For all forms
+5. **IMAGES FROM CONFIG** - All image URLs in `src/config/images.ts`
+6. **MINIMAL sx PROPS** - Use theme, primitives first; sx only for layout (spacing, flex)
+7. **UX MOCKUPS = REFERENCE ONLY** - Don't replicate exactly, take best guess
+8. **KEEP COMPONENTS MINIMAL** - Simple, focused, small files
+9. **USE GLOBAL UTILITY CSS** - Use existing utility classes from `globals.css` (flex, gap-4, text-muted, etc.), NOT page-specific CSS classes
+10. **NO PAGE-SPECIFIC CSS** - Never create `.auth-*`, `.login-*`, `.dashboard-*` classes. Use MUI + utility classes only
+
+### Auth Page Layout Rules
+
+1. **Social login buttons at BOTTOM** - After the form, after divider, before "Sign up/Sign in" link
+2. **NO vertical border/divider** between hero image section and form section
+3. **Header "Return to Shop" button** - Use `ArrowBack` icon, styled with `rgba(249, 115, 22, 0.1)` bg and `primary.main` text
+4. **Logo must be visible** - Use `color: 'primary.main'` on LogoIcon component
+
+### Theme Color Reference
+
+```typescript
+// Background colors
+'background.surfaceDark'  // #181411 - main dark bg
+'background.inputDark'    // #27201b - input bg on dark
+'background.dark'         // #23170f - darker bg
+
+// Text colors  
+'common.white'            // #ffffff
+'text.muted'              // #bba89b - muted text on dark
+'text.primary'            // #181411 - primary text on light
+'text.secondary'          // #8c725f
+
+// Border colors
+'border.dark'             // #55453a - borders on dark bg
+'border.light'            // #e6dfdb - borders on light bg
+
+// Semantic colors
+'primary.main'            // #f97415 - brand orange
+'error.main'              // #dc2626
+'error.light'             // #fee2e2 - error bg
+'success.main'            // #16a34a
+```
+
+---
+
 ## Table of Contents
 
 1. [Tech Stack](#1-tech-stack)
@@ -54,8 +101,13 @@ frontend-react/
 │   ├── App.tsx                     # Root component with providers
 │   ├── vite-env.d.ts
 │   │
-│   ├── assets/                     # Static assets (images, fonts)
-│   │   └── images/
+│   ├── assets/                     # Static assets
+│   │   ├── images/                 # Image files (png, jpg, webp)
+│   │   ├── icons/                  # SVG icon files
+│   │   │   ├── logo.svg
+│   │   │   ├── google.svg
+│   │   │   └── ...
+│   │   └── fonts/                  # Custom fonts (if any)
 │   │
 │   ├── config/                     # App configuration
 │   │   ├── index.ts
@@ -501,18 +553,67 @@ Button.displayName = 'Button';
 |-------|-------|---------|
 | **Global CSS** | `styles/globals.css` | CSS variables, base styles, resets |
 | **Theme** | MUI theme | Component defaults, palette, typography |
-| **Utility CSS** | `styles/utilities.css` | Common utility classes |
-| **Component CSS** | Inline sx prop / styled() | Component-specific overrides (MINIMAL) |
+| **Utility CSS** | `styles/utilities.css` | Common utility classes (Tailwind-like) |
+| **Page CSS** | `styles/pages/*.css` | Page-specific reusable classes |
+| **Component CSS** | Inline sx prop | Component-specific overrides (**LAST RESORT**) |
 
 ### 7.2 Rules
 
 1. **Global First** - Put common styles in global CSS
 2. **Use Theme** - Leverage MUI theme for consistency
-3. **Minimal Component CSS** - Only when absolutely necessary
-4. **No CSS Modules** - Use MUI's sx prop for component overrides
+3. **Use Primitives** - Use primitive components instead of raw MUI + sx
+4. **Minimal sx Props** - Only for truly one-off positioning (mt, mb, gap)
 5. **CSS Variables** - Use for dynamic values (theme switching)
+6. **No Inline Colors** - Use theme colors or CSS variables
+7. **No Magic Numbers** - Use spacing scale (1, 2, 3...) not pixels
 
-### 7.3 Global CSS Structure
+### 7.3 SVG Icons
+
+**SVG icons MUST be in separate files, NOT inline in components.**
+
+```
+src/assets/icons/
+├── logo.svg
+├── google.svg  
+├── apple.svg
+├── lock.svg
+├── verified.svg
+├── shipping.svg
+└── index.ts     # Re-exports all icons
+```
+
+```typescript
+// assets/icons/index.ts
+export { ReactComponent as LogoIcon } from './logo.svg';
+export { ReactComponent as GoogleIcon } from './google.svg';
+// OR use as img src:
+export { default as logoUrl } from './logo.svg';
+```
+
+**Usage:**
+```tsx
+// ✅ Good - Import from assets
+import { GoogleIcon } from '@/assets/icons';
+<GoogleIcon className="icon-md" />
+
+// ❌ Bad - Inline SVG in component
+<svg viewBox="0 0 24 24">...</svg>
+```
+
+### 7.4 Design Reference Usage
+
+**UX mockups (Stitch designs) are REFERENCE ONLY - do not exactly replicate.**
+
+- ✅ Use mockups for layout structure and flow
+- ✅ Use mockups for feature requirements  
+- ✅ Take best guess for colors, spacing
+- ❌ Don't copy exact pixel values
+- ❌ Don't replicate every visual detail
+- ❌ Don't add unnecessary decorative elements
+
+**Keep pages simple and functional first. Polish later.**
+
+### 7.5 Global CSS Structure
 
 ```css
 /* globals.css */

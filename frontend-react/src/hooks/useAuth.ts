@@ -3,12 +3,12 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { authAtom, AuthState, notificationAtom } from '@/state/atoms';
 import { isAuthenticatedSelector, userRoleSelector } from '@/state/selectors';
 import { authService } from '@/services';
-import { LoginCredentials, RegisterData, User } from '@/types';
+import type { LoginRequest, RegisterRequest, AuthUser } from '@/models';
 import { setStorageItem, removeStorageItem, STORAGE_KEYS } from '@/utils/storage';
 
 export interface UseAuthReturn {
   /** Current user */
-  user: User | null;
+  user: AuthUser | null;
   /** Whether user is authenticated */
   isAuthenticated: boolean;
   /** User role */
@@ -16,9 +16,9 @@ export interface UseAuthReturn {
   /** Loading state */
   isLoading: boolean;
   /** Login with credentials */
-  login: (credentials: LoginCredentials) => Promise<void>;
+  login: (credentials: LoginRequest) => Promise<void>;
   /** Register new account */
-  register: (data: RegisterData) => Promise<void>;
+  register: (data: RegisterRequest) => Promise<void>;
   /** Logout current user */
   logout: () => Promise<void>;
   /** Refresh user profile */
@@ -52,32 +52,17 @@ export function useAuth(): UseAuthReturn {
 
   // Login
   const login = useCallback(
-    async (credentials: LoginCredentials) => {
+    async (credentials: LoginRequest) => {
       setAuth((prev: AuthState) => ({ ...prev, isLoading: true }));
       try {
         const response = await authService.login(credentials);
         
-        // Store tokens - handle different response formats
-        if ('tokens' in response && response.tokens) {
-          setStorageItem(STORAGE_KEYS.AUTH_TOKEN, response.tokens.accessToken);
-          if (response.tokens.refreshToken) {
-            setStorageItem(STORAGE_KEYS.REFRESH_TOKEN, response.tokens.refreshToken);
-          }
-        }
+        // Session-based auth - cookies are handled automatically
+        // Just store user in local storage for persistence
         setStorageItem(STORAGE_KEYS.USER, response.user);
 
-        // Map response user to our User type
-        const user: User = {
-          id: response.user.id,
-          email: response.user.email,
-          firstName: response.user.firstName,
-          lastName: response.user.lastName,
-          phone: response.user.phone,
-          role: response.user.role as User['role'],
-        };
-
         setAuth({
-          user,
+          user: response.user,
           featureConfig: null,
           isAuthenticated: true,
           isLoading: false,
@@ -85,7 +70,7 @@ export function useAuth(): UseAuthReturn {
 
         setNotification({
           id: `auth-${Date.now()}`,
-          message: `Welcome back, ${user.firstName || user.email}!`,
+          message: `Welcome back, ${response.user.firstName || response.user.email}!`,
           type: 'success',
         });
       } catch (error: unknown) {
@@ -104,32 +89,17 @@ export function useAuth(): UseAuthReturn {
 
   // Register
   const register = useCallback(
-    async (data: RegisterData) => {
+    async (data: RegisterRequest) => {
       setAuth((prev: AuthState) => ({ ...prev, isLoading: true }));
       try {
         const response = await authService.register(data);
         
-        // Store tokens - handle different response formats
-        if ('tokens' in response && response.tokens) {
-          setStorageItem(STORAGE_KEYS.AUTH_TOKEN, response.tokens.accessToken);
-          if (response.tokens.refreshToken) {
-            setStorageItem(STORAGE_KEYS.REFRESH_TOKEN, response.tokens.refreshToken);
-          }
-        }
+        // Session-based auth - cookies are handled automatically
+        // Just store user in local storage for persistence
         setStorageItem(STORAGE_KEYS.USER, response.user);
 
-        // Map response user to our User type
-        const user: User = {
-          id: response.user.id,
-          email: response.user.email,
-          firstName: response.user.firstName,
-          lastName: response.user.lastName,
-          phone: response.user.phone,
-          role: response.user.role as User['role'],
-        };
-
         setAuth({
-          user,
+          user: response.user,
           featureConfig: null,
           isAuthenticated: true,
           isLoading: false,
@@ -186,9 +156,9 @@ export function useAuth(): UseAuthReturn {
     if (!auth.isAuthenticated) return;
     
     try {
-      const user = await authService.getProfile();
-      setStorageItem(STORAGE_KEYS.USER, user);
-      setAuth((prev: AuthState) => ({ ...prev, user }));
+      const response = await authService.getMe();
+      setStorageItem(STORAGE_KEYS.USER, response.data);
+      setAuth((prev: AuthState) => ({ ...prev, user: response.data }));
     } catch (error) {
       // If profile fetch fails, might mean token is invalid
       console.error('Failed to refresh profile:', error);

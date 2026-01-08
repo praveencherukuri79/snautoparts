@@ -1,11 +1,11 @@
 import { useCallback, useMemo } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { cartAtom, notificationAtom } from '@/state/atoms';
-import { Product, CartItem } from '@/types';
+import { cartAtom, notificationAtom, LocalCartItem } from '@/state/atoms';
+import type { ProductDetail } from '@/models';
 
 export interface UseCartReturn {
   /** Cart items */
-  items: CartItem[];
+  items: LocalCartItem[];
   /** Total items count */
   itemCount: number;
   /** Subtotal price */
@@ -13,7 +13,7 @@ export interface UseCartReturn {
   /** Loading state */
   isLoading: boolean;
   /** Add item to cart */
-  addItem: (product: Product, quantity?: number) => void;
+  addItem: (product: ProductDetail, quantity?: number) => void;
   /** Update item quantity */
   updateQuantity: (itemId: string, quantity: number) => void;
   /** Remove item from cart */
@@ -41,7 +41,7 @@ export interface UseCartReturn {
  * ```
  */
 export function useCart(): UseCartReturn {
-  const [items, setItems] = useRecoilState<CartItem[]>(cartAtom);
+  const [items, setItems] = useRecoilState<LocalCartItem[]>(cartAtom);
   const setNotification = useSetRecoilState(notificationAtom);
 
   // Calculate totals
@@ -58,15 +58,15 @@ export function useCart(): UseCartReturn {
 
   // Add item to cart
   const addItem = useCallback(
-    (product: Product, quantity: number = 1) => {
+    (product: ProductDetail, quantity: number = 1) => {
       const existingIndex = items.findIndex(
-        (item: CartItem) => item.productId === product.id
+        (item: LocalCartItem) => item.productId === product.id
       );
 
       if (existingIndex >= 0) {
         // Update existing item
-        setItems((prev: CartItem[]) =>
-          prev.map((item: CartItem, index: number) =>
+        setItems((prev: LocalCartItem[]) =>
+          prev.map((item: LocalCartItem, index: number) =>
             index === existingIndex
               ? { ...item, quantity: Math.min(item.quantity + quantity, item.maxQuantity) }
               : item
@@ -78,20 +78,23 @@ export function useCart(): UseCartReturn {
           type: 'success',
         });
       } else {
-        // Add new item
-        const newItem: CartItem = {
+        // Add new item - convert API ProductDetail to LocalCartItem
+        const price = parseFloat(product.price);
+        const comparePrice = product.compareAtPrice ? parseFloat(product.compareAtPrice) : undefined;
+        
+        const newItem: LocalCartItem = {
           id: `cart-${product.id}-${Date.now()}`,
           productId: product.id,
           sku: product.sku,
           name: product.name,
-          price: product.price,
-          salePrice: product.salePrice,
+          price: comparePrice ?? price,
+          salePrice: comparePrice ? price : undefined,
           quantity,
-          imageUrl: product.images?.[0]?.url,
+          imageUrl: product.imageUrl ?? product.images?.[0],
           maxQuantity: product.stockQuantity,
         };
 
-        setItems((prev: CartItem[]) => [...prev, newItem]);
+        setItems((prev: LocalCartItem[]) => [...prev, newItem]);
         setNotification({
           id: `cart-${Date.now()}`,
           message: `Added ${product.name} to cart`,
@@ -107,15 +110,15 @@ export function useCart(): UseCartReturn {
     (itemId: string, quantity: number) => {
       if (quantity <= 0) {
         // Remove if quantity is 0 or negative
-        setItems((prev: CartItem[]) => prev.filter((item: CartItem) => item.id !== itemId));
+        setItems((prev: LocalCartItem[]) => prev.filter((item: LocalCartItem) => item.id !== itemId));
         setNotification({
           id: `cart-${Date.now()}`,
           message: 'Item removed from cart',
           type: 'info',
         });
       } else {
-        setItems((prev: CartItem[]) =>
-          prev.map((item: CartItem) =>
+        setItems((prev: LocalCartItem[]) =>
+          prev.map((item: LocalCartItem) =>
             item.id === itemId
               ? { ...item, quantity: Math.min(quantity, item.maxQuantity) }
               : item
@@ -129,8 +132,8 @@ export function useCart(): UseCartReturn {
   // Remove item
   const removeItem = useCallback(
     (itemId: string) => {
-      const item = items.find((i: CartItem) => i.id === itemId);
-      setItems((prev: CartItem[]) => prev.filter((i: CartItem) => i.id !== itemId));
+      const item = items.find((i: LocalCartItem) => i.id === itemId);
+      setItems((prev: LocalCartItem[]) => prev.filter((i: LocalCartItem) => i.id !== itemId));
       setNotification({
         id: `cart-${Date.now()}`,
         message: item ? `Removed ${item.name} from cart` : 'Item removed from cart',
@@ -153,7 +156,7 @@ export function useCart(): UseCartReturn {
   // Check if in cart
   const isInCart = useCallback(
     (productId: string): boolean => {
-      return items.some((item: CartItem) => item.productId === productId);
+      return items.some((item: LocalCartItem) => item.productId === productId);
     },
     [items]
   );
@@ -161,7 +164,7 @@ export function useCart(): UseCartReturn {
   // Get quantity
   const getQuantity = useCallback(
     (productId: string): number => {
-      const item = items.find((i: CartItem) => i.productId === productId);
+      const item = items.find((i: LocalCartItem) => i.productId === productId);
       return item?.quantity ?? 0;
     },
     [items]

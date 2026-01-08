@@ -1,8 +1,8 @@
-import { atom } from 'recoil';
+import { atom, AtomEffect } from 'recoil';
 import type { ThemeMode } from '@/theme';
 
 // Local storage effect for persisting state
-const localStorageEffect = (key: string) => ({ setSelf, onSet }: { setSelf: (value: ThemeMode) => void; onSet: (callback: (newValue: ThemeMode, _: ThemeMode, isReset: boolean) => void) => void }) => {
+const localStorageEffect = (key: string): AtomEffect<ThemeMode> => ({ setSelf, onSet }) => {
   if (typeof window === 'undefined') return;
   
   const savedValue = localStorage.getItem(key);

@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material/styles';
 import { palette } from './palette';
 import { typography } from './typography';
 import { components } from './components';
+import './theme.d.ts';
 
 /**
  * Light Theme Configuration
@@ -25,11 +26,20 @@ export const lightTheme = createTheme({
     background: {
       default: palette.background.default,
       paper: palette.background.paper,
+      dark: palette.background.dark,
+      header: palette.background.header,
+      surfaceDark: palette.background.surfaceDark,
+      inputDark: palette.background.inputDark,
     },
     text: {
       primary: palette.text.primary,
       secondary: palette.text.secondary,
       disabled: palette.text.disabled,
+      muted: palette.text.muted,
+    },
+    border: {
+      light: palette.border.light,
+      dark: palette.border.dark,
     },
     success: {
       main: palette.success.main,

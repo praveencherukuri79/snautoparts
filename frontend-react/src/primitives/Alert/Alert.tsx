@@ -34,7 +34,7 @@ export interface AlertProps extends Omit<MuiAlertProps, 'severity' | 'onClose'> 
  * </Alert>
  * ```
  */
-export const Alert: React.FC<AlertProps> = ({
+export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(({
   severity = 'info',
   title,
   dismissible = false,
@@ -43,9 +43,10 @@ export const Alert: React.FC<AlertProps> = ({
   open = true,
   children,
   ...props
-}) => {
+}, ref) => {
   const alertContent = (
     <MuiAlert
+      ref={ref}
       severity={severity}
       action={
         dismissible && onDismiss ? (
@@ -71,7 +72,7 @@ export const Alert: React.FC<AlertProps> = ({
   }
 
   return alertContent;
-};
+});
 
 Alert.displayName = 'Alert';
 

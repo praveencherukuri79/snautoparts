@@ -2,12 +2,14 @@ import React, { Suspense, lazy, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { isAuthenticatedSelector, userRoleSelector } from '@/state/selectors';
+import { userRoleSelector } from '@/state/selectors';
 import { authAtom } from '@/state/atoms/authAtom';
 import { Spinner } from '@/primitives';
 import { MainLayout, DashboardLayout } from '@/layouts';
 import NotificationSnackbar from '@/components/NotificationSnackbar';
+import { DialogProvider } from '@/services/dialogService';
 import type { AuthUser } from '@/models';
+import { getStorageItem, STORAGE_KEYS } from '@/utils/storage';
 
 // Lazy load pages for code splitting
 // Customer pages
@@ -32,6 +34,7 @@ const AddressesPage = lazy(() => import('@/pages/account/AddressesPage'));
 const VehiclesPage = lazy(() => import('@/pages/account/VehiclesPage'));
 const OrdersPage = lazy(() => import('@/pages/account/OrdersPage'));
 const OrderDetailPage = lazy(() => import('@/pages/account/OrderDetailPage'));
+const AccountSettingsPage = lazy(() => import('@/pages/account/SettingsPage'));
 
 // Manager/Admin Dashboard pages
 const DashboardHome = lazy(() => import('@/pages/dashboard/DashboardHome'));
@@ -72,10 +75,15 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, roles }) => {
-  const isAuthenticated = useRecoilValue(isAuthenticatedSelector);
+  const auth = useRecoilValue(authAtom);
   const userRole = useRecoilValue(userRoleSelector);
 
-  if (!isAuthenticated) {
+  // Don't redirect while still loading auth state (prevents race condition)
+  if (auth.isLoading) {
+    return <PageLoader />;
+  }
+
+  if (!auth.isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
@@ -88,16 +96,21 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, roles }) => {
 
 /**
  * Guest Route Component
- * Redirects to home if already authenticated
+ * Redirects to account if already authenticated
  */
 interface GuestRouteProps {
   children: React.ReactNode;
 }
 
 const GuestRoute: React.FC<GuestRouteProps> = ({ children }) => {
-  const isAuthenticated = useRecoilValue(isAuthenticatedSelector);
+  const auth = useRecoilValue(authAtom);
 
-  if (isAuthenticated) {
+  // Don't redirect while still loading auth state (prevents race condition)
+  if (auth.isLoading) {
+    return <PageLoader />;
+  }
+
+  if (auth.isAuthenticated) {
     return <Navigate to="/account" replace />;
   }
 
@@ -106,27 +119,34 @@ const GuestRoute: React.FC<GuestRouteProps> = ({ children }) => {
 
 /**
  * Auth Initializer Component
- * Restores auth state from localStorage on app load
+ * Restores auth state from localStorage on app load and validates session
  */
 const AuthInitializer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const setAuthState = useSetRecoilState(authAtom);
 
   useEffect(() => {
+    // Set loading state initially
+    setAuthState((prev) => ({ ...prev, isLoading: true }));
+
     // Try to restore auth state from localStorage
-    const storedUser = localStorage.getItem('user');
+    const storedUser = getStorageItem<AuthUser | null>(STORAGE_KEYS.USER, null);
+    
     if (storedUser) {
-      try {
-        const user: AuthUser = JSON.parse(storedUser);
-        setAuthState({
-          isAuthenticated: true,
-          isLoading: false,
-          user,
-          featureConfig: null,
-        });
-      } catch (error) {
-        console.error('Failed to parse stored user:', error);
-        localStorage.removeItem('user');
-      }
+      // User data exists, restore auth state
+      setAuthState({
+        isAuthenticated: true,
+        isLoading: false,
+        user: storedUser,
+        featureConfig: null,
+      });
+    } else {
+      // No stored user, ensure auth state is cleared
+      setAuthState({
+        isAuthenticated: false,
+        isLoading: false,
+        user: null,
+        featureConfig: null,
+      });
     }
   }, [setAuthState]);
 
@@ -138,8 +158,9 @@ const AuthInitializer: React.FC<{ children: React.ReactNode }> = ({ children }) 
  */
 const App: React.FC = () => {
   return (
-    <AuthInitializer>
-      <Suspense fallback={<PageLoader />}>
+    <DialogProvider>
+      <AuthInitializer>
+        <Suspense fallback={<PageLoader />}>
         <Routes>
           {/* Public routes with MainLayout */}
           <Route
@@ -292,6 +313,16 @@ const App: React.FC = () => {
               </MainLayout>
             }
           />
+          <Route
+            path="/account/settings"
+            element={
+              <MainLayout>
+                <ProtectedRoute>
+                  <AccountSettingsPage />
+                </ProtectedRoute>
+              </MainLayout>
+            }
+          />
 
           {/* Dashboard routes with DashboardLayout */}
           <Route
@@ -387,9 +418,10 @@ const App: React.FC = () => {
         </Routes>
       </Suspense>
 
-      {/* Global notification snackbar */}
-      <NotificationSnackbar />
-    </AuthInitializer>
+        {/* Global notification snackbar */}
+        <NotificationSnackbar />
+      </AuthInitializer>
+    </DialogProvider>
   );
 };
 

@@ -22,12 +22,24 @@
 14. **ALWAYS USE API SERVICES** - Never use `console.log()` for form submissions. Always call proper API services with loading/error states
 15. **UPDATE RECOIL STATE** - After successful auth API calls, MUST update Recoil authAtom with user data
 16. **INITIALIZE AUTH FROM LOCALSTORAGE** - App MUST restore auth state from localStorage on load (use AuthInitializer pattern)
-17. **USE PROPER MODELS** - ALWAYS use types from `src/models/*.model.ts` (generated from swagger). Never create duplicate custom types
-18. **DON'T CREATE UNNECESSARY FILES** - No extra README files. Update this guideline with recommendations only
-19. **CENTRALIZE ICON IMPORTS** - Use barrel export (`src/icons/index.ts`) for all MUI icons. Import from `@/icons` not `@mui/icons-material`
-20. **EXTRACT REPETITIVE sx TO STYLED COMPONENTS** - If same `sx` pattern repeats 3+ times, create a styled component in `.styles.ts`
-21. **ICON VISIBILITY** - Icons on dark backgrounds need explicit color (use styled components or CSS utility classes, NOT inline sx)
-22. **KEEP THIS BIBLE CONCISE** - Short, actionable rules only. No verbose explanations. This is for AI context, not user documentation.
+17. **USE STORAGE UTILITIES** - ALWAYS use `setStorageItem()`, `getStorageItem()`, `removeStorageItem()` from `@/utils/storage` with `STORAGE_KEYS` constants. NEVER use `localStorage.setItem('user')` directly - it breaks logout flow
+18. **USE PROPER MODELS** - ALWAYS use types from `src/models/*.model.ts` (generated from swagger). Never create duplicate custom types or type hacks like `as unknown as Record<string, unknown>`
+19. **DON'T CREATE UNNECESSARY FILES** - No extra README files. Update this guideline with recommendations only
+20. **CENTRALIZE ICON IMPORTS** - Use barrel export (`src/icons/index.ts`) for all MUI icons. Import from `@/icons` not `@mui/icons-material`
+21. **EXTRACT REPETITIVE sx TO STYLED COMPONENTS** - If same `sx` pattern repeats 3+ times, create a styled component in `.styles.ts`
+22. **STYLED COMPONENT TRANSIENT PROPS** - Props prefixed with `$` (transient) MUST use `shouldForwardProp: (prop) => prop !== '$propName'` to prevent DOM warnings
+23. **BUTTON NAVIGATION** - Buttons with `to` prop MUST have `component={RouterLink}` for react-router navigation. Missing this causes page reloads
+24. **ICON VISIBILITY** - Icons on dark backgrounds need explicit color (use styled components or CSS utility classes, NOT inline sx)
+25. **LOGOUT MUST REDIRECT** - After logout, MUST call `navigate('/', { replace: true })` to redirect to home page and close mobile menu
+26. **AUTH PAGES MUST USE useAuth HOOK** - Login/Register pages MUST call `useAuth().login()`/`useAuth().register()` NOT `authService` directly. Direct authService calls don't save to localStorage causing logout on reload
+27. **PROTECTED ROUTE MUST CHECK isLoading** - Before redirecting, MUST check `auth.isLoading`. Otherwise race condition: redirect happens before auth state restored from localStorage
+28. **AUTH INITIALIZATION** - Set `isLoading: true` at start, restore from localStorage, set `isLoading: false`. Keep synchronous, no async calls
+29. **ADD DEBUG LOGS FIRST** - When debugging auth/routing issues, add `console.log` at key points BEFORE making changes. Trace actual flow, don't guess
+30. **ALWAYS CHECK COMPILE ERRORS** - Run `npm run build` and `read_lints` BEFORE concluding any work. Never assume code compiles
+31. **DEBUG DON'T GUESS** - When user reports bug, add logs to trace actual flow. Don't make changes until you understand root cause
+32. **KEEP THIS BIBLE CONCISE** - Short, actionable rules only. No verbose explanations. This is for AI context, not user documentation.
+33. **GUESTROUTE MUST CHECK isLoading** - GuestRoute must check `auth.isLoading` before redirecting authenticated users, same as ProtectedRoute. Otherwise logged-in users see flash of login page.
+34. **USE ASYNC DIALOG SERVICE** - For confirmations/alerts, use `useDialog()` hook instead of managing dialog state. See `DIALOG_SERVICE_USAGE.md`.
 
 ### Auth Page Layout Rules
 

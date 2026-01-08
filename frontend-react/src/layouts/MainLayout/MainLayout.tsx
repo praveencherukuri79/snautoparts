@@ -48,6 +48,8 @@ import { useRecoilValue } from 'recoil';
 import { cartTotalItemsSelector } from '@/state/selectors';
 import { authAtom, AuthState } from '@/state/atoms';
 import { Avatar, Link } from '@/primitives';
+import { useAuth } from '@/hooks';
+import { useNavigate } from 'react-router-dom';
 import {
   HeaderTopBar,
   HeaderText,
@@ -100,6 +102,8 @@ const Header: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const cartItemCount = useRecoilValue(cartTotalItemsSelector);
   const auth = useRecoilValue<AuthState>(authAtom);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [accountMenuAnchor, setAccountMenuAnchor] = useState<null | HTMLElement>(null);
@@ -110,6 +114,13 @@ const Header: React.FC = () => {
 
   const handleAccountMenuClose = () => {
     setAccountMenuAnchor(null);
+  };
+
+  const handleLogout = async () => {
+    handleAccountMenuClose();
+    setMobileMenuOpen(false);
+    await logout();
+    navigate('/', { replace: true });
   };
 
   return (
@@ -280,7 +291,7 @@ const Header: React.FC = () => {
                     </MenuItem>
                   ))}
                   <Divider />
-                  <MenuItem>
+                  <MenuItem onClick={handleLogout}>
                     <ListItemIcon>
                       <ExitToAppIcon fontSize="small" />
                     </ListItemIcon>
@@ -338,6 +349,20 @@ const Header: React.FC = () => {
                     </ListItemButton>
                   </ListItem>
                 ))}
+                <Divider />
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      handleLogout();
+                    }}
+                  >
+                    <ListItemIcon>
+                      <ExitToAppIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Sign Out" />
+                  </ListItemButton>
+                </ListItem>
               </>
             ) : (
               <ListItem disablePadding>

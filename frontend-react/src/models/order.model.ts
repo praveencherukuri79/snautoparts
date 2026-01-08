@@ -4,6 +4,7 @@
  */
 
 import type { PaginationMeta } from './api.model';
+import type { Address } from './user.model';
 
 /**
  * Order status enum
@@ -73,8 +74,8 @@ export interface OrderDetail {
   createdAt: string;
   updatedAt: string;
   items: OrderItem[];
-  shippingAddress: Record<string, unknown> | null;
-  billingAddress: Record<string, unknown> | null;
+  shippingAddress: Address | null;
+  billingAddress: Address | null;
   user?: OrderUser;
 }
 

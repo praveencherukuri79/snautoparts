@@ -1,21 +1,13 @@
 import { useForm } from 'react-hook-form';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Link,
-  Stack,
-  TextField,
-  Typography,
-  Alert,
-  CircularProgress,
-} from '@mui/material';
-import { ArrowBack, LockReset } from '@mui/icons-material';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Box, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
 import { logoIcon } from '@/assets/icons';
 import { IMAGES } from '@/config';
 import { authService } from '@/services';
 import type { ForgotPasswordRequest } from '@/models';
+import { Input, Button, Link, Alert } from '@/primitives';
+import { ArrowBackIcon, LockResetIcon } from '@/icons';
 
 interface ForgotPasswordFormData {
   email: string;
@@ -45,8 +37,6 @@ export default function ForgotPasswordPage() {
       await authService.forgotPassword(requestData);
       
       setIsSubmitted(true);
-      
-      // Auto redirect after 5 seconds
       setTimeout(() => navigate('/login'), 5000);
     } catch (err: any) {
       console.error('Forgot password failed:', err);
@@ -58,25 +48,28 @@ export default function ForgotPasswordPage() {
 
   return (
     <Stack minHeight="100vh" bgcolor="background.surfaceDark">
-      {/* Header - Full Width */}
+      {/* Header */}
       <Stack direction="row" justifyContent="space-between" alignItems="center" px={{ xs: 3, lg: 5 }} py={2} borderBottom={1} borderColor="border.dark">
-        <Stack direction="row" alignItems="center" gap={1} component={RouterLink} to="/" sx={{ textDecoration: 'none' }}>
-          <Box component="img" src={logoIcon} alt="Logo" width={32} height={32} />
-          <Typography variant="h6" fontWeight={700} color="common.white">
-            SN AutoParts
-          </Typography>
-        </Stack>
+        <Link to="/" variant="unstyled">
+          <Stack direction="row" alignItems="center" gap={1}>
+            <Box component="img" src={logoIcon} alt="Logo" width={32} height={32} />
+            <Typography variant="h6" fontWeight={700} color="common.white">
+              SN AutoParts
+            </Typography>
+          </Stack>
+        </Link>
         <Button
           component={RouterLink}
           to="/login"
-          startIcon={<ArrowBack />}
+          variant="secondary"
+          startIcon={<ArrowBackIcon />}
           className="btn-primary-ghost"
         >
           Back to Login
         </Button>
       </Stack>
 
-      {/* Main Content - Split View */}
+      {/* Main Content */}
       <Stack direction="row" flex={1}>
         {/* Hero Section */}
         <Box
@@ -94,10 +87,8 @@ export default function ForgotPasswordPage() {
             height="100%"
             sx={{ objectFit: 'cover', opacity: 0.6 }}
           />
-          {/* Gradient overlays */}
           <Box position="absolute" sx={{ inset: 0, background: 'linear-gradient(to top, var(--color-bg-surface-dark), transparent)' }} />
           <Box position="absolute" sx={{ inset: 0, background: 'linear-gradient(to right, var(--color-bg-surface-dark), transparent 50%)' }} />
-          {/* Hero Content - bottom left */}
           <Stack position="absolute" sx={{ inset: 0 }} justifyContent="flex-end" p={8}>
             <Typography variant="h2" color="common.white" fontWeight={900} lineHeight={1.1} mb={2}>
               Don't worry,<br />we got you.
@@ -113,7 +104,6 @@ export default function ForgotPasswordPage() {
           <Box width="100%" maxWidth={480} textAlign="center">
             {!isSubmitted ? (
               <>
-                {/* Icon */}
                 <Box
                   mb={3}
                   p={2}
@@ -123,7 +113,7 @@ export default function ForgotPasswordPage() {
                   border={1}
                   borderColor="border.dark"
                 >
-                  <LockReset sx={{ fontSize: 40, color: 'primary.main' }} />
+                  <LockResetIcon sx={{ fontSize: 40, color: 'primary.main' }} />
                 </Box>
 
                 <Typography variant="h4" fontWeight={900} color="common.white" mb={1}>
@@ -134,19 +124,17 @@ export default function ForgotPasswordPage() {
                 </Typography>
 
                 <Stack component="form" onSubmit={handleSubmit(onSubmit)} gap={3} textAlign="left">
-                  {/* Error Alert */}
                   {error && (
-                    <Alert severity="error" onClose={() => setError(null)}>
+                    <Alert severity="error" dismissible onDismiss={() => setError(null)}>
                       {error}
                     </Alert>
                   )}
 
-                  {/* Email */}
                   <Box>
                     <Typography component="label" fontWeight={500} color="common.white" mb={1} display="block">
                       Email Address
                     </Typography>
-                    <TextField
+                    <Input
                       fullWidth
                       placeholder="name@example.com"
                       type="email"
@@ -157,23 +145,20 @@ export default function ForgotPasswordPage() {
                     />
                   </Box>
 
-                  {/* Submit */}
                   <Button
                     type="submit"
-                    variant="contained"
+                    variant="primary"
                     size="large"
                     fullWidth
-                    disabled={loading}
-                    startIcon={loading ? <CircularProgress size={20} color="inherit" /> : undefined}
+                    loading={loading}
                     sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
                   >
                     {loading ? 'Sending...' : 'Send Reset Link'}
                   </Button>
 
-                  {/* Back to Login */}
                   <Typography color="text.muted" textAlign="center">
                     Remember your password?{' '}
-                    <Link component={RouterLink} to="/login" color="primary.main" fontWeight={600}>
+                    <Link to="/login" sx={{ color: 'primary.main', fontWeight: 600 }}>
                       Sign in
                     </Link>
                   </Typography>
@@ -181,7 +166,6 @@ export default function ForgotPasswordPage() {
               </>
             ) : (
               <>
-                {/* Success State */}
                 <Box
                   mb={3}
                   p={2}
@@ -189,7 +173,7 @@ export default function ForgotPasswordPage() {
                   display="inline-flex"
                   bgcolor="success.main"
                 >
-                  <LockReset sx={{ fontSize: 40, color: 'common.white' }} />
+                  <LockResetIcon sx={{ fontSize: 40, color: 'common.white' }} />
                 </Box>
 
                 <Typography variant="h4" fontWeight={900} color="common.white" mb={1}>
@@ -202,7 +186,7 @@ export default function ForgotPasswordPage() {
                 <Button
                   component={RouterLink}
                   to="/login"
-                  variant="contained"
+                  variant="primary"
                   size="large"
                   fullWidth
                   sx={{ py: 1.5 }}
@@ -216,12 +200,11 @@ export default function ForgotPasswordPage() {
               </>
             )}
 
-            {/* Footer Links */}
             <Stack direction="row" justifyContent="center" gap={3} mt={6}>
-              <Link href="#" color="text.muted" variant="caption" sx={{ opacity: 0.5, '&:hover': { opacity: 1 } }}>
+              <Link to="#" external sx={{ color: 'text.muted', fontSize: '0.75rem', opacity: 0.5, '&:hover': { opacity: 1 } }}>
                 Privacy Policy
               </Link>
-              <Link href="#" color="text.muted" variant="caption" sx={{ opacity: 0.5, '&:hover': { opacity: 1 } }}>
+              <Link to="#" external sx={{ color: 'text.muted', fontSize: '0.75rem', opacity: 0.5, '&:hover': { opacity: 1 } }}>
                 Terms of Service
               </Link>
             </Stack>

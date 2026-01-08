@@ -4,8 +4,9 @@
  * Reusable card for displaying statistics with icon
  */
 
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography, styled } from '@mui/material';
 import { SvgIconComponent } from '@mui/icons-material';
+import { Card } from '@/primitives';
 
 export interface StatCardProps {
   label: string;
@@ -14,16 +15,23 @@ export interface StatCardProps {
   color: string;
 }
 
+const IconContainer = styled(Box, {
+  shouldForwardProp: (prop) => prop !== '$iconColor',
+})<{ $iconColor: string }>(({ $iconColor }) => ({
+  backgroundColor: `${$iconColor}15`,
+  padding: '12px',
+  borderRadius: '8px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
 export const StatCard: React.FC<StatCardProps> = ({ label, value, icon: Icon, color }) => {
   return (
-    <Box
-      flex={1}
-      bgcolor="background.paper"
-      p={3}
-      borderRadius={2}
-      border={1}
-      borderColor="border.light"
+    <Card
       sx={{
+        flex: 1,
+        p: 3,
         transition: 'all 0.2s',
         '&:hover': {
           borderColor: color,
@@ -40,18 +48,11 @@ export const StatCard: React.FC<StatCardProps> = ({ label, value, icon: Icon, co
             {label}
           </Typography>
         </Box>
-        <Box
-          sx={{
-            bgcolor: `${color}15`,
-            p: 1.5,
-            borderRadius: 2,
-            display: 'flex',
-          }}
-        >
+        <IconContainer $iconColor={color}>
           <Icon sx={{ fontSize: 28, color }} />
-        </Box>
+        </IconContainer>
       </Stack>
-    </Box>
+    </Card>
   );
 };
 

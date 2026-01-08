@@ -58,6 +58,7 @@ export { default as CancelIcon } from '@mui/icons-material/Cancel';
 export { default as ErrorIcon } from '@mui/icons-material/Error';
 export { default as WarningIcon } from '@mui/icons-material/Warning';
 export { default as InfoIcon } from '@mui/icons-material/Info';
+export { default as RadioButtonUncheckedIcon } from '@mui/icons-material/RadioButtonUnchecked';
 
 // Actions & Editing
 export { default as AddIcon } from '@mui/icons-material/Add';
@@ -100,4 +101,8 @@ export { default as VerifiedIcon } from '@mui/icons-material/Verified';
 export { default as LocalOfferIcon } from '@mui/icons-material/LocalOffer';
 export { default as TrendingUpIcon } from '@mui/icons-material/TrendingUp';
 export { default as NewReleasesIcon } from '@mui/icons-material/NewReleases';
+export { default as LockIcon } from '@mui/icons-material/Lock';
+export { default as LockResetIcon } from '@mui/icons-material/LockReset';
+export { default as ChevronRight } from '@mui/icons-material/ChevronRight';
+export { default as PersonIcon2 } from '@mui/icons-material/Person';
 

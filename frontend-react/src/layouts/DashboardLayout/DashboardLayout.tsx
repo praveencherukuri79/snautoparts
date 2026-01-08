@@ -41,6 +41,8 @@ import StoreIcon from '@mui/icons-material/Store';
 import { useRecoilValue } from 'recoil';
 import { authAtom, AuthState } from '@/state/atoms';
 import { Avatar } from '@/primitives';
+import { useAuth } from '@/hooks';
+import { useNavigate } from 'react-router-dom';
 
 const DRAWER_WIDTH = 260;
 const DRAWER_WIDTH_COLLAPSED = 72;
@@ -366,6 +368,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const auth = useRecoilValue<AuthState>(authAtom);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -377,6 +381,12 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
 
   const handleCollapse = () => {
     setCollapsed(!collapsed);
+  };
+
+  const handleLogout = async () => {
+    setAccountMenuAnchor(null);
+    await logout();
+    navigate('/', { replace: true });
   };
 
   const drawerWidth = isMobile ? 0 : collapsed ? DRAWER_WIDTH_COLLAPSED : DRAWER_WIDTH;
@@ -471,7 +481,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                 </ListItemIcon>
                 <ListItemText>Profile</ListItemText>
               </MenuItem>
-              <MenuItem>
+              <MenuItem onClick={handleLogout}>
                 <ListItemIcon>
                   <ExitToAppIcon fontSize="small" />
                 </ListItemIcon>

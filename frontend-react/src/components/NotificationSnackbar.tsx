@@ -1,7 +1,8 @@
 import React from 'react';
-import { Snackbar, Alert as MuiAlert } from '@mui/material';
+import { Snackbar } from '@mui/material';
 import { useRecoilState } from 'recoil';
 import { notificationAtom } from '@/state/atoms';
+import { Alert } from '@/primitives';
 
 /**
  * NotificationSnackbar Component
@@ -30,15 +31,13 @@ const NotificationSnackbar: React.FC = () => {
       onClose={handleClose}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
     >
-      <MuiAlert
-        onClose={handleClose}
+      <Alert
         severity={notification?.type ?? 'info'}
-        variant="filled"
-        elevation={6}
-        sx={{ width: '100%' }}
+        dismissible
+        onDismiss={handleClose}
       >
         {notification?.message}
-      </MuiAlert>
+      </Alert>
     </Snackbar>
   );
 };

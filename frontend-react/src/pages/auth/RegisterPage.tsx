@@ -1,28 +1,18 @@
 import { useForm } from 'react-hook-form';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Divider,
-  FormControlLabel,
-  IconButton,
-  InputAdornment,
-  Link,
-  Stack,
-  TextField,
-  Typography,
-  Alert,
-  CircularProgress,
-} from '@mui/material';
-import { Visibility, VisibilityOff, Verified, LocalShipping } from '@mui/icons-material';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Box, Stack, Typography, Divider, FormControlLabel, Checkbox as MuiCheckbox } from '@mui/material';
 import { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
 import { logoIcon, googleIcon } from '@/assets/icons';
 import { IMAGES } from '@/config';
-import { authService } from '@/services';
-import { authAtom } from '@/state/atoms/authAtom';
+import { useAuth } from '@/hooks';
 import type { RegisterRequest } from '@/models';
+import { Input, Button, Link, IconButton, Alert } from '@/primitives';
+import {
+  VisibilityIcon,
+  VisibilityOffIcon,
+  VerifiedIcon,
+  LocalShippingIcon,
+} from '@/icons';
 
 interface RegisterFormData {
   fullName: string;
@@ -34,7 +24,7 @@ interface RegisterFormData {
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const setAuthState = useSetRecoilState(authAtom);
+  const { register: registerUser } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -54,7 +44,6 @@ export default function RegisterPage() {
       setLoading(true);
       setError(null);
       
-      // Split full name into first and last name
       const nameParts = data.fullName.trim().split(' ');
       const firstName = nameParts[0] || '';
       const lastName = nameParts.slice(1).join(' ') || '';
@@ -66,20 +55,7 @@ export default function RegisterPage() {
         lastName,
       };
       
-      const response = await authService.register(registerData);
-      
-      // Update Recoil auth state
-      setAuthState({
-        isAuthenticated: true,
-        isLoading: false,
-        user: response.user,
-        featureConfig: null,
-      });
-      
-      // Store user data in localStorage
-      localStorage.setItem('user', JSON.stringify(response.user));
-      
-      // Redirect to account dashboard
+      await registerUser(registerData);
       navigate('/account');
     } catch (err: any) {
       console.error('Registration failed:', err);
@@ -91,14 +67,16 @@ export default function RegisterPage() {
 
   return (
     <Stack minHeight="100vh" bgcolor="background.surfaceDark">
-      {/* Header - Full Width */}
+      {/* Header */}
       <Stack direction="row" justifyContent="space-between" alignItems="center" px={{ xs: 3, lg: 5 }} py={2} borderBottom={1} borderColor="border.dark">
-        <Stack direction="row" alignItems="center" gap={1} component={RouterLink} to="/" sx={{ textDecoration: 'none' }}>
-          <Box component="img" src={logoIcon} alt="Logo" width={32} height={32} />
-          <Typography variant="h6" fontWeight={700} color="common.white">
-            SN AutoParts
-          </Typography>
-        </Stack>
+        <Link to="/" variant="unstyled">
+          <Stack direction="row" alignItems="center" gap={1}>
+            <Box component="img" src={logoIcon} alt="Logo" width={32} height={32} />
+            <Typography variant="h6" fontWeight={700} color="common.white">
+              SN AutoParts
+            </Typography>
+          </Stack>
+        </Link>
         <Stack direction="row" alignItems="center" gap={2}>
           <Typography color="text.muted" variant="body2" display={{ xs: 'none', sm: 'block' }}>
             Already a member?
@@ -114,7 +92,7 @@ export default function RegisterPage() {
         </Stack>
       </Stack>
 
-      {/* Main Content - Split View */}
+      {/* Main Content */}
       <Stack direction="row" flex={1}>
         {/* Hero Section */}
         <Box
@@ -132,10 +110,8 @@ export default function RegisterPage() {
             height="100%"
             sx={{ objectFit: 'cover', opacity: 0.6 }}
           />
-          {/* Gradient overlays */}
           <Box position="absolute" sx={{ inset: 0, background: 'linear-gradient(to top, var(--color-bg-surface-dark), transparent)' }} />
           <Box position="absolute" sx={{ inset: 0, background: 'linear-gradient(to right, var(--color-bg-surface-dark), transparent 50%)' }} />
-          {/* Hero Content */}
           <Stack position="absolute" sx={{ inset: 0 }} justifyContent="flex-end" p={8} maxWidth={500}>
             <Typography variant="h2" color="common.white" fontWeight={900} lineHeight={1.1} mb={2}>
               Performance<br />starts here.
@@ -145,11 +121,11 @@ export default function RegisterPage() {
             </Typography>
             <Stack direction="row" gap={3} mt={4}>
               <Stack direction="row" alignItems="center" gap={1}>
-                <Verified color="primary" fontSize="small" />
+                <VerifiedIcon color="primary" fontSize="small" />
                 <Typography color="text.muted" variant="body2">Quality Guaranteed</Typography>
               </Stack>
               <Stack direction="row" alignItems="center" gap={1}>
-                <LocalShipping color="primary" fontSize="small" />
+                <LocalShippingIcon color="primary" fontSize="small" />
                 <Typography color="text.muted" variant="body2">Fast Shipping</Typography>
               </Stack>
             </Stack>
@@ -166,7 +142,6 @@ export default function RegisterPage() {
               Start getting exclusive deals on premium auto parts today.
             </Typography>
 
-            {/* Social Buttons */}
             <Stack direction="row" gap={2} mb={3}>
               <Button
                 variant="outlined"
@@ -185,7 +160,6 @@ export default function RegisterPage() {
               </Button>
             </Stack>
 
-            {/* Divider */}
             <Divider sx={{ mb: 3, '&::before, &::after': { borderColor: 'border.dark' } }}>
               <Typography color="text.muted" variant="caption" fontWeight={700} textTransform="uppercase">
                 Or register with email
@@ -193,19 +167,17 @@ export default function RegisterPage() {
             </Divider>
 
             <Stack component="form" onSubmit={handleSubmit(onSubmit)} gap={3}>
-              {/* Error Alert */}
               {error && (
-                <Alert severity="error" onClose={() => setError(null)}>
+                <Alert severity="error" dismissible onDismiss={() => setError(null)}>
                   {error}
                 </Alert>
               )}
 
-              {/* Full Name */}
               <Box>
                 <Typography component="label" variant="body2" fontWeight={500} color="common.white" mb={1} display="block">
                   Full Name
                 </Typography>
-                <TextField
+                <Input
                   fullWidth
                   placeholder="e.g. John Doe"
                   error={!!errors.fullName}
@@ -215,12 +187,11 @@ export default function RegisterPage() {
                 />
               </Box>
 
-              {/* Email */}
               <Box>
                 <Typography component="label" variant="body2" fontWeight={500} color="common.white" mb={1} display="block">
                   Email Address
                 </Typography>
-                <TextField
+                <Input
                   fullWidth
                   placeholder="name@example.com"
                   type="email"
@@ -231,13 +202,12 @@ export default function RegisterPage() {
                 />
               </Box>
 
-              {/* Password Row */}
               <Stack direction={{ xs: 'column', sm: 'row' }} gap={2}>
                 <Box flex={1}>
                   <Typography component="label" variant="body2" fontWeight={500} color="common.white" mb={1} display="block">
                     Password
                   </Typography>
-                  <TextField
+                  <Input
                     fullWidth
                     placeholder="Min. 8 chars"
                     type={showPassword ? 'text' : 'password'}
@@ -245,22 +215,18 @@ export default function RegisterPage() {
                     helperText={errors.password?.message}
                     {...register('password', { required: 'Password is required', minLength: { value: 8, message: 'Min 8 characters' } })}
                     className="dark-input"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" sx={{ color: 'text.muted' }}>
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
+                    endIcon={
+                      <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" sx={{ color: 'text.muted' }}>
+                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                      </IconButton>
+                    }
                   />
                 </Box>
                 <Box flex={1}>
                   <Typography component="label" variant="body2" fontWeight={500} color="common.white" mb={1} display="block">
                     Confirm Password
                   </Typography>
-                  <TextField
+                  <Input
                     fullWidth
                     placeholder="Re-enter password"
                     type={showConfirmPassword ? 'text' : 'password'}
@@ -271,23 +237,18 @@ export default function RegisterPage() {
                       validate: (value) => value === password || 'Passwords do not match',
                     })}
                     className="dark-input"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)} edge="end" sx={{ color: 'text.muted' }}>
-                            {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
+                    endIcon={
+                      <IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)} edge="end" sx={{ color: 'text.muted' }}>
+                        {showConfirmPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                      </IconButton>
+                    }
                   />
                 </Box>
               </Stack>
 
-              {/* Terms */}
               <FormControlLabel
                 control={
-                  <Checkbox
+                  <MuiCheckbox
                     {...register('acceptTerms', { required: 'You must accept terms' })}
                     sx={{ color: 'border.dark', '&.Mui-checked': { color: 'primary.main' } }}
                   />
@@ -295,30 +256,27 @@ export default function RegisterPage() {
                 label={
                   <Typography variant="body2" color="text.muted">
                     I agree to the{' '}
-                    <Link href="#" color="common.white">Terms of Service</Link>
+                    <Link to="#" external sx={{ color: 'common.white' }}>Terms of Service</Link>
                     {' '}and{' '}
-                    <Link href="#" color="common.white">Privacy Policy</Link>.
+                    <Link to="#" external sx={{ color: 'common.white' }}>Privacy Policy</Link>.
                   </Typography>
                 }
               />
 
-              {/* Submit */}
               <Button
                 type="submit"
-                variant="contained"
+                variant="primary"
                 size="large"
                 fullWidth
-                disabled={loading}
-                startIcon={loading ? <CircularProgress size={20} color="inherit" /> : undefined}
+                loading={loading}
                 sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
               >
                 {loading ? 'Creating Account...' : 'Create Account'}
               </Button>
 
-              {/* Support Link */}
               <Typography color="text.muted" textAlign="center" mt={2}>
                 Having trouble?{' '}
-                <Link href="#" color="primary.main" fontWeight={500}>
+                <Link to="#" external sx={{ color: 'primary.main', fontWeight: 500 }}>
                   Contact Support
                 </Link>
               </Typography>

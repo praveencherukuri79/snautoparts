@@ -14,7 +14,7 @@ import {
   Alert,
   Divider,
 } from '@mui/material';
-import { Save, Person } from '@mui/icons-material';
+import { SaveIcon, PersonIcon } from '@/icons';
 import { Button, Input } from '@/primitives';
 import { profileService } from '@/services';
 import type { UserProfile, UpdateUserProfileRequest } from '@/models';
@@ -109,7 +109,7 @@ export default function ProfilePage() {
               display: 'flex',
             }}
           >
-            <Person sx={{ fontSize: 28, color: 'primary.main' }} />
+            <PersonIcon sx={{ fontSize: 28, color: 'primary.main' }} />
           </Box>
           <Box>
             <Typography variant="h4" fontWeight={900} color="text.primary">
@@ -213,7 +213,7 @@ export default function ProfilePage() {
             <Button
               type="submit"
               variant="primary"
-              startIcon={saving ? <CircularProgress size={16} /> : <Save />}
+              startIcon={saving ? <CircularProgress size={16} /> : <SaveIcon />}
               disabled={saving}
             >
               {saving ? 'Saving...' : 'Save Changes'}

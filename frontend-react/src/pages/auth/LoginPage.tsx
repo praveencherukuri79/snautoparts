@@ -1,26 +1,20 @@
 import { useForm } from 'react-hook-form';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Divider,
-  IconButton,
-  InputAdornment,
-  Link,
-  Stack,
-  TextField,
-  Typography,
-  Alert,
-  CircularProgress,
-} from '@mui/material';
-import { Visibility, VisibilityOff, ArrowBack, Lock, Verified, LocalShipping } from '@mui/icons-material';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Box, Stack, Typography, Divider } from '@mui/material';
 import { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
 import { logoIcon, googleIcon } from '@/assets/icons';
 import { IMAGES } from '@/config';
-import { authService } from '@/services';
-import { authAtom } from '@/state/atoms/authAtom';
+import { useAuth } from '@/hooks';
 import type { LoginRequest } from '@/models';
+import { Input, Button, Link, IconButton, Alert } from '@/primitives';
+import {
+  VisibilityIcon,
+  VisibilityOffIcon,
+  ArrowBackIcon,
+  LockIcon,
+  VerifiedIcon,
+  LocalShippingIcon,
+} from '@/icons';
 
 interface LoginFormData {
   email: string;
@@ -29,7 +23,7 @@ interface LoginFormData {
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const setAuthState = useSetRecoilState(authAtom);
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,20 +44,7 @@ export default function LoginPage() {
         password: data.password,
       };
       
-      const response = await authService.login(loginData);
-      
-      // Update Recoil auth state
-      setAuthState({
-        isAuthenticated: true,
-        isLoading: false,
-        user: response.user,
-        featureConfig: null, // Will be loaded separately if needed
-      });
-      
-      // Store user data in localStorage
-      localStorage.setItem('user', JSON.stringify(response.user));
-      
-      // Redirect to account dashboard
+      await login(loginData);
       navigate('/account');
     } catch (err: any) {
       console.error('Login failed:', err);
@@ -75,7 +56,7 @@ export default function LoginPage() {
 
   return (
     <Stack minHeight="100vh" bgcolor="background.surfaceDark">
-      {/* Header - Full Width */}
+      {/* Header */}
       <Stack direction="row" justifyContent="space-between" alignItems="center" px={{ xs: 3, lg: 5 }} py={2} borderBottom={1} borderColor="border.dark">
         <Stack direction="row" alignItems="center" gap={1}>
           <Box component="img" src={logoIcon} alt="Logo" width={32} height={32} />
@@ -86,14 +67,15 @@ export default function LoginPage() {
         <Button
           component={RouterLink}
           to="/"
-          startIcon={<ArrowBack />}
+          variant="secondary"
+          startIcon={<ArrowBackIcon />}
           className="btn-primary-ghost"
         >
           Return to Shop
         </Button>
       </Stack>
 
-      {/* Main Content - Split View */}
+      {/* Main Content */}
       <Stack direction="row" flex={1}>
         {/* Hero Section */}
         <Box
@@ -111,10 +93,8 @@ export default function LoginPage() {
             height="100%"
             sx={{ objectFit: 'cover', opacity: 0.6 }}
           />
-          {/* Gradient overlays */}
           <Box position="absolute" sx={{ inset: 0, background: 'linear-gradient(to top, var(--color-bg-surface-dark), transparent)' }} />
           <Box position="absolute" sx={{ inset: 0, background: 'linear-gradient(to right, var(--color-bg-surface-dark), transparent 50%)' }} />
-          {/* Hero Content - bottom left */}
           <Stack position="absolute" sx={{ inset: 0 }} justifyContent="flex-end" p={8}>
             <Typography variant="h2" color="common.white" fontWeight={900} lineHeight={1.1} mb={2}>
               Performance<br />starts here.
@@ -124,11 +104,11 @@ export default function LoginPage() {
             </Typography>
             <Stack direction="row" gap={4} mt={4}>
               <Stack direction="row" alignItems="center" gap={1}>
-                <Verified color="primary" fontSize="small" />
+                <VerifiedIcon color="primary" fontSize="small" />
                 <Typography color="text.muted" variant="body2" fontWeight={500}>Quality Guaranteed</Typography>
               </Stack>
               <Stack direction="row" alignItems="center" gap={1}>
-                <LocalShipping color="primary" fontSize="small" />
+                <LocalShippingIcon color="primary" fontSize="small" />
                 <Typography color="text.muted" variant="body2" fontWeight={500}>Fast Shipping</Typography>
               </Stack>
             </Stack>
@@ -146,19 +126,17 @@ export default function LoginPage() {
             </Typography>
 
             <Stack component="form" onSubmit={handleSubmit(onSubmit)} gap={3}>
-              {/* Error Alert */}
               {error && (
-                <Alert severity="error" onClose={() => setError(null)}>
+                <Alert severity="error" dismissible onDismiss={() => setError(null)}>
                   {error}
                 </Alert>
               )}
 
-              {/* Email */}
               <Box>
                 <Typography component="label" fontWeight={500} color="common.white" mb={1} display="block">
                   Email Address
                 </Typography>
-                <TextField
+                <Input
                   fullWidth
                   placeholder="Enter your email"
                   type="email"
@@ -169,12 +147,11 @@ export default function LoginPage() {
                 />
               </Box>
 
-              {/* Password */}
               <Box>
                 <Typography component="label" fontWeight={500} color="common.white" mb={1} display="block">
                   Password
                 </Typography>
-                <TextField
+                <Input
                   fullWidth
                   placeholder="Enter your password"
                   type={showPassword ? 'text' : 'password'}
@@ -182,42 +159,35 @@ export default function LoginPage() {
                   helperText={errors.password?.message}
                   {...register('password', { required: 'Password is required' })}
                   className="dark-input"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" sx={{ color: 'text.muted' }}>
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
+                  endIcon={
+                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" sx={{ color: 'text.muted' }}>
+                      {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                    </IconButton>
+                  }
                 />
                 <Box textAlign="right" mt={1}>
-                  <Link component={RouterLink} to="/forgot-password" color="primary.main" variant="body2" fontWeight={500}>
+                  <Link to="/forgot-password" sx={{ color: 'primary.main', fontSize: '0.875rem', fontWeight: 500 }}>
                     Forgot Password?
                   </Link>
                 </Box>
               </Box>
 
-              {/* Submit */}
               <Button
                 type="submit"
-                variant="contained"
+                variant="primary"
                 size="large"
                 fullWidth
-                disabled={loading}
-                startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <Lock />}
+                loading={loading}
+                startIcon={<LockIcon />}
                 sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
               >
                 {loading ? 'Signing In...' : 'Secure Login'}
               </Button>
 
-              {/* Divider */}
               <Divider sx={{ '&::before, &::after': { borderColor: 'border.dark' } }}>
                 <Typography color="text.muted">Or continue with</Typography>
               </Divider>
 
-              {/* Social Buttons */}
               <Stack direction="row" gap={2}>
                 <Button
                   variant="outlined"
@@ -236,20 +206,18 @@ export default function LoginPage() {
                 </Button>
               </Stack>
 
-              {/* Sign Up Link */}
               <Typography color="text.muted" textAlign="center" mt={2}>
                 Don't have an account?{' '}
-                <Link component={RouterLink} to="/register" color="primary.main" fontWeight={600}>
+                <Link to="/register" sx={{ color: 'primary.main', fontWeight: 600 }}>
                   Sign up for free
                 </Link>
               </Typography>
 
-              {/* Footer Links */}
               <Stack direction="row" justifyContent="center" gap={3} mt={6}>
-                <Link href="#" color="text.muted" variant="caption" sx={{ opacity: 0.5, '&:hover': { opacity: 1 } }}>
+                <Link to="#" external sx={{ color: 'text.muted', fontSize: '0.75rem', opacity: 0.5, '&:hover': { opacity: 1 } }}>
                   Privacy Policy
                 </Link>
-                <Link href="#" color="text.muted" variant="caption" sx={{ opacity: 0.5, '&:hover': { opacity: 1 } }}>
+                <Link to="#" external sx={{ color: 'text.muted', fontSize: '0.75rem', opacity: 0.5, '&:hover': { opacity: 1 } }}>
                   Terms of Service
                 </Link>
               </Stack>

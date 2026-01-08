@@ -5,7 +5,6 @@
  */
 
 import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import {
   Box,
   Stack,
@@ -16,19 +15,21 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
   IconButton,
   Chip,
 } from '@mui/material';
 import {
-  DirectionsCar,
-  Add,
-  Edit,
-  Delete,
-  Close,
-  CheckCircle,
-} from '@mui/icons-material';
-import { Button, Input, Checkbox } from '@/primitives';
+  DirectionsCarIcon,
+  AddIcon,
+  EditIcon,
+  DeleteIcon,
+  CloseIcon,
+  CheckCircleIcon,
+} from '@/icons';
+import { Button } from '@/primitives';
+import { FormBuilder } from '@/components/FormBuilder';
+import type { FormConfig } from '@/components/FormBuilder';
+import { useDialog } from '@/services/dialogService';
 import { profileService } from '@/services';
 import type { SavedVehicle, CreateVehicleRequest } from '@/models';
 
@@ -49,19 +50,8 @@ export default function VehiclesPage() {
   const [vehicles, setVehicles] = useState<SavedVehicle[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingVehicle, setEditingVehicle] = useState<SavedVehicle | null>(null);
-  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    watch,
-  } = useForm<VehicleFormData>({
-    defaultValues: {
-      isDefault: false,
-    },
-  });
+  const [formKey, setFormKey] = useState(0);
+  const dialog = useDialog();
 
   useEffect(() => {
     loadVehicles();
@@ -81,32 +71,32 @@ export default function VehiclesPage() {
 
   const handleAddNew = () => {
     setEditingVehicle(null);
-    reset({
-      isDefault: false,
-    });
+    setFormKey(prev => prev + 1);
     setDialogOpen(true);
   };
 
   const handleEdit = (vehicle: SavedVehicle) => {
     setEditingVehicle(vehicle);
-    reset({
-      nickname: vehicle.nickname || '',
-      year: vehicle.year,
-      make: vehicle.make,
-      model: vehicle.model,
-      submodel: vehicle.submodel || '',
-      engine: vehicle.engine || '',
-      isDefault: vehicle.isDefault,
-    });
+    setFormKey(prev => prev + 1);
     setDialogOpen(true);
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (vehicle: SavedVehicle) => {
+    const confirmed = await dialog.confirm({
+      title: 'Delete Vehicle?',
+      message: 'Are you sure you want to delete this vehicle? This action cannot be undone.',
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      isDangerous: true,
+      icon: <DeleteIcon sx={{ color: 'error.main' }} />,
+    });
+
+    if (!confirmed) return;
+
     try {
       setSaving(true);
-      await profileService.deleteVehicle(id);
+      await profileService.deleteVehicle(vehicle.id);
       await loadVehicles();
-      setDeleteConfirmId(null);
     } catch (err: any) {
       setError(err.message || 'Failed to delete vehicle');
     } finally {
@@ -144,6 +134,79 @@ export default function VehiclesPage() {
     }
   };
 
+  // Form configuration
+  const vehicleFormConfig: FormConfig = {
+    fields: [
+      {
+        name: 'nickname',
+        type: 'text',
+        label: 'Nickname (Optional)',
+        placeholder: 'e.g., Daily Driver, Weekend Car',
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'year',
+        type: 'number',
+        label: 'Year',
+        validation: {
+          required: 'Year is required',
+          min: { value: 1900, message: 'Year must be 1900 or later' },
+          max: { value: new Date().getFullYear() + 1, message: 'Invalid year' },
+        },
+        colSpan: { xs: 12, sm: 6 },
+      },
+      {
+        name: 'make',
+        type: 'text',
+        label: 'Make',
+        placeholder: 'e.g., Toyota, Ford',
+        validation: { required: 'Make is required' },
+        colSpan: { xs: 12, sm: 6 },
+      },
+      {
+        name: 'model',
+        type: 'text',
+        label: 'Model',
+        placeholder: 'e.g., Camry, F-150',
+        validation: { required: 'Model is required' },
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'submodel',
+        type: 'text',
+        label: 'Submodel (Optional)',
+        placeholder: 'e.g., XLE, Lariat',
+        colSpan: { xs: 12, sm: 6 },
+      },
+      {
+        name: 'engine',
+        type: 'text',
+        label: 'Engine (Optional)',
+        placeholder: 'e.g., 2.5L 4-Cyl, 5.0L V8',
+        colSpan: { xs: 12, sm: 6 },
+      },
+      {
+        name: 'isDefault',
+        type: 'checkbox',
+        label: 'Set as default vehicle',
+        colSpan: { xs: 12 },
+      },
+    ],
+    defaultValues: editingVehicle ? {
+      nickname: editingVehicle.nickname || '',
+      year: editingVehicle.year,
+      make: editingVehicle.make,
+      model: editingVehicle.model,
+      submodel: editingVehicle.submodel || '',
+      engine: editingVehicle.engine || '',
+      isDefault: editingVehicle.isDefault,
+    } : {
+      isDefault: false,
+    },
+    spacing: 2.5,
+    mode: 'onTouched',
+  };
+
   if (loading) {
     return (
       <Box bgcolor="background.default" minHeight="100vh" display="flex" alignItems="center" justifyContent="center">
@@ -166,7 +229,7 @@ export default function VehiclesPage() {
                 display: 'flex',
               }}
             >
-              <DirectionsCar sx={{ fontSize: 28, color: 'info.main' }} />
+              <DirectionsCarIcon sx={{ fontSize: 28, color: 'info.main' }} />
             </Box>
             <Box>
               <Typography variant="h4" fontWeight={900} color="text.primary">
@@ -178,7 +241,7 @@ export default function VehiclesPage() {
             </Box>
           </Stack>
           <Button
-            startIcon={<Add />}
+            startIcon={<AddIcon />}
             variant="primary"
             onClick={handleAddNew}
           >
@@ -217,7 +280,7 @@ export default function VehiclesPage() {
                         justifyContent: 'center',
                       }}
                     >
-                      <DirectionsCar sx={{ fontSize: 32, color: 'primary.main' }} />
+                      <DirectionsCarIcon sx={{ fontSize: 32, color: 'primary.main' }} />
                     </Box>
 
                     <Box flex={1}>
@@ -230,7 +293,7 @@ export default function VehiclesPage() {
                             label="Default"
                             size="small"
                             color="primary"
-                            icon={<CheckCircle />}
+                            icon={<CheckCircleIcon />}
                             sx={{ height: 24 }}
                           />
                         )}
@@ -263,14 +326,14 @@ export default function VehiclesPage() {
                       onClick={() => handleEdit(vehicle)}
                       sx={{ color: 'primary.main' }}
                     >
-                      <Edit fontSize="small" />
+                      <EditIcon fontSize="small" />
                     </IconButton>
                     <IconButton
                       size="small"
-                      onClick={() => setDeleteConfirmId(vehicle.id)}
+                      onClick={() => handleDelete(vehicle)}
                       sx={{ color: 'error.main' }}
                     >
-                      <Delete fontSize="small" />
+                      <DeleteIcon fontSize="small" />
                     </IconButton>
                   </Stack>
                 </Stack>
@@ -286,14 +349,14 @@ export default function VehiclesPage() {
             p={8}
             textAlign="center"
           >
-            <DirectionsCar sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
+            <DirectionsCarIcon sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
             <Typography variant="h6" fontWeight={700} color="text.primary" mb={1}>
               No vehicles saved
             </Typography>
             <Typography color="text.secondary" mb={3}>
               Add your vehicle to find compatible parts faster
             </Typography>
-            <Button startIcon={<Add />} variant="primary" onClick={handleAddNew}>
+            <Button startIcon={<AddIcon />} variant="primary" onClick={handleAddNew}>
               Add Vehicle
             </Button>
           </Box>
@@ -312,125 +375,39 @@ export default function VehiclesPage() {
                 {editingVehicle ? 'Edit Vehicle' : 'Add New Vehicle'}
               </Typography>
               <IconButton onClick={() => setDialogOpen(false)} disabled={saving}>
-                <Close />
+                <CloseIcon />
               </IconButton>
             </Stack>
           </DialogTitle>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <DialogContent>
-              <Stack gap={2.5}>
-                <Input
-                  label="Nickname (Optional)"
-                  {...register('nickname')}
-                  placeholder="e.g., Daily Driver, Work Truck"
-                  fullWidth
-                />
-
-                <Divider />
-
-                <Stack direction="row" gap={2}>
-                  <Input
-                    label="Year"
-                    type="number"
-                    {...register('year', {
-                      required: 'Year is required',
-                      min: { value: 1900, message: 'Invalid year' },
-                      max: { value: new Date().getFullYear() + 1, message: 'Invalid year' },
-                      valueAsNumber: true,
-                    })}
-                    error={!!errors.year}
-                    helperText={errors.year?.message}
-                    placeholder="2020"
-                    sx={{ width: '30%' }}
-                  />
-                  <Input
-                    label="Make"
-                    {...register('make', { required: 'Make is required' })}
-                    error={!!errors.make}
-                    helperText={errors.make?.message}
-                    placeholder="Honda"
-                    fullWidth
-                  />
-                </Stack>
-
-                <Input
-                  label="Model"
-                  {...register('model', { required: 'Model is required' })}
-                  error={!!errors.model}
-                  helperText={errors.model?.message}
-                  placeholder="Civic"
-                  fullWidth
-                />
-
-                <Input
-                  label="Submodel (Optional)"
-                  {...register('submodel')}
-                  placeholder="EX, LX, Sport, etc."
-                  fullWidth
-                />
-
-                <Input
-                  label="Engine (Optional)"
-                  {...register('engine')}
-                  placeholder="1.5L Turbo, 2.0L V6, etc."
-                  fullWidth
-                />
-
-                <Divider />
-
-                <Checkbox
-                  label="Set as default vehicle"
-                  {...register('isDefault')}
-                  checked={watch('isDefault')}
-                />
-              </Stack>
-            </DialogContent>
-
-            <DialogActions sx={{ px: 3, pb: 3 }}>
-              <Button
-                onClick={() => setDialogOpen(false)}
-                disabled={saving}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                variant="primary"
-                disabled={saving}
-                startIcon={saving ? <CircularProgress size={16} /> : undefined}
-              >
-                {saving ? 'Saving...' : editingVehicle ? 'Update' : 'Add Vehicle'}
-              </Button>
-            </DialogActions>
-          </form>
-        </Dialog>
-
-        {/* Delete Confirmation Dialog */}
-        <Dialog
-          open={!!deleteConfirmId}
-          onClose={() => !saving && setDeleteConfirmId(null)}
-          maxWidth="xs"
-        >
-          <DialogTitle>Delete Vehicle?</DialogTitle>
           <DialogContent>
-            <Typography>
-              Are you sure you want to delete this vehicle? This action cannot be undone.
-            </Typography>
+            <FormBuilder
+              key={formKey}
+              config={vehicleFormConfig}
+              onSubmit={onSubmit}
+              actions={
+                <>
+                  <Divider sx={{ mb: 2 }} />
+                  <Stack direction="row" justifyContent="flex-end" gap={2}>
+                    <Button
+                      onClick={() => setDialogOpen(false)}
+                      disabled={saving}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      disabled={saving}
+                      startIcon={saving ? <CircularProgress size={16} /> : undefined}
+                    >
+                      {saving ? 'Saving...' : editingVehicle ? 'Update' : 'Add Vehicle'}
+                    </Button>
+                  </Stack>
+                </>
+              }
+            />
           </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setDeleteConfirmId(null)} disabled={saving}>
-              Cancel
-            </Button>
-            <Button
-              variant="danger"
-              onClick={() => deleteConfirmId && handleDelete(deleteConfirmId)}
-              disabled={saving}
-              startIcon={saving ? <CircularProgress size={16} /> : undefined}
-            >
-              {saving ? 'Deleting...' : 'Delete'}
-            </Button>
-          </DialogActions>
         </Dialog>
       </Box>
     </Box>

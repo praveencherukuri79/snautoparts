@@ -1,4 +1,3 @@
-import { useForm } from 'react-hook-form';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { Box, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -6,8 +5,10 @@ import { logoIcon } from '@/assets/icons';
 import { IMAGES } from '@/config';
 import { authService } from '@/services';
 import type { ForgotPasswordRequest } from '@/models';
-import { Input, Button, Link, Alert } from '@/primitives';
-import { ArrowBackIcon, LockResetIcon } from '@/icons';
+import { Button, Link, Alert } from '@/primitives';
+import { FormBuilder } from '@/components/FormBuilder';
+import type { FormConfig } from '@/components/FormBuilder';
+import { ArrowBackIcon, LockResetIcon, EmailIcon } from '@/icons';
 
 interface ForgotPasswordFormData {
   email: string;
@@ -18,12 +19,6 @@ export default function ForgotPasswordPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ForgotPasswordFormData>();
 
   const onSubmit = async (data: ForgotPasswordFormData) => {
     try {
@@ -44,6 +39,30 @@ export default function ForgotPasswordPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Form configuration with auth style
+  const forgotPasswordFormConfig: FormConfig = {
+    authStyle: true,
+    fields: [
+      {
+        name: 'email',
+        type: 'email',
+        label: 'Email Address',
+        placeholder: 'Enter your registered email',
+        validation: {
+          required: 'Email is required',
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: 'Invalid email address',
+          },
+        },
+        authStyle: { enabled: true },
+        colSpan: { xs: 12 },
+      },
+    ],
+    spacing: 3,
+    mode: 'onSubmit',
   };
 
   return (
@@ -123,46 +142,40 @@ export default function ForgotPasswordPage() {
                   Enter your email address and we'll send you a link to reset your password.
                 </Typography>
 
-                <Stack component="form" onSubmit={handleSubmit(onSubmit)} gap={3} textAlign="left">
+                <Box textAlign="left">
                   {error && (
-                    <Alert severity="error" dismissible onDismiss={() => setError(null)}>
+                    <Alert severity="error" dismissible onDismiss={() => setError(null)} sx={{ mb: 3 }}>
                       {error}
                     </Alert>
                   )}
 
-                  <Box>
-                    <Typography component="label" fontWeight={500} color="common.white" mb={1} display="block">
-                      Email Address
-                    </Typography>
-                    <Input
-                      fullWidth
-                      placeholder="name@example.com"
-                      type="email"
-                      error={!!errors.email}
-                      helperText={errors.email?.message}
-                      {...register('email', { required: 'Email is required' })}
-                      className="dark-input"
-                    />
-                  </Box>
+                  <FormBuilder
+                    config={forgotPasswordFormConfig}
+                    onSubmit={onSubmit}
+                    actions={
+                      <>
+                        <Button
+                          type="submit"
+                          variant="primary"
+                          size="large"
+                          fullWidth
+                          loading={loading}
+                          startIcon={<EmailIcon />}
+                          sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
+                        >
+                          {loading ? 'Sending...' : 'Send Reset Link'}
+                        </Button>
 
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    size="large"
-                    fullWidth
-                    loading={loading}
-                    sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
-                  >
-                    {loading ? 'Sending...' : 'Send Reset Link'}
-                  </Button>
-
-                  <Typography color="text.muted" textAlign="center">
-                    Remember your password?{' '}
-                    <Link to="/login" sx={{ color: 'primary.main', fontWeight: 600 }}>
-                      Sign in
-                    </Link>
-                  </Typography>
-                </Stack>
+                        <Typography color="text.muted" textAlign="center" mt={2}>
+                          Remember your password?{' '}
+                          <Link to="/login" sx={{ color: 'primary.main', fontWeight: 600 }}>
+                            Sign in
+                          </Link>
+                        </Typography>
+                      </>
+                    }
+                  />
+                </Box>
               </>
             ) : (
               <>

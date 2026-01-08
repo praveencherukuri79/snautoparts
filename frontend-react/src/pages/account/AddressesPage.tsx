@@ -5,7 +5,6 @@
  */
 
 import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import {
   Box,
   Stack,
@@ -16,19 +15,21 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
   IconButton,
   Chip,
 } from '@mui/material';
 import {
-  LocationOn,
-  Add,
-  Edit,
-  Delete,
-  Close,
-  CheckCircle,
-} from '@mui/icons-material';
-import { Button, Input, Checkbox } from '@/primitives';
+  LocationOnIcon,
+  AddIcon,
+  EditIcon,
+  DeleteIcon,
+  CloseIcon,
+  CheckCircleIcon,
+} from '@/icons';
+import { Button } from '@/primitives';
+import { FormBuilder } from '@/components/FormBuilder';
+import type { FormConfig } from '@/components/FormBuilder';
+import { useDialog } from '@/services/dialogService';
 import { profileService } from '@/services';
 import type { Address, CreateAddressRequest } from '@/models';
 
@@ -54,21 +55,8 @@ export default function AddressesPage() {
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingAddress, setEditingAddress] = useState<Address | null>(null);
-  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    watch,
-  } = useForm<AddressFormData>({
-    defaultValues: {
-      country: 'US',
-      isDefault: false,
-      isBilling: false,
-    },
-  });
+  const [formKey, setFormKey] = useState(0);
+  const dialog = useDialog();
 
   useEffect(() => {
     loadAddresses();
@@ -88,39 +76,32 @@ export default function AddressesPage() {
 
   const handleAddNew = () => {
     setEditingAddress(null);
-    reset({
-      country: 'US',
-      isDefault: false,
-      isBilling: false,
-    });
+    setFormKey(prev => prev + 1);
     setDialogOpen(true);
   };
 
   const handleEdit = (address: Address) => {
     setEditingAddress(address);
-    reset({
-      firstName: address.firstName,
-      lastName: address.lastName,
-      company: address.company || '',
-      address1: address.address1,
-      address2: address.address2 || '',
-      city: address.city,
-      state: address.state,
-      zipCode: address.zipCode,
-      country: address.country,
-      phone: address.phone || '',
-      isDefault: address.isDefault,
-      isBilling: address.isBilling,
-    });
+    setFormKey(prev => prev + 1);
     setDialogOpen(true);
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (address: Address) => {
+    const confirmed = await dialog.confirm({
+      title: 'Delete Address?',
+      message: 'Are you sure you want to delete this address? This action cannot be undone.',
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      isDangerous: true,
+      icon: <DeleteIcon sx={{ color: 'error.main' }} />,
+    });
+
+    if (!confirmed) return;
+
     try {
       setSaving(true);
-      await profileService.deleteAddress(id);
+      await profileService.deleteAddress(address.id);
       await loadAddresses();
-      setDeleteConfirmId(null);
     } catch (err: any) {
       setError(err.message || 'Failed to delete address');
     } finally {
@@ -163,6 +144,111 @@ export default function AddressesPage() {
     }
   };
 
+  // Form configuration
+  const addressFormConfig: FormConfig = {
+    fields: [
+      {
+        name: 'firstName',
+        type: 'text',
+        label: 'First Name',
+        validation: { required: 'First name is required' },
+        colSpan: { xs: 12, sm: 6 },
+      },
+      {
+        name: 'lastName',
+        type: 'text',
+        label: 'Last Name',
+        validation: { required: 'Last name is required' },
+        colSpan: { xs: 12, sm: 6 },
+      },
+      {
+        name: 'company',
+        type: 'text',
+        label: 'Company (Optional)',
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'address1',
+        type: 'text',
+        label: 'Address Line 1',
+        validation: { required: 'Address is required' },
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'address2',
+        type: 'text',
+        label: 'Address Line 2 (Optional)',
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'city',
+        type: 'text',
+        label: 'City',
+        validation: { required: 'City is required' },
+        colSpan: { xs: 12, sm: 7 },
+      },
+      {
+        name: 'state',
+        type: 'text',
+        label: 'State',
+        validation: { required: 'State is required' },
+        colSpan: { xs: 12, sm: 5 },
+      },
+      {
+        name: 'zipCode',
+        type: 'text',
+        label: 'ZIP Code',
+        validation: { required: 'ZIP code is required' },
+        colSpan: { xs: 12, sm: 6 },
+      },
+      {
+        name: 'country',
+        type: 'text',
+        label: 'Country',
+        validation: { required: 'Country is required' },
+        colSpan: { xs: 12, sm: 6 },
+      },
+      {
+        name: 'phone',
+        type: 'tel',
+        label: 'Phone (Optional)',
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'isDefault',
+        type: 'checkbox',
+        label: 'Set as default shipping address',
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'isBilling',
+        type: 'checkbox',
+        label: 'Use as billing address',
+        colSpan: { xs: 12 },
+      },
+    ],
+    defaultValues: editingAddress ? {
+      firstName: editingAddress.firstName,
+      lastName: editingAddress.lastName,
+      company: editingAddress.company || '',
+      address1: editingAddress.address1,
+      address2: editingAddress.address2 || '',
+      city: editingAddress.city,
+      state: editingAddress.state,
+      zipCode: editingAddress.zipCode,
+      country: editingAddress.country,
+      phone: editingAddress.phone || '',
+      isDefault: editingAddress.isDefault,
+      isBilling: editingAddress.isBilling,
+    } : {
+      country: 'US',
+      isDefault: false,
+      isBilling: false,
+    },
+    spacing: 2.5,
+    mode: 'onTouched',
+  };
+
   if (loading) {
     return (
       <Box bgcolor="background.default" minHeight="100vh" display="flex" alignItems="center" justifyContent="center">
@@ -185,7 +271,7 @@ export default function AddressesPage() {
                 display: 'flex',
               }}
             >
-              <LocationOn sx={{ fontSize: 28, color: 'success.main' }} />
+              <LocationOnIcon sx={{ fontSize: 28, color: 'success.main' }} />
             </Box>
             <Box>
               <Typography variant="h4" fontWeight={900} color="text.primary">
@@ -197,7 +283,7 @@ export default function AddressesPage() {
             </Box>
           </Stack>
           <Button
-            startIcon={<Add />}
+            startIcon={<AddIcon />}
             variant="primary"
             onClick={handleAddNew}
           >
@@ -235,7 +321,7 @@ export default function AddressesPage() {
                           label="Default"
                           size="small"
                           color="primary"
-                          icon={<CheckCircle />}
+                          icon={<CheckCircleIcon />}
                           sx={{ height: 24 }}
                         />
                       )}
@@ -278,14 +364,14 @@ export default function AddressesPage() {
                       onClick={() => handleEdit(address)}
                       sx={{ color: 'primary.main' }}
                     >
-                      <Edit fontSize="small" />
+                      <EditIcon fontSize="small" />
                     </IconButton>
                     <IconButton
                       size="small"
-                      onClick={() => setDeleteConfirmId(address.id)}
+                      onClick={() => handleDelete(address)}
                       sx={{ color: 'error.main' }}
                     >
-                      <Delete fontSize="small" />
+                      <DeleteIcon fontSize="small" />
                     </IconButton>
                   </Stack>
                 </Stack>
@@ -301,14 +387,14 @@ export default function AddressesPage() {
             p={8}
             textAlign="center"
           >
-            <LocationOn sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
+            <LocationOnIcon sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
             <Typography variant="h6" fontWeight={700} color="text.primary" mb={1}>
               No addresses yet
             </Typography>
             <Typography color="text.secondary" mb={3}>
               Add your first shipping or billing address
             </Typography>
-            <Button startIcon={<Add />} variant="primary" onClick={handleAddNew}>
+            <Button startIcon={<AddIcon />} variant="primary" onClick={handleAddNew}>
               Add Address
             </Button>
           </Box>
@@ -327,153 +413,39 @@ export default function AddressesPage() {
                 {editingAddress ? 'Edit Address' : 'Add New Address'}
               </Typography>
               <IconButton onClick={() => setDialogOpen(false)} disabled={saving}>
-                <Close />
+                <CloseIcon />
               </IconButton>
             </Stack>
           </DialogTitle>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <DialogContent>
-              <Stack gap={2.5}>
-                <Stack direction="row" gap={2}>
-                  <Input
-                    label="First Name"
-                    {...register('firstName', { required: 'First name is required' })}
-                    error={!!errors.firstName}
-                    helperText={errors.firstName?.message}
-                    fullWidth
-                  />
-                  <Input
-                    label="Last Name"
-                    {...register('lastName', { required: 'Last name is required' })}
-                    error={!!errors.lastName}
-                    helperText={errors.lastName?.message}
-                    fullWidth
-                  />
-                </Stack>
-
-                <Input
-                  label="Company (Optional)"
-                  {...register('company')}
-                  fullWidth
-                />
-
-                <Input
-                  label="Address Line 1"
-                  {...register('address1', { required: 'Address is required' })}
-                  error={!!errors.address1}
-                  helperText={errors.address1?.message}
-                  fullWidth
-                />
-
-                <Input
-                  label="Address Line 2 (Optional)"
-                  {...register('address2')}
-                  fullWidth
-                />
-
-                <Stack direction="row" gap={2}>
-                  <Input
-                    label="City"
-                    {...register('city', { required: 'City is required' })}
-                    error={!!errors.city}
-                    helperText={errors.city?.message}
-                    fullWidth
-                  />
-                  <Input
-                    label="State"
-                    {...register('state', { required: 'State is required' })}
-                    error={!!errors.state}
-                    helperText={errors.state?.message}
-                    sx={{ width: '40%' }}
-                  />
-                </Stack>
-
-                <Stack direction="row" gap={2}>
-                  <Input
-                    label="ZIP Code"
-                    {...register('zipCode', { required: 'ZIP code is required' })}
-                    error={!!errors.zipCode}
-                    helperText={errors.zipCode?.message}
-                    fullWidth
-                  />
-                  <Input
-                    label="Country"
-                    {...register('country', { required: 'Country is required' })}
-                    error={!!errors.country}
-                    helperText={errors.country?.message}
-                    fullWidth
-                  />
-                </Stack>
-
-                <Input
-                  label="Phone (Optional)"
-                  type="tel"
-                  {...register('phone')}
-                  fullWidth
-                />
-
-                <Divider />
-
-                <Stack gap={1}>
-                  <Checkbox
-                    label="Set as default shipping address"
-                    {...register('isDefault')}
-                    checked={watch('isDefault')}
-                  />
-                  <Checkbox
-                    label="Use as billing address"
-                    {...register('isBilling')}
-                    checked={watch('isBilling')}
-                  />
-                </Stack>
-              </Stack>
-            </DialogContent>
-
-            <DialogActions sx={{ px: 3, pb: 3 }}>
-              <Button
-                onClick={() => setDialogOpen(false)}
-                disabled={saving}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                variant="primary"
-                disabled={saving}
-                startIcon={saving ? <CircularProgress size={16} /> : undefined}
-              >
-                {saving ? 'Saving...' : editingAddress ? 'Update' : 'Add Address'}
-              </Button>
-            </DialogActions>
-          </form>
-        </Dialog>
-
-        {/* Delete Confirmation Dialog */}
-        <Dialog
-          open={!!deleteConfirmId}
-          onClose={() => !saving && setDeleteConfirmId(null)}
-          maxWidth="xs"
-        >
-          <DialogTitle>Delete Address?</DialogTitle>
           <DialogContent>
-            <Typography>
-              Are you sure you want to delete this address? This action cannot be undone.
-            </Typography>
+            <FormBuilder
+              key={formKey}
+              config={addressFormConfig}
+              onSubmit={onSubmit}
+              actions={
+                <>
+                  <Divider sx={{ mb: 2 }} />
+                  <Stack direction="row" justifyContent="flex-end" gap={2}>
+                    <Button
+                      onClick={() => setDialogOpen(false)}
+                      disabled={saving}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      disabled={saving}
+                      startIcon={saving ? <CircularProgress size={16} /> : undefined}
+                    >
+                      {saving ? 'Saving...' : editingAddress ? 'Update' : 'Add Address'}
+                    </Button>
+                  </Stack>
+                </>
+              }
+            />
           </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setDeleteConfirmId(null)} disabled={saving}>
-              Cancel
-            </Button>
-            <Button
-              variant="danger"
-              onClick={() => deleteConfirmId && handleDelete(deleteConfirmId)}
-              disabled={saving}
-              startIcon={saving ? <CircularProgress size={16} /> : undefined}
-            >
-              {saving ? 'Deleting...' : 'Delete'}
-            </Button>
-          </DialogActions>
         </Dialog>
       </Box>
     </Box>

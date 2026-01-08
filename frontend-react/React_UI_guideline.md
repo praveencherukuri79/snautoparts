@@ -39,7 +39,8 @@
 31. **DEBUG DON'T GUESS** - When user reports bug, add logs to trace actual flow. Don't make changes until you understand root cause
 32. **KEEP THIS BIBLE CONCISE** - Short, actionable rules only. No verbose explanations. This is for AI context, not user documentation.
 33. **GUESTROUTE MUST CHECK isLoading** - GuestRoute must check `auth.isLoading` before redirecting authenticated users, same as ProtectedRoute. Otherwise logged-in users see flash of login page.
-34. **USE ASYNC DIALOG SERVICE** - For confirmations/alerts, use `useDialog()` hook instead of managing dialog state. See `DIALOG_SERVICE_USAGE.md`.
+34. **USE ASYNC DIALOG SERVICE** - For confirmations/alerts, use `useDialog()` hook instead of managing dialog state.
+35. **USE FORMBUILDER FOR ALL FORMS** - Define form fields in JSON config, pass to `<FormBuilder>`. Supports: auth style (dark theme), custom validators, all input types (text, email, password, number, tel, url, search, date, time, datetime-local, month, week, color, range, file, textarea, select, checkbox, radio, switch), password toggles, conditional fields, file uploads. Auth pages: set `authStyle: true` in FormConfig + `authStyle: { enabled: true, showPasswordToggle: true }` in password field.
 
 ### Auth Page Layout Rules
 

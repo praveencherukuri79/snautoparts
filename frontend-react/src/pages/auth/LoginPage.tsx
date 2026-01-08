@@ -1,4 +1,3 @@
-import { useForm } from 'react-hook-form';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { Box, Stack, Typography, Divider } from '@mui/material';
 import { useState } from 'react';
@@ -6,10 +5,10 @@ import { logoIcon, googleIcon } from '@/assets/icons';
 import { IMAGES } from '@/config';
 import { useAuth } from '@/hooks';
 import type { LoginRequest } from '@/models';
-import { Input, Button, Link, IconButton, Alert } from '@/primitives';
+import { Button, Link, Alert } from '@/primitives';
+import { FormBuilder } from '@/components/FormBuilder';
+import type { FormConfig } from '@/components/FormBuilder';
 import {
-  VisibilityIcon,
-  VisibilityOffIcon,
   ArrowBackIcon,
   LockIcon,
   VerifiedIcon,
@@ -24,15 +23,8 @@ interface LoginFormData {
 export default function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormData>();
 
   const onSubmit = async (data: LoginFormData) => {
     try {
@@ -52,6 +44,43 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Form configuration with auth style
+  const loginFormConfig: FormConfig = {
+    authStyle: true,
+    fields: [
+      {
+        name: 'email',
+        type: 'email',
+        label: 'Email Address',
+        placeholder: 'Enter your email',
+        validation: { required: 'Email is required' },
+        authStyle: { enabled: true },
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'password',
+        type: 'password',
+        label: 'Password',
+        placeholder: 'Enter your password',
+        validation: { required: 'Password is required' },
+        authStyle: {
+          enabled: true,
+          showPasswordToggle: true,
+          action: (
+            <Box textAlign="right">
+              <Link to="/forgot-password" sx={{ color: 'primary.main', fontSize: '0.875rem', fontWeight: 500 }}>
+                Forgot Password?
+              </Link>
+            </Box>
+          ),
+        },
+        colSpan: { xs: 12 },
+      },
+    ],
+    spacing: 3,
+    mode: 'onSubmit',
   };
 
   return (
@@ -125,103 +154,71 @@ export default function LoginPage() {
               Access your order history and saved garage.
             </Typography>
 
-            <Stack component="form" onSubmit={handleSubmit(onSubmit)} gap={3}>
+            <Box>
               {error && (
-                <Alert severity="error" dismissible onDismiss={() => setError(null)}>
+                <Alert severity="error" dismissible onDismiss={() => setError(null)} sx={{ mb: 3 }}>
                   {error}
                 </Alert>
               )}
 
-              <Box>
-                <Typography component="label" fontWeight={500} color="common.white" mb={1} display="block">
-                  Email Address
-                </Typography>
-                <Input
-                  fullWidth
-                  placeholder="Enter your email"
-                  type="email"
-                  error={!!errors.email}
-                  helperText={errors.email?.message}
-                  {...register('email', { required: 'Email is required' })}
-                  className="dark-input"
-                />
-              </Box>
+              <FormBuilder
+                config={loginFormConfig}
+                onSubmit={onSubmit}
+                actions={
+                  <Stack gap={3}>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      size="large"
+                      fullWidth
+                      loading={loading}
+                      startIcon={<LockIcon />}
+                      sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
+                    >
+                      {loading ? 'Signing In...' : 'Secure Login'}
+                    </Button>
 
-              <Box>
-                <Typography component="label" fontWeight={500} color="common.white" mb={1} display="block">
-                  Password
-                </Typography>
-                <Input
-                  fullWidth
-                  placeholder="Enter your password"
-                  type={showPassword ? 'text' : 'password'}
-                  error={!!errors.password}
-                  helperText={errors.password?.message}
-                  {...register('password', { required: 'Password is required' })}
-                  className="dark-input"
-                  endIcon={
-                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" sx={{ color: 'text.muted' }}>
-                      {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                    </IconButton>
-                  }
-                />
-                <Box textAlign="right" mt={1}>
-                  <Link to="/forgot-password" sx={{ color: 'primary.main', fontSize: '0.875rem', fontWeight: 500 }}>
-                    Forgot Password?
-                  </Link>
-                </Box>
-              </Box>
+                    <Divider sx={{ '&::before, &::after': { borderColor: 'border.dark' } }}>
+                      <Typography color="text.muted">Or continue with</Typography>
+                    </Divider>
 
-              <Button
-                type="submit"
-                variant="primary"
-                size="large"
-                fullWidth
-                loading={loading}
-                startIcon={<LockIcon />}
-                sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
-              >
-                {loading ? 'Signing In...' : 'Secure Login'}
-              </Button>
+                    <Stack direction="row" gap={2}>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        startIcon={<Box component="img" src={googleIcon} alt="Google" width={20} height={20} />}
+                        className="btn-dark-outlined"
+                      >
+                        Google
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        className="btn-dark-outlined"
+                      >
+                        Facebook
+                      </Button>
+                    </Stack>
 
-              <Divider sx={{ '&::before, &::after': { borderColor: 'border.dark' } }}>
-                <Typography color="text.muted">Or continue with</Typography>
-              </Divider>
+                    <Typography color="text.muted" textAlign="center">
+                      Don't have an account?{' '}
+                      <Link to="/register" sx={{ color: 'primary.main', fontWeight: 600 }}>
+                        Sign up for free
+                      </Link>
+                    </Typography>
 
-              <Stack direction="row" gap={2}>
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  startIcon={<Box component="img" src={googleIcon} alt="Google" width={20} height={20} />}
-                  className="btn-dark-outlined"
-                >
-                  Google
-                </Button>
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  className="btn-dark-outlined"
-                >
-                  Facebook
-                </Button>
-              </Stack>
-
-              <Typography color="text.muted" textAlign="center" mt={2}>
-                Don't have an account?{' '}
-                <Link to="/register" sx={{ color: 'primary.main', fontWeight: 600 }}>
-                  Sign up for free
-                </Link>
-              </Typography>
-
-              <Stack direction="row" justifyContent="center" gap={3} mt={6}>
-                <Link to="#" external sx={{ color: 'text.muted', fontSize: '0.75rem', opacity: 0.5, '&:hover': { opacity: 1 } }}>
-                  Privacy Policy
-                </Link>
-                <Link to="#" external sx={{ color: 'text.muted', fontSize: '0.75rem', opacity: 0.5, '&:hover': { opacity: 1 } }}>
-                  Terms of Service
-                </Link>
-              </Stack>
-            </Stack>
+                    <Stack direction="row" justifyContent="center" gap={3} mt={3}>
+                      <Link to="#" external sx={{ color: 'text.muted', fontSize: '0.75rem', opacity: 0.5, '&:hover': { opacity: 1 } }}>
+                        Privacy Policy
+                      </Link>
+                      <Link to="#" external sx={{ color: 'text.muted', fontSize: '0.75rem', opacity: 0.5, '&:hover': { opacity: 1 } }}>
+                        Terms of Service
+                      </Link>
+                    </Stack>
+                  </Stack>
+                }
+              />
+            </Box>
           </Box>
         </Stack>
       </Stack>

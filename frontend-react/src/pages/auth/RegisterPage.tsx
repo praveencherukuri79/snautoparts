@@ -1,17 +1,17 @@
-import { useForm } from 'react-hook-form';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
-import { Box, Stack, Typography, Divider, FormControlLabel, Checkbox as MuiCheckbox } from '@mui/material';
+import { Box, Stack, Typography, Divider } from '@mui/material';
 import { useState } from 'react';
 import { logoIcon, googleIcon } from '@/assets/icons';
 import { IMAGES } from '@/config';
 import { useAuth } from '@/hooks';
 import type { RegisterRequest } from '@/models';
-import { Input, Button, Link, IconButton, Alert } from '@/primitives';
+import { Button, Link, Alert } from '@/primitives';
+import { FormBuilder } from '@/components/FormBuilder';
+import type { FormConfig } from '@/components/FormBuilder';
 import {
-  VisibilityIcon,
-  VisibilityOffIcon,
   VerifiedIcon,
   LocalShippingIcon,
+  PersonIcon,
 } from '@/icons';
 
 interface RegisterFormData {
@@ -25,19 +25,8 @@ interface RegisterFormData {
 export default function RegisterPage() {
   const navigate = useNavigate();
   const { register: registerUser } = useAuth();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<RegisterFormData>();
-
-  const password = watch('password');
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
@@ -63,6 +52,94 @@ export default function RegisterPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Form configuration with auth style
+  const registerFormConfig: FormConfig = {
+    authStyle: true,
+    fields: [
+      {
+        name: 'fullName',
+        type: 'text',
+        label: 'Full Name',
+        placeholder: 'John Doe',
+        validation: {
+          required: 'Full name is required',
+          minLength: { value: 3, message: 'Name must be at least 3 characters' },
+        },
+        authStyle: { enabled: true },
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'email',
+        type: 'email',
+        label: 'Email Address',
+        placeholder: 'you@example.com',
+        validation: {
+          required: 'Email is required',
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: 'Invalid email address',
+          },
+        },
+        authStyle: { enabled: true },
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'password',
+        type: 'password',
+        label: 'Password',
+        placeholder: 'Create a strong password',
+        validation: {
+          required: 'Password is required',
+          minLength: { value: 8, message: 'Password must be at least 8 characters' },
+        },
+        authStyle: {
+          enabled: true,
+          showPasswordToggle: true,
+        },
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'confirmPassword',
+        type: 'password',
+        label: 'Confirm Password',
+        placeholder: 'Re-enter your password',
+        validation: {
+          required: 'Please confirm your password',
+        },
+        customValidators: [
+          (value, formValues) => value === formValues.password || 'Passwords do not match',
+        ],
+        authStyle: {
+          enabled: true,
+          showPasswordToggle: true,
+        },
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'acceptTerms',
+        type: 'checkbox',
+        label: (
+          <Typography component="span" color="text.muted" variant="body2">
+            I agree to the{' '}
+            <Link to="#" external sx={{ color: 'primary.main' }}>
+              Terms of Service
+            </Link>
+            {' '}and{' '}
+            <Link to="#" external sx={{ color: 'primary.main' }}>
+              Privacy Policy
+            </Link>
+          </Typography>
+        ) as any,
+        validation: {
+          required: 'You must accept the terms',
+        },
+        colSpan: { xs: 12 },
+      },
+    ],
+    spacing: 2.5,
+    mode: 'onSubmit',
   };
 
   return (
@@ -142,145 +219,65 @@ export default function RegisterPage() {
               Start getting exclusive deals on premium auto parts today.
             </Typography>
 
-            <Stack direction="row" gap={2} mb={3}>
-              <Button
-                variant="outlined"
-                fullWidth
-                startIcon={<Box component="img" src={googleIcon} alt="Google" width={20} height={20} />}
-                className="btn-dark-outlined"
-              >
-                Google
-              </Button>
-              <Button
-                variant="outlined"
-                fullWidth
-                className="btn-dark-outlined"
-              >
-                Apple
-              </Button>
-            </Stack>
+            <Box>
+              {/* Social Login Buttons */}
+              <Stack direction="row" gap={2} mb={3}>
+                <Button
+                  variant="outlined"
+                  fullWidth
+                  startIcon={<Box component="img" src={googleIcon} alt="Google" width={20} height={20} />}
+                  className="btn-dark-outlined"
+                >
+                  Google
+                </Button>
+                <Button
+                  variant="outlined"
+                  fullWidth
+                  className="btn-dark-outlined"
+                >
+                  Apple
+                </Button>
+              </Stack>
 
-            <Divider sx={{ mb: 3, '&::before, &::after': { borderColor: 'border.dark' } }}>
-              <Typography color="text.muted" variant="caption" fontWeight={700} textTransform="uppercase">
-                Or register with email
-              </Typography>
-            </Divider>
+              <Divider sx={{ mb: 3, '&::before, &::after': { borderColor: 'border.dark' } }}>
+                <Typography color="text.muted" variant="caption" fontWeight={700} textTransform="uppercase">
+                  Or register with email
+                </Typography>
+              </Divider>
 
-            <Stack component="form" onSubmit={handleSubmit(onSubmit)} gap={3}>
               {error && (
-                <Alert severity="error" dismissible onDismiss={() => setError(null)}>
+                <Alert severity="error" dismissible onDismiss={() => setError(null)} sx={{ mb: 3 }}>
                   {error}
                 </Alert>
               )}
 
-              <Box>
-                <Typography component="label" variant="body2" fontWeight={500} color="common.white" mb={1} display="block">
-                  Full Name
-                </Typography>
-                <Input
-                  fullWidth
-                  placeholder="e.g. John Doe"
-                  error={!!errors.fullName}
-                  helperText={errors.fullName?.message}
-                  {...register('fullName', { required: 'Full name is required' })}
-                  className="dark-input"
-                />
-              </Box>
+              <FormBuilder
+                config={registerFormConfig}
+                onSubmit={onSubmit}
+                actions={
+                  <>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      size="large"
+                      fullWidth
+                      loading={loading}
+                          startIcon={<PersonIcon />}
+                      sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
+                    >
+                      {loading ? 'Creating Account...' : 'Create Account'}
+                    </Button>
 
-              <Box>
-                <Typography component="label" variant="body2" fontWeight={500} color="common.white" mb={1} display="block">
-                  Email Address
-                </Typography>
-                <Input
-                  fullWidth
-                  placeholder="name@example.com"
-                  type="email"
-                  error={!!errors.email}
-                  helperText={errors.email?.message}
-                  {...register('email', { required: 'Email is required' })}
-                  className="dark-input"
-                />
-              </Box>
-
-              <Stack direction={{ xs: 'column', sm: 'row' }} gap={2}>
-                <Box flex={1}>
-                  <Typography component="label" variant="body2" fontWeight={500} color="common.white" mb={1} display="block">
-                    Password
-                  </Typography>
-                  <Input
-                    fullWidth
-                    placeholder="Min. 8 chars"
-                    type={showPassword ? 'text' : 'password'}
-                    error={!!errors.password}
-                    helperText={errors.password?.message}
-                    {...register('password', { required: 'Password is required', minLength: { value: 8, message: 'Min 8 characters' } })}
-                    className="dark-input"
-                    endIcon={
-                      <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" sx={{ color: 'text.muted' }}>
-                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                      </IconButton>
-                    }
-                  />
-                </Box>
-                <Box flex={1}>
-                  <Typography component="label" variant="body2" fontWeight={500} color="common.white" mb={1} display="block">
-                    Confirm Password
-                  </Typography>
-                  <Input
-                    fullWidth
-                    placeholder="Re-enter password"
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    error={!!errors.confirmPassword}
-                    helperText={errors.confirmPassword?.message}
-                    {...register('confirmPassword', {
-                      required: 'Confirm password',
-                      validate: (value) => value === password || 'Passwords do not match',
-                    })}
-                    className="dark-input"
-                    endIcon={
-                      <IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)} edge="end" sx={{ color: 'text.muted' }}>
-                        {showConfirmPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                      </IconButton>
-                    }
-                  />
-                </Box>
-              </Stack>
-
-              <FormControlLabel
-                control={
-                  <MuiCheckbox
-                    {...register('acceptTerms', { required: 'You must accept terms' })}
-                    sx={{ color: 'border.dark', '&.Mui-checked': { color: 'primary.main' } }}
-                  />
-                }
-                label={
-                  <Typography variant="body2" color="text.muted">
-                    I agree to the{' '}
-                    <Link to="#" external sx={{ color: 'common.white' }}>Terms of Service</Link>
-                    {' '}and{' '}
-                    <Link to="#" external sx={{ color: 'common.white' }}>Privacy Policy</Link>.
-                  </Typography>
+                    <Typography color="text.muted" textAlign="center" mt={2}>
+                      Having trouble?{' '}
+                      <Link to="#" external sx={{ color: 'primary.main', fontWeight: 500 }}>
+                        Contact Support
+                      </Link>
+                    </Typography>
+                  </>
                 }
               />
-
-              <Button
-                type="submit"
-                variant="primary"
-                size="large"
-                fullWidth
-                loading={loading}
-                sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
-              >
-                {loading ? 'Creating Account...' : 'Create Account'}
-              </Button>
-
-              <Typography color="text.muted" textAlign="center" mt={2}>
-                Having trouble?{' '}
-                <Link to="#" external sx={{ color: 'primary.main', fontWeight: 500 }}>
-                  Contact Support
-                </Link>
-              </Typography>
-            </Stack>
+            </Box>
           </Box>
         </Stack>
       </Stack>

@@ -5,7 +5,6 @@
  */
 
 import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import {
   Box,
   Stack,
@@ -15,7 +14,9 @@ import {
   Divider,
 } from '@mui/material';
 import { SaveIcon, PersonIcon } from '@/icons';
-import { Button, Input } from '@/primitives';
+import { Button } from '@/primitives';
+import { FormBuilder } from '@/components/FormBuilder';
+import type { FormConfig } from '@/components/FormBuilder';
 import { profileService } from '@/services';
 import type { UserProfile, UpdateUserProfileRequest } from '@/models';
 
@@ -32,13 +33,7 @@ export default function ProfilePage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<ProfileFormData>();
+  const [formKey, setFormKey] = useState(0); // Force form reset
 
   useEffect(() => {
     loadProfile();
@@ -49,12 +44,7 @@ export default function ProfilePage() {
       setLoading(true);
       const data = await profileService.getProfile();
       setProfile(data);
-      reset({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        phone: data.phone || '',
-        email: data.email,
-      });
+      setFormKey(prev => prev + 1); // Trigger form reset with new data
     } catch (err: any) {
       setError(err.message || 'Failed to load profile');
     } finally {
@@ -86,6 +76,58 @@ export default function ProfilePage() {
     } finally {
       setSaving(false);
     }
+  };
+
+  // Form configuration
+  const profileFormConfig: FormConfig = {
+    fields: [
+      {
+        name: 'firstName',
+        type: 'text',
+        label: 'First Name',
+        validation: {
+          required: 'First name is required',
+          minLength: { value: 2, message: 'First name must be at least 2 characters' },
+        },
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'lastName',
+        type: 'text',
+        label: 'Last Name',
+        validation: {
+          required: 'Last name is required',
+          minLength: { value: 2, message: 'Last name must be at least 2 characters' },
+        },
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'phone',
+        type: 'tel',
+        label: 'Phone Number',
+        placeholder: '+1 (555) 123-4567',
+        customValidators: [
+          (value) => !value || /^[\d\s\-\+\(\)]+$/.test(value) || 'Invalid phone number format',
+        ],
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'email',
+        type: 'email',
+        label: 'Email Address',
+        disabled: true,
+        helperText: 'Contact support to change your email address',
+        colSpan: { xs: 12 },
+      },
+    ],
+    defaultValues: {
+      firstName: profile?.firstName || '',
+      lastName: profile?.lastName || '',
+      phone: profile?.phone || '',
+      email: profile?.email || '',
+    },
+    spacing: 3,
+    mode: 'onTouched',
   };
 
   if (loading) {
@@ -136,8 +178,6 @@ export default function ProfilePage() {
 
         {/* Profile Form */}
         <Box
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
           bgcolor="background.paper"
           borderRadius={2}
           border={1}
@@ -148,85 +188,39 @@ export default function ProfilePage() {
             Personal Information
           </Typography>
 
-          <Stack gap={3}>
-            {/* First Name */}
-            <Input
-              label="First Name"
-              {...register('firstName', {
-                required: 'First name is required',
-                minLength: { value: 2, message: 'First name must be at least 2 characters' },
-              })}
-              error={!!errors.firstName}
-              helperText={errors.firstName?.message}
-              fullWidth
-            />
-
-            {/* Last Name */}
-            <Input
-              label="Last Name"
-              {...register('lastName', {
-                required: 'Last name is required',
-                minLength: { value: 2, message: 'Last name must be at least 2 characters' },
-              })}
-              error={!!errors.lastName}
-              helperText={errors.lastName?.message}
-              fullWidth
-            />
-
-            {/* Phone */}
-            <Input
-              label="Phone Number"
-              type="tel"
-              {...register('phone', {
-                pattern: {
-                  value: /^[\d\s\-\+\(\)]+$/,
-                  message: 'Invalid phone number format',
-                },
-              })}
-              error={!!errors.phone}
-              helperText={errors.phone?.message}
-              placeholder="+1 (555) 123-4567"
-              fullWidth
-            />
-
-            <Divider />
-
-            {/* Email (read-only) */}
-            <Box>
-              <Input
-                label="Email Address"
-                {...register('email')}
-                disabled
-                fullWidth
-                helperText="Contact support to change your email address"
-              />
-              {profile?.emailVerified && (
-                <Typography variant="caption" color="success.main" sx={{ mt: 0.5, display: 'block' }}>
-                  ✓ Email verified
-                </Typography>
-              )}
-            </Box>
-          </Stack>
-
-          {/* Actions */}
-          <Stack direction="row" gap={2} mt={4}>
-            <Button
-              type="submit"
-              variant="primary"
-              startIcon={saving ? <CircularProgress size={16} /> : <SaveIcon />}
-              disabled={saving}
-            >
-              {saving ? 'Saving...' : 'Save Changes'}
-            </Button>
-            <Button
-              type="button"
-              variant="outlined"
-              onClick={() => reset()}
-              disabled={saving}
-            >
-              Cancel
-            </Button>
-          </Stack>
+          <FormBuilder
+            key={formKey}
+            config={profileFormConfig}
+            onSubmit={onSubmit}
+            actions={
+              <>
+                {profile?.emailVerified && (
+                  <Typography variant="caption" color="success.main" sx={{ mb: 2, display: 'block' }}>
+                    ✓ Email verified
+                  </Typography>
+                )}
+                <Divider sx={{ my: 2 }} />
+                <Stack direction="row" gap={2}>
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    startIcon={saving ? <CircularProgress size={16} /> : <SaveIcon />}
+                    disabled={saving}
+                  >
+                    {saving ? 'Saving...' : 'Save Changes'}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outlined"
+                    onClick={() => setFormKey(prev => prev + 1)}
+                    disabled={saving}
+                  >
+                    Cancel
+                  </Button>
+                </Stack>
+              </>
+            }
+          />
         </Box>
 
         {/* Account Info */}

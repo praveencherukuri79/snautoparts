@@ -2,10 +2,10 @@
  * Account Settings Page
  * 
  * Manage account preferences, security, and notifications
+ * Uses FormBuilder for clean form management
  */
 
 import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import {
   Box,
@@ -18,7 +18,9 @@ import {
   styled,
 } from '@mui/material';
 import { LockIcon, NotificationsIcon, PersonIcon, DeleteIcon } from '@/icons';
-import { Button, Input } from '@/primitives';
+import { Button } from '@/primitives';
+import { FormBuilder } from '@/components/FormBuilder';
+import type { FormConfig } from '@/components/FormBuilder';
 import { authAtom } from '@/state/atoms';
 import { profileService } from '@/services';
 import { useDialog } from '@/services/dialogService';
@@ -39,11 +41,44 @@ const SectionCard = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
 }));
 
-interface PasswordFormData {
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-}
+// Password change form configuration
+const passwordFormConfig: FormConfig = {
+  fields: [
+    {
+      name: 'currentPassword',
+      type: 'password',
+      label: 'Current Password',
+      validation: {
+        required: 'Current password is required',
+      },
+      colSpan: { xs: 12 },
+    },
+    {
+      name: 'newPassword',
+      type: 'password',
+      label: 'New Password',
+      validation: {
+        required: 'New password is required',
+        minLength: {
+          value: 8,
+          message: 'Password must be at least 8 characters',
+        },
+      },
+      colSpan: { xs: 12 },
+    },
+    {
+      name: 'confirmPassword',
+      type: 'password',
+      label: 'Confirm New Password',
+      validation: {
+        required: 'Please confirm your password',
+      },
+      colSpan: { xs: 12 },
+    },
+  ],
+  spacing: 2.5,
+  mode: 'onSubmit',
+};
 
 export default function SettingsPage() {
   const auth = useRecoilValue(authAtom);
@@ -59,16 +94,6 @@ export default function SettingsPage() {
   const [orderUpdates, setOrderUpdates] = useState(true);
   const [promotions, setPromotions] = useState(true);
   const [newsletter, setNewsletter] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    watch,
-  } = useForm<PasswordFormData>();
-
-  const newPassword = watch('newPassword');
 
   useEffect(() => {
     loadProfile();
@@ -87,7 +112,6 @@ export default function SettingsPage() {
   };
 
   const handleDeleteAccount = async () => {
-    // Use async dialog - clean and simple!
     const confirmed = await dialog.confirm({
       title: 'Delete Account?',
       message: 'Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently deleted.',
@@ -101,20 +125,14 @@ export default function SettingsPage() {
 
     try {
       setError(null);
-      
-      // TODO: Call API to delete account
-      // await profileService.deleteAccount();
-      
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
       setSuccess('Account deletion request submitted');
     } catch (err: any) {
       setError(err.message || 'Failed to delete account');
     }
   };
 
-  const onPasswordSubmit = async (data: PasswordFormData) => {
+  const onPasswordSubmit = async (data: any) => {
     try {
       setChangingPassword(true);
       setError(null);
@@ -126,16 +144,11 @@ export default function SettingsPage() {
       }
 
       // TODO: Call API to change password
-      // await profileService.changePassword(data);
-      
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       setSuccess('Password changed successfully');
       setShowPasswordForm(false);
-      reset();
 
-      // Clear success message after 3 seconds
       setTimeout(() => setSuccess(null), 3000);
     } catch (err: any) {
       setError(err.message || 'Failed to change password');
@@ -206,57 +219,19 @@ export default function SettingsPage() {
                   )}
                 </Stack>
 
-                {/* Password Change Form */}
+                {/* Password Change Form - Using FormBuilder! */}
                 {showPasswordForm && (
                   <>
                     <Divider />
-                    <Box component="form" onSubmit={handleSubmit(onPasswordSubmit)}>
-                      <Stack spacing={2.5}>
-                        <Input
-                          label="Current Password"
-                          type="password"
-                          required
-                          error={!!errors.currentPassword}
-                          helperText={errors.currentPassword?.message}
-                          {...register('currentPassword', {
-                            required: 'Current password is required',
-                          })}
-                        />
-                        
-                        <Input
-                          label="New Password"
-                          type="password"
-                          required
-                          error={!!errors.newPassword}
-                          helperText={errors.newPassword?.message}
-                          {...register('newPassword', {
-                            required: 'New password is required',
-                            minLength: {
-                              value: 8,
-                              message: 'Password must be at least 8 characters',
-                            },
-                          })}
-                        />
-                        
-                        <Input
-                          label="Confirm New Password"
-                          type="password"
-                          required
-                          error={!!errors.confirmPassword}
-                          helperText={errors.confirmPassword?.message}
-                          {...register('confirmPassword', {
-                            required: 'Please confirm your password',
-                            validate: (value) =>
-                              value === newPassword || 'Passwords do not match',
-                          })}
-                        />
-
+                    <FormBuilder
+                      config={passwordFormConfig}
+                      onSubmit={onPasswordSubmit}
+                      actions={
                         <Stack direction="row" gap={2} justifyContent="flex-end">
                           <Button
                             variant="outlined"
                             onClick={() => {
                               setShowPasswordForm(false);
-                              reset();
                               setError(null);
                             }}
                             disabled={changingPassword}
@@ -272,8 +247,8 @@ export default function SettingsPage() {
                             {changingPassword ? 'Updating...' : 'Update Password'}
                           </Button>
                         </Stack>
-                      </Stack>
-                    </Box>
+                      }
+                    />
                   </>
                 )}
               </Stack>
@@ -357,7 +332,6 @@ export default function SettingsPage() {
             
             <SectionCard>
               <Stack spacing={3}>
-                {/* Email Display */}
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
                   <Box>
                     <Typography fontWeight={600} mb={0.5}>

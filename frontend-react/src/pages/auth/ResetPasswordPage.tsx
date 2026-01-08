@@ -1,4 +1,3 @@
-import { useForm } from 'react-hook-form';
 import { useNavigate, useSearchParams, Link as RouterLink } from 'react-router-dom';
 import { Box, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -6,13 +5,14 @@ import { logoIcon } from '@/assets/icons';
 import { IMAGES } from '@/config';
 import { authService } from '@/services';
 import type { ResetPasswordRequest } from '@/models';
-import { Input, Button, Link, IconButton, Alert } from '@/primitives';
+import { Button, Link, Alert } from '@/primitives';
+import { FormBuilder } from '@/components/FormBuilder';
+import type { FormConfig } from '@/components/FormBuilder';
 import {
-  VisibilityIcon,
-  VisibilityOffIcon,
   LockResetIcon,
   CheckCircleIcon,
   RadioButtonUncheckedIcon,
+  LockIcon,
 } from '@/icons';
 
 interface ResetPasswordFormData {
@@ -25,20 +25,10 @@ export default function ResetPasswordPage() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<ResetPasswordFormData>();
-
-  const password = watch('password', '');
+  const [password, setPassword] = useState('');
 
   const requirements = [
     { label: 'At least 8 characters', met: password.length >= 8 },
@@ -71,6 +61,51 @@ export default function ResetPasswordPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Form configuration with auth style
+  const resetPasswordFormConfig: FormConfig = {
+    authStyle: true,
+    fields: [
+      {
+        name: 'password',
+        type: 'password',
+        label: 'New Password',
+        placeholder: 'Enter your new password',
+        validation: {
+          required: 'Password is required',
+          minLength: { value: 8, message: 'Password must be at least 8 characters' },
+          pattern: {
+            value: /^(?=.*[A-Z])(?=.*[0-9a-zA-Z]).{8,}$/,
+            message: 'Password must contain uppercase and number/special char',
+          },
+        },
+        authStyle: {
+          enabled: true,
+          showPasswordToggle: true,
+        },
+        colSpan: { xs: 12 },
+      },
+      {
+        name: 'confirmPassword',
+        type: 'password',
+        label: 'Confirm Password',
+        placeholder: 'Re-enter your new password',
+        validation: {
+          required: 'Please confirm your password',
+        },
+        customValidators: [
+          (value, formValues) => value === formValues.password || 'Passwords do not match',
+        ],
+        authStyle: {
+          enabled: true,
+          showPasswordToggle: true,
+        },
+        colSpan: { xs: 12 },
+      },
+    ],
+    spacing: 3,
+    mode: 'onSubmit',
   };
 
   return (
@@ -149,86 +184,50 @@ export default function ResetPasswordPage() {
                   Your new password must be different from previously used passwords.
                 </Typography>
 
-                <Stack component="form" onSubmit={handleSubmit(onSubmit)} gap={3} textAlign="left">
+                <Box textAlign="left">
                   {error && (
-                    <Alert severity="error" dismissible onDismiss={() => setError(null)}>
+                    <Alert severity="error" dismissible onDismiss={() => setError(null)} sx={{ mb: 3 }}>
                       {error}
                     </Alert>
                   )}
 
-                  <Box>
-                    <Typography component="label" fontWeight={500} color="common.white" mb={1} display="block">
-                      New Password
-                    </Typography>
-                    <Input
-                      fullWidth
-                      placeholder="Enter new password"
-                      type={showPassword ? 'text' : 'password'}
-                      error={!!errors.password}
-                      helperText={errors.password?.message}
-                      {...register('password', {
-                        required: 'Password is required',
-                        minLength: { value: 8, message: 'Min 8 characters' },
-                        validate: () => requirements.every((r) => r.met) || 'Password does not meet requirements',
-                      })}
-                      className="dark-input"
-                      endIcon={
-                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" sx={{ color: 'text.muted' }}>
-                          {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                        </IconButton>
-                      }
-                    />
-                    {/* Requirements */}
-                    <Stack gap={0.5} mt={2}>
-                      {requirements.map((req) => (
-                        <Stack key={req.label} direction="row" alignItems="center" gap={1}>
-                          {req.met ? (
-                            <CheckCircleIcon sx={{ fontSize: 16, color: 'success.main' }} />
-                          ) : (
-                            <RadioButtonUncheckedIcon sx={{ fontSize: 16, color: 'text.muted' }} />
-                          )}
-                          <Typography variant="body2" color={req.met ? 'success.main' : 'text.muted'}>
-                            {req.label}
-                          </Typography>
+                  <FormBuilder
+                    config={resetPasswordFormConfig}
+                    onSubmit={onSubmit}
+                    onValuesChange={(values) => setPassword(values.password || '')}
+                    actions={
+                      <>
+                        {/* Password Requirements */}
+                        <Stack gap={0.5} mb={3}>
+                          {requirements.map((req) => (
+                            <Stack key={req.label} direction="row" alignItems="center" gap={1}>
+                              {req.met ? (
+                                <CheckCircleIcon sx={{ fontSize: 16, color: 'success.main' }} />
+                              ) : (
+                                <RadioButtonUncheckedIcon sx={{ fontSize: 16, color: 'text.muted' }} />
+                              )}
+                              <Typography variant="body2" color={req.met ? 'success.main' : 'text.muted'}>
+                                {req.label}
+                              </Typography>
+                            </Stack>
+                          ))}
                         </Stack>
-                      ))}
-                    </Stack>
-                  </Box>
 
-                  <Box>
-                    <Typography component="label" fontWeight={500} color="common.white" mb={1} display="block">
-                      Confirm Password
-                    </Typography>
-                    <Input
-                      fullWidth
-                      placeholder="Re-enter password"
-                      type={showConfirmPassword ? 'text' : 'password'}
-                      error={!!errors.confirmPassword}
-                      helperText={errors.confirmPassword?.message}
-                      {...register('confirmPassword', {
-                        required: 'Confirm password',
-                        validate: (value) => value === password || 'Passwords do not match',
-                      })}
-                      className="dark-input"
-                      endIcon={
-                        <IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)} edge="end" sx={{ color: 'text.muted' }}>
-                          {showConfirmPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                        </IconButton>
-                      }
-                    />
-                  </Box>
-
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    size="large"
-                    fullWidth
-                    loading={loading}
-                    sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
-                  >
-                    {loading ? 'Resetting...' : 'Reset Password'}
-                  </Button>
-                </Stack>
+                        <Button
+                          type="submit"
+                          variant="primary"
+                          size="large"
+                          fullWidth
+                          loading={loading}
+                          startIcon={<LockIcon />}
+                          sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
+                        >
+                          {loading ? 'Resetting...' : 'Reset Password'}
+                        </Button>
+                      </>
+                    }
+                  />
+                </Box>
               </>
             ) : (
               <>

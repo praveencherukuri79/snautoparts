@@ -21,9 +21,47 @@ async function bootstrap() {
 
   // Register plugins
   await app.register(cors, {
-    origin: config.corsOrigin,
+    origin: (origin, cb) => {
+      // In development, allow all origins dynamically
+      if (!config.isProduction) {
+        // If origin header exists, use it
+        if (origin) {
+          cb(null, origin);
+          return;
+        }
+        // No origin (same-origin or non-browser), allow all
+        cb(null, true);
+        return;
+      }
+      // Production: strict origin check
+      if (!origin || config.corsOrigin.includes(origin)) {
+        cb(null, true);
+      } else {
+        cb(new Error('Not allowed by CORS'), false);
+      }
+    },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin', 'Referer'],
   });
+
+  // In development: add hook to handle referer-based origin for CORS
+  if (!config.isProduction) {
+    app.addHook('onRequest', async (request, reply) => {
+      // If no origin but has referer, extract origin from referer
+      if (!request.headers.origin && request.headers.referer) {
+        try {
+          const refererUrl = new URL(request.headers.referer);
+          const derivedOrigin = refererUrl.origin;
+          // Set CORS headers manually for this case
+          reply.header('Access-Control-Allow-Origin', derivedOrigin);
+          reply.header('Access-Control-Allow-Credentials', 'true');
+        } catch {
+          // Invalid referer URL, ignore
+        }
+      }
+    });
+  }
 
   await app.register(helmet, {
     // Allow Swagger UI to load

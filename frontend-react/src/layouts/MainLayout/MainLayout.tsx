@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
   Box,
+  Stack,
   Container,
   IconButton,
   Badge,
@@ -20,21 +22,43 @@ import {
   Divider,
   InputBase,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PersonIcon from '@mui/icons-material/Person';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import HistoryIcon from '@mui/icons-material/History';
-import SettingsIcon from '@mui/icons-material/Settings';
+import {
+  MenuIcon,
+  SearchIcon,
+  ShoppingCartIcon,
+  PersonIcon,
+  FavoriteIcon,
+  ExitToAppIcon,
+  AccountCircleIcon,
+  DirectionsCarIcon,
+  LocationOnIcon,
+  HistoryIcon,
+  SettingsIcon,
+  DashboardIcon,
+  FacebookIcon,
+  TwitterIcon,
+  InstagramIcon,
+  YouTubeIcon,
+  PhoneIcon,
+  EmailIcon,
+  LocationOnOutlinedIcon,
+  AccessTimeIcon,
+} from '@/icons';
 import { useRecoilValue } from 'recoil';
 import { cartTotalItemsSelector } from '@/state/selectors';
 import { authAtom, AuthState } from '@/state/atoms';
-import { Avatar } from '@/primitives';
+import { Avatar, Link } from '@/primitives';
+import {
+  HeaderTopBar,
+  HeaderText,
+  LogoBadge,
+  SearchContainer,
+  FooterSection,
+  FooterText,
+  FooterBottomBar,
+  FooterIcon,
+  SocialIconButton,
+} from './MainLayout.styles';
 
 interface NavLink {
   label: string;
@@ -57,6 +81,7 @@ const navLinks: NavLink[] = [
 
 // Account menu items
 const accountMenuItems: NavLink[] = [
+  { label: 'Dashboard', href: '/account', icon: <DashboardIcon fontSize="small" /> },
   { label: 'My Profile', href: '/account/profile', icon: <AccountCircleIcon fontSize="small" /> },
   { label: 'My Vehicles', href: '/account/vehicles', icon: <DirectionsCarIcon fontSize="small" /> },
   { label: 'My Addresses', href: '/account/addresses', icon: <LocationOnIcon fontSize="small" /> },
@@ -78,7 +103,6 @@ const Header: React.FC = () => {
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [accountMenuAnchor, setAccountMenuAnchor] = useState<null | HTMLElement>(null);
-  const [searchFocused, setSearchFocused] = useState(false);
 
   const handleAccountMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAccountMenuAnchor(event.currentTarget);
@@ -97,47 +121,24 @@ const Header: React.FC = () => {
       }}
     >
       {/* Top bar with contact/account info */}
-      <Box
-        sx={{
-          bgcolor: 'rgba(255, 255, 255, 0.05)',
-          py: 0.75,
-          display: { xs: 'none', md: 'block' },
-        }}
-      >
+      <HeaderTopBar>
         <Container maxWidth="xl">
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
+            <HeaderText variant="body2">
               Free shipping on orders over $50
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 3 }}>
-              <Typography
-                variant="body2"
-                sx={{ color: 'rgba(255, 255, 255, 0.7)' }}
-              >
-                📞 1-800-AUTO-PARTS
-              </Typography>
-              <Typography
-                variant="body2"
-                component="a"
-                href="/track-order"
-                sx={{
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  textDecoration: 'none',
-                  '&:hover': { color: 'white' },
-                }}
-              >
+            </HeaderText>
+            <Stack direction="row" spacing={3} alignItems="center">
+              <Stack direction="row" spacing={0.5} alignItems="center">
+                <PhoneIcon fontSize="small" className="header-text" sx={{ fontSize: '0.875rem' }} />
+                <HeaderText variant="body2">1-800-AUTO-PARTS</HeaderText>
+              </Stack>
+              <Link to="/track-order" variant="unstyled" className="header-text header-text-hover">
                 Track Order
-              </Typography>
-            </Box>
-          </Box>
+              </Link>
+            </Stack>
+          </Stack>
         </Container>
-      </Box>
+      </HeaderTopBar>
 
       {/* Main header */}
       <Container maxWidth="xl">
@@ -159,43 +160,21 @@ const Header: React.FC = () => {
           )}
 
           {/* Logo */}
-          <Box
-            component="a"
-            href="/"
+          <Link
+            to="/"
+            variant="unstyled"
             sx={{
               display: 'flex',
               alignItems: 'center',
-              textDecoration: 'none',
               color: 'white',
               mr: { xs: 'auto', md: 4 },
             }}
           >
-            <Box
-              sx={{
-                width: 40,
-                height: 40,
-                bgcolor: 'primary.main',
-                borderRadius: 1,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                mr: 1.5,
-                fontWeight: 700,
-                fontSize: '1.25rem',
-              }}
-            >
-              SN
-            </Box>
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 700,
-                display: { xs: 'none', sm: 'block' },
-              }}
-            >
+            <LogoBadge>SN</LogoBadge>
+            <Typography variant="h6" sx={{ fontWeight: 700, display: { xs: 'none', sm: 'block' } }}>
               SN Auto Parts
             </Typography>
-          </Box>
+          </Link>
 
           {/* Desktop navigation */}
           {!isMobile && (
@@ -208,58 +187,25 @@ const Header: React.FC = () => {
               }}
             >
               {navLinks.map((link) => (
-                <Box
+                <Link
                   key={link.href}
-                  component="a"
-                  href={link.href}
-                  sx={{
-                    px: 2,
-                    py: 1,
-                    color: 'white',
-                    textDecoration: 'none',
-                    borderRadius: 1,
-                    fontSize: '0.9rem',
-                    fontWeight: 500,
-                    transition: 'background-color 0.2s',
-                    '&:hover': {
-                      bgcolor: 'rgba(255, 255, 255, 0.1)',
-                    },
-                  }}
+                  to={link.href}
+                  variant="unstyled"
+                  sx={{ px: 2, py: 1, color: 'white', borderRadius: 1, fontSize: '0.9rem', fontWeight: 500 }}
+                  className="header-link-transition"
                 >
                   {link.label}
-                </Box>
+                </Link>
               ))}
             </Box>
           )}
 
           {/* Search bar */}
-          <Box
-            sx={{
-              flex: { xs: 0, md: 1 },
-              maxWidth: 500,
-              mx: { xs: 0, md: 2 },
-              display: { xs: 'none', sm: 'flex' },
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                bgcolor: 'rgba(255, 255, 255, 0.1)',
-                borderRadius: 2,
-                px: 2,
-                width: '100%',
-                transition: 'background-color 0.2s',
-                ...(searchFocused && {
-                  bgcolor: 'rgba(255, 255, 255, 0.15)',
-                }),
-              }}
-            >
-              <SearchIcon sx={{ color: 'rgba(255, 255, 255, 0.7)', mr: 1 }} />
+          <Box sx={{ flex: { xs: 0, md: 1 }, maxWidth: 500, mx: { xs: 0, md: 2 }, display: { xs: 'none', sm: 'flex' } }}>
+            <SearchContainer>
+              <SearchIcon className="header-text" sx={{ mr: 1 }} />
               <InputBase
                 placeholder="Search parts by name, SKU, or vehicle..."
-                onFocus={() => setSearchFocused(true)}
-                onBlur={() => setSearchFocused(false)}
                 sx={{
                   flex: 1,
                   color: 'white',
@@ -270,7 +216,7 @@ const Header: React.FC = () => {
                   },
                 }}
               />
-            </Box>
+            </SearchContainer>
           </Box>
 
           {/* Action buttons */}
@@ -285,15 +231,15 @@ const Header: React.FC = () => {
             {/* Wishlist */}
             <IconButton
               color="inherit"
-              component="a"
-              href="/wishlist"
+              component={RouterLink}
+              to="/wishlist"
               sx={{ display: { xs: 'none', sm: 'flex' } }}
             >
               <FavoriteIcon />
             </IconButton>
 
             {/* Cart */}
-            <IconButton color="inherit" component="a" href="/cart">
+            <IconButton color="inherit" component={RouterLink} to="/cart">
               <Badge badgeContent={cartItemCount} color="primary">
                 <ShoppingCartIcon />
               </Badge>
@@ -324,9 +270,10 @@ const Header: React.FC = () => {
                   {accountMenuItems.map((item) => (
                     <MenuItem
                       key={item.href}
-                      component="a"
-                      href={item.href}
+                      component={RouterLink}
+                      to={item.href}
                       onClick={handleAccountMenuClose}
+                      sx={{ color: 'inherit', textDecoration: 'none' }}
                     >
                       <ListItemIcon>{item.icon}</ListItemIcon>
                       <ListItemText>{item.label}</ListItemText>
@@ -342,7 +289,7 @@ const Header: React.FC = () => {
                 </Menu>
               </>
             ) : (
-              <IconButton color="inherit" component="a" href="/login">
+              <IconButton color="inherit" component={RouterLink} to="/login">
                 <PersonIcon />
               </IconButton>
             )}
@@ -366,8 +313,8 @@ const Header: React.FC = () => {
             {navLinks.map((link) => (
               <ListItem key={link.href} disablePadding>
                 <ListItemButton
-                  component="a"
-                  href={link.href}
+                  component={RouterLink}
+                  to={link.href}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <ListItemText primary={link.label} />
@@ -382,8 +329,8 @@ const Header: React.FC = () => {
                 {accountMenuItems.map((item) => (
                   <ListItem key={item.href} disablePadding>
                     <ListItemButton
-                      component="a"
-                      href={item.href}
+                      component={RouterLink}
+                      to={item.href}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <ListItemIcon>{item.icon}</ListItemIcon>
@@ -395,8 +342,8 @@ const Header: React.FC = () => {
             ) : (
               <ListItem disablePadding>
                 <ListItemButton
-                  component="a"
-                  href="/login"
+                  component={RouterLink}
+                  to="/login"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <ListItemIcon>
@@ -441,163 +388,105 @@ const Footer: React.FC = () => {
           }}
         >
           {/* Company Info */}
-          <Box>
-            <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+          <FooterSection>
+            <Typography variant="h6" className="footer-title">
               SN Auto Parts
             </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 2 }}
-            >
+            <FooterText variant="body2" sx={{ mb: 2 }}>
               Your trusted source for quality auto parts. We offer a wide
               selection of parts for all makes and models.
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              {['facebook', 'twitter', 'instagram', 'youtube'].map((social) => (
-                <IconButton
-                  key={social}
-                  size="small"
-                  sx={{ color: 'rgba(255, 255, 255, 0.7)' }}
-                >
-                  <Box
-                    sx={{
-                      width: 20,
-                      height: 20,
-                      bgcolor: 'currentColor',
-                      borderRadius: '50%',
-                    }}
-                  />
-                </IconButton>
-              ))}
-            </Box>
-          </Box>
+            </FooterText>
+            <Stack direction="row" spacing={1}>
+              <SocialIconButton size="small" aria-label="Facebook">
+                <FacebookIcon fontSize="small" />
+              </SocialIconButton>
+              <SocialIconButton size="small" aria-label="Twitter">
+                <TwitterIcon fontSize="small" />
+              </SocialIconButton>
+              <SocialIconButton size="small" aria-label="Instagram">
+                <InstagramIcon fontSize="small" />
+              </SocialIconButton>
+              <SocialIconButton size="small" aria-label="YouTube">
+                <YouTubeIcon fontSize="small" />
+              </SocialIconButton>
+            </Stack>
+          </FooterSection>
 
           {/* Quick Links */}
-          <Box>
-            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+          <FooterSection>
+            <Typography variant="subtitle1" className="footer-title">
               Quick Links
             </Typography>
-            {['Shop All', 'Categories', 'Deals', 'New Arrivals', 'Best Sellers'].map(
-              (link) => (
-                <Typography
-                  key={link}
-                  component="a"
-                  href="#"
-                  variant="body2"
-                  sx={{
-                    display: 'block',
-                    color: 'rgba(255, 255, 255, 0.7)',
-                    textDecoration: 'none',
-                    mb: 1,
-                    '&:hover': { color: 'white' },
-                  }}
-                >
+            <Stack spacing={1}>
+              {['Shop All', 'Categories', 'Deals', 'New Arrivals', 'Best Sellers'].map((link) => (
+                <Link key={link} to="#" variant="unstyled" className="footer-link">
                   {link}
-                </Typography>
-              )
-            )}
-          </Box>
+                </Link>
+              ))}
+            </Stack>
+          </FooterSection>
 
           {/* Customer Service */}
-          <Box>
-            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+          <FooterSection>
+            <Typography variant="subtitle1" className="footer-title">
               Customer Service
             </Typography>
-            {[
-              'Contact Us',
-              'FAQs',
-              'Shipping Info',
-              'Returns & Refunds',
-              'Track Order',
-            ].map((link) => (
-              <Typography
-                key={link}
-                component="a"
-                href="#"
-                variant="body2"
-                sx={{
-                  display: 'block',
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  textDecoration: 'none',
-                  mb: 1,
-                  '&:hover': { color: 'white' },
-                }}
-              >
-                {link}
-              </Typography>
-            ))}
-          </Box>
+            <Stack spacing={1}>
+              {['Contact Us', 'FAQs', 'Shipping Info', 'Returns & Refunds', 'Track Order'].map((link) => (
+                <Link key={link} to="#" variant="unstyled" className="footer-link">
+                  {link}
+                </Link>
+              ))}
+            </Stack>
+          </FooterSection>
 
           {/* Contact Info */}
-          <Box>
-            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+          <FooterSection>
+            <Typography variant="subtitle1" className="footer-title">
               Contact Us
             </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 1 }}
-            >
-              📞 1-800-AUTO-PARTS
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 1 }}
-            >
-              ✉️ support@snautoparts.com
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 1 }}
-            >
-              📍 123 Auto Drive, Parts City, PC 12345
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: 'rgba(255, 255, 255, 0.7)' }}
-            >
-              🕒 Mon-Fri: 8am-8pm EST
-            </Typography>
-          </Box>
+            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+              <FooterIcon><PhoneIcon fontSize="small" /></FooterIcon>
+              <FooterText variant="body2" sx={{ mb: 0 }}>1-800-AUTO-PARTS</FooterText>
+            </Stack>
+            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+              <FooterIcon><EmailIcon fontSize="small" /></FooterIcon>
+              <FooterText variant="body2" sx={{ mb: 0 }}>support@snautoparts.com</FooterText>
+            </Stack>
+            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+              <FooterIcon><LocationOnOutlinedIcon fontSize="small" /></FooterIcon>
+              <FooterText variant="body2" sx={{ mb: 0 }}>123 Auto Drive, Parts City, PC 12345</FooterText>
+            </Stack>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <FooterIcon><AccessTimeIcon fontSize="small" /></FooterIcon>
+              <FooterText variant="body2" sx={{ mb: 0 }}>Mon-Fri: 8am-8pm EST</FooterText>
+            </Stack>
+          </FooterSection>
         </Box>
       </Container>
 
       {/* Bottom bar */}
-      <Box sx={{ bgcolor: 'rgba(0, 0, 0, 0.2)', py: 2 }}>
+      <FooterBottomBar>
         <Container maxWidth="xl">
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: { xs: 'column', sm: 'row' },
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              gap: 2,
-            }}
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={2}
           >
-            <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+            <Typography variant="body2" className="footer-text-muted">
               © {new Date().getFullYear()} SN Auto Parts. All rights reserved.
             </Typography>
-            <Box sx={{ display: 'flex', gap: 3 }}>
-              {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map(
-                (link) => (
-                  <Typography
-                    key={link}
-                    component="a"
-                    href="#"
-                    variant="body2"
-                    sx={{
-                      color: 'rgba(255, 255, 255, 0.6)',
-                      textDecoration: 'none',
-                      '&:hover': { color: 'white' },
-                    }}
-                  >
-                    {link}
-                  </Typography>
-                )
-              )}
-            </Box>
-          </Box>
+            <Stack direction="row" spacing={3}>
+              {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((link) => (
+                <Link key={link} to="#" variant="unstyled" className="footer-text-muted header-text-hover">
+                  {link}
+                </Link>
+              ))}
+            </Stack>
+          </Stack>
         </Container>
-      </Box>
+      </FooterBottomBar>
     </Box>
   );
 };

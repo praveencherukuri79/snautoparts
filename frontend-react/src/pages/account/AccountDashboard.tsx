@@ -140,10 +140,10 @@ export default function AccountDashboard() {
         </Stack>
 
         {/* Main Content Grid */}
-        <Stack direction={{ xs: 'column', lg: 'row' }} gap={3}>
+        <Stack direction={{ xs: 'column', lg: 'row' }} gap={3} alignItems="flex-start">
           {/* Recent Orders */}
           <Box flex={2}>
-            <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2} minHeight={40}>
               <Typography variant="h6" fontWeight={700}>
                 Recent Orders
               </Typography>
@@ -205,9 +205,11 @@ export default function AccountDashboard() {
 
           {/* Quick Actions */}
           <Box flex={1}>
-            <Typography variant="h6" fontWeight={700} mb={2}>
-              Quick Actions
-            </Typography>
+            <Box mb={2} minHeight={40} display="flex" alignItems="center">
+              <Typography variant="h6" fontWeight={700}>
+                Quick Actions
+              </Typography>
+            </Box>
             <Stack gap={2}>
               {quickActions.map((action) => {
                 const IconComponent = iconMap[action.icon as keyof typeof iconMap];

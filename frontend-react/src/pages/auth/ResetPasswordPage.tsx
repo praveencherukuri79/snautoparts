@@ -71,8 +71,8 @@ export default function ResetPasswordPage() {
       setIsSuccess(true);
       setTimeout(() => navigate('/login'), 3000);
     } catch (err: any) {
+      console.error('Reset password failed:', err);
       setError(err.message || 'Failed to reset password. Please try again.');
-      console.error('Reset password error:', err);
     } finally {
       setLoading(false);
     }

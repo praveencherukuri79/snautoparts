@@ -6,7 +6,7 @@
 
 import { Stack, Typography, Box } from '@mui/material';
 import { ChevronRight, SvgIconComponent } from '@mui/icons-material';
-import { ClickableCard } from './ClickableCard';
+import { Link } from '@/primitives';
 
 export interface ActionCardProps {
   label: string;
@@ -18,15 +18,17 @@ export interface ActionCardProps {
 
 export const ActionCard: React.FC<ActionCardProps> = ({ label, description, icon: Icon, color, to }) => {
   return (
-    <ClickableCard
+    <Link
       to={to}
-      bgcolor="background.paper"
-      p={2.5}
-      borderRadius={2}
-      border={1}
-      borderColor="border.light"
-      className="transition-all"
+      variant="unstyled"
       sx={{
+        display: 'block',
+        bgcolor: 'background.paper',
+        p: 2.5,
+        borderRadius: 2,
+        border: 1,
+        borderColor: 'border.light',
+        transition: 'all 0.2s',
         '&:hover': {
           borderColor: color,
           boxShadow: 1,
@@ -55,7 +57,7 @@ export const ActionCard: React.FC<ActionCardProps> = ({ label, description, icon
         </Box>
         <ChevronRight sx={{ color: 'text.disabled' }} />
       </Stack>
-    </ClickableCard>
+    </Link>
   );
 };
 

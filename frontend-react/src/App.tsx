@@ -283,7 +283,7 @@ const App: React.FC = () => {
             }
           />
           <Route
-            path="/account/orders/:id"
+            path="/account/orders/:orderId"
             element={
               <MainLayout>
                 <ProtectedRoute>

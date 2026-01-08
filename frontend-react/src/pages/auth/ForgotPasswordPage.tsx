@@ -49,8 +49,8 @@ export default function ForgotPasswordPage() {
       // Auto redirect after 5 seconds
       setTimeout(() => navigate('/login'), 5000);
     } catch (err: any) {
+      console.error('Forgot password failed:', err);
       setError(err.message || 'Failed to send reset email. Please try again.');
-      console.error('Forgot password error:', err);
     } finally {
       setLoading(false);
     }

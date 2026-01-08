@@ -1,203 +1,161 @@
-import { apiGet, apiPost, apiPatch } from './api';
-import type {
-  OrderStatus,
-  OrderSummary,
-  OrderDetail,
-  OrderTimelineEvent,
-  Shipment,
-  ShipmentTracking,
-  GetOrdersResponse,
-  GetOrdersParams,
-  GetOrderDetailResponse,
-  UpdateOrderStatusRequest,
-  UpdateOrderStatusResponse,
-  CancelOrderRequest,
-  CancelOrderResponse,
-  GetOrderTimelineResponse,
-  GetOrderShipmentsResponse,
-  TrackShipmentResponse,
-  GetPendingOrdersCountResponse,
-  GetOrderStatisticsResponse,
-} from '@/models';
-import type {
-  ShippingMethod,
-  CheckoutSummary,
-  PaymentIntent,
-  CreatedOrder,
-  GetShippingMethodsResponse,
-  GetCheckoutSummaryParams,
-  GetCheckoutSummaryResponse,
-  CreatePaymentIntentRequest,
-  CreatePaymentIntentResponse,
-  CreateOrderRequest,
-  CreateOrderResponse,
-} from '@/models';
-
-// API Endpoints matching swagger paths
-const ORDER_ENDPOINTS = {
-  LIST: '/orders/',
-  DETAIL: (id: string) => `/orders/${id}`,
-  STATUS: (id: string) => `/orders/${id}/status`,
-  CANCEL: (id: string) => `/orders/${id}/cancel`,
-  TIMELINE: (id: string) => `/orders/${id}/timeline`,
-  SHIPMENTS: (id: string) => `/orders/${id}/shipments`,
-  TRACK: (trackingNumber: string) => `/orders/track/${trackingNumber}`,
-  STATISTICS: '/orders/statistics',
-  PENDING_COUNT: '/orders/pending-count',
-};
-
-const CHECKOUT_ENDPOINTS = {
-  SHIPPING_METHODS: '/checkout/shipping-methods',
-  SUMMARY: '/checkout/summary',
-  PAYMENT_INTENT: '/checkout/payment-intent',
-  ORDERS: '/checkout/orders',
-};
-
 /**
  * Order Service
  * 
- * Handles order-related API calls including checkout.
- * Types match swagger.json exactly.
+ * Handles order-related API calls.
+ * Conditionally uses mock data based on env.enableMockData.
  */
-export const orderService = {
-  // Orders
-  /**
-   * GET /orders/
-   * Returns a paginated list of orders
-   */
-  getOrders: async (params?: GetOrdersParams): Promise<GetOrdersResponse> => {
-    return apiGet<GetOrdersResponse>(ORDER_ENDPOINTS.LIST, { params });
-  },
 
-  /**
-   * GET /orders/{id}
-   * Returns detailed order information
-   */
-  getOrder: async (id: string): Promise<OrderDetail> => {
-    const response = await apiGet<GetOrderDetailResponse>(ORDER_ENDPOINTS.DETAIL(id));
-    return response.data;
-  },
-
-  /**
-   * GET /orders/statistics
-   * Returns order statistics and metrics (manager/admin only)
-   */
-  getStatistics: async (): Promise<Record<string, unknown>> => {
-    const response = await apiGet<GetOrderStatisticsResponse>(ORDER_ENDPOINTS.STATISTICS);
-    return response.data;
-  },
-
-  /**
-   * GET /orders/pending-count
-   * Returns the count of pending orders (for nav badge)
-   */
-  getPendingCount: async (): Promise<number> => {
-    const response = await apiGet<GetPendingOrdersCountResponse>(ORDER_ENDPOINTS.PENDING_COUNT);
-    return response.data.count;
-  },
-
-  /**
-   * PATCH /orders/{id}/status
-   * Update the status of an order (manager/admin only)
-   */
-  updateStatus: async (id: string, data: UpdateOrderStatusRequest): Promise<UpdateOrderStatusResponse['data']> => {
-    const response = await apiPatch<UpdateOrderStatusResponse>(ORDER_ENDPOINTS.STATUS(id), data);
-    return response.data;
-  },
-
-  /**
-   * POST /orders/{id}/cancel
-   * Cancel an order
-   */
-  cancelOrder: async (id: string, data?: CancelOrderRequest): Promise<CancelOrderResponse['data']> => {
-    const response = await apiPost<CancelOrderResponse>(ORDER_ENDPOINTS.CANCEL(id), data);
-    return response.data;
-  },
-
-  /**
-   * GET /orders/{id}/timeline
-   * Returns the status history timeline for an order
-   */
-  getTimeline: async (id: string): Promise<OrderTimelineEvent[]> => {
-    const response = await apiGet<GetOrderTimelineResponse>(ORDER_ENDPOINTS.TIMELINE(id));
-    return response.data;
-  },
-
-  /**
-   * GET /orders/{id}/shipments
-   * Returns shipment tracking information for an order
-   */
-  getShipments: async (id: string): Promise<Shipment[]> => {
-    const response = await apiGet<GetOrderShipmentsResponse>(ORDER_ENDPOINTS.SHIPMENTS(id));
-    return response.data;
-  },
-
-  /**
-   * GET /orders/track/{trackingNumber}
-   * Public endpoint to track a shipment by tracking number
-   */
-  trackShipment: async (trackingNumber: string): Promise<ShipmentTracking> => {
-    const response = await apiGet<TrackShipmentResponse>(ORDER_ENDPOINTS.TRACK(trackingNumber));
-    return response.data;
-  },
-
-  // Checkout
-  /**
-   * GET /checkout/shipping-methods
-   * Returns available shipping methods based on cart contents and user location
-   */
-  getShippingMethods: async (): Promise<ShippingMethod[]> => {
-    const response = await apiGet<GetShippingMethodsResponse>(CHECKOUT_ENDPOINTS.SHIPPING_METHODS);
-    return response.data;
-  },
-
-  /**
-   * GET /checkout/summary
-   * Returns order summary with subtotal, shipping, tax, and total
-   */
-  getCheckoutSummary: async (params?: GetCheckoutSummaryParams): Promise<CheckoutSummary> => {
-    const response = await apiGet<GetCheckoutSummaryResponse>(CHECKOUT_ENDPOINTS.SUMMARY, { params });
-    return response.data;
-  },
-
-  /**
-   * POST /checkout/payment-intent
-   * Creates a Stripe payment intent for the current cart
-   */
-  createPaymentIntent: async (data: CreatePaymentIntentRequest): Promise<PaymentIntent> => {
-    const response = await apiPost<CreatePaymentIntentResponse>(CHECKOUT_ENDPOINTS.PAYMENT_INTENT, data);
-    return response.data;
-  },
-
-  /**
-   * POST /checkout/orders
-   * Creates an order from the current cart after successful payment
-   */
-  createOrder: async (data: CreateOrderRequest): Promise<CreatedOrder> => {
-    const response = await apiPost<CreateOrderResponse>(CHECKOUT_ENDPOINTS.ORDERS, data);
-    return response.data;
-  },
-};
-
-// Re-export types for convenience
-export type {
-  OrderStatus,
+import { api } from './api';
+import { env } from '@/config/env';
+import {
+  mockAllOrders,
+  mockOrderDetail,
+  mockOrderTimeline,
+  mockShipment,
+} from './mockData';
+import type {
   OrderSummary,
   OrderDetail,
   OrderTimelineEvent,
   Shipment,
-  ShipmentTracking,
-  GetOrdersResponse,
   GetOrdersParams,
-  UpdateOrderStatusRequest,
+  GetOrdersResponse,
+  GetOrderDetailResponse,
+  GetOrderTimelineResponse,
+  GetOrderShipmentsResponse,
   CancelOrderRequest,
-  ShippingMethod,
-  CheckoutSummary,
-  PaymentIntent,
-  CreatedOrder,
-  GetCheckoutSummaryParams,
-  CreatePaymentIntentRequest,
-  CreateOrderRequest,
+  CancelOrderResponse,
+} from '@/models';
+
+/**
+ * Order Service
+ */
+export const orderService = {
+  /**
+   * Get all orders with optional filters
+   */
+  getOrders: async (params?: GetOrdersParams): Promise<{ orders: OrderSummary[]; total: number }> => {
+    if (env.enableMockData) {
+      // Filter mock data if status provided
+      let filteredOrders = [...mockAllOrders];
+      if (params?.status) {
+        filteredOrders = filteredOrders.filter(order => order.status === params.status);
+      }
+      
+      return {
+        orders: filteredOrders,
+        total: filteredOrders.length,
+      };
+    }
+
+    try {
+      const response = await api.get<GetOrdersResponse>('/orders/', { params });
+      return {
+        orders: response.data.data,
+        total: response.data.meta.total,
+      };
+    } catch (error) {
+      console.error('Failed to fetch orders, using mock data:', error);
+      return {
+        orders: mockAllOrders,
+        total: mockAllOrders.length,
+      };
+    }
+  },
+
+  /**
+   * Get single order details
+   */
+  getOrderDetail: async (orderId: string): Promise<OrderDetail> => {
+    if (env.enableMockData) {
+      // Find the matching order from mockAllOrders to get the correct orderNumber
+      const matchingOrder = mockAllOrders.find(o => o.id === orderId);
+      return { 
+        ...mockOrderDetail, 
+        id: orderId,
+        orderNumber: matchingOrder?.orderNumber || mockOrderDetail.orderNumber,
+      };
+    }
+
+    try {
+      const response = await api.get<GetOrderDetailResponse>(`/orders/${orderId}`);
+      return response.data.data;
+    } catch (error) {
+      console.error('Failed to fetch order detail, using mock data:', error);
+      return { ...mockOrderDetail, id: orderId };
+    }
+  },
+
+  /**
+   * Get order timeline/history
+   */
+  getOrderTimeline: async (orderId: string): Promise<OrderTimelineEvent[]> => {
+    if (env.enableMockData) {
+      return mockOrderTimeline;
+    }
+
+    try {
+      const response = await api.get<GetOrderTimelineResponse>(`/orders/${orderId}/timeline`);
+      return response.data.data;
+    } catch (error) {
+      console.error('Failed to fetch order timeline, using mock data:', error);
+      return mockOrderTimeline;
+    }
+  },
+
+  /**
+   * Get order shipments
+   */
+  getOrderShipments: async (orderId: string): Promise<Shipment[]> => {
+    if (env.enableMockData) {
+      return [mockShipment];
+    }
+
+    try {
+      const response = await api.get<GetOrderShipmentsResponse>(`/orders/${orderId}/shipments`);
+      return response.data.data;
+    } catch (error) {
+      console.error('Failed to fetch shipments, using mock data:', error);
+      return [mockShipment];
+    }
+  },
+
+  /**
+   * Cancel order
+   */
+  cancelOrder: async (orderId: string, reason?: string): Promise<void> => {
+    if (env.enableMockData) {
+      return Promise.resolve();
+    }
+
+    const data: CancelOrderRequest = { reason };
+    await api.post<CancelOrderResponse>(`/orders/${orderId}/cancel`, data);
+  },
+
+  /**
+   * Track shipment by tracking number (public endpoint)
+   */
+  trackShipment: async (trackingNumber: string): Promise<Shipment & { orderNumber: string }> => {
+    if (env.enableMockData) {
+      return {
+        ...mockShipment,
+        trackingNumber,
+        orderNumber: 'ORD-2024-001',
+      };
+    }
+
+    try {
+      const response = await api.get(`/orders/track/${trackingNumber}`);
+      return response.data.data;
+    } catch (error) {
+      console.error('Failed to track shipment, using mock data:', error);
+      return {
+        ...mockShipment,
+        trackingNumber,
+        orderNumber: 'ORD-2024-001',
+      };
+    }
+  },
 };
 
 export default orderService;

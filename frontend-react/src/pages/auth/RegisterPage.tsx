@@ -82,8 +82,8 @@ export default function RegisterPage() {
       // Redirect to account dashboard
       navigate('/account');
     } catch (err: any) {
+      console.error('Registration failed:', err);
       setError(err.message || 'Registration failed. Please try again.');
-      console.error('Registration error:', err);
     } finally {
       setLoading(false);
     }

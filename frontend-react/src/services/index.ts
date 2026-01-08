@@ -6,6 +6,7 @@ export { cartService } from './cartService';
 export { orderService } from './orderService';
 export { userService } from './userService';
 export { accountService } from './accountService';
+export { default as profileService } from './profileService';
 
 // Re-export types from models
 export type * from '@/models';

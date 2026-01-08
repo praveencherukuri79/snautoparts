@@ -66,8 +66,8 @@ export default function LoginPage() {
       // Redirect to account dashboard
       navigate('/account');
     } catch (err: any) {
+      console.error('Login failed:', err);
       setError(err.message || 'Login failed. Please check your credentials.');
-      console.error('Login error:', err);
     } finally {
       setLoading(false);
     }

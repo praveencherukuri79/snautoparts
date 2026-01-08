@@ -17,24 +17,43 @@ export interface ClickableCardProps extends Omit<BoxProps, 'component'> {
 
 export const ClickableCard = forwardRef<HTMLDivElement, ClickableCardProps>(
   ({ to, onClick, hoverBg = 'grey.50', children, sx, ...props }, ref) => {
-    const Component = to ? RouterLink : 'div';
-    const componentProps = to ? { to } : {};
+    if (to) {
+      return (
+        <Box
+          ref={ref as any}
+          component={RouterLink as any}
+          to={to}
+          onClick={onClick}
+          className="transition-colors"
+          sx={{
+            cursor: 'pointer',
+            textDecoration: 'none',
+            display: 'block',
+            color: 'inherit',
+            '&:hover': {
+              bgcolor: hoverBg,
+            },
+            ...sx,
+          }}
+          {...props}
+        >
+          {children}
+        </Box>
+      );
+    }
 
     return (
       <Box
         ref={ref}
-        component={Component}
         onClick={onClick}
         className="transition-colors"
         sx={{
           cursor: 'pointer',
-          textDecoration: 'none',
           '&:hover': {
             bgcolor: hoverBg,
           },
           ...sx,
         }}
-        {...componentProps}
         {...props}
       >
         {children}

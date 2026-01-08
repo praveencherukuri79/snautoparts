@@ -45,18 +45,26 @@ export const accountService = {
       };
     }
 
-    // Real API calls (to be implemented when backend is ready)
+    // Real API calls - swagger compliant
     try {
       // Parallel requests for better performance
-      const [stats, orders, meResponse] = await Promise.all([
-        apiGet<{ data: AccountDashboardStats }>('/account/stats'),
-        apiGet<{ data: OrderSummary[] }>('/orders/?limit=3'),
+      const [ordersResponse, meResponse] = await Promise.all([
+        apiGet<{ data: OrderSummary[]; meta: any }>('/orders/?limit=3'),
         apiGet<{ data: AuthUser }>('/auth/me'),
       ]);
 
+      // For now, we'll use basic stats from the orders response
+      // TODO: Add proper stats endpoint when backend implements it
+      const stats: AccountDashboardStats = {
+        totalOrders: ordersResponse.meta?.total || ordersResponse.data.length,
+        savedVehicles: 0, // Will be fetched separately if needed
+        cartItems: 0, // Will be fetched from cart endpoint
+        addresses: 0, // Will be fetched from profile/addresses
+      };
+
       return {
-        stats: stats.data,
-        recentOrders: orders.data,
+        stats,
+        recentOrders: ordersResponse.data,
         quickActions: mockQuickActions, // These are static UI config
         user: meResponse.data,
       };

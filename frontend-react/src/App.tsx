@@ -15,6 +15,7 @@ import { getStorageItem, STORAGE_KEYS } from '@/utils/storage';
 // Customer pages
 const HomePage = lazy(() => import('@/pages/HomePage'));
 const ShopPage = lazy(() => import('@/pages/ShopPage'));
+const CategoriesPage = lazy(() => import('@/pages/CategoriesPage'));
 const CategoryPage = lazy(() => import('@/pages/CategoryPage'));
 const ProductPage = lazy(() => import('@/pages/ProductPage'));
 const DealsPage = lazy(() => import('@/pages/DealsPage'));
@@ -178,6 +179,14 @@ const App: React.FC = () => {
             element={
               <MainLayout>
                 <ShopPage />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="/categories"
+            element={
+              <MainLayout>
+                <CategoriesPage />
               </MainLayout>
             }
           />

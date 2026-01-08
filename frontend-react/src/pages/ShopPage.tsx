@@ -23,7 +23,6 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  Checkbox,
   Divider,
   useTheme,
   useMediaQuery,
@@ -31,7 +30,7 @@ import {
   InputAdornment,
   CircularProgress,
 } from '@mui/material';
-import { Button, Card } from '@/primitives';
+import { Button, Card, Checkbox } from '@/primitives';
 import { FilterListIcon, CloseIcon, GridViewIcon, ViewListIcon, SearchIcon } from '@/icons';
 import { catalogService } from '@/services/catalogService';
 import type { ProductSummary, Category, Brand } from '@/models';
@@ -94,7 +93,7 @@ const ShopPage: React.FC = () => {
       {items.map((item) => (
         <ListItem key={item} disablePadding>
           <ListItemButton onClick={() => onToggle(item)}>
-            <Checkbox edge="start" checked={selectedItems.includes(item)} disableRipple />
+            <Checkbox checked={selectedItems.includes(item)} sx={{ mr: 1 }} />
             <ListItemText primary={item} />
           </ListItemButton>
         </ListItem>

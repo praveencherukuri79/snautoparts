@@ -14,10 +14,10 @@ export const ProductCard = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const ProductImage = styled('img')({
+export const ProductImage = styled('img')(({ theme }) => ({
   objectFit: 'cover',
-  backgroundColor: '#f5f5f5',
-});
+  backgroundColor: theme.palette.grey[100],
+}));
 
 export const FilterSidebarPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),

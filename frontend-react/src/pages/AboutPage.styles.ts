@@ -3,6 +3,7 @@
  */
 
 import { Box, styled } from '@mui/material';
+import { IMAGES } from '@/config/images';
 
 export const HeroSection = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.main,
@@ -17,7 +18,7 @@ export const HeroSection = styled(Box)(({ theme }) => ({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundImage: 'url(https://via.placeholder.com/1920x400?text=Auto+Parts+Workshop)',
+    backgroundImage: `url(${IMAGES.hero.workshop})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     opacity: 0.1,

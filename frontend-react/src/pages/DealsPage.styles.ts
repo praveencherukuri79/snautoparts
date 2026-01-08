@@ -5,7 +5,7 @@
 import { Box, styled } from '@mui/material';
 
 export const HeroSection = styled(Box)(({ theme }) => ({
-  background: 'linear-gradient(135deg, #f97316 0%, #d97706 100%)',
+  background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
   color: theme.palette.common.white,
   paddingTop: theme.spacing(6),
   paddingBottom: theme.spacing(6),
@@ -36,12 +36,12 @@ export const DealCard = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const ProductImage = styled('img')({
+export const ProductImage = styled('img')(({ theme }) => ({
   width: '100%',
   height: 200,
   objectFit: 'cover',
-  backgroundColor: '#f5f5f5',
-});
+  backgroundColor: theme.palette.grey[100],
+}));
 
 export const StrikePrice = styled('span')(({ theme }) => ({
   textDecoration: 'line-through',

@@ -362,3 +362,284 @@ export const mockAllOrders: OrderSummary[] = [
   },
 ];
 
+/**
+ * Deal Interface
+ */
+export interface Deal {
+  id: string;
+  name: string;
+  brand: string;
+  category: string;
+  originalPrice: number;
+  salePrice: number;
+  discount: number;
+  image: string;
+  tag?: 'hot' | 'new' | 'limited';
+  endsIn?: string;
+}
+
+/**
+ * Mock Deals
+ */
+export const mockDeals: Deal[] = [
+  {
+    id: '1',
+    name: 'Premium Brake Pads Set',
+    brand: 'Wagner',
+    category: 'Brakes',
+    originalPrice: 89.99,
+    salePrice: 49.99,
+    discount: 44,
+    image: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=300&h=200&fit=crop',
+    tag: 'hot',
+    endsIn: '2 days',
+  },
+  {
+    id: '2',
+    name: 'Full Synthetic Motor Oil 5W-30',
+    brand: 'Mobil 1',
+    category: 'Oil & Fluids',
+    originalPrice: 45.99,
+    salePrice: 32.99,
+    discount: 28,
+    image: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=300&h=200&fit=crop',
+    tag: 'hot',
+  },
+  {
+    id: '3',
+    name: 'LED Headlight Conversion Kit',
+    brand: 'Philips',
+    category: 'Lighting',
+    originalPrice: 129.99,
+    salePrice: 79.99,
+    discount: 38,
+    image: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=300&h=200&fit=crop',
+    tag: 'new',
+  },
+  {
+    id: '4',
+    name: 'Performance Air Filter',
+    brand: 'K&N',
+    category: 'Engine',
+    originalPrice: 69.99,
+    salePrice: 54.99,
+    discount: 21,
+    image: 'https://images.unsplash.com/photo-1625047509168-a7026f36de04?w=300&h=200&fit=crop',
+    tag: 'limited',
+    endsIn: '5 hours',
+  },
+  {
+    id: '5',
+    name: 'Shock Absorber Pair',
+    brand: 'Monroe',
+    category: 'Suspension',
+    originalPrice: 159.99,
+    salePrice: 119.99,
+    discount: 25,
+    image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=300&h=200&fit=crop',
+  },
+  {
+    id: '6',
+    name: 'Ceramic Brake Rotors',
+    brand: 'Brembo',
+    category: 'Brakes',
+    originalPrice: 199.99,
+    salePrice: 149.99,
+    discount: 25,
+    image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=300&h=200&fit=crop',
+  },
+];
+
+/**
+ * Product Interface
+ */
+export interface Product {
+  id: string;
+  name: string;
+  brand: string;
+  category: string;
+  price: number;
+  salePrice?: number;
+  rating: number;
+  reviews: number;
+  image: string;
+  inStock: boolean;
+}
+
+/**
+ * Mock Products
+ */
+export const mockProducts: Product[] = [
+  {
+    id: '1',
+    name: 'Premium Brake Pads',
+    brand: 'Wagner',
+    category: 'Brakes',
+    price: 89.99,
+    salePrice: 49.99,
+    rating: 4.5,
+    reviews: 124,
+    image: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=300&h=200&fit=crop',
+    inStock: true,
+  },
+  {
+    id: '2',
+    name: 'Full Synthetic Motor Oil',
+    brand: 'Mobil 1',
+    category: 'Oil & Fluids',
+    price: 45.99,
+    rating: 4.8,
+    reviews: 89,
+    image: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=300&h=200&fit=crop',
+    inStock: true,
+  },
+  {
+    id: '3',
+    name: 'LED Headlight Kit',
+    brand: 'Philips',
+    category: 'Lighting',
+    price: 129.99,
+    rating: 4.6,
+    reviews: 56,
+    image: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=300&h=200&fit=crop',
+    inStock: true,
+  },
+  {
+    id: '4',
+    name: 'Air Filter',
+    brand: 'K&N',
+    category: 'Engine',
+    price: 69.99,
+    rating: 4.7,
+    reviews: 201,
+    image: 'https://images.unsplash.com/photo-1625047509168-a7026f36de04?w=300&h=200&fit=crop',
+    inStock: false,
+  },
+  {
+    id: '5',
+    name: 'Shock Absorbers',
+    brand: 'Monroe',
+    category: 'Suspension',
+    price: 159.99,
+    rating: 4.4,
+    reviews: 78,
+    image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=300&h=200&fit=crop',
+    inStock: true,
+  },
+  {
+    id: '6',
+    name: 'Brake Rotors',
+    brand: 'Brembo',
+    category: 'Brakes',
+    price: 199.99,
+    rating: 4.9,
+    reviews: 145,
+    image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=300&h=200&fit=crop',
+    inStock: true,
+  },
+];
+
+/**
+ * Stat Interface
+ */
+export interface Stat {
+  value: string;
+  label: string;
+  icon: string;
+}
+
+/**
+ * Mock Company Stats
+ */
+export const mockCompanyStats: Stat[] = [
+  {
+    value: '15+',
+    label: 'Years in Business',
+    icon: 'TrendingUpIcon',
+  },
+  {
+    value: '500K+',
+    label: 'Happy Customers',
+    icon: 'GroupsIcon',
+  },
+  {
+    value: '50K+',
+    label: 'Parts in Stock',
+    icon: 'PublicIcon',
+  },
+  {
+    value: '98%',
+    label: 'Customer Satisfaction',
+    icon: 'EmojiEventsIcon',
+  },
+];
+
+/**
+ * Value Interface
+ */
+export interface CompanyValue {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+/**
+ * Mock Company Values
+ */
+export const mockCompanyValues: CompanyValue[] = [
+  {
+    title: 'Quality First',
+    description: 'We source only premium, OEM-quality parts from trusted manufacturers.',
+    icon: 'VerifiedIcon',
+  },
+  {
+    title: 'Fast Delivery',
+    description: 'Same-day shipping on most orders with free delivery over $50.',
+    icon: 'LocalShippingIcon',
+  },
+  {
+    title: 'Expert Support',
+    description: 'Our knowledgeable team is here to help you find the right part.',
+    icon: 'SupportAgentIcon',
+  },
+  {
+    title: 'Best Prices',
+    description: 'Competitive pricing with regular deals and discounts.',
+    icon: 'StarIcon',
+  },
+];
+
+/**
+ * Team Member Interface
+ */
+export interface TeamMember {
+  name: string;
+  role: string;
+  image: string;
+}
+
+/**
+ * Mock Team Members
+ */
+export const mockTeamMembers: TeamMember[] = [
+  {
+    name: 'John Davis',
+    role: 'CEO & Founder',
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop',
+  },
+  {
+    name: 'Sarah Miller',
+    role: 'Operations Manager',
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop',
+  },
+  {
+    name: 'Mike Johnson',
+    role: 'Parts Specialist',
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop',
+  },
+  {
+    name: 'Emily Chen',
+    role: 'Customer Success',
+    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop',
+  },
+];

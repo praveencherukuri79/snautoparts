@@ -98,11 +98,15 @@ export { default as NotificationsIcon } from '@mui/icons-material/Notifications'
 export { default as HelpIcon } from '@mui/icons-material/Help';
 export { default as SecurityIcon } from '@mui/icons-material/Security';
 export { default as VerifiedIcon } from '@mui/icons-material/Verified';
+export { default as LockIcon } from '@mui/icons-material/Lock';
+export { default as LockResetIcon } from '@mui/icons-material/LockReset';
+export { default as SupportAgentIcon } from '@mui/icons-material/SupportAgent';
+export { default as GroupsIcon } from '@mui/icons-material/Groups';
+export { default as PublicIcon } from '@mui/icons-material/Public';
+export { default as EmojiEventsIcon } from '@mui/icons-material/EmojiEvents';
 export { default as LocalOfferIcon } from '@mui/icons-material/LocalOffer';
 export { default as TrendingUpIcon } from '@mui/icons-material/TrendingUp';
 export { default as NewReleasesIcon } from '@mui/icons-material/NewReleases';
-export { default as LockIcon } from '@mui/icons-material/Lock';
-export { default as LockResetIcon } from '@mui/icons-material/LockReset';
-export { default as ChevronRight } from '@mui/icons-material/ChevronRight';
-export { default as PersonIcon2 } from '@mui/icons-material/Person';
+export { default as GridViewIcon } from '@mui/icons-material/GridView';
+export { default as ViewListIcon } from '@mui/icons-material/ViewList';
 

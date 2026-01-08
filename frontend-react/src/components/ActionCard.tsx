@@ -7,7 +7,7 @@
 import { Stack, Typography, Box, styled } from '@mui/material';
 import { SvgIconComponent } from '@mui/icons-material';
 import { Link } from '@/primitives';
-import { ChevronRight } from '@/icons';
+import { ChevronRightIcon } from '@/icons';
 
 export interface ActionCardProps {
   label: string;
@@ -62,7 +62,7 @@ export const ActionCard: React.FC<ActionCardProps> = ({ label, description, icon
             {description}
           </Typography>
         </Box>
-        <ChevronRight sx={{ color: 'text.disabled' }} />
+        <ChevronRightIcon sx={{ color: 'text.disabled' }} />
       </Stack>
     </StyledLink>
   );

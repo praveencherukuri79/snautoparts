@@ -9,10 +9,9 @@ import { Button, Link, Alert } from '@/primitives';
 import { FormBuilder } from '@/components/FormBuilder';
 import type { FormConfig } from '@/components/FormBuilder';
 import {
-  LockResetIcon,
+  LockIcon,
   CheckCircleIcon,
   RadioButtonUncheckedIcon,
-  LockIcon,
 } from '@/icons';
 
 interface ResetPasswordFormData {
@@ -174,7 +173,7 @@ export default function ResetPasswordPage() {
                   border={1}
                   borderColor="border.dark"
                 >
-                  <LockResetIcon sx={{ fontSize: 40, color: 'primary.main' }} />
+                  <LockIcon sx={{ fontSize: 40, color: 'primary.main' }} />
                 </Box>
 
                 <Typography variant="h4" fontWeight={900} color="common.white" mb={1}>

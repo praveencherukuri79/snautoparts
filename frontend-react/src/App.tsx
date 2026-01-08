@@ -17,6 +17,8 @@ const HomePage = lazy(() => import('@/pages/HomePage'));
 const ShopPage = lazy(() => import('@/pages/ShopPage'));
 const CategoryPage = lazy(() => import('@/pages/CategoryPage'));
 const ProductPage = lazy(() => import('@/pages/ProductPage'));
+const DealsPage = lazy(() => import('@/pages/DealsPage'));
+const AboutPage = lazy(() => import('@/pages/AboutPage'));
 const CartPage = lazy(() => import('@/pages/CartPage'));
 const CheckoutPage = lazy(() => import('@/pages/CheckoutPage'));
 const OrderConfirmationPage = lazy(() => import('@/pages/OrderConfirmationPage'));
@@ -184,6 +186,22 @@ const App: React.FC = () => {
             element={
               <MainLayout>
                 <CategoryPage />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="/deals"
+            element={
+              <MainLayout>
+                <DealsPage />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <MainLayout>
+                <AboutPage />
               </MainLayout>
             }
           />

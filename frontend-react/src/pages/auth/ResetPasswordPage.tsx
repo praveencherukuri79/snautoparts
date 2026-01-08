@@ -9,11 +9,15 @@ import {
   Stack,
   TextField,
   Typography,
+  Alert,
+  CircularProgress,
 } from '@mui/material';
 import { Visibility, VisibilityOff, LockReset, CheckCircle, RadioButtonUnchecked } from '@mui/icons-material';
 import { useState } from 'react';
 import { logoIcon } from '@/assets/icons';
 import { IMAGES } from '@/config';
+import { authService } from '@/services';
+import type { ResetPasswordRequest } from '@/models';
 
 interface ResetPasswordFormData {
   password: string;
@@ -28,6 +32,8 @@ export default function ResetPasswordPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const {
     register,
@@ -45,10 +51,31 @@ export default function ResetPasswordPage() {
     { label: 'One number or special character', met: /[0-9]|[^A-Za-z0-9]/.test(password) },
   ];
 
-  const onSubmit = (data: ResetPasswordFormData) => {
-    console.log('Reset password:', { token, ...data });
-    setIsSuccess(true);
-    setTimeout(() => navigate('/login'), 3000);
+  const onSubmit = async (data: ResetPasswordFormData) => {
+    if (!token) {
+      setError('Invalid or missing reset token');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const resetData: ResetPasswordRequest = {
+        token,
+        newPassword: data.password,
+      };
+      
+      await authService.resetPassword(resetData);
+      
+      setIsSuccess(true);
+      setTimeout(() => navigate('/login'), 3000);
+    } catch (err: any) {
+      setError(err.message || 'Failed to reset password. Please try again.');
+      console.error('Reset password error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -128,6 +155,13 @@ export default function ResetPasswordPage() {
                 </Typography>
 
                 <Stack component="form" onSubmit={handleSubmit(onSubmit)} gap={3} textAlign="left">
+                  {/* Error Alert */}
+                  {error && (
+                    <Alert severity="error" onClose={() => setError(null)}>
+                      {error}
+                    </Alert>
+                  )}
+
                   {/* Password */}
                   <Box>
                     <Typography component="label" fontWeight={500} color="common.white" mb={1} display="block">
@@ -206,9 +240,11 @@ export default function ResetPasswordPage() {
                     variant="contained"
                     size="large"
                     fullWidth
+                    disabled={loading}
+                    startIcon={loading ? <CircularProgress size={20} color="inherit" /> : undefined}
                     sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
                   >
-                    Reset Password
+                    {loading ? 'Resetting...' : 'Reset Password'}
                   </Button>
                 </Stack>
               </>

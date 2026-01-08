@@ -7,11 +7,15 @@ import {
   Stack,
   TextField,
   Typography,
+  Alert,
+  CircularProgress,
 } from '@mui/material';
 import { ArrowBack, LockReset } from '@mui/icons-material';
 import { useState } from 'react';
 import { logoIcon } from '@/assets/icons';
 import { IMAGES } from '@/config';
+import { authService } from '@/services';
+import type { ForgotPasswordRequest } from '@/models';
 
 interface ForgotPasswordFormData {
   email: string;
@@ -20,17 +24,36 @@ interface ForgotPasswordFormData {
 export default function ForgotPasswordPage() {
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ForgotPasswordFormData>();
 
-  const onSubmit = (data: ForgotPasswordFormData) => {
-    console.log('Forgot password:', data);
-    setIsSubmitted(true);
-    // Auto redirect after 5 seconds
-    setTimeout(() => navigate('/login'), 5000);
+  const onSubmit = async (data: ForgotPasswordFormData) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const requestData: ForgotPasswordRequest = {
+        email: data.email,
+      };
+      
+      await authService.forgotPassword(requestData);
+      
+      setIsSubmitted(true);
+      
+      // Auto redirect after 5 seconds
+      setTimeout(() => navigate('/login'), 5000);
+    } catch (err: any) {
+      setError(err.message || 'Failed to send reset email. Please try again.');
+      console.error('Forgot password error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -111,6 +134,13 @@ export default function ForgotPasswordPage() {
                 </Typography>
 
                 <Stack component="form" onSubmit={handleSubmit(onSubmit)} gap={3} textAlign="left">
+                  {/* Error Alert */}
+                  {error && (
+                    <Alert severity="error" onClose={() => setError(null)}>
+                      {error}
+                    </Alert>
+                  )}
+
                   {/* Email */}
                   <Box>
                     <Typography component="label" fontWeight={500} color="common.white" mb={1} display="block">
@@ -133,9 +163,11 @@ export default function ForgotPasswordPage() {
                     variant="contained"
                     size="large"
                     fullWidth
+                    disabled={loading}
+                    startIcon={loading ? <CircularProgress size={20} color="inherit" /> : undefined}
                     sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
                   >
-                    Send Reset Link
+                    {loading ? 'Sending...' : 'Send Reset Link'}
                   </Button>
 
                   {/* Back to Login */}

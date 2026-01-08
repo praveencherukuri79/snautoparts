@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -10,11 +10,17 @@ import {
   Stack,
   TextField,
   Typography,
+  Alert,
+  CircularProgress,
 } from '@mui/material';
 import { Visibility, VisibilityOff, ArrowBack, Lock, Verified, LocalShipping } from '@mui/icons-material';
 import { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import { logoIcon, googleIcon } from '@/assets/icons';
 import { IMAGES } from '@/config';
+import { authService } from '@/services';
+import { authAtom } from '@/state/atoms/authAtom';
+import type { LoginRequest } from '@/models';
 
 interface LoginFormData {
   email: string;
@@ -22,15 +28,49 @@ interface LoginFormData {
 }
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+  const setAuthState = useSetRecoilState(authAtom);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormData>();
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log('Login data:', data);
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const loginData: LoginRequest = {
+        email: data.email,
+        password: data.password,
+      };
+      
+      const response = await authService.login(loginData);
+      
+      // Update Recoil auth state
+      setAuthState({
+        isAuthenticated: true,
+        isLoading: false,
+        user: response.user,
+        featureConfig: null, // Will be loaded separately if needed
+      });
+      
+      // Store user data in localStorage
+      localStorage.setItem('user', JSON.stringify(response.user));
+      
+      // Redirect to account dashboard
+      navigate('/account');
+    } catch (err: any) {
+      setError(err.message || 'Login failed. Please check your credentials.');
+      console.error('Login error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -106,6 +146,13 @@ export default function LoginPage() {
             </Typography>
 
             <Stack component="form" onSubmit={handleSubmit(onSubmit)} gap={3}>
+              {/* Error Alert */}
+              {error && (
+                <Alert severity="error" onClose={() => setError(null)}>
+                  {error}
+                </Alert>
+              )}
+
               {/* Email */}
               <Box>
                 <Typography component="label" fontWeight={500} color="common.white" mb={1} display="block">
@@ -158,10 +205,11 @@ export default function LoginPage() {
                 variant="contained"
                 size="large"
                 fullWidth
-                startIcon={<Lock />}
+                disabled={loading}
+                startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <Lock />}
                 sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
               >
-                Secure Login
+                {loading ? 'Signing In...' : 'Secure Login'}
               </Button>
 
               {/* Divider */}

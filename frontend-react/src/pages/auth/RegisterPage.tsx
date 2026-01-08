@@ -12,11 +12,17 @@ import {
   Stack,
   TextField,
   Typography,
+  Alert,
+  CircularProgress,
 } from '@mui/material';
 import { Visibility, VisibilityOff, Verified, LocalShipping } from '@mui/icons-material';
 import { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import { logoIcon, googleIcon } from '@/assets/icons';
 import { IMAGES } from '@/config';
+import { authService } from '@/services';
+import { authAtom } from '@/state/atoms/authAtom';
+import type { RegisterRequest } from '@/models';
 
 interface RegisterFormData {
   fullName: string;
@@ -28,8 +34,12 @@ interface RegisterFormData {
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+  const setAuthState = useSetRecoilState(authAtom);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  
   const {
     register,
     handleSubmit,
@@ -39,9 +49,44 @@ export default function RegisterPage() {
 
   const password = watch('password');
 
-  const onSubmit = (data: RegisterFormData) => {
-    console.log('Register data:', data);
-    navigate('/');
+  const onSubmit = async (data: RegisterFormData) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // Split full name into first and last name
+      const nameParts = data.fullName.trim().split(' ');
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.slice(1).join(' ') || '';
+      
+      const registerData: RegisterRequest = {
+        email: data.email,
+        password: data.password,
+        firstName,
+        lastName,
+      };
+      
+      const response = await authService.register(registerData);
+      
+      // Update Recoil auth state
+      setAuthState({
+        isAuthenticated: true,
+        isLoading: false,
+        user: response.user,
+        featureConfig: null,
+      });
+      
+      // Store user data in localStorage
+      localStorage.setItem('user', JSON.stringify(response.user));
+      
+      // Redirect to account dashboard
+      navigate('/account');
+    } catch (err: any) {
+      setError(err.message || 'Registration failed. Please try again.');
+      console.error('Registration error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -148,6 +193,13 @@ export default function RegisterPage() {
             </Divider>
 
             <Stack component="form" onSubmit={handleSubmit(onSubmit)} gap={3}>
+              {/* Error Alert */}
+              {error && (
+                <Alert severity="error" onClose={() => setError(null)}>
+                  {error}
+                </Alert>
+              )}
+
               {/* Full Name */}
               <Box>
                 <Typography component="label" variant="body2" fontWeight={500} color="common.white" mb={1} display="block">
@@ -256,9 +308,11 @@ export default function RegisterPage() {
                 variant="contained"
                 size="large"
                 fullWidth
+                disabled={loading}
+                startIcon={loading ? <CircularProgress size={20} color="inherit" /> : undefined}
                 sx={{ py: 1.5, boxShadow: (theme) => `0 8px 16px ${theme.palette.primary.main}33` }}
               >
-                Create Account
+                {loading ? 'Creating Account...' : 'Create Account'}
               </Button>
 
               {/* Support Link */}

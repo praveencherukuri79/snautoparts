@@ -140,6 +140,5 @@ export interface ForgotPasswordRequest {
  */
 export interface ResetPasswordRequest {
   token: string;
-  password: string;
-  passwordConfirmation: string;
+  newPassword: string;
 }

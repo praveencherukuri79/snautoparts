@@ -1,11 +1,13 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Box } from '@mui/material';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { isAuthenticatedSelector, userRoleSelector } from '@/state/selectors';
+import { authAtom } from '@/state/atoms/authAtom';
 import { Spinner } from '@/primitives';
 import { MainLayout, DashboardLayout } from '@/layouts';
 import NotificationSnackbar from '@/components/NotificationSnackbar';
+import type { AuthUser } from '@/models';
 
 // Lazy load pages for code splitting
 // Customer pages
@@ -96,8 +98,37 @@ const GuestRoute: React.FC<GuestRouteProps> = ({ children }) => {
   const isAuthenticated = useRecoilValue(isAuthenticatedSelector);
 
   if (isAuthenticated) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/account" replace />;
   }
+
+  return <>{children}</>;
+};
+
+/**
+ * Auth Initializer Component
+ * Restores auth state from localStorage on app load
+ */
+const AuthInitializer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const setAuthState = useSetRecoilState(authAtom);
+
+  useEffect(() => {
+    // Try to restore auth state from localStorage
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const user: AuthUser = JSON.parse(storedUser);
+        setAuthState({
+          isAuthenticated: true,
+          isLoading: false,
+          user,
+          featureConfig: null,
+        });
+      } catch (error) {
+        console.error('Failed to parse stored user:', error);
+        localStorage.removeItem('user');
+      }
+    }
+  }, [setAuthState]);
 
   return <>{children}</>;
 };
@@ -107,7 +138,7 @@ const GuestRoute: React.FC<GuestRouteProps> = ({ children }) => {
  */
 const App: React.FC = () => {
   return (
-    <>
+    <AuthInitializer>
       <Suspense fallback={<PageLoader />}>
         <Routes>
           {/* Public routes with MainLayout */}
@@ -358,7 +389,7 @@ const App: React.FC = () => {
 
       {/* Global notification snackbar */}
       <NotificationSnackbar />
-    </>
+    </AuthInitializer>
   );
 };
 

@@ -8,14 +8,22 @@
 
 1. **NO INLINE SVGs** - All SVGs must be in `src/assets/icons/` and imported
 2. **NO HARDCODED COLORS** - Use theme colors only (`primary.main`, `text.muted`, `background.surfaceDark`, etc.)
-3. **USE MUI COMPONENTS** - Use Box, Stack, Typography, not raw HTML (div, span, p, h1)
-4. **USE react-hook-form** - For all forms
-5. **IMAGES FROM CONFIG** - All image URLs in `src/config/images.ts`
-6. **MINIMAL sx PROPS** - Use theme, primitives first; sx only for layout (spacing, flex)
-7. **UX MOCKUPS = REFERENCE ONLY** - Don't replicate exactly, take best guess
-8. **KEEP COMPONENTS MINIMAL** - Simple, focused, small files
-9. **USE GLOBAL UTILITY CSS** - Use existing utility classes from `globals.css` (flex, gap-4, text-muted, etc.), NOT page-specific CSS classes
-10. **NO PAGE-SPECIFIC CSS** - Never create `.auth-*`, `.login-*`, `.dashboard-*` classes. Use MUI + utility classes only
+3. **USE PRIMITIVES FIRST** - Always check `src/primitives/` before using MUI components directly (e.g., use `Avatar` from primitives, not MUI)
+4. **USE MUI COMPONENTS** - Use Box, Stack, Typography, not raw HTML (div, span, p, h1)
+5. **USE react-hook-form** - For all forms
+6. **IMAGES FROM CONFIG** - All image URLs in `src/config/images.ts`
+7. **MINIMAL sx PROPS** - Use theme, primitives first; sx only for layout (spacing, flex)
+8. **UX MOCKUPS = REFERENCE ONLY** - Don't replicate exactly, take best guess
+9. **KEEP COMPONENTS MINIMAL** - Simple, focused, small files
+10. **USE GLOBAL UTILITY CSS** - Use existing utility classes from `globals.css` (flex, gap-4, text-muted, etc.), NOT page-specific CSS classes
+11. **NO PAGE-SPECIFIC CSS** - Never create `.auth-*`, `.login-*`, `.dashboard-*` classes. Use MUI + utility classes only
+12. **CREATE REUSABLE COMPONENTS** - Extract repetitive patterns into reusable components in `src/components/`. Avoid complex inline `sx` props
+13. **MOCK DATA CENTRALIZED** - All mock data in `src/services/mockData.ts` with env toggle `VITE_ENABLE_MOCK_DATA`
+14. **ALWAYS USE API SERVICES** - Never use `console.log()` for form submissions. Always call proper API services with loading/error states
+15. **UPDATE RECOIL STATE** - After successful auth API calls, MUST update Recoil authAtom with user data
+16. **INITIALIZE AUTH FROM LOCALSTORAGE** - App MUST restore auth state from localStorage on load (use AuthInitializer pattern)
+17. **USE PROPER MODELS** - ALWAYS use types from `src/models/*.model.ts` (generated from swagger). Never create duplicate custom types
+18. **DON'T CREATE UNNECESSARY FILES** - No extra README files. Update this guideline with recommendations only
 
 ### Auth Page Layout Rules
 
@@ -423,10 +431,38 @@ Button.displayName = 'Button';
 
 ## 5. Primitive Components
 
-### 5.1 Component List with Props
+### 5.1 Always Use Primitives First
+
+**CRITICAL:** Before importing any MUI component directly, check if a primitive exists in `src/primitives/`. Primitives provide:
+- Consistent styling and theming
+- Size presets and variants
+- Built-in functionality (e.g., Avatar auto-generates initials)
+- Type-safe props
+- Project-specific customizations
+
+**Example - DON'T DO THIS:**
+```typescript
+// ❌ Bad - Using MUI directly
+import { Avatar } from '@mui/material';
+
+<Avatar sx={{ width: 64, height: 64, bgcolor: 'primary.main' }}>
+  {getUserInitials()}
+</Avatar>
+```
+
+**DO THIS:**
+```typescript
+// ✅ Good - Using primitive
+import { Avatar } from '@/primitives';
+
+<Avatar size="xl" name={getUserFullName()} />
+```
+
+### 5.2 Component List with Props
 
 | Component | Key Props |
 |-----------|-----------|
+| **Avatar** | `size` ('xs'\|'sm'\|'md'\|'lg'\|'xl'), `name` (auto-generates initials & color) |
 | **Button** | `variant`, `size`, `loading`, `startIcon`, `endIcon`, `fullWidth` |
 | **IconButton** | `variant`, `size`, `color` |
 | **Input** | `label`, `error`, `helperText`, `startAdornment`, `endAdornment` |
@@ -436,7 +472,6 @@ Button.displayName = 'Button';
 | **Switch** | `label`, `checked`, `size` |
 | **Badge** | `variant`, `color`, `content`, `max`, `invisible` |
 | **Chip** | `variant`, `color`, `size`, `onDelete`, `avatar`, `icon` |
-| **Avatar** | `src`, `alt`, `size`, `variant`, `fallback` |
 | **Card** | `variant`, `elevation`, `hover` |
 | **Dialog** | `open`, `title`, `actions`, `maxWidth`, `fullScreen` |
 | **Drawer** | `open`, `anchor`, `variant` |
@@ -735,51 +770,150 @@ export const notificationAtom = atom<Notification | null>({
 
 ## 9. API Integration
 
-### 9.1 API Service Structure
+### 9.1 Mock Data Pattern (REQUIRED)
+
+**All mock data must be centralized in `src/services/mockData.ts` and toggled via environment variable.**
 
 ```typescript
-// services/api.ts
-import axios from 'axios';
+// config/env.ts
+export const env = {
+  enableMockData: import.meta.env.VITE_ENABLE_MOCK_DATA === 'true' || false,
+};
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api/v1',
-  withCredentials: true, // For session cookies
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+// services/mockData.ts
+export const mockRecentOrders = [
+  { id: '1', orderNumber: 'ORD-001', status: 'DELIVERED', total: '245.99' },
+];
 
-// Response interceptor for error handling
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      // Handle unauthorized - redirect to login
+// services/accountService.ts
+import { env } from '@/config';
+import { mockRecentOrders } from './mockData';
+
+export const accountService = {
+  getDashboardData: async () => {
+    if (env.enableMockData) {
+      return { recentOrders: mockRecentOrders };
     }
-    return Promise.reject(error);
-  }
-);
-
-export default api;
+    // Real API call
+    return await apiGet('/account/dashboard');
+  },
+};
 ```
 
-### 9.2 Service Example
+### 9.2 Form API Integration Pattern (REQUIRED)
+
+**Never use `console.log()` for form submissions. Always integrate with real API services and update Recoil state.**
 
 ```typescript
-// services/catalogService.ts
-import api from './api';
-import { Product, ProductListParams, PaginatedResponse } from '@/types';
+import { useSetRecoilState } from 'recoil';
+import { authAtom } from '@/state/atoms/authAtom';
 
-export const catalogService = {
-  getProducts: (params: ProductListParams) => 
-    api.get<PaginatedResponse<Product>>('/products', { params }),
-  
-  getProduct: (id: string) => 
-    api.get<Product>(`/products/${id}`),
-  
-  searchProducts: (query: string) => 
-    api.get<Product[]>('/products/search', { params: { q: query } }),
+// ❌ BAD - Just logging
+const onSubmit = (data: LoginFormData) => {
+  console.log('Login data:', data);
 };
+
+// ❌ BAD - API call but no Recoil update
+const onSubmit = async (data: LoginFormData) => {
+  const response = await authService.login(data);
+  localStorage.setItem('user', JSON.stringify(response.user));
+  navigate('/account');
+};
+
+// ✅ GOOD - Real API integration + Recoil state update
+const setAuthState = useSetRecoilState(authAtom);
+
+const onSubmit = async (data: LoginFormData) => {
+  try {
+    setLoading(true);
+    setError(null);
+    
+    const response = await authService.login(data);
+    
+    // Update Recoil auth state (REQUIRED for auth to work)
+    setAuthState({
+      isAuthenticated: true,
+      isLoading: false,
+      user: response.user,
+      featureConfig: null,
+    });
+    
+    // Store in localStorage as backup
+    localStorage.setItem('user', JSON.stringify(response.user));
+    
+    navigate('/account');
+  } catch (err: any) {
+    setError(err.message || 'Login failed');
+  } finally {
+    setLoading(false);
+  }
+};
+```
+
+### 9.3 Auth State Initialization (REQUIRED)
+
+**App MUST restore auth state from localStorage on load.**
+
+```typescript
+// In App.tsx
+import { useSetRecoilState } from 'recoil';
+import { authAtom } from '@/state/atoms/authAtom';
+
+const AuthInitializer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const setAuthState = useSetRecoilState(authAtom);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const user: AuthUser = JSON.parse(storedUser);
+        setAuthState({
+          isAuthenticated: true,
+          isLoading: false,
+          user,
+          featureConfig: null,
+        });
+      } catch (error) {
+        console.error('Failed to parse stored user:', error);
+        localStorage.removeItem('user');
+      }
+    }
+  }, [setAuthState]);
+
+  return <>{children}</>;
+};
+
+// Wrap your app
+<AuthInitializer>
+  <Routes>...</Routes>
+</AuthInitializer>
+```
+
+### 9.4 Required Form States
+
+Every form must have:
+1. **Loading state** - Show spinner/disable button during API call
+2. **Error state** - Display error Alert above form
+3. **Success handling** - Navigate or show success message
+
+```typescript
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState<string | null>(null);
+
+// In JSX
+{error && (
+  <Alert severity="error" onClose={() => setError(null)}>
+    {error}
+  </Alert>
+)}
+
+<Button
+  type="submit"
+  disabled={loading}
+  startIcon={loading ? <CircularProgress size={20} /> : <Icon />}
+>
+  {loading ? 'Loading...' : 'Submit'}
+</Button>
 ```
 
 ---
@@ -957,7 +1091,223 @@ export const getInitials = (name: string): string => {
 
 ---
 
-## 12. Accessibility
+## 12. Reusable Component Patterns
+
+### 12.1 When to Create Reusable Components
+
+Create reusable components when you notice:
+1. **Repetitive patterns** - Same structure/layout used 3+ times
+2. **Complex inline `sx` props** - More than 3-4 style properties
+3. **Repeated business logic** - Same data transformation/formatting
+4. **Consistent interaction patterns** - Hover states, click handlers, routing
+
+### 12.2 Component Examples
+
+#### ClickableCard
+Use for any clickable/linkable card with hover states:
+
+```typescript
+// src/components/ClickableCard.tsx
+import { forwardRef } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { Box, BoxProps } from '@mui/material';
+
+export interface ClickableCardProps extends Omit<BoxProps, 'component'> {
+  to?: string;
+  onClick?: () => void;
+  hoverBg?: string;
+}
+
+export const ClickableCard = forwardRef<HTMLDivElement, ClickableCardProps>(
+  ({ to, onClick, hoverBg = 'grey.50', children, sx, ...props }, ref) => {
+    const Component = to ? RouterLink : 'div';
+    const componentProps = to ? { to } : {};
+
+    return (
+      <Box
+        ref={ref}
+        component={Component}
+        onClick={onClick}
+        className="transition-colors"
+        sx={{
+          cursor: 'pointer',
+          textDecoration: 'none',
+          '&:hover': { bgcolor: hoverBg },
+          ...sx,
+        }}
+        {...componentProps}
+        {...props}
+      >
+        {children}
+      </Box>
+    );
+  }
+);
+```
+
+**Usage:**
+```typescript
+<ClickableCard to="/account/orders/123" p={3}>
+  <Stack direction="row" gap={2}>
+    <Typography>Order #123</Typography>
+    <Chip label="Delivered" color="success" />
+  </Stack>
+</ClickableCard>
+```
+
+#### StatCard
+Use for displaying statistics with icon:
+
+```typescript
+// src/components/StatCard.tsx
+export interface StatCardProps {
+  label: string;
+  value: string | number;
+  icon: SvgIconComponent;
+  color: string;
+}
+
+export const StatCard: React.FC<StatCardProps> = ({ label, value, icon: Icon, color }) => {
+  return (
+    <Box
+      flex={1}
+      bgcolor="background.paper"
+      p={3}
+      borderRadius={2}
+      border={1}
+      borderColor="border.light"
+      sx={{
+        transition: 'all 0.2s',
+        '&:hover': { borderColor: color, boxShadow: 2 },
+      }}
+    >
+      <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+        <Box>
+          <Typography variant="h3" fontWeight={900} color="text.primary" mb={0.5}>
+            {value}
+          </Typography>
+          <Typography color="text.secondary" variant="body2">
+            {label}
+          </Typography>
+        </Box>
+        <Box sx={{ bgcolor: `${color}15`, p: 1.5, borderRadius: 2, display: 'flex' }}>
+          <Icon sx={{ fontSize: 28, color }} />
+        </Box>
+      </Stack>
+    </Box>
+  );
+};
+```
+
+**Usage:**
+```typescript
+<Stack direction={{ xs: 'column', sm: 'row' }} gap={3}>
+  <StatCard label="Total Orders" value={42} icon={Inventory2} color="primary.main" />
+  <StatCard label="Cart Items" value={5} icon={ShoppingCart} color="warning.main" />
+</Stack>
+```
+
+#### OrderListItem
+Use for displaying order summaries in lists:
+
+```typescript
+// src/components/OrderListItem.tsx
+export interface OrderListItemProps {
+  id: string;
+  orderNumber: string;
+  createdAt: string;
+  itemCount: number;
+  total: string;
+  status: OrderStatus;
+  statusLabel: string;
+  statusColor: 'success' | 'info' | 'warning' | 'error' | 'default';
+  onDateFormat: (date: string) => string;
+}
+
+export const OrderListItem: React.FC<OrderListItemProps> = ({
+  id, orderNumber, createdAt, itemCount, total, statusLabel, statusColor, onDateFormat
+}) => {
+  return (
+    <ClickableCard to={`/account/orders/${id}`} p={3}>
+      <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" gap={2}>
+        <Stack flex={1} gap={0.5}>
+          <Typography fontWeight={600}>{orderNumber}</Typography>
+          <Typography variant="body2" color="text.secondary">
+            {onDateFormat(createdAt)} • {itemCount} items
+          </Typography>
+        </Stack>
+        <Stack direction="row" alignItems="center" gap={2}>
+          <Typography fontWeight={700}>${parseFloat(total).toFixed(2)}</Typography>
+          <Chip label={statusLabel} color={statusColor} size="small" />
+          <IconButton size="small"><ChevronRight /></IconButton>
+        </Stack>
+      </Stack>
+    </ClickableCard>
+  );
+};
+```
+
+#### ActionCard
+Use for quick action items with icon:
+
+```typescript
+// src/components/ActionCard.tsx
+export interface ActionCardProps {
+  label: string;
+  description: string;
+  icon: SvgIconComponent;
+  color: string;
+  to: string;
+}
+
+export const ActionCard: React.FC<ActionCardProps> = ({ label, description, icon: Icon, color, to }) => {
+  return (
+    <ClickableCard
+      to={to}
+      bgcolor="background.paper"
+      p={2.5}
+      borderRadius={2}
+      border={1}
+      borderColor="border.light"
+      sx={{
+        '&:hover': { borderColor: color, boxShadow: 1, transform: 'translateY(-2px)' },
+      }}
+    >
+      <Stack direction="row" alignItems="center" gap={2}>
+        <Box sx={{ bgcolor: `${color}15`, p: 1.5, borderRadius: 1.5, display: 'flex' }}>
+          <Icon sx={{ fontSize: 24, color }} />
+        </Box>
+        <Box flex={1}>
+          <Typography fontWeight={600}>{label}</Typography>
+          <Typography variant="body2" color="text.secondary">{description}</Typography>
+        </Box>
+        <ChevronRight sx={{ color: 'text.disabled' }} />
+      </Stack>
+    </ClickableCard>
+  );
+};
+```
+
+### 12.3 Benefits of Reusable Components
+
+1. **Smaller page components** - Reduced from 338 lines to 244 lines (28% reduction)
+2. **Consistent patterns** - Same hover states, transitions, and interactions
+3. **Easier maintenance** - Update once, applies everywhere
+4. **Better testability** - Test components in isolation
+5. **Improved readability** - Declarative component names vs complex JSX
+
+### 12.4 Guidelines
+
+- Place reusable components in `src/components/`
+- Export from `src/components/index.ts`
+- Document props with TypeScript interfaces
+- Keep components focused on single responsibility
+- Use composition (children prop) for flexibility
+- Avoid over-abstraction - balance reusability with simplicity
+
+---
+
+## 13. Accessibility
 
 ### Requirements
 
